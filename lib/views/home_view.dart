@@ -71,34 +71,187 @@ class _HomeViewState extends State<HomeView> {
                 color: Colors.black
             ),),
             SizedBox(height: 20,),
-            SingleChildScrollView(
+            Expanded(child: SingleChildScrollView(
               child: Column(
                 children: [
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6 - 10,
+                        width: MediaQuery.of(context).size.width * 0.6 - 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text("05 Oct 2022", style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 14,
+                              fontSize: 15,
                             ),),
-                            SizedBox(height: 5,),
+                            SizedBox(height: 7,),
                             Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
                                 color: Colors.black.withOpacity(.5),
+                                fontSize: 12
+                            ),)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4 - 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("550USD", style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("En cours", style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 11
                             ),)
                           ],
                         ),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6 - 20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("05 Oct 2022", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),),
+                            SizedBox(height: 7,),
+                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontSize: 12
+                            ),)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4 - 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("550USD", style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("En cours", style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 11
+                            ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6 - 20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("05 Oct 2022", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),),
+                            SizedBox(height: 7,),
+                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontSize: 12
+                            ),)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4 - 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("550USD", style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("En cours", style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 11
+                            ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6 - 20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("05 Oct 2022", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),),
+                            SizedBox(height: 7,),
+                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontSize: 12
+                            ),)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4 - 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text("550USD", style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("En cours", style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 11
+                            ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
-            )
+            ))
           ],
         ),
       )
