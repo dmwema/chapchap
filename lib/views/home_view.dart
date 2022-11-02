@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/home_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +14,25 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(),
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+      body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salut"),
-            Text("Al-Bakr Sanogo"),
+            Text("Salut!", style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.black.withOpacity(.5)
+            ),),
+            const Text("Al-Bakr Sanogo", style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.black
+            ),),
+            SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +63,41 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 )
               ],
+            ),
+            SizedBox(height: 40,),
+            const Text("Dernières opérations", style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black
+            ),),
+            SizedBox(height: 20,),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6 - 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("05 Oct 2022", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
+                                color: Colors.black.withOpacity(.5),
+                                fontSize: 11
+                            ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),

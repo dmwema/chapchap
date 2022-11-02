@@ -21,8 +21,16 @@ class HomeCard extends StatelessWidget {
             width: (MediaQuery.of(context).size.width - 60)  / 2,
             height: h,
             decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(20)
+              color: color,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 2,
+                  offset: Offset(0, 1), // changes position of shadow
+                ),
+              ],
             ),
             child: Center(
               child: Column(
