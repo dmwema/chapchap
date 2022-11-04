@@ -6,18 +6,21 @@ class HomeCard extends StatelessWidget {
   final Color color;
   final IconData icon;
   final title;
+  void Function()? onTap;
 
-  const HomeCard({
+  HomeCard({
+    Key? key,
     required this.h,
     required this.color,
     required this.icon,
-    required this.title
-  });
+    required this.title,
+    this.onTap
+  }) : super(key: key);
 
    @override
   Widget build(BuildContext context) {
     return InkWell(
-        child: Container(
+      child: Container(
             width: (MediaQuery.of(context).size.width - 60)  / 2,
             height: h,
             decoration: BoxDecoration(
@@ -49,6 +52,7 @@ class HomeCard extends StatelessWidget {
               ),
             )
         ),
+      onTap: onTap,
       );
   }
 }

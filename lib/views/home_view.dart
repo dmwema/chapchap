@@ -2,6 +2,7 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/home_card.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -46,6 +47,9 @@ class _HomeViewState extends State<HomeView> {
                       color: AppColors.primaryColor,
                       icon: Icons.payment_rounded,
                       title: "Envoi d'argent",
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.send);
+                      },
                     ),
                     SizedBox(height: 20,),
                     HomeCard(h: 90, color: AppColors.darkRed2, icon: Icons.bar_chart, title: "Bénéficiaires")
