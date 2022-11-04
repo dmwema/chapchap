@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       actions: const [
         CircleAvatar(
           backgroundColor: Colors.red,
-          child: Text("AS"),
+          backgroundImage: AssetImage("assets/avatart.jpeg"),
         ),
         SizedBox(width: 20,)
       ],

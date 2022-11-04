@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/home_card.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
+      drawer: AppbarDrawer(),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -144,15 +146,15 @@ class _HomeViewState extends State<HomeView> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
+                          children: const [
                             Text("550USD", style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20
                             ),),
                             SizedBox(height: 5,),
-                            Text("En cours", style: TextStyle(
-                                color: Colors.red,
+                            Text("Réçu", style: TextStyle(
+                                color: Colors.green,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 11
                             ),)

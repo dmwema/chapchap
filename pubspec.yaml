@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   page_transition: "^2.0.9"
   flutter_native_splash: ^1.1.1
+  circular_profile_avatar: ^2.0.5
 
 
 
