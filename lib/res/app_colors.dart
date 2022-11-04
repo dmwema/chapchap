@@ -5,4 +5,5 @@ class AppColors {
   static Color get darkRed => const Color(0xFF9E2525);
   static Color get darkRed2 => const Color(0xFFBA6B6B);
   static Color get marronRed => const Color(0xFFAC5A37);
+  static Color get lightGrey => const Color(0xFFF1F1F1);
 }
