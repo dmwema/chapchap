@@ -58,9 +58,9 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
             showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
           ),
           const SizedBox(height: 20,),
-          Text(
+          const Text(
             "Al-Bakr Sanogo",
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 18,
                 color: Colors.white,
                 fontWeight: FontWeight.w600
