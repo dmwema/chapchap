@@ -1,5 +1,6 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/views/home_view.dart';
+import 'package:chapchap/views/on_boarding_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,6 +10,8 @@ class Routes {
     switch(settings.name) {
       case RoutesName.home:
         return PageTransition(child: HomeView(), type: PageTransitionType.leftToRight );
+      case RoutesName.onBoarding:
+        return MaterialPageRoute(builder: (BuildContext context) => OnBoardingView());
       case RoutesName.send:
         return PageTransition(
             child: SendView(),

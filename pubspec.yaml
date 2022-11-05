@@ -33,6 +33,8 @@ dependencies:
   flutter_native_splash: ^1.1.1
   circular_profile_avatar: ^2.0.5
   country_icons: ^2.0.2
+  shared_preferences: ^2.0.15
+  flutter_svg:
 
 flutter_native_splash:
   color: "#ee2829"
