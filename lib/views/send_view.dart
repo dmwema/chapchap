@@ -1,5 +1,6 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
+import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/recipient_card.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +106,21 @@ class _SendViewState extends State<SendView> {
                           ],
                         ),
                         InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) {
+                                  return const CountrySelectModal();
+                                },
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20),
+                                    ),
+                                ),
+
+                            );
+                          },
                           child: Row(
                             children: [
                               Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 15, height: 15, fit: BoxFit.contain),
