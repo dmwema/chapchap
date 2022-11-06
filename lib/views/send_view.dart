@@ -4,6 +4,7 @@ import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/payment_methods_modal.dart';
 import 'package:chapchap/res/components/recipient_card.dart';
+import 'package:chapchap/res/components/send_bottom_modal.dart';
 import 'package:flutter/material.dart';
 
 class SendView extends StatefulWidget {
@@ -251,6 +252,21 @@ class _SendViewState extends State<SendView> {
                 ),
                 const SizedBox(height: 30,),
                 InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) {
+                        return const SendBottomModal();
+                      },
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     decoration: BoxDecoration(
