@@ -59,7 +59,9 @@ class _HomeViewState extends State<HomeView> {
                 SizedBox(width: 20,),
                 Column(
                   children: [
-                    HomeCard(h: 90, color: AppColors.darkRed, icon: Icons.compare_arrows_rounded, title: "Taux de change"),
+                    HomeCard(h: 90, color: AppColors.darkRed, icon: Icons.compare_arrows_rounded, title: "Taux de change", onTap: () {
+                      Navigator.pushNamed(context, RoutesName.exchange);
+                    },),
                     const SizedBox(height: 20,),
                     HomeCard(
                       h: 150,

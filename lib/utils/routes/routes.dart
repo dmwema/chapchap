@@ -1,4 +1,5 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
@@ -22,6 +23,12 @@ class Routes {
       case RoutesName.history:
         return PageTransition(
             child: HistoryView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.exchange:
+        return PageTransition(
+            child: ExchangeView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

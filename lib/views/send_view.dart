@@ -52,6 +52,8 @@ class _SendViewState extends State<SendView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Image.asset("packages/country_icons/icons/flags/png/ca.png", width: 30, height: 15, fit: BoxFit.contain),
+                      const SizedBox(width: 10,),
                       const Text("CAD", style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
