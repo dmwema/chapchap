@@ -2,6 +2,7 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class PasswordResetView extends StatelessWidget {
@@ -30,17 +31,12 @@ class PasswordResetView extends StatelessWidget {
                 password: false,
                 prefixIcon: Icon(Icons.alternate_email_sharp),
               ),
-              SizedBox(height: 20,),
-              InkWell(
-                child: Text("Mot de passe oublié ?", style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13
-                ), textAlign: TextAlign.start,),
-              ),
               SizedBox(height: 30,),
               RoundedButton(
                 title: 'Envoyer',
-                loading: false, onPress: () {  },
+                loading: false, onPress: () {
+                  Navigator.pushNamed(context, RoutesName.resetCodeSend);
+              },
               ),
               const SizedBox(height: 20,),
               SizedBox(height: 20,),

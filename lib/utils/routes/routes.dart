@@ -1,6 +1,7 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/password_reset_view.dart';
+import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
@@ -57,6 +58,12 @@ class Routes {
       case RoutesName.passwordReset:
         return PageTransition(
             child: PasswordResetView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.resetCodeSend:
+        return PageTransition(
+            child: ResetCodeView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

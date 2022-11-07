@@ -8,4 +8,5 @@ class RoutesName {
   static const String profile = 'profile_screen';
   static const String login = 'login_screen';
   static const String passwordReset = 'password_reset_screen';
+  static const String resetCodeSend = 'reset_code_sent_screen';
 }
