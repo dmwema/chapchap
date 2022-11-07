@@ -6,4 +6,5 @@ class RoutesName {
   static const String exchange = 'exchange_screen';
   static const String recipeints = 'recipeints_screen';
   static const String profile = 'profile_screen';
+  static const String login = 'login_screen';
 }
