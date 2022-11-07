@@ -2,6 +2,7 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -162,7 +163,9 @@ class ResetCodeView extends StatelessWidget {
               SizedBox(height: 30,),
               RoundedButton(
                 title: 'Vérifier',
-                loading: false, onPress: () {  },
+                loading: false, onPress: () {
+                  Navigator.pushNamed(context, RoutesName.newPassword);
+              },
               ),
             ],
           ),

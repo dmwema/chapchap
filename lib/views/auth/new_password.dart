@@ -5,7 +5,7 @@ import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
-class PasswordResetView extends StatelessWidget {
+class NewPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,36 +13,34 @@ class PasswordResetView extends StatelessWidget {
         child: Padding(padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text("Réinitialiser le mot de passe", style: TextStyle(
+              const Text("Créez un nouveau mot de passe", style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold
               ),),
               const SizedBox(height: 20,),
               CustomFormField(
-                label: "Adressse électronique",
-                hint: "Entrez l'adresse électronique",
+                label: "Nouveau mot de passe *",
+                hint: "Nouveau mot de passe *",
                 password: false,
-                prefixIcon: Icon(Icons.alternate_email_sharp),
+                prefixIcon: Icon(Icons.lock_person_outlined),
+                suffixIcon: Icon(Icons.visibility_off_outlined),
               ),
               SizedBox(height: 20,),
               CustomFormField(
-                label: "Confirmer Adresse électronique",
-                hint: "Confirmer Adresse électronique",
+                label: "Confirmer le mot de passe *",
+                hint: "Confirmer le mot de passe *",
                 password: false,
-                prefixIcon: Icon(Icons.alternate_email_sharp),
+                prefixIcon: Icon(Icons.lock_person_outlined),
+                suffixIcon: Icon(Icons.visibility_off_outlined),
               ),
               SizedBox(height: 30,),
               RoundedButton(
-                title: 'Envoyer',
+                title: 'Enrégistrer',
                 loading: false, onPress: () {
-                  Navigator.pushNamed(context, RoutesName.resetCodeSend);
+                Navigator.pushNamed(context, RoutesName.resetCodeSend);
               },
               ),
               const SizedBox(height: 20,),
-              Text("Un mail sera envoyé à l’adresse renseigner avec un code de récupération. Rassurer-vous que l’adresse est bien saisie", style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black.withOpacity(.7)
-              ), textAlign: TextAlign.center,),
             ],
           ),
         ),
