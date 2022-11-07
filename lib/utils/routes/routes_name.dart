@@ -14,4 +14,5 @@ class RoutesName {
   static const String newPassword = 'new_password_screen';
 
   static const String invoices = 'invoices_screen';
+  static const String invoiceDetail = 'invoice_detail_screen';
 }
