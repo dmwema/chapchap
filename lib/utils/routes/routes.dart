@@ -1,4 +1,5 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
 import 'package:chapchap/views/send_view.dart';
@@ -15,6 +16,12 @@ class Routes {
       case RoutesName.send:
         return PageTransition(
             child: SendView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.history:
+        return PageTransition(
+            child: HistoryView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

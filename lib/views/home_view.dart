@@ -1,6 +1,7 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
+import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/res/components/home_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +60,15 @@ class _HomeViewState extends State<HomeView> {
                 Column(
                   children: [
                     HomeCard(h: 90, color: AppColors.darkRed, icon: Icons.compare_arrows_rounded, title: "Taux de change"),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     HomeCard(
                       h: 150,
                       color: AppColors.marronRed,
                       icon: Icons.history_rounded,
                       title: "Historique des transferts",
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.history);
+                      },
                     ),
                   ],
                 )
@@ -79,182 +83,18 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(height: 20,),
             Expanded(child: SingleChildScrollView(
               child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6 - 20,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("05 Oct 2022", style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),),
-                            SizedBox(height: 7,),
-                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4 - 30,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text("550USD", style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20
-                            ),),
-                            SizedBox(height: 5,),
-                            Text("En cours", style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11
-                            ),)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 10,),
+                children: const [
+                  HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                  SizedBox(height: 5,),
                   Divider(),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6 - 20,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("05 Oct 2022", style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),),
-                            SizedBox(height: 7,),
-                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4 - 30,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text("550USD", style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20
-                            ),),
-                            SizedBox(height: 5,),
-                            Text("Réçu", style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11
-                            ),)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                  SizedBox(height: 5,),
                   Divider(),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6 - 20,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("05 Oct 2022", style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),),
-                            SizedBox(height: 7,),
-                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4 - 30,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text("550USD", style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20
-                            ),),
-                            SizedBox(height: 5,),
-                            Text("En cours", style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11
-                            ),)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                  SizedBox(height: 5,),
                   Divider(),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6 - 20,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("05 Oct 2022", style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),),
-                            SizedBox(height: 7,),
-                            Text("5 Oct. 2022 Envoi argent à Daniel Mwema (cd)", style: TextStyle(
-                                color: Colors.black.withOpacity(.5),
-                                fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.4 - 30,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text("550USD", style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20
-                            ),),
-                            SizedBox(height: 5,),
-                            Text("En cours", style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11
-                            ),)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                  SizedBox(height: 5,),
                 ],
               ),
             ))
