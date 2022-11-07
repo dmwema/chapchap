@@ -7,6 +7,7 @@ import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
+import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';
@@ -72,6 +73,12 @@ class Routes {
       case RoutesName.resetCodeSend:
         return PageTransition(
             child: ResetCodeView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.invoices:
+        return PageTransition(
+            child: InvoicesView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

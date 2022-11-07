@@ -51,7 +51,9 @@ class LoginView extends StatelessWidget {
               SizedBox(height: 30,),
               RoundedButton(
                 title: 'Se connecter',
-                loading: false, onPress: () {  },
+                loading: false, onPress: () {
+                  Navigator.pushNamed(context, RoutesName.home);
+              },
               ),
               const SizedBox(height: 20,),
               Text("Vous n'avez pas encore de compte ?"),

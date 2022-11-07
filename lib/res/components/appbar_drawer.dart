@@ -36,48 +36,52 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top
       ),
-      child: Column(
-        children: [
-          const SizedBox(height: 20,),
-          CircularProfileAvatar(
-            "",
-            radius: 35, // sets radius, default 50.0
-            backgroundColor: AppColors.darkRed , // sets background color, default Colors.white
-            borderWidth: 5,  // sets border, default 0.0
-            initialsText: const Text(
-              "AS",
-              style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-            ),  // sets initials text, set your own style, default Text('')
-            borderColor: AppColors.darkRed, // sets border color, default Colors.white
-            elevation: 5.0, // sets elevation (shadow of the profile picture), default value is 0.0
-            foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-            cacheImage: true, // allow widget to cache image against provided url
-            onTap: () {
-              print('adit');
-            }, // sets on tap
-            showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-          ),
-          const SizedBox(height: 20,),
-          const Text(
-            "Al-Bakr Sanogo",
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w600
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Row(
+          children: [
+            CircularProfileAvatar(
+              "",
+              radius: 25, // sets radius, default 50.0
+              backgroundColor: AppColors.darkRed , // sets background color, default Colors.white
+              borderWidth: 5,  // sets border, default 0.0
+              initialsText: const Text(
+                "AS",
+                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+              ),  // sets initials text, set your own style, default Text('')
+              borderColor: AppColors.darkRed, // sets border color, default Colors.white
+              elevation: 5.0, // sets elevation (shadow of the profile picture), default value is 0.0
+              foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+              cacheImage: true, // allow widget to cache image against provided url
+              onTap: () {
+                print('adit');
+              }, // sets on tap
+              showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
             ),
-          ),
-          const SizedBox(height: 7,),
-          Text(
-            "albakrsanogo@chapchap.ca",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withOpacity(.5),
-            ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(height: 20),
-        ],
-      ),
+            const SizedBox(width: 10,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [ const Text(
+                "Al-Bakr Sanogo",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+              const SizedBox(height: 7,),
+              Text(
+                "albakrsanogo@chapchap.ca",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.white.withOpacity(.5),
+                ),
+              ),
+            ],
+            )
+          ],
+        ),
+      )
     );
   }
 
@@ -114,6 +118,13 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 title: const Text("Mes bénéficiaires"),
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.recipeints);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.file_present_outlined),
+                title: const Text("Mes factures"),
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.invoices);
                 },
               ),
             ],

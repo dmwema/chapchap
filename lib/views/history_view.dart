@@ -21,7 +21,7 @@ class _HistoryViewState extends State<HistoryView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
-          title: 'Historique des transferts',
+          title: 'Historique',
         ),
         drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,

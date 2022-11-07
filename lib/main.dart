@@ -29,25 +29,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  //FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
-  /*@override
-  void initState() {
-    super.initState();
-
-    firebaseMessaging.getToken().then((value) {
-      print("Firebase token : ${value}");
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "QuickDep",
-      //initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.home,
+      initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.login,
       //initialRoute: RoutesName.onBoarding,
-      initialRoute: RoutesName.login,
+      // initialRoute: RoutesName.login,
       onGenerateRoute: Routes.generateRoute,
       //home:  NetworkError(),
     );
