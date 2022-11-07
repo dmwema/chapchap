@@ -4,4 +4,5 @@ class RoutesName {
   static const String onBoarding = 'on_boarding';
   static const String history = 'history_screen';
   static const String exchange = 'exchange_screen';
+  static const String recipeints = 'recipeints_screen';
 }

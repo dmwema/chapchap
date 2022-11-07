@@ -53,7 +53,9 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
                     SizedBox(height: 20,),
-                    HomeCard(h: 90, color: AppColors.darkRed2, icon: Icons.bar_chart, title: "Bénéficiaires")
+                    HomeCard(h: 90, color: AppColors.darkRed2, icon: Icons.bar_chart, title: "Bénéficiaires", onTap: (){
+                      Navigator.pushNamed(context, RoutesName.recipeints);
+                    },)
                   ],
                 ),
                 SizedBox(width: 20,),
