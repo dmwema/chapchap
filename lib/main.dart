@@ -46,7 +46,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: "QuickDep",
       //initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.home,
-      initialRoute: RoutesName.onBoarding,
+      //initialRoute: RoutesName.onBoarding,
+      initialRoute: RoutesName.login,
       onGenerateRoute: Routes.generateRoute,
       //home:  NetworkError(),
     );
