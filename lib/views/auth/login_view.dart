@@ -57,7 +57,9 @@ class LoginView extends StatelessWidget {
               Text("Vous n'avez pas encore de compte ?"),
               const SizedBox(height: 10,),
               InkWell(
-                onTap: () {}, child: Text("Inscrivez-vous", style: TextStyle(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.register);
+                }, child: Text("Inscrivez-vous", style: TextStyle(
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.bold
               ),),),

@@ -4,13 +4,30 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String? title;
   bool showBack;
+  bool red;
 
-  CustomAppBar({Key? key, this.title, this.showBack = false}) : super(key: key);
+  CustomAppBar({Key? key, this.title, this.showBack = false, this.red = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title == null ? "" :title!, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(.9)),),
+      title: Row(
+        children: [
+          if (red)
+            Container(
+              width: 35, height: 35,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/logo.png"),
+                  fit: BoxFit.contain
+                )
+              ),
+            ),
+          if (red)
+            SizedBox(width: 10,),
+          Text(title == null ? "" :title!, style: TextStyle(fontWeight: FontWeight.bold, color: !red ? Colors.black.withOpacity(.9): Colors.white.withOpacity(.9)),),
+        ],
+      ),
       elevation: 1,
       leading: Builder(builder: (BuildContext context) {
         if (showBack) {
@@ -18,7 +35,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Image.asset("assets/back.png")
+              icon: red ? Icon(Icons.chevron_left_rounded, color: Colors.white, size: 40,): Image.asset("assets/back.png")
           );
         }
         return IconButton(
@@ -29,11 +46,12 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         );
       },
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundColor: Colors.red,
-          backgroundImage: AssetImage("assets/avatart.jpeg"),
-        ),
+      actions: [
+        if (!red)
+          const CircleAvatar(
+            backgroundColor: Colors.red,
+            backgroundImage: AssetImage("assets/avatart.jpeg"),
+          ),
         SizedBox(width: 20,)
       ],
       shape: const RoundedRectangleBorder(
@@ -41,7 +59,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               bottom: Radius.circular(0)
           )
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: red ? AppColors.primaryColor: Colors.white,
       iconTheme: IconThemeData(
           color: Colors.white
       ),

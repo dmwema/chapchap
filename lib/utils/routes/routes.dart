@@ -2,6 +2,7 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/new_password.dart';
 import 'package:chapchap/views/auth/password_reset_view.dart';
+import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
@@ -53,6 +54,12 @@ class Routes {
       case RoutesName.login:
         return PageTransition(
             child: LoginView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.register:
+        return PageTransition(
+            child: RegisterView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
