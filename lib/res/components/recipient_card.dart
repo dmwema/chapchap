@@ -11,8 +11,6 @@ class RecipientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      width: 120,
-      height: 100,
       margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -21,6 +19,7 @@ class RecipientCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 10,),
           const Text("Daniel Mwema", textAlign: TextAlign.center, style: TextStyle(

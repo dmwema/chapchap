@@ -21,6 +21,7 @@ class _HistoryViewState extends State<HistoryView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
+          title: 'Historique des transferts',
         ),
         drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
@@ -31,12 +32,6 @@ class _HistoryViewState extends State<HistoryView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Historique des transferts", style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black
-                ),),
-                SizedBox(height: 20,),
                 Text("Cette année", style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

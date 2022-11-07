@@ -21,6 +21,7 @@ class _ExchangeViewState extends State<ExchangeView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
+          title: 'Taux de change',
         ),
         drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
@@ -31,12 +32,6 @@ class _ExchangeViewState extends State<ExchangeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Taux de change", style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black
-                ),),
-                const SizedBox(height: 20,),
                 Row(
                   children: [
                     SizedBox(

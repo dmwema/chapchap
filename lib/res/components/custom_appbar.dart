@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title == null ? "" :title!, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white.withOpacity(.9)),),
+      title: Text(title == null ? "" :title!, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black.withOpacity(.9)),),
       elevation: 1,
       leading: Builder(builder: (BuildContext context) {
         if (showBack) {

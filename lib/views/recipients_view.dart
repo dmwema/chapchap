@@ -22,6 +22,7 @@ class _RecipientsViewState extends State<RecipientsView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
+          title: "Bénéficiaires",
         ),
         drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
@@ -32,12 +33,6 @@ class _RecipientsViewState extends State<RecipientsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Bénéficiaires", style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black
-                ),),
-                const SizedBox(height: 20,),
                 Text("Vous pouvez glisser de droite à gauche pour supprimer", style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,

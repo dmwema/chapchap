@@ -20,6 +20,7 @@ class _SendViewState extends State<SendView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
+          title: "Envoi d'argent",
         ),
         drawer: AppbarDrawer(),
         backgroundColor: Colors.white,
@@ -30,12 +31,6 @@ class _SendViewState extends State<SendView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Envoi d'argent", style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black
-                ),),
-                const SizedBox(height: 20,),
                 Text("Montant à envoyer *", style: TextStyle(
                     color: Colors.black.withOpacity(.6),
                     fontSize: 13
@@ -181,7 +176,11 @@ class _SendViewState extends State<SendView> {
                     )
                 ),
                 const SizedBox(height: 20,),
-                const Text("Le montant est déposé sur le portefeuille mobile de votre bénéficiaire."),
+                Text("Le montant est déposé sur le portefeuille mobile de votre bénéficiaire.", style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Colors.black.withOpacity(.7)
+                ),),
                 const SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

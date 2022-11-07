@@ -99,22 +99,21 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 leading: const Icon(Icons.compare_arrows_outlined),
                 title: const Text("Faire un envoi"),
                 onTap: () {
-                  // Navigator.pushNamed(context, RoutesName.myContracts, arguments: ScreenArguments(user.id!.toInt()));
+                  Navigator.pushNamed(context, RoutesName.profile);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.history),
                 title: const Text("Mon historique"),
                 onTap: () {
-                  //Navigator.pushNamed(context, RoutesName.likes, arguments: ScreenArguments(user.id!.toInt()));
-                },
+                  Navigator.pushNamed(context, RoutesName.history);
+                }
               ),
               ListTile(
                 leading: Icon(Icons.bar_chart_rounded),
                 title: const Text("Mes bénéficiaires"),
                 onTap: () {
-                  //Utils.flushBarErrorMessage("En cours de dévéloppement", context);
-                  //Navigator.pushNamed(context, RoutesName.home);
+                  Navigator.pushNamed(context, RoutesName.recipeints);
                 },
               ),
             ],
@@ -126,7 +125,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 leading: const Icon(Icons.person_outline),
                 title: const Text("Mon profile"),
                 onTap: () {
-                  //Navigator.pushNamed(context, RoutesName.profile);
+                  Navigator.pushNamed(context, RoutesName.profile);
                 },
               ),
               ListTile(

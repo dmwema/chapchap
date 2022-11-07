@@ -3,6 +3,7 @@ import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
+import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,12 @@ class Routes {
       case RoutesName.recipeints:
         return PageTransition(
             child: RecipientsView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.profile:
+        return PageTransition(
+            child: ProfileView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
