@@ -103,7 +103,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 leading: const Icon(Icons.compare_arrows_outlined),
                 title: const Text("Faire un envoi"),
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.profile);
+                  Navigator.pushNamed(context, RoutesName.send);
                 },
               ),
               ListTile(

@@ -13,6 +13,7 @@ import 'package:chapchap/views/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';
+import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -93,6 +94,12 @@ class Routes {
       case RoutesName.pay:
         return PageTransition(
             child: PayView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.sendSuccess:
+        return PageTransition(
+            child: SendSuccessView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

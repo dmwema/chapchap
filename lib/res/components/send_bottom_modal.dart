@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class SendBottomModal extends StatelessWidget {
@@ -233,6 +234,9 @@ class SendBottomModal extends StatelessWidget {
                     ),
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, RoutesName.sendSuccess);
+                    },
                     child: Container(
                         width: (MediaQuery.of(context).size.width - 40) * 0.5,
                         decoration: BoxDecoration(
