@@ -10,6 +10,7 @@ import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/invoice_detail_view.dart';
 import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
+import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/send_view.dart';
@@ -86,6 +87,12 @@ class Routes {
       case RoutesName.invoiceDetail:
         return PageTransition(
             child: InvoiceDetailView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.pay:
+        return PageTransition(
+            child: PayView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

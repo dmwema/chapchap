@@ -1,5 +1,6 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceDetailView extends StatelessWidget {
@@ -103,6 +104,9 @@ class InvoiceDetailView extends StatelessWidget {
                     ),
                     SizedBox(width: 15,),
                     InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.pay);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.green,
