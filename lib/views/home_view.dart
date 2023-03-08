@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: AppbarDrawer(),
+      drawer: const AppbarDrawer(),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Padding(

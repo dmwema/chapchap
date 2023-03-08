@@ -1,6 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SliderPage extends StatelessWidget {
   final String title;
@@ -17,7 +16,7 @@ class SliderPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(image, width: width * 0.6,),
+          Image.asset(image, width: width * 0.6,),
           const SizedBox(height: 60,),
           Container(
             width: 200,

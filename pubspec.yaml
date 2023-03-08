@@ -29,12 +29,45 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  page_transition: "^2.0.9"
-  flutter_native_splash: ^1.1.1
+  cupertino_icons: ^1.0.5
+  flutter_lints: ^2.0.1
+  flutter_native_splash: ^2.2.18
+  shared_preferences: ^2.0.18
+  fluttertoast: ^8.2.1
+  http: ^0.13.5
+  another_flushbar: ^1.12.29
+  provider: ^6.0.5
+  bottom_navy_bar: ^6.0.0
   circular_profile_avatar: ^2.0.5
-  country_icons: ^2.0.2
-  shared_preferences: ^2.0.15
-  flutter_svg:
+  flutter_launcher_icons: ^0.12.0
+  badges: ^3.0.2
+  flutter_rating_bar: ^4.0.1
+  intl: ^0.17.0
+  shimmer: ^2.0.0
+  page_transition: "^2.0.9"
+  image_picker: ^0.8.6+3
+  path_provider: ^2.0.13
+  dio: ^5.0.1
+  google_maps_flutter: ^2.2.4
+  syncfusion_flutter_signaturepad: ^20.4.51
+  standard_dialogs: ^2.1.0
+  map_launcher: ^2.5.0+1
+  jiffy: ^5.0.0
+  email_validator: '^2.1.16'
+  workmanager: ^0.5.1
+  maps_launcher: ^2.2.0
+  mask_text_input_formatter: ^2.4.0
+  flutter_time_picker_spinner: ^2.0.0
+  flutter_local_notifications: ^13.0.0
+  flutter_downloader: ^1.10.2
+  flutter_cupertino_datetime_picker: ^3.0.0
+  flutter_cupertino_localizations: ^1.0.1
+  flutter_cupertino_date_picker_fork: ^1.0.7
+  firebase_core: ^2.7.0
+  firebase_messaging: ^14.2.5
+  dbus: ^0.7.8
+  xml: ^6.2.2
+  image: ^4.0.15
 
 flutter_native_splash:
   color: "#ee2829"

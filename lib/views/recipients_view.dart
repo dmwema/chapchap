@@ -20,6 +20,13 @@ class _RecipientsViewState extends State<RecipientsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primaryColor,
+        onPressed: () {  },
+        child: Center(
+          child: Icon(Icons.person_add_alt_1),
+        ),
+      ),
         appBar: CustomAppBar(
           showBack: true,
           title: "Bénéficiaires",

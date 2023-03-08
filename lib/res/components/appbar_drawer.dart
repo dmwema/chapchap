@@ -1,5 +1,7 @@
+import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
@@ -11,6 +13,17 @@ class AppbarDrawer extends StatefulWidget {
 }
 
 class _AppbarDrawerState extends State<AppbarDrawer> {
+  UserModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    UserViewModel().getUser().then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -45,9 +58,9 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               radius: 25, // sets radius, default 50.0
               backgroundColor: AppColors.darkRed , // sets background color, default Colors.white
               borderWidth: 5,  // sets border, default 0.0
-              initialsText: const Text(
-                "AS",
-                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+              initialsText: Text(
+                user != null ? user!.prenomClient.toString()[0] + user!.nomClient.toString()[0]: "",
+                style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
               ),  // sets initials text, set your own style, default Text('')
               borderColor: AppColors.darkRed, // sets border color, default Colors.white
               elevation: 5.0, // sets elevation (shadow of the profile picture), default value is 0.0
@@ -61,9 +74,9 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
             const SizedBox(width: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [ const Text(
-                "Al-Bakr Sanogo",
-                style: TextStyle(
+              children: [ Text(
+                user != null ? user!.client.toString(): "",
+                style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                     fontWeight: FontWeight.w600
@@ -71,7 +84,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               ),
               const SizedBox(height: 7,),
               Text(
-                "albakrsanogo@chapchap.ca",
+                user != null ? user!.emailClient.toString(): "",
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.white.withOpacity(.5),
@@ -140,10 +153,10 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.notifications_outlined),
-                title: const Text("Notifications"),
+                leading: const Icon(Icons.phone_outlined),
+                title: const Text("Contact"),
                 onTap: () {
-                  //Navigator.pushNamed(context, RoutesName.profile);
+                  Navigator.pushNamed(context, RoutesName.profile);
                 },
               ),
               ListTile(

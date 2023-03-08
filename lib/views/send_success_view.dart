@@ -1,6 +1,7 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class SendSuccessView extends StatelessWidget {
@@ -39,7 +40,7 @@ class SendSuccessView extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(30),
                   child: Column(
-                    children: [
+                    children: const [
                       Text("Montant à payer", style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold
@@ -53,7 +54,9 @@ class SendSuccessView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40,),
-                RoundedButton(title: "Voir l'historique", onPress: () {}),
+                RoundedButton(title: "Voir l'historique", onPress: () {
+                  Navigator.pushNamed(context, RoutesName.history);
+                }),
               ],
             ),
           )

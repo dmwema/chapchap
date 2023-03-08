@@ -1,7 +1,10 @@
 import 'package:chapchap/utils/routes/routes.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool? initScreen;
@@ -31,14 +34,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "QuickDep",
-      initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.login,
-      //initialRoute: RoutesName.onBoarding,
-      // initialRoute: RoutesName.login,
-      onGenerateRoute: Routes.generateRoute,
-      //home:  NetworkError(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ChapChap Transfert",
+        initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.login,
+        onGenerateRoute: Routes.generateRoute,
+        //home:  NetworkError(),
+      )
     );
   }
 }

@@ -15,9 +15,9 @@ class OnBoardingViewState extends State<OnBoardingView> {
   PageController _controller = PageController();
 
   final List<Widget> _pages = [
-    SliderPage(title: "Facile à utiliser", description: "consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam.", image: "assets/1.svg"),
-    SliderPage(title: "Envoyer Rapidement et sûrement", description: "consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/2.svg"),
-    SliderPage(title: "Commencez la belle aventure !", description: "*consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/3.svg", text_color: Colors.white,),
+    SliderPage(title: "Facile à utiliser", description: "consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam.", image: "assets/1.gif"),
+    SliderPage(title: "Envoyer Rapidement et sûrement", description: "consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/2.gif"),
+    SliderPage(title: "Commencez la belle aventure !", description: "*consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/3.gif", text_color: Colors.white,),
     // SliderPage(title: "Title 3", description: "En utilisant notre application, vous acceptez notre politique de confidentialité. tâchez de le lire avant de continuer", image: "assets/3.svg", text_color: Colors.white,),
   ];
 
@@ -60,7 +60,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
                       return Container(
                         height: 10,
                         width: (index == _currentPage) ? 30: 10,
-                        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+                        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: (index == _currentPage) ? dots_color: dots_color.withOpacity(0.5)
@@ -78,7 +78,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
                         );
                       } else {
                         // go Home
-                        Navigator.pushNamed(context, RoutesName.home);
+                        Navigator.pushNamed(context, RoutesName.login);
                       }
                     },
                     child: AnimatedContainer(

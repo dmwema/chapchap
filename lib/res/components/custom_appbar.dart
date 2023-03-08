@@ -1,15 +1,40 @@
+import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   final String? title;
   bool showBack;
   bool red;
-
   CustomAppBar({Key? key, this.title, this.showBack = false, this.red = false}) : super(key: key);
 
   @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  UserModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    UserViewModel().getUser().then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final String? title = widget.title;
+    bool showBack = widget.showBack;
+    bool red = widget.red;
+
     return AppBar(
       title: Row(
         children: [
@@ -24,8 +49,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               ),
             ),
           if (red)
-            SizedBox(width: 10,),
-          Text(title == null ? "" :title!, style: TextStyle(fontWeight: FontWeight.bold, color: !red ? Colors.black.withOpacity(.9): Colors.white.withOpacity(.9)),),
+            const SizedBox(width: 10,),
+          Text(title ?? "", style: TextStyle(fontWeight: FontWeight.bold, color: !red ? Colors.black.withOpacity(.9): Colors.white.withOpacity(.9)),),
         ],
       ),
       elevation: 1,
@@ -35,7 +60,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: red ? Icon(Icons.chevron_left_rounded, color: Colors.white, size: 40,): Image.asset("assets/back.png")
+              icon: red ? const Icon(Icons.chevron_left_rounded, color: Colors.white, size: 40,): Image.asset("assets/back.png")
           );
         }
         return IconButton(
@@ -48,11 +73,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       actions: [
         if (!red)
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: Colors.red,
-            backgroundImage: AssetImage("assets/avatart.jpeg"),
+            backgroundImage: user != null && user!.photoProfil  != null ? NetworkImage(user!.photoProfil.toString()) : null
           ),
-        SizedBox(width: 20,)
+        const SizedBox(width: 20,)
       ],
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -66,6 +91,4 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

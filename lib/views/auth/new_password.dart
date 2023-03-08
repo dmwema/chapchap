@@ -37,7 +37,7 @@ class NewPassword extends StatelessWidget {
               RoundedButton(
                 title: 'Enrégistrer',
                 loading: false, onPress: () {
-                Navigator.pushNamed(context, RoutesName.resetCodeSend);
+                Navigator.pushNamed(context, RoutesName.login);
               },
               ),
               const SizedBox(height: 20,),

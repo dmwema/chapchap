@@ -3,8 +3,39 @@ import 'package:flutter/material.dart';
 class CountrySelectModal extends StatelessWidget {
   const CountrySelectModal({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    List countries = [
+      {
+        "code": "cd",
+        "name": "République Démocratique du Congo",
+        "phone": "+243",
+        "device": "USD",
+        "rate": 1.2
+      },
+      {
+        "code": "ca",
+        "name": "Canada",
+        "phone": "+1",
+        "device": "CAD",
+        "rate": 1
+      },
+      {
+        "code": "ci",
+        "name": "République Démocratique du Congo",
+        "phone": "+225",
+        "device": "USD",
+        "rate": 1.4
+      },
+      {
+        "code": "bj",
+        "name": "Bénin",
+        "phone": "+229",
+        "device": "USD",
+        "rate": 1.7
+      },
+    ];
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       child: Column(
@@ -16,112 +47,17 @@ class CountrySelectModal extends StatelessWidget {
           SizedBox(height: 5,),
           Divider(),
           SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("République Démocratique du Congo", style: TextStyle(
-                fontSize: 14
-              ),)
-            ],
+          InkWell(
+            child: Row(
+              children: [
+                Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 20, height: 20, fit: BoxFit.contain,),
+                const SizedBox(width: 20,),
+                Text("République Démocratique du Congo", style: TextStyle(
+                    fontSize: 14
+                ),)
+              ],
+            ),
           ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/bj.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Bénin", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/bf.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Burkina Faso", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/cn.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Chine", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/ci.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Côte d'Ivoire", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/gn.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Guinée", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/ml.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Mali", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/sn.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Sénégal", style: TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
-          Divider(),
-          SizedBox(height: 5,),
-          Row(
-            children: [
-              Image.asset("packages/country_icons/icons/flags/png/tg.png", width: 20, height: 20, fit: BoxFit.contain,),
-              const SizedBox(width: 20,),
-              Text("Togo", style: const TextStyle(
-                  fontSize: 14
-              ),)
-            ],
-          ),
-          SizedBox(height: 5,),
         ],
       )
     );

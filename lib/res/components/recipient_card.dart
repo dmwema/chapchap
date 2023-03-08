@@ -15,7 +15,7 @@ class RecipientCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: AppColors.lightGrey,
-        border: Border.all(color: active! ? AppColors.primaryColor: Colors.white, width: active! ? 1: 0)
+        border: Border.all(color: active! ? AppColors.primaryColor: Colors.black54, width: active! ? 1: 1)
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

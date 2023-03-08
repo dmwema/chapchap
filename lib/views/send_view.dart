@@ -15,6 +15,66 @@ class SendView extends StatefulWidget {
 }
 
 class _SendViewState extends State<SendView> {
+
+  TextEditingController _fromController = TextEditingController();
+  TextEditingController _toController = TextEditingController();
+
+  @override
+  void dispose() {
+    _fromController.dispose();
+    _toController.dispose();
+    super.dispose();
+  }
+
+  void insert(content, TextEditingController controller) {
+    if (controller == _toController) {
+      content = content.floorToDouble();
+    } else {
+      content = content.ceilToDouble();
+    }
+    controller.value = TextEditingValue(
+      text: content.toString(),
+      selection: TextSelection.collapsed(offset: content.toString().length),
+    );
+  }
+
+  List countries = [
+    {
+      "code": "cd",
+      "name": "République Démocratique du Congo",
+      "phone": "+243",
+      "device": "USD",
+      "rate": 1.2
+    },
+    {
+      "code": "ca",
+      "name": "Canada",
+      "phone": "+1",
+      "device": "CAD",
+      "rate": 1
+    },
+    {
+      "code": "ci",
+      "name": "Côte d'ivoire",
+      "phone": "+225",
+      "device": "USD",
+      "rate": 1.4
+    },
+    {
+      "code": "bj",
+      "name": "Bénin",
+      "phone": "+229",
+      "device": "USD",
+      "rate": 1.7
+    },
+  ];
+  Map selectedCountry = {
+    "code": "cd",
+    "name": "République Démocratique du Congo",
+    "phone": "+243",
+    "device": "USD",
+    "rate": 1.2
+  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +115,15 @@ class _SendViewState extends State<SendView> {
                       ),),
                       const SizedBox(width: 10,),
                       Expanded(child: TextFormField(
+                        controller: _fromController,
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          if (value != "") {
+                            insert(double.parse(value) / selectedCountry["rate"], _toController);
+                          } else {
+                            insert("", _toController);
+                          }
+                        },
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "0.00",
@@ -87,12 +156,21 @@ class _SendViewState extends State<SendView> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const Text("USD", style: TextStyle(
+                            Text(selectedCountry["device"], style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                             ),),
                             const SizedBox(width: 10,),
                             Expanded(child: TextFormField(
+                              controller: _toController,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                if (value != "") {
+                                  insert(double.parse(value) * selectedCountry["rate"], _fromController);
+                                } else {
+                                  insert("", _fromController);
+                                }
+                              },
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "0.00",
@@ -110,7 +188,96 @@ class _SendViewState extends State<SendView> {
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) {
-                                  return const CountrySelectModal();
+                                  return Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text("Séléctionnez le pays de destination", style: TextStyle(
+                                              fontWeight: FontWeight.w600
+                                          ),),
+                                          const SizedBox(height: 5,),
+                                          const Divider(),
+                                          const SizedBox(height: 5,),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedCountry = {
+                                                  "code": "ci",
+                                                  "name": "Côte d'ivoire",
+                                                  "phone": "+225",
+                                                  "device": "EUR",
+                                                  "rate": 0.75
+                                                };
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Image.asset("packages/country_icons/icons/flags/png/ci.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                const SizedBox(width: 20,),
+                                                const Text("Côte d'ivoire", style: TextStyle(
+                                                    fontSize: 14
+                                                ),)
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5,),
+                                          const Divider(),
+                                          const SizedBox(height: 5,),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedCountry = {
+                                                  "code": "cd",
+                                                  "name": "République Démocratique du Congo",
+                                                  "phone": "+243",
+                                                  "device": "USD",
+                                                  "rate": 0.7
+                                                };
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                const SizedBox(width: 20,),
+                                                const Text("République Démocratique du Congo", style: TextStyle(
+                                                    fontSize: 14
+                                                ),)
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5,),
+                                          const Divider(),
+                                          const SizedBox(height: 5,),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedCountry =
+                                                {
+                                                  "code": "bj",
+                                                  "name": "Bénin",
+                                                  "phone": "+229",
+                                                  "device": "EUR",
+                                                  "rate": 0.7
+                                                };
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Image.asset("packages/country_icons/icons/flags/png/bj.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                const SizedBox(width: 20,),
+                                                const Text("Bénin", style: TextStyle(
+                                                    fontSize: 14
+                                                ),)
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                  );
                                 },
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
@@ -120,32 +287,39 @@ class _SendViewState extends State<SendView> {
 
                             );
                           },
-                          child: Row(
-                            children: [
-                              Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 15, height: 15, fit: BoxFit.contain),
-                              const SizedBox(width: 10,),
-                              const Text("République Démocratique du Congo", style: TextStyle(
-                                  fontSize: 12  ,
-                                  fontWeight: FontWeight.w500
-                              ),),
-                              const SizedBox(width: 10,),
-                              const Icon(Icons.arrow_drop_down, color: Colors.green,),
-                            ],
+                          child: Container(
+                            color: Colors.black.withOpacity(.05),
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Image.asset("packages/country_icons/icons/flags/png/${selectedCountry["code"]}.png", width: 15, height: 15, fit: BoxFit.contain),
+                                const SizedBox(width: 10,),
+                                Text(selectedCountry["name"], style: const TextStyle(
+                                    fontSize: 12  ,
+                                    fontWeight: FontWeight.w500
+                                ),),
+                                const SizedBox(width: 10,),
+                                const Expanded(child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(Icons.arrow_drop_down, color: Colors.green,),
+                                ))
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5,),
-                        Text("(1CAD = 0.9USD)", style: TextStyle(
+                        const SizedBox(height: 10,),
+                        Text("(1CAD = ${selectedCountry["rate"]}${selectedCountry["device"]})", style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                             color: Colors.black.withOpacity(.4)
                         ),),
-                        const SizedBox(height: 15,),
+                        const SizedBox(height: 10,),
                         Row(
                           children: [
                             const Text("Mode de reception", style: TextStyle(
                                 fontWeight: FontWeight.w500
                             ),),
-                            const SizedBox(width: 15,),
+                            const SizedBox(width: 10,),
                             InkWell(
                                 onTap: () {
                                   showModalBottomSheet(
@@ -204,18 +378,30 @@ class _SendViewState extends State<SendView> {
                     )
                   ],
                 ),
-                const SizedBox(height: 10,),
-                SizedBox(
-                  height: 100,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
+                const SizedBox(height: 15,),
+
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: const [
-                      RecipientCard(),
-                      RecipientCard(
-                        active: true,
-                      ),
-                      RecipientCard(),
-                      RecipientCard(),
+                      Text("Choisissez un bénéficiaire", style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),),
+                      SizedBox(width: 10,),
+                      Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(Icons.arrow_drop_down, size: 30,),
+                          )
+                      )
                     ],
                   ),
                 ),
@@ -226,11 +412,11 @@ class _SendViewState extends State<SendView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Nom", style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: Colors.black.withOpacity(.5)
                         ),),
                         const Text("Daniel Mwema", style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600
                         ),),
                       ],
@@ -240,11 +426,11 @@ class _SendViewState extends State<SendView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Téléphone", style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: Colors.black.withOpacity(.5)
                         ),),
                         const Text("+243 123 456 789", style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600
                         ),),
                       ],
