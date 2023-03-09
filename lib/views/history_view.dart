@@ -38,23 +38,23 @@ class _HistoryViewState extends State<HistoryView> {
                     color: AppColors.primaryColor.withOpacity(.3)
                 ),),
                 SizedBox(height: 5,),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
                 SizedBox(height: 5,),
                 Divider(),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
                 SizedBox(height: 20,),
                 Text("2021", style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryColor.withOpacity(.3)
                 ),),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
                 SizedBox(height: 5,),
                 Divider(),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
                 SizedBox(height: 5,),
                 Divider(),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
                 SizedBox(height: 20,),
                 Text("2020", style: TextStyle(
                     fontSize: 12,
@@ -62,7 +62,7 @@ class _HistoryViewState extends State<HistoryView> {
                     color: AppColors.primaryColor.withOpacity(.3)
                 ),),
                 SizedBox(height: 5,),
-                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: 250),
+                HistoryCard(date: "05 Oct 2022", sent: false, receiver: "Daniel Mwema (cd)", amount: "250"),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ class HistoryCard extends StatelessWidget {
   final String date;
   final bool sent;
   final String receiver;
-  final double amount;
+  final String amount;
 
   const HistoryCard({super.key, required this.date, required this.sent, required this.receiver, required this.amount});
 
@@ -12,7 +12,7 @@ class HistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width * 0.6 - 20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +23,7 @@ class HistoryCard extends StatelessWidget {
                 fontSize: 15,
               ),),
               const SizedBox(height: 7,),
-              Text("$date Envoi argent à $receiver", style: TextStyle(
+              Text("Envoi argent à $receiver", style: TextStyle(
                   color: Colors.black.withOpacity(.5),
                   fontSize: 12
               ),)
@@ -49,7 +49,7 @@ class HistoryCard extends StatelessWidget {
               ),)
             ],
           ),
-        )
+        ),
       ],
     );
   }

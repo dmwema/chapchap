@@ -50,7 +50,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
           top: MediaQuery.of(context).padding.top
       ),
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           children: [
             CircularProfileAvatar(
@@ -74,8 +74,8 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
             const SizedBox(width: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [ Text(
-                user != null ? user!.client.toString(): "",
+              children: [
+                Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "",
                 style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,

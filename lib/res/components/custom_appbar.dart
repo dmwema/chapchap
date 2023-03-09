@@ -85,7 +85,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           )
       ),
       backgroundColor: red ? AppColors.primaryColor: Colors.white,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
           color: Colors.white
       ),
     );
