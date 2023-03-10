@@ -1,5 +1,6 @@
 import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/model/demande_model.dart';
+import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -12,6 +13,9 @@ import 'package:chapchap/view_model/user_view_model.dart';
 class DemandesViewModel with ChangeNotifier{
   final _repository = DemandesRepository();
   ApiResponse<dynamic> demandeList = ApiResponse.loading();
+  ApiResponse<dynamic> beneficiairesList = ApiResponse.loading();
+  ApiResponse<dynamic> paysActifList = ApiResponse.loading();
+  ApiResponse<dynamic> paysDestination = ApiResponse.loading();
 
   bool _loading = false;
   bool get loading => _loading;
@@ -23,6 +27,20 @@ class DemandesViewModel with ChangeNotifier{
 
   setDemandeList (ApiResponse<dynamic> response) {
     demandeList = response;
+    notifyListeners();
+  }
+  setBeneficiairesList (ApiResponse<dynamic> response) {
+    beneficiairesList = response;
+    notifyListeners();
+  }
+
+  setPaysDestination (ApiResponse<PaysDestinationModel> response) {
+    paysDestination = response;
+    notifyListeners();
+  }
+
+  setPaysActif (ApiResponse<dynamic> response) {
+    paysActifList = response;
     notifyListeners();
   }
 
@@ -38,6 +56,59 @@ class DemandesViewModel with ChangeNotifier{
         }
       }
     }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> paysDestinations(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.paysDestination(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setPaysDestination(ApiResponse.completed(PaysDestinationModel.fromJson(value["data"])));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> beneficiaires(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.beneficiaires(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setBeneficiairesList(ApiResponse.completed(value["data"]));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> paysActifs(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.paysActif(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setPaysActif(ApiResponse.completed(value["data"]));
+        } else {
+          setPaysActif(ApiResponse.error(value['message']));
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      setPaysActif(ApiResponse.error(error.toString()));
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });

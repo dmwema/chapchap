@@ -1,11 +1,14 @@
+import 'package:chapchap/model/beneficiaire_model.dart';
+import 'package:chapchap/data/response/status.dart';
+import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
-import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/payment_methods_modal.dart';
-import 'package:chapchap/res/components/recipient_card.dart';
 import 'package:chapchap/res/components/send_bottom_modal.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SendView extends StatefulWidget {
   const SendView({Key? key}) : super(key: key);
@@ -18,6 +21,12 @@ class _SendViewState extends State<SendView> {
 
   TextEditingController _fromController = TextEditingController();
   TextEditingController _toController = TextEditingController();
+  DemandesViewModel demandesViewModel = DemandesViewModel();
+  PaysDestinationModel? paysDestinationModel;
+  Destination? selectedDesinaion;
+  ModeRetrait?  selectedModeRetrait;
+  List? beneficiaires;
+  BeneficiaireModel? selectedBeneficiaire;
 
   @override
   void dispose() {
@@ -26,451 +35,635 @@ class _SendViewState extends State<SendView> {
     super.dispose();
   }
 
-  void insert(content, TextEditingController controller) {
-    if (controller == _toController) {
-      content = content.floorToDouble();
-    } else {
-      content = content.ceilToDouble();
-    }
-    controller.value = TextEditingValue(
-      text: content.toString(),
-      selection: TextSelection.collapsed(offset: content.toString().length),
-    );
+  @override
+  void initState() {
+    super.initState();
+    demandesViewModel.paysDestinations([], context);
+    demandesViewModel.beneficiaires([], context);
   }
 
-  List countries = [
-    {
-      "code": "cd",
-      "name": "République Démocratique du Congo",
-      "phone": "+243",
-      "device": "USD",
-      "rate": 1.2
-    },
-    {
-      "code": "ca",
-      "name": "Canada",
-      "phone": "+1",
-      "device": "CAD",
-      "rate": 1
-    },
-    {
-      "code": "ci",
-      "name": "Côte d'ivoire",
-      "phone": "+225",
-      "device": "USD",
-      "rate": 1.4
-    },
-    {
-      "code": "bj",
-      "name": "Bénin",
-      "phone": "+229",
-      "device": "USD",
-      "rate": 1.7
-    },
-  ];
-  Map selectedCountry = {
-    "code": "cd",
-    "name": "République Démocratique du Congo",
-    "phone": "+243",
-    "device": "USD",
-    "rate": 1.2
-  };
+  void insert(content, TextEditingController controller) {
+    if (content.runtimeType.toString() == "double"){
+      if (controller == _toController) {
+        content = double.parse(content.toStringAsFixed(2));
+      } else {
+        content = double.parse(content.toStringAsFixed(2));
+      }
+      controller.value = TextEditingValue(
+        text: content.toString(),
+        selection: TextSelection.collapsed(offset: content.toString().length),
+      );
+    } else {
+      _fromController.clear();
+      _toController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
           title: "Envoi d'argent",
+          backUrl: RoutesName.home,
         ),
-        drawer: AppbarDrawer(),
+        drawer:
+        const AppbarDrawer(),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Montant à envoyer *", style: TextStyle(
-                    color: Colors.black.withOpacity(.6),
-                    fontSize: 13
-                ),),
-                const SizedBox(height: 10,),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image.asset("packages/country_icons/icons/flags/png/ca.png", width: 30, height: 15, fit: BoxFit.contain),
-                      const SizedBox(width: 10,),
-                      const Text("CAD", style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                      ),),
-                      const SizedBox(width: 10,),
-                      Expanded(child: TextFormField(
-                        controller: _fromController,
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          if (value != "") {
-                            insert(double.parse(value) / selectedCountry["rate"], _toController);
-                          } else {
-                            insert("", _toController);
+          child: ChangeNotifierProvider<DemandesViewModel>(
+              create: (BuildContext context) => demandesViewModel,
+              child: Consumer<DemandesViewModel>(
+                  builder: (context, value, _){
+                    switch (value.paysDestination.status) {
+                      case Status.LOADING:
+                        return Container(
+                          height: MediaQuery.of(context).size.height - 200,
+                          child: Center(
+                            child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                          ),
+                        );
+                      case Status.ERROR:
+                        return Center(
+                          child: Text(value.paysDestination.message.toString()),
+                        );
+                      default:
+                        paysDestinationModel = value.paysDestination.data!;
+                        selectedDesinaion ??= paysDestinationModel!.destination![0];
+                        if(selectedModeRetrait == null) {
+                          if (
+                          paysDestinationModel!.destination![0].modeRetrait != null
+                              && paysDestinationModel!.destination![0].modeRetrait!.isNotEmpty
+                          ) {
+                            selectedModeRetrait = paysDestinationModel!
+                                .destination![0]
+                                .modeRetrait![0];
                           }
-                        },
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "0.00",
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                        style: const TextStyle(
-                            fontSize: 18
-                        ),
-                      ))
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Text("Motant à recevoir *", style: TextStyle(
-                    color: Colors.black.withOpacity(.6),
-                    fontSize: 13
-                ),),
-                const SizedBox(height: 10,),
-                Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 5, bottom: 20, left: 20, right: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(selectedCountry["device"], style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),),
-                            const SizedBox(width: 10,),
-                            Expanded(child: TextFormField(
-                              controller: _toController,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                if (value != "") {
-                                  insert(double.parse(value) * selectedCountry["rate"], _fromController);
-                                } else {
-                                  insert("", _fromController);
-                                }
-                              },
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "0.00",
-                                  contentPadding: EdgeInsets.zero
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Montant à envoyer *", style: TextStyle(
+                                  color: Colors.black.withOpacity(.6),
+                                  fontSize: 13
+                              ),),
+                              const SizedBox(height: 10,),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    if (paysDestinationModel != null)
+                                    Image.asset("packages/country_icons/icons/flags/png/${paysDestinationModel!.codePaysSrce}.png", width: 30, height: 15, fit: BoxFit.contain),
+                                    const SizedBox(width: 10,),
+                                    if (paysDestinationModel != null)
+                                    Text(paysDestinationModel!.paysCodeMonnaieSrce.toString(), style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                    ),),
+                                    const SizedBox(width: 10,),
+                                    Expanded(child: TextFormField(
+                                      controller: _fromController,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        if (selectedDesinaion != null) {
+                                          if (value != "") {
+                                            insert(double.parse(value) * double.parse(selectedDesinaion!.rate.toString()), _toController);
+                                          } else {
+                                            insert("", _toController);
+                                          }
+                                        }
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "0.00",
+                                        contentPadding: EdgeInsets.zero,
+                                      ),
+                                      style: const TextStyle(
+                                          fontSize: 18
+                                      ),
+                                    ))
+                                  ],
+                                ),
                               ),
-                              style: const TextStyle(
-                                  fontSize: 18
-                              ),
-                            )),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
+                              const SizedBox(height: 20,),
+                              Text("Motant à recevoir *", style: TextStyle(
+                                  color: Colors.black.withOpacity(.6),
+                                  fontSize: 13
+                              ),),
+                              const SizedBox(height: 10,),
+                              Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.only(top: 5, bottom: 20, left: 20, right: 20),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          const Text("Séléctionnez le pays de destination", style: TextStyle(
-                                              fontWeight: FontWeight.w600
+                                          Text(selectedDesinaion!.paysCodeMonnaieDest.toString(), style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
                                           ),),
-                                          const SizedBox(height: 5,),
-                                          const Divider(),
-                                          const SizedBox(height: 5,),
+                                          const SizedBox(width: 10,),
+                                          Expanded(child: TextFormField(
+                                            controller: _toController,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              if (value != "") {
+                                                insert(double.parse(value) / double.parse(selectedDesinaion!.rate.toString()), _fromController);
+                                              } else {
+                                                insert("", _fromController);
+                                              }
+                                            },
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "0.00",
+                                                contentPadding: EdgeInsets.zero
+                                            ),
+                                            style: const TextStyle(
+                                                fontSize: 18
+                                            ),
+                                          )),
+                                        ],
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Container(
+                                                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      const Text("Séléctionnez le pays de destination", style: TextStyle(
+                                                          fontWeight: FontWeight.w600
+                                                      ),),
+                                                      const SizedBox(height: 20,),
+                                                      Expanded(child: ListView.builder(
+                                                        itemCount: paysDestinationModel!.destination!.length,
+                                                        itemBuilder: (context, index) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                selectedDesinaion = paysDestinationModel!.destination![index];
+                                                                if (
+                                                                  selectedDesinaion!.modeRetrait != null
+                                                                    && selectedDesinaion!.modeRetrait!.isNotEmpty
+                                                                ) {
+                                                                  selectedModeRetrait = selectedDesinaion!.modeRetrait![0];
+                                                                }
+                                                                _toController.clear();
+                                                                _fromController.clear();
+                                                              });
+                                                              Navigator.pop(context);
+                                                            },
+                                                            child: Container(
+                                                              padding: const EdgeInsets.all(10),
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Image.asset("packages/country_icons/icons/flags/png/${paysDestinationModel!.destination![index].codePaysDest}.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                                  const SizedBox(width: 20,),
+                                                                  Text(paysDestinationModel!.destination![index].paysDest.toString(), style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                    fontWeight: FontWeight.bold
+                                                                  ),)
+                                                                ],
+                                                              ),
+                                                            )
+                                                          );
+                                                        },
+                                                      ))
+                                                    ],
+                                                  )
+                                              );
+                                            },
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          color: Colors.black.withOpacity(.05),
+                                          padding: const EdgeInsets.all(10),
+                                          child: Row(
+                                            children: [
+                                              Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 15, height: 15, fit: BoxFit.contain),
+                                              const SizedBox(width: 10,),
+                                              Text(selectedDesinaion!.paysDest.toString(), style: const TextStyle(
+                                                  fontSize: 12  ,
+                                                  fontWeight: FontWeight.w500
+                                              ),),
+                                              const SizedBox(width: 10,),
+                                              const Expanded(child: Align(
+                                                alignment: Alignment.centerRight,
+                                                child: Icon(Icons.arrow_drop_down, color: Colors.green,),
+                                              ))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      Text("(1${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate}${selectedDesinaion!.paysCodeMonnaieDest})", style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.black.withOpacity(.4)
+                                      ),),
+                                      const SizedBox(height: 10,),
+                                      Row(
+                                        children: [
+                                          if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                                          const Text("Mode de reception", style: TextStyle(
+                                              fontWeight: FontWeight.w500
+                                          ),),
+                                          if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                                          const SizedBox(width: 10,),
+                                          if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
                                           InkWell(
                                             onTap: () {
-                                              setState(() {
-                                                selectedCountry = {
-                                                  "code": "ci",
-                                                  "name": "Côte d'ivoire",
-                                                  "phone": "+225",
-                                                  "device": "EUR",
-                                                  "rate": 0.75
-                                                };
-                                              });
-                                              Navigator.pop(context);
+                                              showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Container(
+                                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          const Text("Séléctionnez le mode de reception", style: TextStyle(
+                                                              fontWeight: FontWeight.w600
+                                                          ),),
+                                                          const SizedBox(height: 20,),
+                                                          Expanded(child: ListView.builder(
+                                                            itemCount: selectedDesinaion!.modeRetrait!.length,
+                                                            itemBuilder: (context, index) {
+                                                              return InkWell(
+                                                                  onTap: () {
+                                                                    setState(() {
+                                                                      selectedModeRetrait = selectedDesinaion!.modeRetrait![index];
+                                                                    });
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: Container(
+                                                                    padding: const EdgeInsets.all(10),
+                                                                    decoration: BoxDecoration(
+                                                                        border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
+                                                                    ),
+                                                                    child: Row(
+                                                                      mainAxisSize: MainAxisSize.max,
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      children: [
+                                                                        Text(selectedDesinaion!.modeRetrait![index].modeRetrait.toString(), style: const TextStyle(
+                                                                            fontSize: 14,
+                                                                            fontWeight: FontWeight.bold
+                                                                        ),textAlign: TextAlign.center,)
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                              );
+                                                            },
+                                                          ))
+                                                        ],
+                                                      )
+                                                  );
+                                                },
+                                                shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.vertical(
+                                                    top: Radius.circular(20),
+                                                  ),
+                                                ),
+
+                                              );
                                             },
                                             child: Row(
                                               children: [
-                                                Image.asset("packages/country_icons/icons/flags/png/ci.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                const SizedBox(width: 20,),
-                                                const Text("Côte d'ivoire", style: TextStyle(
-                                                    fontSize: 14
-                                                ),)
+                                                Text(selectedModeRetrait!.modeRetrait.toString()),
+                                                const SizedBox(width: 5,),
+                                                const Icon(Icons.arrow_drop_down, color: Colors.green,)
                                               ],
                                             ),
-                                          ),
-                                          const SizedBox(height: 5,),
-                                          const Divider(),
-                                          const SizedBox(height: 5,),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                selectedCountry = {
-                                                  "code": "cd",
-                                                  "name": "République Démocratique du Congo",
-                                                  "phone": "+243",
-                                                  "device": "USD",
-                                                  "rate": 0.7
-                                                };
-                                              });
-                                              Navigator.pop(context);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                const SizedBox(width: 20,),
-                                                const Text("République Démocratique du Congo", style: TextStyle(
-                                                    fontSize: 14
-                                                ),)
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5,),
-                                          const Divider(),
-                                          const SizedBox(height: 5,),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                selectedCountry =
-                                                {
-                                                  "code": "bj",
-                                                  "name": "Bénin",
-                                                  "phone": "+229",
-                                                  "device": "EUR",
-                                                  "rate": 0.7
-                                                };
-                                              });
-                                              Navigator.pop(context);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Image.asset("packages/country_icons/icons/flags/png/bj.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                const SizedBox(width: 20,),
-                                                const Text("Bénin", style: TextStyle(
-                                                    fontSize: 14
-                                                ),)
-                                              ],
-                                            ),
-                                          ),
+                                          )
                                         ],
                                       )
-                                  );
-                                },
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
-                                    ),
-                                ),
-
-                            );
-                          },
-                          child: Container(
-                            color: Colors.black.withOpacity(.05),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Image.asset("packages/country_icons/icons/flags/png/${selectedCountry["code"]}.png", width: 15, height: 15, fit: BoxFit.contain),
-                                const SizedBox(width: 10,),
-                                Text(selectedCountry["name"], style: const TextStyle(
-                                    fontSize: 12  ,
-                                    fontWeight: FontWeight.w500
-                                ),),
-                                const SizedBox(width: 10,),
-                                const Expanded(child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Icon(Icons.arrow_drop_down, color: Colors.green,),
-                                ))
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10,),
-                        Text("(1CAD = ${selectedCountry["rate"]}${selectedCountry["device"]})", style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            color: Colors.black.withOpacity(.4)
-                        ),),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            const Text("Mode de reception", style: TextStyle(
-                                fontWeight: FontWeight.w500
-                            ),),
-                            const SizedBox(width: 10,),
-                            InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return const PaymentMethodsModal();
-                                    },
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20),
+                                    ],
+                                  )
+                              ),
+                              if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              const SizedBox(height: 20,),
+                              if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              Text(selectedModeRetrait!.infosModeRetrait.toString(), style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: Colors.black.withOpacity(.5)
+                              ),),
+                              const SizedBox(height: 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Bénéficiaire *", style: TextStyle(
+                                      color: Colors.black.withOpacity(.6),
+                                      fontSize: 14
+                                  ),),
+                                  InkWell(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(.3),
+                                          borderRadius: BorderRadius.circular(20)
                                       ),
+                                      child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500
+                                      ),),
                                     ),
-
-                                  );
-                                },
-                              child: Row(
-                                children: const [
-                                  Text("Mpesa"),
-                                  SizedBox(width: 5,),
-                                  Icon(Icons.arrow_drop_down, color: Colors.green,)
+                                  )
                                 ],
                               ),
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                ),
-                const SizedBox(height: 20,),
-                Text("Le montant est déposé sur le portefeuille mobile de votre bénéficiaire.", style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13,
-                  color: Colors.black.withOpacity(.7)
-                ),),
-                const SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Bénéficiaire *", style: TextStyle(
-                        color: Colors.black.withOpacity(.6),
-                        fontSize: 14
-                    ),),
-                    InkWell(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(.3),
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500
-                        ),),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 15,),
+                              const SizedBox(height: 15,),
 
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Text("Choisissez un bénéficiaire", style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                      ),),
-                      SizedBox(width: 10,),
-                      Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Icon(Icons.arrow_drop_down, size: 30,),
-                          )
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Nom", style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.black.withOpacity(.5)
-                        ),),
-                        const Text("Daniel Mwema", style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600
-                        ),),
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Téléphone", style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.black.withOpacity(.5)
-                        ),),
-                        const Text("+243 123 456 789", style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600
-                        ),),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30,),
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) {
-                        return const SendBottomModal();
-                      },
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
+                              InkWell(
+                                onTap: () {
+                                  if (beneficiaires == null) {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return ChangeNotifierProvider<DemandesViewModel>(
+                                            create: (BuildContext context) => demandesViewModel,
+                                            child: Consumer<DemandesViewModel>(
+                                                builder: (context, value, _){
+                                                  switch (value.beneficiairesList.status) {
+                                                    case Status.LOADING:
+                                                      return Expanded(child: Center(
+                                                        child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                                                      ));
+                                                    case Status.ERROR:
+                                                      return Center(
+                                                        child: Text(value.beneficiairesList.message.toString()),
+                                                      );
+                                                    default:
+                                                      beneficiaires = value.beneficiairesList.data!;
+                                                      if (beneficiaires!.isEmpty) {
+                                                        return Center(
+                                                          child: Container(
+                                                            padding: const EdgeInsets.symmetric(vertical: 20),
+                                                            child: const Text("Aucune bénéficiaire trouvée"),
+                                                          ),
+                                                        );
+                                                      }
+                                                      return Container(
+                                                        padding: const EdgeInsets.all(20),
+                                                        child: Column(
+                                                          children: [
+                                                            const Text("Séléctionnez un bénéficiaire", style: TextStyle(
+                                                                fontWeight: FontWeight.w600
+                                                            ),),
+                                                            const SizedBox(height: 20,),
+                                                            Expanded(
+                                                              child: ListView.builder(
+                                                                itemCount: beneficiaires!.length,
+                                                                itemBuilder: (context, index) {
+                                                                  BeneficiaireModel beneficiaire = BeneficiaireModel.fromJson(beneficiaires![index]);
+                                                                  bool last = index == beneficiaires!.length - 1;
 
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Center(
-                      child: Text("Envoyer", style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16, color: Colors.white
-                      ),),
-                    )
-                  ),
-                )
-              ],
-            ),
-          ),
+                                                                  return InkWell(
+                                                                    onTap: () {
+                                                                      setState(() {
+                                                                        selectedBeneficiaire = beneficiaire;
+                                                                      });
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    child: Container(
+                                                                      padding: const EdgeInsets.all(10),
+                                                                      margin: const EdgeInsets.only(bottom: 10),
+                                                                      decoration: BoxDecoration(
+                                                                          border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
+                                                                          borderRadius: BorderRadius.circular(5)
+                                                                      ),
+                                                                      child: Column(
+                                                                          children: [
+                                                                            Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
+                                                                            const SizedBox(height: 10,),
+                                                                            Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
+                                                                                fontWeight: FontWeight.w600,
+                                                                                fontSize: 16
+                                                                            ),),
+                                                                            const SizedBox(height: 10,),
+                                                                            Text(beneficiaire.telBeneficiaire.toString()),
+                                                                          ]
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                  }
+                                                })
+                                        );
+                                      },
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        if (beneficiaires!.isEmpty) {
+                                          return Center(
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 20),
+                                              child: const Text("Aucune bénéficiaire trouvée"),
+                                            ),
+                                          );
+                                        }
+                                        return Container(
+                                          padding: const EdgeInsets.all(20),
+                                          child: Column(
+                                            children: [
+                                              const Text("Séléctionnez un bénéficiaire", style: TextStyle(
+                                                  fontWeight: FontWeight.w600
+                                              ),),
+                                              const SizedBox(height: 20,),
+                                              Expanded(
+                                                child: ListView.builder(
+                                                  itemCount: beneficiaires!.length,
+                                                  itemBuilder: (context, index) {
+                                                    BeneficiaireModel beneficiaire = BeneficiaireModel.fromJson(beneficiaires![index]);
+                                                    bool last = index == beneficiaires!.length - 1;
+
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectedBeneficiaire = beneficiaire;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        padding: const EdgeInsets.all(10),
+                                                        margin: const EdgeInsets.only(bottom: 10),
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
+                                                            borderRadius: BorderRadius.circular(5)
+                                                        ),
+                                                        child: Column(
+                                                            children: [
+                                                              Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
+                                                              const SizedBox(height: 10,),
+                                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontSize: 16
+                                                              ),),
+                                                              const SizedBox(height: 10,),
+                                                              Text(beneficiaire.telBeneficiaire.toString()),
+                                                            ]
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: const [
+                                      Text("Choisissez un bénéficiaire", style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                      ),),
+                                      SizedBox(width: 10,),
+                                      Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Icon(Icons.arrow_drop_down, size: 30,),
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              if (selectedBeneficiaire != null)
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Nom", style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black.withOpacity(.5)
+                                      ),),
+                                      Row(
+                                        children: [
+                                          Image.asset("packages/country_icons/icons/flags/png/${selectedBeneficiaire!.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
+                                          const SizedBox(width: 10,),
+                                          Text(selectedBeneficiaire!.nomBeneficiaire.toString(), style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600
+                                          ),),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  const Divider(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Téléphone", style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black.withOpacity(.5)
+                                      ),),
+                                      Text(selectedBeneficiaire!.telBeneficiaire.toString(), style: const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600
+                                      ),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 30,),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (context) {
+                                        return const SendBottomModal();
+                                      },
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+
+                                    );
+                                  },
+                                  child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: const Center(
+                                        child: Text("Envoyer", style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16, color: Colors.white
+                                        ),),
+                                      )
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                    }
+                  })
+          )
         )
     );
   }

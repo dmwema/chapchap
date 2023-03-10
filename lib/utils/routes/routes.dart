@@ -2,8 +2,10 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/new_password.dart';
 import 'package:chapchap/views/auth/password_reset_view.dart';
+import 'package:chapchap/views/auth/phone_verification_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
+import 'package:chapchap/views/auth/splash_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
@@ -97,6 +99,8 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
+      case RoutesName.splash:
+        return MaterialPageRoute(builder: (BuildContext context) => const SplashView());
       case RoutesName.sendSuccess:
         return PageTransition(
             child: SendSuccessView(),
@@ -106,6 +110,12 @@ class Routes {
       case RoutesName.newPassword:
         return PageTransition(
             child: NewPassword(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.phoneVerificatiob:
+        return PageTransition(
+            child: PhoneVerification(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

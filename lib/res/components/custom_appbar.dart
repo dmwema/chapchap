@@ -7,7 +7,8 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   final String? title;
   bool showBack;
   bool red;
-  CustomAppBar({Key? key, this.title, this.showBack = false, this.red = false}) : super(key: key);
+  String? backUrl;
+  CustomAppBar({Key? key, this.title, this.showBack = false, this.red = false, this.backUrl}) : super(key: key);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -58,7 +59,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
         if (showBack) {
           return IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                if (widget.backUrl != null)  {
+                  Navigator.pushNamed(context, widget.backUrl.toString());
+                } else {
+                  Navigator.pop(context);
+                  }
               },
               icon: red ? const Icon(Icons.chevron_left_rounded, color: Colors.white, size: 40,): Image.asset("assets/back.png")
           );
@@ -72,10 +77,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
       },
       ),
       actions: [
-        if (!red)
+        if (!red && user != null && user!.photoProfil  != null)
           CircleAvatar(
             backgroundColor: Colors.red,
-            backgroundImage: user != null && user!.photoProfil  != null ? NetworkImage(user!.photoProfil.toString()) : null
+            backgroundImage: user != null && user!.photoProfil  != null ? NetworkImage(user!.photoProfil.toString()) : null,
           ),
         const SizedBox(width: 20,)
       ],

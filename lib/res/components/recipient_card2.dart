@@ -43,10 +43,7 @@ class RecipientCard2 extends StatelessWidget {
                 fontWeight: FontWeight.w600
               ),),
               const SizedBox(height: 5,),
-              Text(address, style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: Colors.black.withOpacity(.6)
-              ),),
+              Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 15, fit: BoxFit.contain),
               const SizedBox(height: 5,),
               Text(phone, style: const TextStyle(
                 fontSize: 11,fontWeight: FontWeight.w500

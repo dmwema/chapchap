@@ -163,7 +163,11 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 leading: const Icon(Icons.logout_outlined),
                 title: const Text("Se deconnecter"),
                 onTap: () {
-
+                  UserViewModel().remove().then((value) {
+                    if (value) {
+                      Navigator.pushNamed(context, RoutesName.login);
+                    }
+                  });
                 },
               ),
             ],

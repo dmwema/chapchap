@@ -65,8 +65,6 @@ class NetworkApiService extends BaseApiServices {
         body: jsonEncode(data),
         headers: auth? header_auth: header,
       ).timeout(const Duration(seconds: 120));
-
-      print(response.body);
       responseJson = returnResponse(response, context);
 
     } on SocketException {

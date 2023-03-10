@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "ChapChap Transfert",
-        initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.login,
+        initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
         //home:  NetworkError(),
       )

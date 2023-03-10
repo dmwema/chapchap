@@ -68,6 +68,7 @@ dependencies:
   dbus: ^0.7.8
   xml: ^6.2.2
   image: ^4.0.15
+  country_icons: ^2.0.2
 
 flutter_native_splash:
   color: "#ee2829"

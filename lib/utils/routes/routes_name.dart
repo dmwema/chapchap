@@ -7,6 +7,7 @@ class RoutesName {
   static const String recipeints = 'recipeints_screen';
   static const String profile = 'profile_screen';
 
+  static const String splash = 'splash_screen';
   static const String login = 'login_screen';
   static const String register = 'register_screen';
   static const String passwordReset = 'password_reset_screen';
@@ -17,4 +18,6 @@ class RoutesName {
   static const String invoiceDetail = 'invoice_detail_screen';
   static const String pay = 'pay_screen';
   static const String sendSuccess = 'send_success_screen';
+
+  static const String phoneVerificatiob = 'phone_verification';
 }

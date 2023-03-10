@@ -1,11 +1,6 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
-import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/res/components/payment_methods_modal.dart';
-import 'package:chapchap/res/components/recipient_card.dart';
-import 'package:chapchap/res/components/send_bottom_modal.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeView extends StatefulWidget {

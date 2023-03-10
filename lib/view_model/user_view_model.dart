@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserViewModel with ChangeNotifier {
   Future<bool> saveUser(UserModel user) async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setInt('id', user.idClient!.toInt());
+    sp.setString('nomClient', user.nomClient!.toString());
     sp.setString('token', user.token.toString());
     notifyListeners();
     return true;

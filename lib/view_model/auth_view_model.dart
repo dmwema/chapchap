@@ -43,19 +43,35 @@ class AuthViewModel with ChangeNotifier{
     setLoading(true);
     _repository.registerApi(data, context: context).then((value) {
       setLoading(false);
-
-      if (value["success"] == true) {
-        var userJson = value;
-        UserModel user = UserModel.fromJson(userJson);
-
-        UserViewModel().saveUser(user).then((value) {
-          Utils.toastMessage("Inscription efféctuée avec succès");
-          Navigator.pushNamed(context, RoutesName.home);
-        });
-      } else {
-        Utils.flushBarErrorMessage(value['message'], context);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          UserModel user = UserModel();
+          user.token = value['token'];
+          user.nomClient = value['message'];
+          UserViewModel().saveUser(user).then((value) {
+            Navigator.pushNamed(context, RoutesName.phoneVerificatiob);
+          });
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
       }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
 
+  Future<void> phoneVerificationConfirm(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _repository.phoneVerificationConfirm(data, context: context).then((value) {
+      setLoading(false);
+      if (value["error"] != true){
+        Utils.toastMessage(value["message"]);
+        Navigator.pushNamed(context, RoutesName.login);
+      } else {
+        Utils.flushBarErrorMessage(value["message"], context);
+      }
 
     }).onError((error, stackTrace) {
       Utils.flushBarErrorMessage(error.toString(), context);
