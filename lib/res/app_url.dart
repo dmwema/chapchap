@@ -7,6 +7,7 @@ class AppUrl {
   static var phoneVerificatiobEndPoint = '$baseUrl/confirm_number_phone';
   static var myDemandesEndPoint = '$baseUrl/my_demandes';
   static var paysDestinationsEndPoint = '$baseUrl/my_destinations';
+  static var allPaysDestinationsEndPoint = '$baseUrl/pays_destination';
   static var beneficiairesEndPoint = '$baseUrl/my_beneficiaires';
   static var paysActifsEndPoint = '$baseUrl/get_pays';
 }

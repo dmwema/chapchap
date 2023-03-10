@@ -21,7 +21,7 @@ class SendSuccessView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40,),
-                Icon(Icons.check_circle_outlined, color: Colors.green, size: 80,),
+                const Icon(Icons.check_circle_outlined, color: Colors.green, size: 80,),
                 SizedBox(height: 20,),
                 Text("Transaction effectuée avec succès", style: TextStyle(
                   color: Colors.green,

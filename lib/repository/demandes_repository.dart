@@ -26,6 +26,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> allPaysDestination (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.allPaysDestinationsEndPoint}/${data["id"]}", data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> beneficiaires (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.beneficiairesEndPoint , data, context: context, auth: true);

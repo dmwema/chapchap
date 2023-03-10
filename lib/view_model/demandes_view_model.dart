@@ -1,14 +1,9 @@
 import 'package:chapchap/data/response/api_response.dart';
-import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/repository/auth_repository.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
 
 class DemandesViewModel with ChangeNotifier{
   final _repository = DemandesRepository();
@@ -16,6 +11,7 @@ class DemandesViewModel with ChangeNotifier{
   ApiResponse<dynamic> beneficiairesList = ApiResponse.loading();
   ApiResponse<dynamic> paysActifList = ApiResponse.loading();
   ApiResponse<dynamic> paysDestination = ApiResponse.loading();
+  ApiResponse<dynamic> allPaysDestination = ApiResponse.loading();
 
   bool _loading = false;
   bool get loading => _loading;
@@ -36,6 +32,11 @@ class DemandesViewModel with ChangeNotifier{
 
   setPaysDestination (ApiResponse<PaysDestinationModel> response) {
     paysDestination = response;
+    notifyListeners();
+  }
+
+  setAllPaysDestination (ApiResponse<PaysDestinationModel> response) {
+    allPaysDestination = response;
     notifyListeners();
   }
 
@@ -68,6 +69,23 @@ class DemandesViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           setPaysDestination(ApiResponse.completed(PaysDestinationModel.fromJson(value["data"])));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> allPaysDestinations(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.allPaysDestination(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setAllPaysDestination(ApiResponse.completed(PaysDestinationModel.fromJson(value["data"])));
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
