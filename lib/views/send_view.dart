@@ -2,6 +2,7 @@ import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/NewBeneficiaireForm.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/send_bottom_modal.dart';
@@ -391,10 +392,32 @@ class _SendViewState extends State<SendView> {
                                           color: Colors.grey.withOpacity(.3),
                                           borderRadius: BorderRadius.circular(20)
                                       ),
-                                      child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500
-                                      ),),
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            beneficiaires = null;
+                                          });
+                                          showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return NewBeneficiaireForm(
+                                                destinations: paysDestinationModel!.destination!,
+                                              );
+                                            },
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+
+                                          );
+                                        },
+                                        child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500
+                                        ),),
+                                      )
                                     ),
                                   )
                                 ],
@@ -404,11 +427,13 @@ class _SendViewState extends State<SendView> {
                               InkWell(
                                 onTap: () {
                                   if (beneficiaires == null) {
+                                    DemandesViewModel demandesViewModel2 = DemandesViewModel();
+                                    demandesViewModel2.beneficiaires([], context);
                                     showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
                                         return ChangeNotifierProvider<DemandesViewModel>(
-                                            create: (BuildContext context) => demandesViewModel,
+                                            create: (BuildContext context) => demandesViewModel2,
                                             child: Consumer<DemandesViewModel>(
                                                 builder: (context, value, _){
                                                   switch (value.beneficiairesList.status) {

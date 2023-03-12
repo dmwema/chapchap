@@ -18,6 +18,7 @@ class RoutesName {
   static const String invoiceDetail = 'invoice_detail_screen';
   static const String pay = 'pay_screen';
   static const String sendSuccess = 'send_success_screen';
+  static const String contactView = 'contact_view';
 
   static const String phoneVerificatiob = 'phone_verification';
 }

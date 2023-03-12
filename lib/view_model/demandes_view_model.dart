@@ -1,6 +1,7 @@
 import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:chapchap/utils/utils.dart';
@@ -130,6 +131,25 @@ class DemandesViewModel with ChangeNotifier{
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
+  }
+
+  Future<bool> newBeneficiaire(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.newBeneficiaire(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.flushBarErrorMessage("Bénéficiaire enrégistré avec succès", context);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      setPaysActif(ApiResponse.error(error.toString()));
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return true;
   }
 
 }

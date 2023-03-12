@@ -6,6 +6,7 @@ import 'package:chapchap/views/auth/phone_verification_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
+import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
@@ -116,6 +117,12 @@ class Routes {
       case RoutesName.phoneVerificatiob:
         return PageTransition(
             child: PhoneVerification(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.contactView:
+        return PageTransition(
+            child: ContactView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

@@ -1,6 +1,7 @@
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
@@ -78,9 +79,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ),
       actions: [
         if (!red && user != null && user!.photoProfil  != null)
-          CircleAvatar(
-            backgroundColor: Colors.red,
-            backgroundImage: user != null && user!.photoProfil  != null ? NetworkImage(user!.photoProfil.toString()) : null,
+          SizedBox(
+            height: 40,
+            width: 40,
+            child:
+            CircularProfileAvatar(
+              user!.photoProfil.toString(),
+              radius: 30, // sets radius, default 50.0
+              imageFit: BoxFit.contain,
+              elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
+              foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+              cacheImage: true, // allow widget to cache image against provided url
+              showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+            ),
           ),
         const SizedBox(width: 20,)
       ],

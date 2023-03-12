@@ -10,4 +10,5 @@ class AppUrl {
   static var allPaysDestinationsEndPoint = '$baseUrl/pays_destination';
   static var beneficiairesEndPoint = '$baseUrl/my_beneficiaires';
   static var paysActifsEndPoint = '$baseUrl/get_pays';
+  static var newBeneficiaire = '$baseUrl/creat_beneficiaire';
 }

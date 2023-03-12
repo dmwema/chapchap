@@ -53,4 +53,13 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> newBeneficiaire (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.newBeneficiaire, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
 }

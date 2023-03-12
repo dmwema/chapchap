@@ -156,7 +156,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 leading: const Icon(Icons.phone_outlined),
                 title: const Text("Contact"),
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.profile);
+                  Navigator.pushNamed(context, RoutesName.contactView);
                 },
               ),
               ListTile(
