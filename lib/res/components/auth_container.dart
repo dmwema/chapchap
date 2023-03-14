@@ -24,7 +24,7 @@ class AuthContainer extends StatelessWidget {
                   Container(
                     width: 100,
                     height: 100,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("assets/logo.png"),
                             fit: BoxFit.contain

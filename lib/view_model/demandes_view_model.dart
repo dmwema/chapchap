@@ -1,6 +1,10 @@
 import 'package:chapchap/data/response/api_response.dart';
+import 'package:chapchap/model/beneficiaire_model.dart';
+import 'package:chapchap/model/demande_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
+import 'package:chapchap/res/components/screen_argument.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +17,8 @@ class DemandesViewModel with ChangeNotifier{
   ApiResponse<dynamic> paysActifList = ApiResponse.loading();
   ApiResponse<dynamic> paysDestination = ApiResponse.loading();
   ApiResponse<dynamic> allPaysDestination = ApiResponse.loading();
+  ApiResponse<BeneficiaireModel> beneficiaireModel = ApiResponse.loading();
+
 
   bool _loading = false;
   bool get loading => _loading;
@@ -26,6 +32,7 @@ class DemandesViewModel with ChangeNotifier{
     demandeList = response;
     notifyListeners();
   }
+
   setBeneficiairesList (ApiResponse<dynamic> response) {
     beneficiairesList = response;
     notifyListeners();
@@ -38,6 +45,11 @@ class DemandesViewModel with ChangeNotifier{
 
   setAllPaysDestination (ApiResponse<PaysDestinationModel> response) {
     allPaysDestination = response;
+    notifyListeners();
+  }
+
+  setBeneficiaireModel (ApiResponse<BeneficiaireModel> response) {
+    beneficiaireModel = response;
     notifyListeners();
   }
 
@@ -139,7 +151,7 @@ class DemandesViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          Utils.flushBarErrorMessage("Bénéficiaire enrégistré avec succès", context);
+          Utils.toastMessage("Bénéficiaire enrégistré avec succès");
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
@@ -150,6 +162,40 @@ class DemandesViewModel with ChangeNotifier{
       setLoading(false);
     });
     return true;
+  }
+
+  Future<dynamic> transfert(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.transfert(data, context: context).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          final SharedPreferences sp = await SharedPreferences.getInstance();
+          Utils.toastMessage("Demande enrégistrée avec succès");
+          Navigator.pushNamed(context, RoutesName.webViewPage, arguments: ScreenArguments(value["data"]['lien_paiement'].toString().replaceAll("dev.", ""), value["data"]['lien_paiement'].toString().replaceAll("dev.", "")));
+          return value;
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
+    return true;
+  }
+
+  Future<void> beneficiaireInfo(int id, BuildContext context) async {
+    setLoading(true);
+    await _repository.beneficiaireInfo(id, context: context).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setBeneficiaireModel(ApiResponse.completed(
+            BeneficiaireModel.fromJson(value["data"])
+          ));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
   }
 
 }

@@ -1,20 +1,31 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/screen_argument.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
 
-class SendBottomModal extends StatelessWidget {
-  const SendBottomModal({Key? key}) : super(key: key);
+class SendBottomModal extends StatefulWidget {
+  Map data;
+  SendBottomModal({Key? key, required this.data}) : super(key: key);
 
+  @override
+  State<SendBottomModal> createState() => _SendBottomModalState();
+}
+
+class _SendBottomModalState extends State<SendBottomModal> {
+  DemandesViewModel demandesViewModel = DemandesViewModel();
+  bool loading = false;
+  final TextEditingController _promoContoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
               color: AppColors.primaryColor,
-            borderRadius: BorderRadius.only(topLeft: const Radius.circular(20), topRight: const Radius.circular(20))
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
           ),
           width: double.infinity,
           child: const Center(
@@ -25,40 +36,40 @@ class SendBottomModal extends StatelessWidget {
           )
         ),
         Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              SizedBox(height: 5,),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Montant", style: TextStyle(
                     color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("250.00 CAD", style: TextStyle(
+                  Text(widget.data["montant_srce"] + " " + widget.data['source']!.paysCodeMonnaieSrce.toString(), style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 5,),
-              Divider(),
-              SizedBox(height: 5,),
+              const SizedBox(height: 5,),
+              const Divider(),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Frais d'envoi", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("0.00 CAD", style: TextStyle(
+                  Text("0.00 ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 color: Colors.blueGrey.withOpacity(.2),
                 child:
                 Row(
@@ -68,7 +79,7 @@ class SendBottomModal extends StatelessWidget {
                         color: Colors.black.withOpacity(.8),
                       fontWeight: FontWeight.w500
                     ),),
-                    const Text("250.00CAD", style: TextStyle(
+                    Text(widget.data["montant_srce"] + " " + widget.data['source']!.paysCodeMonnaieSrce.toString(), style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600
                     ),)
@@ -102,6 +113,7 @@ class SendBottomModal extends StatelessWidget {
                           ),
                         ),
                       ),
+                      controller: _promoContoller,
                       style: const TextStyle(
                           fontSize: 18
                       ),
@@ -132,82 +144,86 @@ class SendBottomModal extends StatelessWidget {
                   Text("Source", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("Canada", style: TextStyle(
+                  Text(widget.data['source']!.paysSrce.toString(), style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 5,),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Destination", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("Congo", style: TextStyle(
+                  Text(widget.data['destination']!.paysDest.toString(), style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 5,),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Bénéficiaire", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("Daniel Mwema", style: TextStyle(
+                  Text(widget.data['beneficiaire']!.nomBeneficiaire.toString(), style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 5,),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Téléphone", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("+243 123 456 789", style: TextStyle(
+                  Text(widget.data['beneficiaire']!.telBeneficiaire.toString(), style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 5,),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Montant bénéficiaire", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("300 USD", style: TextStyle(
+                  Text(widget.data['montant_dest'] + " " + widget.data['destination']!.paysCodeMonnaieDest.toString(), style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 5,),
+              if (widget.data['mode_retrait'] != null)
+              const SizedBox(height: 10,),
+              if (widget.data['mode_retrait'] != null)
+              const Divider(),
+              if (widget.data['mode_retrait'] != null)
+              const SizedBox(height: 5,),
+              if (widget.data['mode_retrait'] != null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Mode de retrait", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  const Text("M-Pesa", style: TextStyle(
+                  Text(widget.data['mode_retrait'], style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
@@ -235,7 +251,26 @@ class SendBottomModal extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, RoutesName.sendSuccess);
+                      if (!loading) {
+                        setState(() {
+                          loading = true;
+                        });
+                        Map data2 = {};
+
+                        widget.data.forEach((key, value) {
+                          if (key != 'source' && key != 'mode_retrait' && key != 'destination') {
+                            data2[key] = value;
+                          }
+                        });
+                        data2['codePromo'] = _promoContoller.text;
+                        demandesViewModel.transfert(data2, context).then((value) {
+                          setState(() {
+                            loading = false;
+                          });
+                        });
+                      }
+
+                      //Navigator.pushNamed(context, RoutesName.sendSuccess);
                     },
                     child: Container(
                         width: (MediaQuery.of(context).size.width - 40) * 0.5,
@@ -243,12 +278,12 @@ class SendBottomModal extends StatelessWidget {
                           borderRadius: const BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
                           color: Colors.black.withOpacity(.9),
                         ),
-                        padding: const EdgeInsets.only(top: 16, bottom: 16.6),
-                        child: const Center(
-                          child: Text("Confirmer", style: TextStyle(
+                        padding: loading ? const EdgeInsets.only(top: 9.7, bottom: 9.7) : const EdgeInsets.only(top: 16, bottom: 16.6),
+                        child: Center(
+                          child: !loading ? const Text("Confirmer", style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white
-                          ),),
+                          ),): Image.asset("assets/loader_btn.gif", width: 30),
                         )
                     ),
                   )

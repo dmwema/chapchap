@@ -1,6 +1,7 @@
 class BeneficiaireModel {
   int? idPays;
   String? codePays;
+  String? paysMonnaie;
   int? idBeneficiaire;
   String? emailBeneficiaire;
   String? nomBeneficiaire;
@@ -15,6 +16,7 @@ class BeneficiaireModel {
   BeneficiaireModel(
       {this.idPays,
         this.codePays,
+        this.paysMonnaie,
         this.idBeneficiaire,
         this.emailBeneficiaire,
         this.nomBeneficiaire,
@@ -29,6 +31,7 @@ class BeneficiaireModel {
   BeneficiaireModel.fromJson(Map<String, dynamic> json) {
     idPays = json['idPays'];
     codePays = json['code_pays'];
+    paysMonnaie = json['pays_monnaie'];
     idBeneficiaire = json['idBeneficiaire'];
     emailBeneficiaire = json['emailBeneficiaire'];
     nomBeneficiaire = json['nomBeneficiaire'];
@@ -45,6 +48,7 @@ class BeneficiaireModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['idPays'] = this.idPays;
     data['code_pays'] = this.codePays;
+    data['pays_monnaie'] = this.paysMonnaie;
     data['idBeneficiaire'] = this.idBeneficiaire;
     data['emailBeneficiaire'] = this.emailBeneficiaire;
     data['nomBeneficiaire'] = this.nomBeneficiaire;

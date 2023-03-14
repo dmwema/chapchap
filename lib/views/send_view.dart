@@ -5,8 +5,10 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/NewBeneficiaireForm.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/res/components/send_bottom_modal.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -79,7 +81,7 @@ class _SendViewState extends State<SendView> {
                   builder: (context, value, _){
                     switch (value.paysDestination.status) {
                       case Status.LOADING:
-                        return Container(
+                        return SizedBox(
                           height: MediaQuery.of(context).size.height - 200,
                           child: Center(
                             child: CircularProgressIndicator(color: AppColors.primaryColor,),
@@ -103,7 +105,12 @@ class _SendViewState extends State<SendView> {
                           }
                         }
                         return Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                            top: 20,
+                            left: 20,
+                            right: 20
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -223,6 +230,7 @@ class _SendViewState extends State<SendView> {
                                                             onTap: () {
                                                               setState(() {
                                                                 selectedDesinaion = paysDestinationModel!.destination![index];
+                                                                beneficiaires = null;
                                                                 if (
                                                                   selectedDesinaion!.modeRetrait != null
                                                                     && selectedDesinaion!.modeRetrait!.isNotEmpty
@@ -386,38 +394,41 @@ class _SendViewState extends State<SendView> {
                                       fontSize: 14
                                   ),),
                                   InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        beneficiaires = null;
+                                      });
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context).viewInsets.bottom),
+                                            child: NewBeneficiaireForm(
+                                              destinations: paysDestinationModel!.destination!,
+                                              parentCotext: context,
+                                            ),
+                                          );
+                                        },
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20),
+                                          ),
+                                        ),
+
+                                      );
+                                    },
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                       decoration: BoxDecoration(
                                           color: Colors.grey.withOpacity(.3),
                                           borderRadius: BorderRadius.circular(20)
                                       ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            beneficiaires = null;
-                                          });
-                                          showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (context) {
-                                              return NewBeneficiaireForm(
-                                                destinations: paysDestinationModel!.destination!,
-                                              );
-                                            },
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(20),
-                                              ),
-                                            ),
-
-                                          );
-                                        },
-                                        child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500
-                                        ),),
-                                      )
+                                      child: const Text("+ Ajouter un bénéficiaire", style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500
+                                      ),),
                                     ),
                                   )
                                 ],
@@ -438,15 +449,23 @@ class _SendViewState extends State<SendView> {
                                                 builder: (context, value, _){
                                                   switch (value.beneficiairesList.status) {
                                                     case Status.LOADING:
-                                                      return Expanded(child: Center(
-                                                        child: CircularProgressIndicator(color: AppColors.primaryColor,),
-                                                      ));
+                                                      return Column(
+                                                        children: [Expanded(child: Center(
+                                                          child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                                                        ))],
+                                                      );
                                                     case Status.ERROR:
                                                       return Center(
                                                         child: Text(value.beneficiairesList.message.toString()),
                                                       );
                                                     default:
-                                                      beneficiaires = value.beneficiairesList.data!;
+                                                      beneficiaires = [];
+                                                      value.beneficiairesList.data!.forEach((element) {
+                                                        BeneficiaireModel beneficiaireD = BeneficiaireModel.fromJson(element);
+                                                        if (beneficiaireD.codePays == selectedDesinaion!.codePaysDest) {
+                                                          beneficiaires!.add(element);
+                                                        }
+                                                      });
                                                       if (beneficiaires!.isEmpty) {
                                                         return Center(
                                                           child: Container(
@@ -522,7 +541,7 @@ class _SendViewState extends State<SendView> {
                                           return Center(
                                             child: Container(
                                               padding: const EdgeInsets.symmetric(vertical: 20),
-                                              child: const Text("Aucune bénéficiaire trouvée"),
+                                              child: const Text("Aucun bénéficiaire trouvée"),
                                             ),
                                           );
                                         }
@@ -600,12 +619,10 @@ class _SendViewState extends State<SendView> {
                                         fontSize: 13,
                                       ),),
                                       SizedBox(width: 10,),
-                                      Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Icon(Icons.arrow_drop_down, size: 30,),
-                                          )
-                                      )
+                                     Expanded(child: Align(
+                                       alignment: Alignment.centerRight,
+                                       child: Icon(Icons.arrow_drop_down, size: 30,),
+                                     ))
                                     ],
                                   ),
                                 ),
@@ -649,39 +666,45 @@ class _SendViewState extends State<SendView> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 30,),
+                              const SizedBox(height: 20,),
                               Align(
                                 alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) {
-                                        return const SendBottomModal();
-                                      },
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
+                                child: RoundedButton(
+                                  onPress: () {
+                                    if (_fromController.text.isEmpty) {
+                                      Utils.flushBarErrorMessage("Vous devez entrer le montant", context);
+                                    } else if (selectedBeneficiaire == null) {
+                                      Utils.flushBarErrorMessage("Vous devez choisir un bénéficiaire", context);
+                                    } else {
+                                      Map data = {
+                                        "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
+                                        "code_pays_srce": paysDestinationModel!.codePaysSrce,
+                                        "montant_srce": _fromController.text,
+                                        "montant_dest":_toController.text,
+                                        "code_pays_dest": selectedDesinaion!.codePaysDest,
+                                        "id_mode_retrait": selectedModeRetrait ?? "",
+                                        "beneficiaire": selectedBeneficiaire,
+                                        "source": paysDestinationModel,
+                                        "destination": selectedDesinaion,
+                                        "mode_retrait": selectedModeRetrait == null ? null : selectedModeRetrait!.modeRetrait.toString()
+                                      };
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return SendBottomModal(data: data,);
+                                        },
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20),
+                                          ),
                                         ),
-                                      ),
-
-                                    );
+                                      );
+                                    }
                                   },
-                                  child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: const Center(
-                                        child: Text("Envoyer", style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16, color: Colors.white
-                                        ),),
-                                      )
-                                  ),
-                                ),
+                                  title: "Envoyer",
+                                  loading: demandesViewModel.loading,
+                                )
                               )
                             ],
                           ),

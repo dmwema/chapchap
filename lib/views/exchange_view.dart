@@ -23,14 +23,30 @@ class _ExchangeViewState extends State<ExchangeView> {
   List destinationsList = [];
   bool changed = false;
 
-  double? total;
-
   TextEditingController _amountController = TextEditingController();
+  TextEditingController _toController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     demandesViewModel.paysActifs([], context);
+  }
+
+  void insert(content, TextEditingController controller) {
+    if (content.runtimeType.toString() == "double"){
+      if (controller == _toController) {
+        content = double.parse(content.toStringAsFixed(2));
+      } else {
+        content = double.parse(content.toStringAsFixed(2));
+      }
+      controller.value = TextEditingValue(
+        text: content.toString(),
+        selection: TextSelection.collapsed(offset: content.toString().length),
+      );
+    } else {
+      _amountController.clear();
+      _toController.clear();
+    }
   }
 
   @override
@@ -107,7 +123,6 @@ class _ExchangeViewState extends State<ExchangeView> {
                                                                   selectedTo = null;
                                                                   changed = true;
                                                                   _amountController.clear();
-                                                                  total = null;
                                                                 });
                                                                 Navigator.pop(context);
                                                               },
@@ -229,7 +244,6 @@ class _ExchangeViewState extends State<ExchangeView> {
                                                                                 setState(() {
                                                                                   selectedTo = paysDestinationModel!.destination![index];
                                                                                   _amountController.clear();
-                                                                                  total = null;
                                                                                 });
                                                                               },
                                                                               child: Container(
@@ -275,7 +289,6 @@ class _ExchangeViewState extends State<ExchangeView> {
                                                                 setState(() {
                                                                   selectedTo = paysDestinationModel!.destination![index];
                                                                   _amountController.clear();
-                                                                  total = null;
                                                                 });
                                                                 Navigator.pop(context);
                                                               },
@@ -352,7 +365,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Montant", style: TextStyle(
+                                Text("Montant à envoyer", style: TextStyle(
                                     color: Colors.black.withOpacity(.6),
                                     fontSize: 13
                                 ),),
@@ -381,14 +394,61 @@ class _ExchangeViewState extends State<ExchangeView> {
                                   controller: _amountController,
                                   keyboardType: TextInputType.text,
                                   onChanged: (value) {
-                                    setState(() {
-                                      total = double.parse(value) * double.parse(selectedTo!.rate.toString());
-                                    });
+                                    if (selectedTo != null) {
+                                      if (value != "") {
+                                        insert(double.parse(value) * double.parse(selectedTo!.rate.toString()), _toController);
+                                      } else {
+                                        insert("", _toController);
+                                      }
+                                    }
                                   },
                                   style: const TextStyle(
                                       fontSize: 18
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: 20,),
+                                Text("Montant à recevoir", style: TextStyle(
+                                    color: Colors.black.withOpacity(.6),
+                                    fontSize: 13
+                                ),),
+                                const SizedBox(height: 5,),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    fillColor: Colors.white,
+                                    focusColor: AppColors.primaryColor,
+                                    hintText: "0.00",
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.blue,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                        color: Colors.black.withOpacity(.4),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                  controller: _toController,
+                                  keyboardType: TextInputType.text,
+                                  onChanged: (value) {
+                                    if (selectedTo != null) {
+                                      if (value != "") {
+                                        insert(double.parse(value) /
+                                            double.parse(selectedTo!.rate.toString()), _amountController);
+                                      } else {
+                                        insert("", _amountController);
+                                      }
+                                    }
+                                  },
+                                  style: const TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
                               ],
                             ),
                             const SizedBox(height: 30,),
@@ -409,7 +469,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                                         color: Colors.black.withOpacity(.7)
                                     ),),
                                     const SizedBox(height: 5,),
-                                    Text(total != null ? "${total!.toStringAsFixed(2)} ${selectedTo!.paysCodeMonnaieDest}" : (selectedTo == null ? "...": "0 ${selectedTo!.paysCodeMonnaieDest}"), style: TextStyle(
+                                    Text(_toController.text.isEmpty ? "... ${selectedTo == null ? '' : selectedTo!.paysCodeMonnaieDest.toString()}" : "${double.parse(_toController.text).toStringAsFixed(2)} ${selectedTo!.paysCodeMonnaieDest}", style: TextStyle(
                                       fontSize: 40,
                                       color: AppColors.primaryColor,
                                       fontWeight: FontWeight.w700,

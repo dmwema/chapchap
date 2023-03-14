@@ -19,6 +19,8 @@ class RoutesName {
   static const String pay = 'pay_screen';
   static const String sendSuccess = 'send_success_screen';
   static const String contactView = 'contact_view';
+  static const String webViewPage = 'web_view_page';
+  static const String newBeneficiaire = 'new_beneficiaire';
 
   static const String phoneVerificatiob = 'phone_verification';
 }

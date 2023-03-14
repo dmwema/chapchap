@@ -1,6 +1,8 @@
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/custom_field.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +10,10 @@ import 'package:flutter/material.dart';
 
 class NewBeneficiaireForm extends StatefulWidget {
   List destinations;
+  BuildContext parentCotext;
+  bool? redirect;
 
-  NewBeneficiaireForm({super.key, required this.destinations});
+  NewBeneficiaireForm({super.key, required this.destinations, required BuildContext this.parentCotext, this.redirect});
 
   @override
   State<NewBeneficiaireForm> createState() => _NewBeneficiaireFormState();
@@ -133,15 +137,15 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               label: "Téléphone *",
               hint: "Entrez le numéro de téléphone du bénéficiaire *",
               controller: _telController,
-              type: TextInputType.emailAddress,
+              type: TextInputType.phone,
               password: false,
             ),
             const SizedBox(height: 20,),
             CustomFormField(
               label: "Confirmez le téléphone *",
-              hint: "Entrez le nom du bénéficiaire ",
+              hint: "Confirmez le téléphone du bénéficiaire ",
               controller: _telConfirmController,
-              type: TextInputType.emailAddress,
+              type: TextInputType.phone,
               password: false,
             ),
             const SizedBox(height: 20,),
@@ -152,9 +156,9 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               password: false,
             ),
             const SizedBox(height: 20,),
-            InkWell(
-              onTap: () {
-
+            RoundedButton(
+              title: "Enrégistrer",
+              onPress: () {
                 if (!demandesViewModel.loading) {
                   if (selectedDesinaion == null) {
                     Utils.flushBarErrorMessage("Vous devez choisir un pays", context);
@@ -184,24 +188,22 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                       "id_compte":""
                     };
                     demandesViewModel.newBeneficiaire(data, context).then((value) {
-                      Navigator.pop(context);
+                      if (widget.redirect != true) {
+                        Navigator.pop(widget.parentCotext);
+                      }
+                      setState(() {
+                        selectedDesinaion = null;
+                        _nomController.text = "";
+                        _emailController.text = "";
+                        _telController.text = "";
+                        _telConfirmController.text = "";
+                        _adresseController.text = "";
+                      });
                     });
                   }
                 }
               },
-              child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Center(
-                    child: Text("Enregistrer", style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16, color: Colors.white
-                    ),),
-                  )
-              ),
+              loading: demandesViewModel.loading,
             ),
             const SizedBox(height: 20,),
           ],

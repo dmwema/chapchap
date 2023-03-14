@@ -62,4 +62,22 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> transfert (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.trasfert, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> beneficiaireInfo (int id, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.beneficiaireInfo}/$id", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
 }

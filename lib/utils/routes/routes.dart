@@ -12,12 +12,14 @@ import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/invoice_detail_view.dart';
 import 'package:chapchap/views/invoices_view.dart';
+import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:chapchap/views/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
+import 'package:chapchap/views/web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -123,6 +125,18 @@ class Routes {
       case RoutesName.contactView:
         return PageTransition(
             child: ContactView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.webViewPage:
+        return PageTransition(
+            child: WebViewPage(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.newBeneficiaire:
+        return PageTransition(
+            child: NewBeneficiaireView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
