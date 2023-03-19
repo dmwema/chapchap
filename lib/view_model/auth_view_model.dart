@@ -25,7 +25,7 @@ class AuthViewModel with ChangeNotifier{
         if (value['error'] != true) {
           UserModel user = UserModel.fromJson(value['data']);
           user.token = value['token'];
-          UserViewModel().updateUser(user, true).then((value) {
+          UserViewModel().updateUser(user, true, false).then((value) {
             Utils.toastMessage("Vous êtes connectés avec succès");
             Navigator.pushNamed(context, RoutesName.home);
           });
@@ -69,7 +69,7 @@ class AuthViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          Utils.toastMessage("Mot de passe modifié avec succès");
+          Utils.toastMessage("Mot de passe modifié avec succontextcès");
           Navigator.pushNamed(context, RoutesName.login);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
@@ -77,6 +77,7 @@ class AuthViewModel with ChangeNotifier{
 
       }
     }).onError((error, stackTrace) {
+      setLoading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
@@ -89,8 +90,13 @@ class AuthViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          Utils.toastMessage(value['message']);
-          Navigator.pushNamed(context, RoutesName.passwordReset );
+          String message = value['message'];
+          UserModel user = UserModel();
+          user.token = value['token'];
+          UserViewModel().updateUser(user, true, true).then((value) {
+            Utils.toastMessage(message);
+            Navigator.pushNamed(context, RoutesName.newPassword);
+          });
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }

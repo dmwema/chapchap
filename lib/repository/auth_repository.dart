@@ -37,7 +37,7 @@ class AuthRepository {
 
   Future<dynamic> changePassword (dynamic data, {required BuildContext context}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.changePassword, data, context: context);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.changePassword, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

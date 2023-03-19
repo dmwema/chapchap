@@ -11,30 +11,32 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<bool> updateUser(UserModel user, bool token) async {
+  Future<bool> updateUser(UserModel user, bool token, bool reset) async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setInt('idClient', user.idClient!.toInt());
     if (token) {
       sp.setString('token', user.token.toString());
     }
-    sp.setString('client', user.client.toString());
-    sp.setString('adresse', user.adresse.toString());
-    sp.setString('nomClient', user.nomClient.toString());
-    sp.setString('prenomClient', user.prenomClient.toString());
-    sp.setString('telClient', user.telClient.toString());
-    sp.setString('username', user.username.toString());
-    if (user.idTypeClient != null) {
-      sp.setInt('idTypeClient', user.idTypeClient!);
+    if (!reset) {
+      sp.setInt('idClient', user.idClient!.toInt());
+      sp.setString('client', user.client.toString());
+      sp.setString('adresse', user.adresse.toString());
+      sp.setString('nomClient', user.nomClient.toString());
+      sp.setString('prenomClient', user.prenomClient.toString());
+      sp.setString('telClient', user.telClient.toString());
+      sp.setString('username', user.username.toString());
+      if (user.idTypeClient != null) {
+        sp.setInt('idTypeClient', user.idTypeClient!);
+      }
+      sp.setString('photoProfil', user.photoProfil.toString());
+      sp.setString('emailClient', user.emailClient.toString());
+      sp.setString('codeParrainage', user.codeParrainage.toString());
+      sp.setString('validationCompte', user.validationCompte.toString());
+      if (user.commissionParrainage != null) {
+        sp.setInt('commissionParrainage', user.commissionParrainage!);
+      }
+      sp.setInt('idPays', user.idPays!);
+      sp.setString('codePays', user.codePays!);
     }
-    sp.setString('photoProfil', user.photoProfil.toString());
-    sp.setString('emailClient', user.emailClient.toString());
-    sp.setString('codeParrainage', user.codeParrainage.toString());
-    sp.setString('validationCompte', user.validationCompte.toString());
-    if (user.commissionParrainage != null) {
-      sp.setInt('commissionParrainage', user.commissionParrainage!);
-    }
-    sp.setInt('idPays', user.idPays!);
-    sp.setString('codePays', user.codePays!);
 
     notifyListeners();
     return true;

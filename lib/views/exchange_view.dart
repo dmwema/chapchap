@@ -374,6 +374,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(10),
                                     fillColor: Colors.white,
+
                                     focusColor: AppColors.primaryColor,
                                     hintText: "0.00",
                                     focusedBorder: OutlineInputBorder(
@@ -392,7 +393,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                                     ),
                                   ),
                                   controller: _amountController,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     if (selectedTo != null) {
                                       if (value != "") {
@@ -434,7 +435,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                                     ),
                                   ),
                                   controller: _toController,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     if (selectedTo != null) {
                                       if (value != "") {

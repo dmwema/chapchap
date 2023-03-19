@@ -208,7 +208,7 @@ class DemandesViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           UserModel newUser = UserModel.fromJson(value['data']);
-          UserViewModel().updateUser(newUser, false).then((value) {
+          UserViewModel().updateUser(newUser, false, false).then((value) {
             if (pop) {
               Utils.toastMessage("Profile modifié avec succès");
             }

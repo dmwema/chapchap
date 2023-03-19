@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       body: AuthContainer(
-        child: Padding(padding: EdgeInsets.all(20),
+        child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: MediaQuery.of(context).viewInsets.bottom + 20),
           child: Column(
             children: [
               const Text("Se connecter", style: TextStyle(

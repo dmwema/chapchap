@@ -22,8 +22,9 @@ class _PasswordResetViewState extends State<PasswordResetView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthContainer(
-        child: Padding(padding: const EdgeInsets.all(20),
+      child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Text("Réinitialiser le mot de passe", style: TextStyle(
                   fontSize: 17,
