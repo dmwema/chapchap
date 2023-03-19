@@ -1,6 +1,8 @@
 import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
+import 'package:chapchap/model/user_model.dart';
+import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
@@ -172,7 +174,7 @@ class DemandesViewModel with ChangeNotifier{
         if (value['error'] != true) {
           final SharedPreferences sp = await SharedPreferences.getInstance();
           Utils.toastMessage("Demande enrégistrée avec succès");
-          Navigator.pushNamed(context, RoutesName.webViewPage, arguments: ScreenArguments(value["data"]['lien_paiement'].toString().replaceAll("dev.", ""), value["data"]['lien_paiement'].toString().replaceAll("dev.", "")));
+          Navigator.pushNamed(context, RoutesName.webViewPage, arguments: ScreenArguments(value["data"]['lien_paiement'].toString(), value["data"]['lien_paiement'].toString()));
           return value;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
@@ -189,8 +191,31 @@ class DemandesViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           setBeneficiaireModel(ApiResponse.completed(
-            BeneficiaireModel.fromJson(value["data"])
+              BeneficiaireModel.fromJson(value["data"])
           ));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
+  }
+
+  Future<void>  uClient(Map data, BuildContext context, bool pop) async {
+    setLoading(true);
+    await _repository.uClient(data, context: context).then((value) async {
+      print(value);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          UserModel newUser = UserModel.fromJson(value['data']);
+          UserViewModel().updateUser(newUser, false).then((value) {
+            if (pop) {
+              Utils.toastMessage("Profile modifié avec succès");
+            }
+            if (pop) {
+              Navigator.pop(context);
+            }
+          });
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }

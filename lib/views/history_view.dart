@@ -78,7 +78,9 @@ class _HistoryViewState extends State<HistoryView> {
                                 DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
                                 return Column(
                                   children: [
-                                    HistoryCard(date: current.date.toString(), sent: false, receiver: current.beneficiaire.toString(), amount: current.montanceSrce.toString()),
+                                    HistoryCard(
+                                      demande: current,
+                                    ),
                                     const SizedBox(height: 5,),
                                     const Divider(),
                                   ],

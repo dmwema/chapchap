@@ -93,7 +93,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                                               builder: (context, value, _){
                                                 switch (value.beneficiaireModel.status) {
                                                   case Status.LOADING:
-                                                    return Container(
+                                                    return SizedBox(
                                                       height: 200,
                                                       child: Center(
                                                         child: CircularProgressIndicator(color: AppColors.primaryColor,),
@@ -117,7 +117,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                             radius: 25, // sets radius, default 50.0
                                                             backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
                                                             initialsText: Text(
-                                                              beneficiaire.nomBeneficiaire!.split(" ")[0][0] + beneficiaire.nomBeneficiaire!.split(" ")[1][0],
+                                                                beneficiaire.nomBeneficiaire!.split(" ").length == 2 ? beneficiaire.nomBeneficiaire!.split(" ")[0][0] + beneficiaire.nomBeneficiaire!.split(" ")[1][0] : beneficiaire.nomBeneficiaire!.split(" ")[0][0],
                                                               style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
                                                             ),  // sets initials text, set your own style, default Text('')
                                                             elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
@@ -125,7 +125,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                             cacheImage: true, // allow widget to cache image against provided url
                                                             showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
                                                           ),
-                                                          SizedBox(height: 20,),
+                                                          const SizedBox(height: 20,),
                                                           Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
                                                               fontWeight: FontWeight.w600
                                                           ),),
@@ -164,13 +164,13 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                               Text(beneficiaire.emailBeneficiaire.toString()),
                                                             ],
                                                           ),
-                                                          if (beneficiaire.banque != null)
+                                                          if (beneficiaire.banque != null || beneficiaire.banque == "")
                                                             const SizedBox(height: 10,),
-                                                          if (beneficiaire.banque != null)
+                                                          if (beneficiaire.banque != null || beneficiaire.banque == "")
                                                             const Divider(),
-                                                          if (beneficiaire.banque != null)
+                                                          if (beneficiaire.banque != null || beneficiaire.banque == "")
                                                             const SizedBox(height: 10,),
-                                                          if (beneficiaire.banque != null)
+                                                          if (beneficiaire.banque != null || beneficiaire.banque == "")
                                                             Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [

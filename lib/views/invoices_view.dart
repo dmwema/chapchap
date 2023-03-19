@@ -19,13 +19,21 @@ class InvoicesView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Cette année", style: TextStyle(
+                /*Text("Cette année", style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryColor.withOpacity(.3)
                 ),),
                 const SizedBox(height: 10,),
-                InvoiceCard(),
+                InvoiceCard(),*/
+                Expanded(child: Center(
+                  child: Text(
+                    "Aucune facture trouvée",
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(.5)
+                    ),
+                  ),
+                ))
               ],
             ),
           ),

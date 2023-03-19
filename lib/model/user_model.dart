@@ -1,7 +1,8 @@
 class UserModel {
+  int? time;
   int? idClient;
-  String? token;
   String? client;
+  String? token;
   String? nomClient;
   String? prenomClient;
   String? telClient;
@@ -9,14 +10,18 @@ class UserModel {
   int? idTypeClient;
   String? photoProfil;
   String? emailClient;
+  String? adresse;
   String? codeParrainage;
   String? validationCompte;
   int? commissionParrainage;
+  int? idPays;
+  String? codePays;
+  String? paysMonnaie;
+  String? paysNom;
 
   UserModel(
-      {
+      {this.time,
         this.idClient,
-        this.token,
         this.client,
         this.nomClient,
         this.prenomClient,
@@ -27,29 +32,43 @@ class UserModel {
         this.emailClient,
         this.codeParrainage,
         this.validationCompte,
-        this.commissionParrainage});
+        this.commissionParrainage,
+        this.adresse,
+        this.idPays,
+        this.token,
+        this.codePays,
+        this.paysMonnaie,
+        this.paysNom});
 
   UserModel.fromJson(Map<String, dynamic> json) {
+    time = json['time'];
     idClient = json['idClient'];
-    token = json['token'];
     client = json['client'];
     nomClient = json['nomClient'];
     prenomClient = json['prenomClient'];
     telClient = json['telClient'];
     username = json['username'];
+    adresse = json['adresse'];
     idTypeClient = json['idTypeClient'];
     photoProfil = json['photoProfil'];
     emailClient = json['emailClient'];
     codeParrainage = json['codeParrainage'];
     validationCompte = json['validationCompte'];
     commissionParrainage = json['commissionParrainage'];
+    idPays = json['idPays'];
+    token = json['token'];
+    codePays = json['code_pays'];
+    paysMonnaie = json['pays_monnaie'];
+    paysNom = json['pays_nom'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['time'] = this.time;
     data['idClient'] = this.idClient;
-    data['token'] = this.token;
+    data['adresse'] = this.adresse;
     data['client'] = this.client;
+    data['token'] = this.token;
     data['nomClient'] = this.nomClient;
     data['prenomClient'] = this.prenomClient;
     data['telClient'] = this.telClient;
@@ -60,6 +79,10 @@ class UserModel {
     data['codeParrainage'] = this.codeParrainage;
     data['validationCompte'] = this.validationCompte;
     data['commissionParrainage'] = this.commissionParrainage;
+    data['idPays'] = this.idPays;
+    data['code_pays'] = this.codePays;
+    data['pays_monnaie'] = this.paysMonnaie;
+    data['pays_nom'] = this.paysNom;
     return data;
   }
 }

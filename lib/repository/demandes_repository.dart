@@ -80,4 +80,22 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> myInfos (int id, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.myInfos}/$id", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> uClient (Map data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.editUser, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
 }

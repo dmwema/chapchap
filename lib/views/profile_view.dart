@@ -1,16 +1,19 @@
+import 'package:chapchap/data/response/status.dart';
+import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
-import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/res/components/payment_methods_modal.dart';
-import 'package:chapchap/res/components/recipient_card.dart';
-import 'package:chapchap/res/components/recipient_card2.dart';
-import 'package:chapchap/res/components/send_bottom_modal.dart';
+import 'package:chapchap/res/components/custom_field.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
+import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -20,7 +23,23 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  DemandesViewModel demandesViewModel = DemandesViewModel();
+  AuthViewModel authViewModel = AuthViewModel();
   UserModel? user;
+  TextEditingController _adresseController = TextEditingController();
+  TextEditingController _oldPasswordContoller = TextEditingController();
+  TextEditingController _newPasswordController = TextEditingController();
+  TextEditingController _newPasswordConfirmController = TextEditingController();
+
+  PaysModel selectedFrom = PaysModel();
+  bool changed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    demandesViewModel.paysActifs([], context);
+  }
+
   @override
   Widget build(BuildContext context) {
     UserViewModel().getUser().then((value) {
@@ -32,267 +51,484 @@ class _ProfileViewState extends State<ProfileView> {
         appBar: CustomAppBar(
           showBack: true,
           title: "Profile",
+          backUrl: RoutesName.home,
         ),
         drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      if (user != null)
-                      CircularProfileAvatar(
-                        user!.photoProfil.toString(),
-                        radius: 30, // sets radius, default 50.0
-                        initialsText: Text(
-                          "CC",
-                          style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-                        ),  // sets initials text, set your own style, default Text('')
-                        elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                        foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-                        cacheImage: true, // allow widget to cache image against provided url
-                        showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-                      ),
-                      const SizedBox(height: 20,),
-                      if (user != null)
-                      Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18
-                      ),),
-                      if (user != null)
-                      Text(user!.emailClient.toString(), style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black.withOpacity(.6)
-                      ),),
-                    ],
-                  )
-                ),
-                SizedBox(height: 20,),
-                Container(
-                  color: Colors.black.withOpacity(.07),
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("INFORMATIONS PERSONNELLES", style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black.withOpacity(.5)
-                      ),),
-                      Row(
-                        children: [
-                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
-                          SizedBox(width: 5,),
-                          Text("Modifier", style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500
-                          ),)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Text("Noms", style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black.withOpacity(.6)
-                ),),
-                const SizedBox(height: 5,),
-                if (user != null)
-                Text("${user!.prenomClient} ${user!.nomClient}", style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600
-                ),),
-                const SizedBox(height: 5,),
-                Divider(),
-                const SizedBox(height: 5,),
-                SizedBox(height: 20,),
-                Text("Date de naissance", style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black.withOpacity(.6)
-                ),),
-                const SizedBox(height: 5,),
-                if (user != null)
-                const Text("-", style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                ),),
-                const SizedBox(height: 5,),
-                Divider(),
-                const SizedBox(height: 5,),
-                SizedBox(height: 20,),
-                Text("Adresse", style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black.withOpacity(.6)
-                ),),
-                const SizedBox(height: 5,),
-                const Text("-", style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                ),),
-                SizedBox(height: 20,),
-                Container(
-                  color: Colors.black.withOpacity(.07),
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("STATUT DU COMPTE", style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black.withOpacity(.5)
-                      ),),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.check_circle_sharp, color: Colors.white, size: 20,),
-                      SizedBox(width: 10,),
-                      Text("Activé", style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                      ),)
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Container(
-                  color: Colors.black.withOpacity(.07),
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("ADRESSE ELECTRONIQUE", style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black.withOpacity(.5)
-                      ),),
-                      Row(
-                        children: [
-                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
-                          const SizedBox(width: 5,),
-                          Text("Modifier", style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500
-                          ),)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                if (user != null)
-                Text(user!.emailClient.toString(), style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                ),),
-                const SizedBox(height: 20,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.check_circle_sharp, color: Colors.white, size: 20,),
-                      SizedBox(width: 10,),
-                      Text("Activé", style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                      ),)
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Container(
-                  color: Colors.black.withOpacity(.07),
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("NUMÉRO DE TÉLÉPHONE", style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black.withOpacity(.5)
-                      ),),
-                      Row(
-                        children: [
-                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
-                          SizedBox(width: 5,),
-                          Text("Modifier", style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500
-                          ),)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                if (user != null)
-                Text(user!.telClient.toString(), style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                ),),
-                const SizedBox(height: 20,),
-                Container(
-                  color: Colors.black.withOpacity(.07),
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("SÉCURITÉ", style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black.withOpacity(.5)
-                      ),),
-                      Row(
-                        children: [
-                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
-                          SizedBox(width: 5,),
-                          Text("Modifier", style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500
-                          ),)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                Text("Mot de passe", style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black.withOpacity(.6)
-                ),),
-                const SizedBox(height: 5,),
-                const Text("**************", style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                ),),
-              ],
-            ),
-          ),
+        body: ChangeNotifierProvider<DemandesViewModel>(
+            create: (BuildContext context) => demandesViewModel,
+            child: Consumer<DemandesViewModel>(
+                builder: (context, value, _){
+                  switch (value.paysActifList.status) {
+                    case Status.LOADING:
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height - 200,
+                        child: Center(
+                          child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                        ),
+                      );
+                    case Status.ERROR:
+                      return Center(
+                        child: Text(value.paysActifList.message.toString()),
+                      );
+                    default:
+                      List paysActifsList = value.paysActifList.data!;
+                      for (var element in paysActifsList) {
+                        PaysModel pays = PaysModel.fromJson(element);
+                        if (user != null && selectedFrom.idPays == null && (pays.idPays.toString() == user!.idPays.toString())) {
+                          selectedFrom = pays;
+                        }
+                      }
+                      return SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                  child: Column(
+                                    children: [
+                                      if (user != null)
+                                        CircularProfileAvatar(
+                                          user!.photoProfil.toString(),
+                                          radius: 30, // sets radius, default 50.0
+                                          initialsText: Text(
+                                            "CC",
+                                            style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                                          ),  // sets initials text, set your own style, default Text('')
+                                          elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
+                                          foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+                                          cacheImage: true, // allow widget to cache image against provided url
+                                          showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+                                        ),
+                                      const SizedBox(height: 20,),
+                                      if (user != null)
+                                        Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18
+                                        ),),
+                                      if (user != null)
+                                        Text(user!.emailClient.toString(), style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black.withOpacity(.6)
+                                        ),),
+                                    ],
+                                  )
+                              ),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("INFORMATIONS PERSONNELLES", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                    InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+                                              child: Container(
+                                                padding: const EdgeInsets.all(20),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children:  [
+                                                    const Text("Modifier les informations personnelles", style: TextStyle(
+                                                        fontWeight: FontWeight.w600
+                                                    ),),
+                                                    const SizedBox(height: 20,),
+                                                    CustomFormField(
+                                                        label: "Adresse",
+                                                        controller: _adresseController,
+                                                        hint: "Entrez votre adresse",
+                                                        password: false
+                                                    ),
+                                                    const SizedBox(height: 20,),
+                                                    RoundedButton(
+                                                      title: "Enrégistrer",
+                                                      loading: demandesViewModel.loading,
+                                                      onPress: (){
+                                                        if (!demandesViewModel.loading) {
+                                                          if (_adresseController.text.isEmpty) {
+                                                            Utils.flushBarErrorMessage("Vous devez entrer une adresse", context);
+                                                          } else {
+                                                            setState(() {
+                                                              Map data = {
+                                                                "idPays": user!.idPays,
+                                                                "adresse": _adresseController.text
+                                                              };
+                                                              demandesViewModel.uClient(data, context, true);
+                                                            });
+                                                          }
+                                                        }
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
+                                          const SizedBox(width: 5,),
+                                          Text("Modifier", style: TextStyle(
+                                              color: AppColors.primaryColor,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w500
+                                          ),)
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20,),
+                              Text("Noms", style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(.6)
+                              ),),
+                              const SizedBox(height: 5,),
+                              if (user != null)
+                                Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600
+                                ),),
+                              const SizedBox(height: 5,),
+                              const Divider(),
+                              const SizedBox(height: 15,),
+                              Text("Adresse", style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(.6)
+                              ),),
+                              const SizedBox(height: 5,),
+                              Text(user!.adresse != null && user!.adresse != 'null' ? user!.adresse.toString(): "_", style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600
+                              ),),
+                              SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("STATUT DU COMPTE", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    Icon(Icons.check_circle_sharp, color: Colors.white, size: 20,),
+                                    SizedBox(width: 10,),
+                                    Text("Activé", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white
+                                    ),)
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("ADRESSE ELECTRONIQUE", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              if (user != null)
+                                Text(user!.emailClient.toString(), style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600
+                                ),),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("NUMÉRO DE TÉLÉPHONE", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              if (user != null)
+                                Text(user!.telClient.toString(), style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600
+                                ),),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("SÉCURITÉ", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                    InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+                                              child: Container(
+                                                padding: const EdgeInsets.all(20),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children:  [
+                                                    const Text("Modifier le mot de passe", style: TextStyle(
+                                                        fontWeight: FontWeight.w600
+                                                    ),),
+                                                    const SizedBox(height: 20,),
+                                                    CustomFormField(
+                                                        label: "Mot de passe actuel",
+                                                        hint: "Mot de passe actuel",
+                                                        controller: _oldPasswordContoller,
+                                                        password: false
+                                                    ),
+                                                    const SizedBox(height: 10,),
+                                                    const Divider(),
+                                                    const SizedBox(height: 10,),CustomFormField(
+                                                        label: "Nouveau mot de passe",
+                                                        controller: _newPasswordController,
+                                                        hint: "Nouveau mot de passe",
+                                                        password: false
+                                                    ),
+                                                    const SizedBox(height: 20,),
+                                                    CustomFormField(
+                                                        label: "Confirmer le Nouveau mot de passe",
+                                                        controller: _newPasswordConfirmController,
+                                                        hint: "Confirmer le Nouveau mot de passe",
+                                                        password: false
+                                                    ),
+
+                                                    const SizedBox(height: 20,),
+                                                    RoundedButton(
+                                                      title: "Enrégistrer",
+                                                      onPress: (){
+                                                        if (_newPasswordConfirmController.text.isEmpty || _newPasswordController.text.isEmpty || _oldPasswordContoller.text.isEmpty) {
+                                                          Utils.flushBarErrorMessage("Tous les champs sont requis", context);
+                                                        } else {
+                                                          Map data = {
+                                                            "password": _newPasswordController.text,
+                                                            "password_cfrm": _newPasswordConfirmController.text,
+                                                            "password_old": _oldPasswordContoller.text
+                                                          };
+                                                          authViewModel.uPassword(data, context);
+                                                        }
+
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit, color: AppColors.primaryColor, size: 14,),
+                                          SizedBox(width: 5,),
+                                          Text("Modifier", style: TextStyle(
+                                              color: AppColors.primaryColor,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w500
+                                          ),)
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              Text("Mot de passe", style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(.6)
+                              ),),
+                              const SizedBox(height: 5,),
+                              const Text("**************", style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600
+                              ),),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("PAYS DE RESIDENCE", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Text("Séléctionnez le pays", style: TextStyle(
+                                                  fontWeight: FontWeight.w600
+                                              ),),
+                                              const SizedBox(height: 20,),
+                                              Expanded(child: ListView.builder(
+                                                itemCount: paysActifsList.length,
+                                                itemBuilder: (context, index) {
+                                                  PaysModel current = PaysModel.fromJson(paysActifsList[index]);
+                                                  return InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectedFrom = current;
+                                                          changed = true;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        padding: const EdgeInsets.all(10),
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            Image.asset("packages/country_icons/icons/flags/png/${current.codePays}.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                            const SizedBox(width: 20,),
+                                                            Text(current.paysNom.toString(), style: const TextStyle(
+                                                                fontSize: 14,
+                                                                fontWeight: FontWeight.bold
+                                                            ),)
+                                                          ],
+                                                        ),
+                                                      )
+                                                  );
+                                                },
+                                              ))
+                                            ],
+                                          )
+                                      );
+                                    },
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Image.asset("packages/country_icons/icons/flags/png/${selectedFrom.codePays}.png", width: 20, height: 15, fit: BoxFit.contain),
+                                      const SizedBox(width: 10,),
+                                      Text(selectedFrom.paysCodemonnaie.toString(), style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),),
+                                      const SizedBox(width: 10,),
+                                      const Expanded(child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.arrow_drop_down),
+                                      ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              if (changed)
+                              RoundedButton(
+                                title: "Enrégistrer",
+                                onPress: (){
+                                  if (!demandesViewModel.loading) {
+                                    Map data = {
+                                      'idPays': selectedFrom.idPays,
+                                      'adresse': user!.adresse
+                                    };
+                                    demandesViewModel.uClient(data, context, false);
+                                    setState(() {
+                                      changed = false;
+                                    });
+                                  }
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                  }
+                })
         )
+
+
+
     );
   }
 }

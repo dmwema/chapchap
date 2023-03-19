@@ -11,21 +11,30 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<bool> updateUser(UserModel user) async {
+  Future<bool> updateUser(UserModel user, bool token) async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setInt('idClient', user.idClient!.toInt());
-    sp.setString('token', user.token.toString());
+    if (token) {
+      sp.setString('token', user.token.toString());
+    }
     sp.setString('client', user.client.toString());
+    sp.setString('adresse', user.adresse.toString());
     sp.setString('nomClient', user.nomClient.toString());
     sp.setString('prenomClient', user.prenomClient.toString());
     sp.setString('telClient', user.telClient.toString());
     sp.setString('username', user.username.toString());
-    sp.setInt('idTypeClient', user.idTypeClient!);
+    if (user.idTypeClient != null) {
+      sp.setInt('idTypeClient', user.idTypeClient!);
+    }
     sp.setString('photoProfil', user.photoProfil.toString());
     sp.setString('emailClient', user.emailClient.toString());
     sp.setString('codeParrainage', user.codeParrainage.toString());
     sp.setString('validationCompte', user.validationCompte.toString());
-    sp.setInt('commissionParrainage', user.commissionParrainage!);
+    if (user.commissionParrainage != null) {
+      sp.setInt('commissionParrainage', user.commissionParrainage!);
+    }
+    sp.setInt('idPays', user.idPays!);
+    sp.setString('codePays', user.codePays!);
 
     notifyListeners();
     return true;
@@ -35,6 +44,7 @@ class UserViewModel with ChangeNotifier {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     int? idClient = sp.getInt('idClient');
     String? token = sp.getString('token');
+    String? adresse = sp.getString('adresse');
     String? client = sp.getString('client');
     String? nomClient = sp.getString('nomClient');
     String? prenomClient = sp.getString('prenomClient');
@@ -46,6 +56,8 @@ class UserViewModel with ChangeNotifier {
     String? codeParrainage = sp.getString('codeParrainage');
     String? validationCompte = sp.getString('validationCompte');
     int? commissionParrainage = sp.getInt('commissionParrainage');
+    int? idPays = sp.getInt('idPays');
+    String? codePays = sp.getString('codePays');
 
     return UserModel(
       idClient: idClient,
@@ -60,7 +72,10 @@ class UserViewModel with ChangeNotifier {
       telClient: telClient,
       token: token,
       username: username,
-      validationCompte: validationCompte
+      idPays: idPays,
+      adresse: adresse,
+      validationCompte: validationCompte,
+      codePays: codePays
     );
   }
 

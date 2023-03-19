@@ -18,7 +18,7 @@ class InvoiceDetailView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Text("Date", style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
@@ -46,8 +46,8 @@ class InvoiceDetailView extends StatelessWidget {
               Row(
                 children: [
                   Image.asset("packages/country_icons/icons/flags/png/cd.png", width: 20,),
-                  SizedBox(width: 10,),
-                  Text("République Démocratique du Congo", style: const TextStyle(
+                  const SizedBox(width: 10,),
+                  const Text("République Démocratique du Congo", style: TextStyle(
                     fontSize: 12,
                   ),)
                 ],

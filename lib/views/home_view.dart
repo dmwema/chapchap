@@ -1,3 +1,4 @@
+
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -139,10 +140,8 @@ class _HomeViewState extends State<HomeView> {
                                 return Column(
                                   children: [
                                     HistoryCard(
-                                    date: demande.date.toString(),
-                                    sent: false, receiver: demande.beneficiaire.toString(),
-                                    amount: demande.montanceDest.toString(),
-                                  ),
+                                      demande: demande,
+                                    ),
                                   if (!last)
                                     const SizedBox(height: 5,),
                                   if (!last)

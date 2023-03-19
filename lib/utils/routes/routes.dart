@@ -136,9 +136,9 @@ class Routes {
         );
       case RoutesName.newBeneficiaire:
         return PageTransition(
-            child: NewBeneficiaireView(),
+            child: const NewBeneficiaireView(),
             type: PageTransitionType.rightToLeft,
-            settings: settings
+            settings: settings,
         );
       default:
         return MaterialPageRoute(builder: (_) {

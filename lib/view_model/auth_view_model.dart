@@ -25,7 +25,7 @@ class AuthViewModel with ChangeNotifier{
         if (value['error'] != true) {
           UserModel user = UserModel.fromJson(value['data']);
           user.token = value['token'];
-          UserViewModel().updateUser(user).then((value) {
+          UserViewModel().updateUser(user, true).then((value) {
             Utils.toastMessage("Vous êtes connectés avec succès");
             Navigator.pushNamed(context, RoutesName.home);
           });
@@ -52,6 +52,64 @@ class AuthViewModel with ChangeNotifier{
           UserViewModel().saveUser(user).then((value) {
             Navigator.pushNamed(context, RoutesName.phoneVerificatiob);
           });
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> changePassword(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _repository.changePassword(data, context: context).then((value) {
+      setLoading(false);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage("Mot de passe modifié avec succès");
+          Navigator.pushNamed(context, RoutesName.login);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> resetPassword(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _repository.resetPassword(data, context: context).then((value) {
+      setLoading(false);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value['message']);
+          Navigator.pushNamed(context, RoutesName.passwordReset );
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> uPassword(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _repository.uPassword(data, context: context).then((value) {
+      setLoading(false);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage("Mot de passe modifié avec succès");
+          Navigator.pop(context);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
