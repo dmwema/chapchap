@@ -154,16 +154,19 @@ class DemandesViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Bénéficiaire enrégistré avec succès");
+          return true;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
+          setLoading(false);
         }
       }
+      setLoading(false);
     }).onError((error, stackTrace) {
       setPaysActif(ApiResponse.error(error.toString()));
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
-    return true;
+    return false;
   }
 
   Future<dynamic> transfert(dynamic data, BuildContext context) async {

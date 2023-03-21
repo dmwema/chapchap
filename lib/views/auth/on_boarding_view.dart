@@ -15,10 +15,9 @@ class OnBoardingViewState extends State<OnBoardingView> {
   PageController _controller = PageController();
 
   final List<Widget> _pages = [
-    SliderPage(title: "Facile à utiliser", description: "consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam.", image: "assets/1.gif"),
-    SliderPage(title: "Envoyer Rapidement et sûrement", description: "consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/2.gif"),
-    SliderPage(title: "Commencez la belle aventure !", description: "*consectetur adipiscing elit duis  nibh sit amet commodo facilisi nullam", image: "assets/3.gif", text_color: Colors.white,),
-    // SliderPage(title: "Title 3", description: "En utilisant notre application, vous acceptez notre politique de confidentialité. tâchez de le lire avant de continuer", image: "assets/3.svg", text_color: Colors.white,),
+    SliderPage(title: "Envoyez de l'argent en un clin d'œil", description: "Avec Chapchap, vous pouvez transférer de l'argent à vos proches en quelques clics. Plus besoin de faire la queue dans une agence bancaire ou de passer par des intermédiaires coûteux.", image: "assets/1.gif"),
+    SliderPage(title: "Sécurité et fiabilité garanties", description: "Nous prenons la sécurité de vos transactions très au sérieux. Toutes les données sont cryptées et nous utilisons les dernières technologies pour protéger vos données.", image: "assets/2.gif"),
+    SliderPage(title: "Commencez la belle aventure !", description: "Nous sommes ravis de vous accueillir dans notre communauté. Avec Chapchap, vous pouvez envoyer de l'argent à vos proches en toute sécurité et à des tarifs avantageux. Commencez dès maintenant !", image: "assets/3.gif", text_color: Colors.white,),
   ];
 
   _onChanged(int index) {

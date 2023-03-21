@@ -13,7 +13,7 @@ import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/invoice_detail_view.dart';
 import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
-import 'package:chapchap/views/on_boarding_view.dart';
+import 'package:chapchap/views/auth/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipients_view.dart';

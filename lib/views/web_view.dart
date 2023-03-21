@@ -46,7 +46,7 @@ class _WebViewPageState extends State<WebViewPage> {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: WebViewStack(
-          link: "https://dev.chapchap.ca/app-paiement-facture-71d54f4b09795d02cbc6959c1145e886.html" /*args.id.toString()*/,
+          link: args.id.toString(),
         ),
     );
   }

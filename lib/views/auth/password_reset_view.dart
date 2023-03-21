@@ -32,7 +32,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
               ),),
               const SizedBox(height: 20,),
               CustomFormField(
-                label: "Adressse électronique",
+                label: "Adresse électronique",
                 controller: _usernameContoller,
                 hint: "Entrez l'adresse électronique",
                 password: false,

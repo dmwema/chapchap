@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       body: AuthContainer(
-        child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+        child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
           child: Column(
             children: [
               const Text("Se connecter", style: TextStyle(
@@ -50,14 +50,14 @@ class _LoginViewState extends State<LoginView> {
                   fontWeight: FontWeight.bold
               ),),
               SizedBox(height: 10,),
-              Text("Connectez-vous avec votre adress électronique et votre mot de passe", style: TextStyle(
+              Text("Connectez-vous avec votre adresse électronique et votre mot de passe", style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                   color: Colors.black.withOpacity(.7)
               ), textAlign: TextAlign.center,),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               CustomFormField(
-                label: "Adressse électronique",
+                label: "Adresse électronique",
                 hint: "Entrez l'adresse électronique",
                 controller: _emailController,
                 type: TextInputType.emailAddress,
@@ -69,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
                 password: false,
                 prefixIcon: Icon(Icons.alternate_email_sharp),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               ValueListenableBuilder(
                 valueListenable: obscurePassword, builder: (context, value, child) {
                 return
@@ -93,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   );
               }),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               InkWell(
                 child: const Text("Mot de passe oublié ?", style: TextStyle(
                     fontWeight: FontWeight.w500,

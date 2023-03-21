@@ -50,7 +50,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
-          title: "Profile",
+          title: "Profil",
           backUrl: RoutesName.home,
         ),
         drawer: const AppbarDrawer(),

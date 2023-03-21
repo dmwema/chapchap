@@ -159,7 +159,7 @@ class HistoryCard extends StatelessWidget {
                     fontSize: 16
                 ),),
                 const SizedBox(height: 5,),
-                Text(demande.facture != null ? "Payé": (demande.lienPaiement != null ? "En cours": "Echoué"), style: TextStyle(
+                Text(demande.progression.toString(), style: TextStyle(
                     color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
                     fontWeight: FontWeight.w500,
                     fontSize: 11

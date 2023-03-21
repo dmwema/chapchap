@@ -231,6 +231,7 @@ class _SendViewState extends State<SendView> {
                                                               setState(() {
                                                                 selectedDesinaion = paysDestinationModel!.destination![index];
                                                                 beneficiaires = null;
+                                                                selectedBeneficiaire = null;
                                                                 if (
                                                                   selectedDesinaion!.modeRetrait != null
                                                                     && selectedDesinaion!.modeRetrait!.isNotEmpty

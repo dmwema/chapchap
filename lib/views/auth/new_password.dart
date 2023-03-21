@@ -32,7 +32,7 @@ class _NewPasswordState extends State<NewPassword> {
               ),),
               const SizedBox(height: 20,),
               CustomFormField(
-                label: "Code réçu *",
+                label: "Code reçu *",
                 hint: "Entrez le code réçu dans le message",
                 type: TextInputType.number,
                 controller: _codeController,
@@ -55,10 +55,10 @@ class _NewPasswordState extends State<NewPassword> {
                 controller: _passCnfController,
                 hint: "Confirmer le mot de passe *",
                 password: false,
-                prefixIcon: Icon(Icons.lock_person_outlined),
-                suffixIcon: Icon(Icons.visibility_off_outlined),
+                prefixIcon: const Icon(Icons.lock_person_outlined),
+                suffixIcon: const Icon(Icons.visibility_off_outlined),
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               RoundedButton(
                 title: 'Enrégistrer',
                 loading: authViewModel.loading, onPress: () {

@@ -40,7 +40,7 @@ class AuthContainer extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("TRANSFERT D’ARGENT - MONEY TRANSFERT", style: TextStyle(
+                  Text("TRANSFERT D’ARGENT - MONEY TRANSFER", style: TextStyle(
                     color: Colors.white.withOpacity(.7),
                     fontSize: 13,
                   ),

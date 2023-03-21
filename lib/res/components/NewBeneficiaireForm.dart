@@ -126,8 +126,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
             ),
             const SizedBox(height: 20,),
             CustomFormField(
-              label: "Email du bénéficiaire *",
-              hint: "Entrez l'adresse e-mail du bénéficiaire *",
+              label: "Email du bénéficiaire",
+              hint: "Entrez l'adresse e-mail du bénéficiaire",
               controller: _emailController,
               type: TextInputType.emailAddress,
               password: false,
@@ -162,8 +162,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 if (!demandesViewModel.loading) {
                   if (selectedDesinaion == null) {
                     Utils.flushBarErrorMessage("Vous devez choisir un pays", context);
-                  } else if (_emailController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("L'adresse e-mail est obligatoire", context);
                   } else if (_telController.text.isEmpty) {
                     Utils.flushBarErrorMessage("Le numéro de téléphone est obligatoire", context);
                   }  else if (_telConfirmController.text.isEmpty) {

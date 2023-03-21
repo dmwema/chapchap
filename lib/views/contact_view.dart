@@ -48,7 +48,15 @@ class _ContactViewState extends State<ContactView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProfileMenu(
-                  title: "+1438 492 9679 (Canada)",
+                  title: "+1 514 370 1555 (Canada)",
+                  icon: Icons.phone,
+                  noIcon: true,
+                  onTap: () {
+                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                  },
+                ),
+                ProfileMenu(
+                  title: "+1 438 492 9679 (Canada)",
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
@@ -80,7 +88,7 @@ class _ContactViewState extends State<ContactView> {
                   },
                 ),
                 ProfileMenu(
-                  title: "info@chapchap.ca",
+                  title: "support@chapchap.ca",
                   icon: Icons.alternate_email_sharp,
                   noIcon: true,
                   onTap: () {
@@ -88,7 +96,7 @@ class _ContactViewState extends State<ContactView> {
                   },
                 ),
                 ProfileMenu(
-                  title: "5588 Avenue Royalmount, Mont-Royal, QC H4P 1H7",
+                  title: "8304 Chemin Devonshire, Mont-Royal, H4P 2P7, QC, Canada Suite 260",
                   icon: Icons.map_outlined,
                   noIcon: true,
                   onTap: () {
