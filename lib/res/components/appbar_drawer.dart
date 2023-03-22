@@ -154,14 +154,14 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               ),
               ListTile(
                 leading: const Icon(Icons.phone_outlined),
-                title: const Text("Nou joindre"),
+                title: const Text("Nous joindre"),
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.contactView);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.logout_outlined),
-                title: const Text("Se deconnecter"),
+                title: const Text("Se déconnecter"),
                 onTap: () {
                   UserViewModel().remove().then((value) {
                     if (value) {

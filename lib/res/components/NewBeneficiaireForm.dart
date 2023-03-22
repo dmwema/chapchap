@@ -27,13 +27,15 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
   final TextEditingController _adresseController = TextEditingController();
   DemandesViewModel demandesViewModel = DemandesViewModel();
 
+  bool emailRequired = false;
+
   Destination? selectedDesinaion;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -64,6 +66,15 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                                       setState(() {
                                         selectedDesinaion = widget.destinations[index];
                                       });
+                                      if (selectedDesinaion!.codePaysDest == "ca") {
+                                        setState(() {
+                                          emailRequired = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          emailRequired = false;
+                                        });
+                                      }
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -126,8 +137,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
             ),
             const SizedBox(height: 20,),
             CustomFormField(
-              label: "Email du bénéficiaire",
-              hint: "Entrez l'adresse e-mail du bénéficiaire",
+              label: "Email du bénéficiaire ${emailRequired ? '*': ''}",
+              hint: "Entrez l'adresse e-mail du bénéficiaire ${emailRequired ? '*': ''}",
               controller: _emailController,
               type: TextInputType.emailAddress,
               password: false,
@@ -170,6 +181,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                     Utils.flushBarErrorMessage("Saisissez le champs de confirmation du nuéro de téléphone", context);
                   }  else if (_telController.text != _telConfirmController.text) {
                     Utils.flushBarErrorMessage("Les deux numéros ne correspondent pas", context);
+                  } else if (selectedDesinaion!.codePaysDest == "ca" && _emailController.text.isEmpty) {
+                    Utils.flushBarErrorMessage("L'adresse email est obligatoire", context);
                   } else {
                     Map data = {
                       "id_pays": selectedDesinaion!.idPaysDest,
