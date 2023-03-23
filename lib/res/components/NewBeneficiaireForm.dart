@@ -146,7 +146,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
             const SizedBox(height: 20,),
             CustomFormField(
               label: "Téléphone *",
-              hint: "Entrez le numéro de téléphone du bénéficiaire *",
+              hint: "Entrez le numero de téléphone du bénéficiaire ",
               controller: _telController,
               type: TextInputType.phone,
               password: false,

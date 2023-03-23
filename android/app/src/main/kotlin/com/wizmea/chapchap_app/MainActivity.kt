@@ -1,4 +1,4 @@
-package com.example.chapchap
+package com.wizmea.chapchap_app
 
 import io.flutter.embedding.android.FlutterActivity
 
