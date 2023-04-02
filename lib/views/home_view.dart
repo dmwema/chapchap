@@ -74,7 +74,7 @@ class _HomeViewState extends State<HomeView> {
                         Navigator.pushNamed(context, RoutesName.send);
                       },
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     HomeCard(h: 90, color: AppColors.darkRed2, icon: Icons.bar_chart, title: "Bénéficiaires", onTap: (){
                       Navigator.pushNamed(context, RoutesName.recipeints);
                     },)
@@ -122,41 +122,37 @@ class _HomeViewState extends State<HomeView> {
                           );
                         default:
                           demandes = value.demandeList.data!;
-                          if (demandes.length == 0) {
+                          if (demandes.isEmpty) {
                             return Center(
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 20),
-                                child: Text("Aucune opération trouvée"),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                child: const Text("Aucune opération trouvée"),
                               ),
                             );
                           }
-                          return Expanded(
-                            child: ListView.builder(
-                              itemCount: demandes.length,
-                              itemBuilder: (context, index) {
-                                DemandeModel demande = DemandeModel.fromJson(demandes[index]);
-                                bool last = index == demandes.length - 1;
-
-                                return Column(
+                          return ListView.builder(
+                            itemCount: demandes.length,
+                            itemBuilder: (context, index) {
+                              DemandeModel demande = DemandeModel.fromJson(demandes[index]);
+                              bool last = index == demandes.length - 1;
+                              return Column(
                                   children: [
                                     HistoryCard(
                                       demande: demande,
                                     ),
-                                  if (!last)
-                                    const SizedBox(height: 5,),
-                                  if (!last)
-                                    const Divider(),
-                                  if (!last)
-                                    const SizedBox(height: 5,)
-                                ]
-                                );
-                              },
-                            ),
+                                    if (!last)
+                                      const SizedBox(height: 5,),
+                                    if (!last)
+                                      const Divider(),
+                                    if (!last)
+                                      const SizedBox(height: 5,)
+                                  ]
+                              );
+                            },
                           );
                       }
                     })
             ),
-
           ],
         ),
       )

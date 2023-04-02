@@ -1,14 +1,8 @@
 
 import 'package:chapchap/model/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_url.dart';
-import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 
 class ContactView extends StatefulWidget {
