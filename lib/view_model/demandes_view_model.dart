@@ -190,8 +190,8 @@ class DemandesViewModel with ChangeNotifier{
   Future<void> beneficiaireInfo(int id, BuildContext context) async {
     setLoading(true);
     await _repository.beneficiaireInfo(id, context: context).then((value) async {
-      if (value!=null){
-        setLoading(false);
+      setLoading(false);
+      if (value!=null && value["data"] != null){
         if (value['error'] != true) {
           setBeneficiaireModel(ApiResponse.completed(
               BeneficiaireModel.fromJson(value["data"])
@@ -199,6 +199,8 @@ class DemandesViewModel with ChangeNotifier{
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
+      } else {
+        Utils.flushBarErrorMessage("Une erreur est survenure", context);
       }
     });
   }
@@ -219,6 +221,21 @@ class DemandesViewModel with ChangeNotifier{
               Navigator.pop(context);
             }
           });
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
+  }
+
+  Future<void>  deleteRecipient(BuildContext context, int id) async {
+    setLoading(true);
+    await _repository.deleteRecipient(context: context, recipientId: id).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value["message"]);
+          Navigator.pushNamed(context, RoutesName.recipeints);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }

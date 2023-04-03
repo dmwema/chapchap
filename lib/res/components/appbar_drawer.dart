@@ -153,6 +153,12 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                 },
               ),
               ListTile(
+                leading: const Icon(Icons.handshake_outlined),
+                title: const Text("Mes Parrainages"),
+                onTap: () {
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.phone_outlined),
                 title: const Text("Nous joindre"),
                 onTap: () {
@@ -168,6 +174,27 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                       Navigator.pushNamed(context, RoutesName.login);
                     }
                   });
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Code de parrainage", style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12
+                    ),),
+                    const SizedBox(height: 5,),
+                    Text(user!.codeParrainage.toString(), style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      color: AppColors.primaryColor
+                    ),)
+                  ],
+                ),
+                onTap: () {
                 },
               ),
             ],

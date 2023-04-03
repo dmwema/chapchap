@@ -34,15 +34,15 @@ class PayView extends StatelessWidget {
                             color: Colors.white.withOpacity(.6)
                         ), textAlign: TextAlign.center,),
                         SizedBox(width: 5,),
-                        Text("(CAD)", style: TextStyle(
+                        const Text("(CAD)", style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white
                         ), textAlign: TextAlign.center,),
                       ],
                     ),
-                    SizedBox(height: 10,),
-                    Text("200.00", style: TextStyle(
+                    const SizedBox(height: 10,),
+                    const Text("200.00", style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50,
                       color: Colors.white

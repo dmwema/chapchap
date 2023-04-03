@@ -52,7 +52,7 @@ class UserModel {
     idTypeClient = json['idTypeClient'];
     photoProfil = json['photoProfil'];
     emailClient = json['emailClient'];
-    codeParrainage = json['codeParrainage'];
+    codeParrainage = json['code_parrainage'];
     validationCompte = json['validationCompte'];
     commissionParrainage = json['commissionParrainage'];
     idPays = json['idPays'];
@@ -76,7 +76,7 @@ class UserModel {
     data['idTypeClient'] = this.idTypeClient;
     data['photoProfil'] = this.photoProfil;
     data['emailClient'] = this.emailClient;
-    data['codeParrainage'] = this.codeParrainage;
+    data['code_parrainage'] = this.codeParrainage;
     data['validationCompte'] = this.validationCompte;
     data['commissionParrainage'] = this.commissionParrainage;
     data['idPays'] = this.idPays;

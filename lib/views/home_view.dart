@@ -130,26 +130,21 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             );
                           }
-                          return ListView.builder(
-                            itemCount: demandes.length,
-                            itemBuilder: (context, index) {
-                              DemandeModel demande = DemandeModel.fromJson(demandes[index]);
-                              bool last = index == demandes.length - 1;
-                              return Column(
+                          return Expanded(child: ListView.builder(
+                              itemCount: value.demandeList.data!.length,
+                              itemBuilder: (context, index) {
+                                DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                return Column(
                                   children: [
                                     HistoryCard(
-                                      demande: demande,
+                                      demande: current,
                                     ),
-                                    if (!last)
-                                      const SizedBox(height: 5,),
-                                    if (!last)
-                                      const Divider(),
-                                    if (!last)
-                                      const SizedBox(height: 5,)
-                                  ]
-                              );
-                            },
-                          );
+                                    const SizedBox(height: 5,),
+                                    const Divider(),
+                                  ],
+                                );
+                              },
+                            ));
                       }
                     })
             ),

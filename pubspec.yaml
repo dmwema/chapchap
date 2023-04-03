@@ -65,7 +65,7 @@ dependencies:
   xml: ^6.2.2
   image: ^4.0.15
   country_icons: ^2.0.2
-  webview_flutter: ^4.0.6
+  webview_flutter: ^2.0.13
 
 flutter_icons:
   android: "launcher_icon"

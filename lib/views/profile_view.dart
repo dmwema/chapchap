@@ -53,7 +53,6 @@ class _ProfileViewState extends State<ProfileView> {
           title: "Profil",
           backUrl: RoutesName.home,
         ),
-        drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: ChangeNotifierProvider<DemandesViewModel>(
@@ -199,7 +198,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               Text("Noms", style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black.withOpacity(.6)
@@ -256,6 +255,27 @@ class _ProfileViewState extends State<ProfileView> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(height: 20,),
+                              Container(
+                                color: Colors.black.withOpacity(.07),
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("CODE DE PARRAINAGE", style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black.withOpacity(.5)
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              if (user != null)
+                                Text(user!.codeParrainage.toString(), style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600
+                                ),),
                               const SizedBox(height: 20,),
                               Container(
                                 color: Colors.black.withOpacity(.07),

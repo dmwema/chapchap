@@ -98,4 +98,13 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> deleteRecipient ({required BuildContext context, required recipientId}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.deleteRecipient}/$recipientId", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
 }

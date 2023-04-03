@@ -2,6 +2,7 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
+import 'package:chapchap/res/components/confirm_delete.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -216,7 +217,19 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                           RoundedButton(
                                                             title: "Supprimer",
                                                             onPress: () {
-
+                                                              DemandesViewModel demandesViewModel3 = DemandesViewModel();
+                                                              showModalBottomSheet(
+                                                                context: context,
+                                                                isScrollControlled: true,
+                                                                builder: (context) {
+                                                                  return ConfirmDelete(recipientId: beneficiaire.idBeneficiaire!.toInt(), demandesViewModel: demandesViewModel3);
+                                                                },
+                                                                shape: const RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.vertical(
+                                                                    top: Radius.circular(20),
+                                                                  ),
+                                                                ),
+                                                              );
                                                             },
                                                             color: Colors.red,
                                                             textColor: Colors.white,

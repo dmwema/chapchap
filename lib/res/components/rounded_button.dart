@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       onTap: onPress,
       child: Container(
-        height: 50,
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(30)

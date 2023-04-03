@@ -103,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
                   Navigator.pushNamed(context, RoutesName.passwordReset);
                 },
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               RoundedButton(
                 title: 'Se connecter',
                 loading: authViewModel.loading,
