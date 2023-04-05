@@ -10,6 +10,7 @@ class CustomFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final bool obscurePassword;
   final Widget? suffixIcon;
+  final BorderRadius? radius;
   final Widget? prefixIcon;
   final List<TextInputFormatter>? inputFormatters;
   void Function(String)? onFieldSubmitted;
@@ -22,6 +23,7 @@ class CustomFormField extends StatelessWidget {
     required this.password,
     this.type,
     this.focusNode,
+    this.radius,
     this.obscurePassword = false,
     this.suffixIcon,
     this.onFieldSubmitted,
@@ -50,8 +52,8 @@ class CustomFormField extends StatelessWidget {
       decoration: InputDecoration(
           hintText: hint,
           labelText: label,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(35)),
+          border: OutlineInputBorder(
+            borderRadius: radius ?? const BorderRadius.all(Radius.circular(35)),
           ),
           contentPadding: const EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16),
           suffixIcon: suffixIcon,

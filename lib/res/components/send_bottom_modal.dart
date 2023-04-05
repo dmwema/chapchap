@@ -1,12 +1,14 @@
+import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/screen_argument.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
 
 class SendBottomModal extends StatefulWidget {
   Map data;
-  SendBottomModal({Key? key, required this.data}) : super(key: key);
+    SendBottomModal({Key? key, required this.data}) : super(key: key);
 
   @override
   State<SendBottomModal> createState() => _SendBottomModalState();
@@ -15,9 +17,20 @@ class SendBottomModal extends StatefulWidget {
 class _SendBottomModalState extends State<SendBottomModal> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   bool loading = false;
+  bool loadingPromo = false;
+  bool loadingPromoSucces = false;
+  bool load = false;
+  double montantSrc = 0;
+  double promoRabais = 0;
   final TextEditingController _promoContoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    if (!load) {
+      setState(() {
+        montantSrc = double.parse(widget.data["montant_srce"]);
+        load = true;
+      });
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -46,7 +59,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                   Text("Montant", style: TextStyle(
                     color: Colors.black.withOpacity(.5)
                   ),),
-                  Text(widget.data["montant_srce"] + " " + widget.data['source']!.paysCodeMonnaieSrce.toString(), style: const TextStyle(
+                  Text("${widget.data["montant_srce"]} ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600
                   ),)
@@ -67,6 +80,27 @@ class _SendBottomModalState extends State<SendBottomModal> {
                   ),)
                 ],
               ),
+              if (promoRabais > 0)
+              const SizedBox(height: 5,),
+              if (promoRabais > 0)
+              const Divider(),
+              if (promoRabais > 0)
+              const SizedBox(height: 5,),
+              if (promoRabais > 0)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Rabais promo", style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold
+                  ),),
+                  Text("- $promoRabais ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold
+                  ),)
+                ],
+              ),
               const SizedBox(height: 10,),
               Container(
                 padding: const EdgeInsets.all(15),
@@ -79,7 +113,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                         color: Colors.black.withOpacity(.8),
                       fontWeight: FontWeight.w500
                     ),),
-                    Text(widget.data["montant_srce"] + " " + widget.data['source']!.paysCodeMonnaieSrce.toString(), style: const TextStyle(
+                    Text("$montantSrc ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600
                     ),)
@@ -93,7 +127,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                     width: (MediaQuery.of(context).size.width - 40) * 0.7,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10),
+                        contentPadding: const EdgeInsets.all(10),
                         label: const Text("CODE PROMO", style: TextStyle(
                           fontSize: 12
                         ),),
@@ -120,6 +154,34 @@ class _SendBottomModalState extends State<SendBottomModal> {
                     ),
                   ),
                   InkWell(
+                    onTap: () {
+                      if (_promoContoller.text.isEmpty) {
+                        Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
+                      } else {
+                        setState(() {
+                          loadingPromo = true;
+                          loadingPromoSucces = false;
+                        });
+                        DemandesViewModel demandeVM = DemandesViewModel();
+                        Map data = {
+                          "codePromo": _promoContoller.text,
+                          "code_pays_srce": widget.data['source']!.codePaysSrce.toString(),
+                          "montant": montantSrc
+                        };
+                        demandeVM.applyPromo(context, data).then((value) {
+                          setState(() {
+                            loadingPromo = false;
+                          });
+                          if (demandeVM.applyDetail.status == Status.COMPLETED) {
+                            setState(() {
+                              montantSrc = montantSrc - demandeVM.applyDetail.data["reductionPromo"];
+                              promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
+                              loadingPromoSucces = true;
+                            });
+                          }
+                        });
+                      }
+                    },
                     child: Container(
                       width: (MediaQuery.of(context).size.width - 40) * 0.3,
                       decoration: BoxDecoration(
@@ -127,11 +189,19 @@ class _SendBottomModalState extends State<SendBottomModal> {
                         color: AppColors.primaryColor,
                       ),
                       padding: const EdgeInsets.only(top: 16, bottom: 16.6),
-                      child: const Center(
-                        child: Text("Appliquer", style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white
-                        ),),
+                      child: Center(
+                        child: loadingPromo
+                            ? const SizedBox(
+                                width: 17, height: 17,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3,),
+                              )
+                            : loadingPromoSucces
+                              ?
+                              const Icon(Icons.check, color: Colors.white, size: 18,)
+                              : const Text("Appliquer", style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white
+                              ),),
                       )
                     ),
                   )
@@ -242,7 +312,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                         ),
                         padding: const EdgeInsets.only(top: 16, bottom: 16.6),
                         child: const Center(
-                          child: Text("Annueler", style: TextStyle(
+                          child: Text("Annuler", style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white
                           ),),
@@ -255,14 +325,16 @@ class _SendBottomModalState extends State<SendBottomModal> {
                         setState(() {
                           loading = true;
                         });
-                        Map data2 = {};
+                        Map data2 = {
+                          "idBeneficiaire": widget.data["idBeneficiaire"],
+                          "codePromo": _promoContoller.text,
+                          "code_pays_srce": widget.data["code_pays_srce"],
+                          "montant_srce": montantSrc,
+                          "montant_dest":widget.data["montant_dest"],
+                          "code_pays_dest": widget.data["code_pays_dest"],
+                          "id_mode_retrait": widget.data["id_mode_retrait"]
+                        };
 
-                        widget.data.forEach((key, value) {
-                          if (key != 'source' && key != 'mode_retrait' && key != 'destination') {
-                            data2[key] = value;
-                          }
-                        });
-                        data2['codePromo'] = _promoContoller.text;
                         demandesViewModel.transfert(data2, context).then((value) {
                           setState(() {
                             loading = false;

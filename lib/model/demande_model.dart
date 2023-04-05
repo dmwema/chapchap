@@ -2,9 +2,9 @@ class DemandeModel {
   int? idDemande;
   String? lienPaiement;
   String? progression;
-  Null? facture;
+  String? facture;
   String? date;
-  Null? datePaidBen;
+  String? datePaidBen;
   String? montantNet;
   String? montanceSrce;
   String? montanceDest;

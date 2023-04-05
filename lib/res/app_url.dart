@@ -19,4 +19,6 @@ class AppUrl {
   static var editUser = '$baseUrl/up_client';
   static var uPass = '$baseUrl/up_password';
   static var deleteRecipient = '$baseUrl/delete_beneficiaire';
+  static var applyPromo = '$baseUrl/appliquer_code_promo';
+  static var myPromo = '$baseUrl/my_code_promo';
 }

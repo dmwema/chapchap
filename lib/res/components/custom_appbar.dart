@@ -79,19 +79,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ),
       actions: [
         if (!red && user != null && user!.photoProfil  != null)
-          SizedBox(
-            height: 40,
-            width: 40,
-            child:
-            CircularProfileAvatar(
-              user!.photoProfil.toString(),
-              radius: 30, // sets radius, default 50.0
-              imageFit: BoxFit.contain,
-              elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-              foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-              cacheImage: true, // allow widget to cache image against provided url
-              showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-            ),
+
+          CircularProfileAvatar(
+            user!.photoProfil.toString(),
+            radius: 20, // sets radius, default 50.0
+            initialsText: Text(
+              "CC",
+              style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+            ),  // sets initials text, set your own style, default Text('')
+            elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
+            foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+            cacheImage: true, // allow widget to cache image against provided url
+            showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
           ),
         const SizedBox(width: 20,)
       ],

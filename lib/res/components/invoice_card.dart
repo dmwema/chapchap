@@ -9,9 +9,6 @@ class InvoiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, RoutesName.invoiceDetail);
-      },
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -34,12 +31,12 @@ class InvoiceCard extends StatelessWidget {
               children: [
                 Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysSrce}.png", width: 30,),
                 const SizedBox(width: 10,),
-                Icon(Icons.arrow_forward, size: 30,),
+                const Icon(Icons.arrow_forward, size: 30,),
                 const SizedBox(width: 10,),
                 Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysDest}.png", width: 30,)
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

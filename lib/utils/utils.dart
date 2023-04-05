@@ -5,6 +5,7 @@ import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:standard_dialogs/standard_dialogs.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
   static String pusherAppId = "1543547";
@@ -29,6 +30,14 @@ class Utils {
       duration: const Duration(seconds: 5),
       backgroundColor: Colors.red,
     )..show(context));
+  }
+
+  static Future<void> launchUrl(String _url) async {
+    if (await canLaunchUrl(Uri.parse(_url))) {
+      await launchUrl(_url);
+    } else {
+      throw "Could not launch $_url";
+    }
   }
 
   static void showDialog (BuildContext context, title, {bool isSuccess = true, description}) {

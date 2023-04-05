@@ -154,8 +154,9 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               ),
               ListTile(
                 leading: const Icon(Icons.handshake_outlined),
-                title: const Text("Mes Parrainages"),
+                title: const Text("Mes coupons rabais"),
                 onTap: () {
+                  Navigator.pushNamed(context, RoutesName.couponView);
                 },
               ),
               ListTile(
@@ -176,7 +177,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                   });
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -187,6 +188,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                       fontSize: 12
                     ),),
                     const SizedBox(height: 5,),
+                    if (user != null)
                     Text(user!.codeParrainage.toString(), style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -195,6 +197,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                   ],
                 ),
                 onTap: () {
+                  Navigator.pushNamed(context, RoutesName.couponView);
                 },
               ),
             ],

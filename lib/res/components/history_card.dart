@@ -1,8 +1,9 @@
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/res/components/screen_argument.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HistoryCard extends StatelessWidget {
   DemandeModel demande;
@@ -111,9 +112,15 @@ class HistoryCard extends StatelessWidget {
                   if (demande.lienPaiement != null && demande.facture == null)
                   RoundedButton(
                     title: "Payer",
-                    onPress: (){
-                      Navigator.pushNamed(context, RoutesName.webViewPage, arguments: ScreenArguments(demande.lienPaiement.toString(), demande.lienPaiement.toString()));
-
+                    onPress: () async {
+                      String url = demande.lienPaiement.toString();
+                      var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                      if(urllaunchable){
+                        await launch(url); //launch is from url_launcher package to launch URL
+                        Navigator.pushNamed(context,RoutesName.home);
+                      }else{
+                        Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                      }
                     },
                   )
                 ],

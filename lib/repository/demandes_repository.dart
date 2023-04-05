@@ -107,4 +107,22 @@ class DemandesRepository {
     }
   }
 
+    Future<dynamic> applyPromo ({required BuildContext context, required Map data}) async {
+      try  {
+        dynamic response = await _apiServices.getPostApiResponse(AppUrl.applyPromo, data, context: context, auth: true);
+        return response;
+      } catch(e) {
+        rethrow;
+      }
+    }
+
+    Future<dynamic> myPromo ({required BuildContext context}) async {
+      try  {
+        dynamic response = await _apiServices.getPostApiResponse(AppUrl.myPromo, [], context: context, auth: true);
+        return response;
+      } catch(e) {
+        rethrow;
+      }
+    }
+
 }

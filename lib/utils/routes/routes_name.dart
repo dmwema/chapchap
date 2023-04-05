@@ -23,4 +23,5 @@ class RoutesName {
   static const String newBeneficiaire = 'new_beneficiaire';
 
   static const String phoneVerificatiob = 'phone_verification';
+  static const String couponView = 'coupon_view';
 }

@@ -65,6 +65,7 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                               child: NewBeneficiaireForm(
                                 destinations: paysDestinationModel!.destination!, parentCotext: context, redirect: true,
+                                hideTitle: true,
                               )
                           );
                       }

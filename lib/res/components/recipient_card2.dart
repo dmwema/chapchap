@@ -26,7 +26,7 @@ class RecipientCard2 extends StatelessWidget {
             radius: 25, // sets radius, default 50.0
             backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
             initialsText: Text(
-              name.split(" ")[0][0] + name.split(" ")[1][0],
+              name.split(" ").length > 2 && name.split(" ")[1] != "" ? (name.split(" ")[0][0] + name.split(" ")[1][0]).toString() : name.split(" ")[0][0].toString(),
               style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
             ),  // sets initials text, set your own style, default Text('')
             elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
@@ -43,6 +43,7 @@ class RecipientCard2 extends StatelessWidget {
                 fontWeight: FontWeight.w600
               ),),
               const SizedBox(height: 5,),
+              if (address != "null")
               Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 15, fit: BoxFit.contain),
               const SizedBox(height: 5,),
               Text(phone, style: const TextStyle(
@@ -50,7 +51,8 @@ class RecipientCard2 extends StatelessWidget {
               ),),
             ],
           ),
-          const Expanded(child: Align(
+          const Expanded(
+            child: Align(
             alignment: Alignment.centerRight,
             child: Icon(Icons.arrow_drop_down),
           ))

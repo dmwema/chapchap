@@ -51,6 +51,7 @@ class Destination {
   String? paysCodeMonnaieDest;
   String? paysMonnaieDest;
   List<ModeRetrait>? modeRetrait;
+  String? paysIndictelDest;
 
   Destination(
       {this.idSens,
@@ -58,6 +59,7 @@ class Destination {
         this.idPaysDest,
         this.codePaysDest,
         this.paysDest,
+        this.paysIndictelDest,
         this.paysCodeMonnaieDest,
         this.paysMonnaieDest,
         this.modeRetrait});
@@ -68,12 +70,13 @@ class Destination {
     idPaysDest = json['id_pays_dest'];
     codePaysDest = json['code_pays_dest'];
     paysDest = json['pays_dest'];
+    paysIndictelDest = json['pays_indictel_dest'];
     paysCodeMonnaieDest = json['pays_code_monnaie_dest'];
     paysMonnaieDest = json['pays_monnaie_dest'];
     if (json['mode_retrait'] != null) {
       modeRetrait = <ModeRetrait>[];
       json['mode_retrait'].forEach((v) {
-        modeRetrait!.add(new ModeRetrait.fromJson(v));
+        modeRetrait!.add(ModeRetrait.fromJson(v));
       });
     }
   }
@@ -84,6 +87,7 @@ class Destination {
     data['rate'] = this.rate;
     data['id_pays_dest'] = this.idPaysDest;
     data['code_pays_dest'] = this.codePaysDest;
+    data['pays_indictel_dest'] = this.paysIndictelDest;
     data['pays_dest'] = this.paysDest;
     data['pays_code_monnaie_dest'] = this.paysCodeMonnaieDest;
     data['pays_monnaie_dest'] = this.paysMonnaieDest;

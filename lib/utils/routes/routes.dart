@@ -7,6 +7,7 @@ import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
 import 'package:chapchap/views/contact_view.dart';
+import 'package:chapchap/views/coupon_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/home_view.dart';
@@ -136,9 +137,15 @@ class Routes {
         );
       case RoutesName.newBeneficiaire:
         return PageTransition(
-            child: const NewBeneficiaireView(),
-            type: PageTransitionType.rightToLeft,
-            settings: settings,
+          child: const NewBeneficiaireView(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
+        );
+      case RoutesName.couponView:
+        return PageTransition(
+          child: const CouponView(),
+          type: PageTransitionType.rightToLeft,
+          settings: settings,
         );
       default:
         return MaterialPageRoute(builder: (_) {

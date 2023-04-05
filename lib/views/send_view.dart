@@ -93,8 +93,8 @@ class _SendViewState extends State<SendView> {
                         );
                       default:
                         paysDestinationModel = value.paysDestination.data!;
-                        selectedDesinaion ??= paysDestinationModel!.destination![0];
-                        if(selectedModeRetrait == null) {
+                        // selectedDesinaion ??= paysDestinationModel!.destination![0];
+                        /*if(selectedModeRetrait == null) {
                           if (
                           paysDestinationModel!.destination![0].modeRetrait != null
                               && paysDestinationModel!.destination![0].modeRetrait!.isNotEmpty
@@ -103,7 +103,7 @@ class _SendViewState extends State<SendView> {
                                 .destination![0]
                                 .modeRetrait![0];
                           }
-                        }
+                        }*/
                         return Padding(
                           padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom + 20,
@@ -149,6 +149,8 @@ class _SendViewState extends State<SendView> {
                                           } else {
                                             insert("", _toController);
                                           }
+                                        } else {
+                                          Utils.flushBarErrorMessage("Vous devez selectionner un pays de destination", context);
                                         }
                                       },
                                       decoration: const InputDecoration(
@@ -183,7 +185,7 @@ class _SendViewState extends State<SendView> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Text(selectedDesinaion!.paysCodeMonnaieDest.toString(), style: const TextStyle(
+                                          Text(selectedDesinaion == null ? "-" : selectedDesinaion!.paysCodeMonnaieDest.toString(), style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 18,
                                           ),),
@@ -192,10 +194,14 @@ class _SendViewState extends State<SendView> {
                                             controller: _toController,
                                             keyboardType: TextInputType.number,
                                             onChanged: (value) {
-                                              if (value != "") {
-                                                insert(double.parse(value) / double.parse(selectedDesinaion!.rate.toString()), _fromController);
+                                              if (selectedDesinaion != null) {
+                                                if (value != "") {
+                                                  insert(double.parse(value) / double.parse(selectedDesinaion!.rate.toString()), _fromController);
+                                                } else {
+                                                  insert("", _fromController);
+                                                }
                                               } else {
-                                                insert("", _fromController);
+                                                Utils.flushBarErrorMessage("Vous devez selectionner un pays de destination", context);
                                               }
                                             },
                                             decoration: const InputDecoration(
@@ -278,9 +284,10 @@ class _SendViewState extends State<SendView> {
                                           padding: const EdgeInsets.all(10),
                                           child: Row(
                                             children: [
+                                              if (selectedDesinaion != null)
                                               Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 15, height: 15, fit: BoxFit.contain),
                                               const SizedBox(width: 10,),
-                                              Text(selectedDesinaion!.paysDest.toString(), style: const TextStyle(
+                                              Text(selectedDesinaion == null ? "Séléctionner p  ays de destination" :selectedDesinaion!.paysDest.toString(), style: const TextStyle(
                                                   fontSize: 12  ,
                                                   fontWeight: FontWeight.w500
                                               ),),
@@ -294,12 +301,14 @@ class _SendViewState extends State<SendView> {
                                         ),
                                       ),
                                       const SizedBox(height: 10,),
+                                      if (selectedDesinaion != null)
                                       Text("(1${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate}${selectedDesinaion!.paysCodeMonnaieDest})", style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12,
                                           color: Colors.black.withOpacity(.4)
                                       ),),
                                       const SizedBox(height: 10,),
+                                      if (selectedDesinaion != null)
                                       Row(
                                         children: [
                                           if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
@@ -378,9 +387,9 @@ class _SendViewState extends State<SendView> {
                                     ],
                                   )
                               ),
-                              if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
                               const SizedBox(height: 20,),
-                              if (selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
                               Text(selectedModeRetrait!.infosModeRetrait.toString(), style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,
@@ -409,6 +418,7 @@ class _SendViewState extends State<SendView> {
                                             child: NewBeneficiaireForm(
                                               destinations: paysDestinationModel!.destination!,
                                               parentCotext: context,
+                                              initialDestination: selectedDesinaion,
                                             ),
                                           );
                                         },
@@ -672,7 +682,9 @@ class _SendViewState extends State<SendView> {
                                 alignment: Alignment.bottomCenter,
                                 child: RoundedButton(
                                   onPress: () {
-                                    if (_fromController.text.isEmpty) {
+                                    if (selectedDesinaion == null) {
+                                      Utils.flushBarErrorMessage("Vous devez séléctionner un pays de destination", context);
+                                    } else if (_fromController.text.isEmpty) {
                                       Utils.flushBarErrorMessage("Vous devez entrer le montant", context);
                                     } else if (selectedBeneficiaire == null) {
                                       Utils.flushBarErrorMessage("Vous devez choisir un bénéficiaire", context);
