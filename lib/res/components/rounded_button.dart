@@ -4,21 +4,22 @@ import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
   final String title;
   final bool loading;
-  final Color color;
+  Color? color;
   final Color textColor;
   final VoidCallback onPress;
 
-  const RoundedButton({
+  RoundedButton({
     Key? key,
     required this.title,
     this.loading = false,
-    this.color = const Color(0xFF29216B),
+    this.color,
     this.textColor = Colors.white,
     required this.onPress
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    color ??= const Color(0xFF29216B);
     return InkWell(
       onTap: onPress,
       child: Container(

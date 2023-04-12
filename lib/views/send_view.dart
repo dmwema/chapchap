@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SendView extends StatefulWidget {
-  const SendView({Key? key}) : super(key: key);
+  BeneficiaireModel? beneficiaire;
+  SendView({Key? key, this.beneficiaire}) : super(key: key);
 
   @override
   State<SendView> createState() => _SendViewState();
@@ -30,6 +31,8 @@ class _SendViewState extends State<SendView> {
   ModeRetrait?  selectedModeRetrait;
   List? beneficiaires;
   BeneficiaireModel? selectedBeneficiaire;
+
+  bool loadBeneficiaire = false;
 
   @override
   void dispose() {
@@ -64,6 +67,11 @@ class _SendViewState extends State<SendView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!loadBeneficiaire && widget.beneficiaire != null) {
+      setState(() {
+        selectedBeneficiaire = widget.beneficiaire;
+      });
+    }
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,

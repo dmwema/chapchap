@@ -8,6 +8,7 @@ import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/views/send_view.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -213,10 +214,26 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                 Text(beneficiaire.iban.toString()),
                                                               ],
                                                             ),
-                                                          SizedBox(height: 20,),
-                                                          RoundedButton(
-                                                            title: "Supprimer",
-                                                            onPress: () {
+                                                          const SizedBox(height: 20,),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) => SendView(beneficiaire: beneficiaire,)),
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.black,
+                                                                    borderRadius: BorderRadius.circular(30)
+                                                                ),
+                                                                child: Text("Nouveau Transfert à ${beneficiaire.nomBeneficiaire}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 10,),
+                                                          InkWell(
+                                                            onTap: () {
                                                               DemandesViewModel demandesViewModel3 = DemandesViewModel();
                                                               showModalBottomSheet(
                                                                 context: context,
@@ -231,9 +248,15 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                 ),
                                                               );
                                                             },
-                                                            color: Colors.red,
-                                                            textColor: Colors.white,
-                                                          )
+                                                            child: Container(
+                                                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.red,
+                                                                    borderRadius: BorderRadius.circular(30)
+                                                                ),
+                                                                child: const Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
                                                     );

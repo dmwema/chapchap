@@ -173,6 +173,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                             loadingPromo = false;
                           });
                           if (demandeVM.applyDetail.status == Status.COMPLETED) {
+                            _promoContoller.clear();
                             setState(() {
                               montantSrc = montantSrc - demandeVM.applyDetail.data["reductionPromo"];
                               promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
@@ -304,6 +305,9 @@ class _SendBottomModalState extends State<SendBottomModal> {
               Row(
                 children: [
                   InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Container(
                         width: (MediaQuery.of(context).size.width - 40) * 0.5,
                         decoration: BoxDecoration(

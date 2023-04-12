@@ -452,36 +452,6 @@ class _ExchangeViewState extends State<ExchangeView> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 30,),
-                            Container(
-                              padding: const EdgeInsets.all(50),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.black, width: 1),
-                                color: Colors.black.withOpacity(.1),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(_amountController.text.isEmpty ? "0 ${selectedFrom.paysCodemonnaie} =" : "${_amountController.text} ${selectedFrom.paysCodemonnaie} =", style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20,
-                                        color: Colors.black.withOpacity(.7)
-                                    ),),
-                                    const SizedBox(height: 5,),
-                                    Text(_toController.text.isEmpty ? "... ${selectedTo == null ? '' : selectedTo!.paysCodeMonnaieDest.toString()}" : "${double.parse(_toController.text).toStringAsFixed(2)} ${selectedTo!.paysCodeMonnaieDest}", style: TextStyle(
-                                      fontSize: 40,
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),),
-                                    const SizedBox(height: 10,),
-                                    const Divider()
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 30,),
                           ],
                         ),
                       ),
