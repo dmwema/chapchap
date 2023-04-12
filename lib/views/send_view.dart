@@ -721,7 +721,7 @@ class _SendViewState extends State<SendView> {
                                         "montant_srce": _fromController.text,
                                         "montant_dest":_toController.text,
                                         "code_pays_dest": selectedDesinaion!.codePaysDest,
-                                        "id_mode_retrait": selectedModeRetrait ?? "",
+                                        "id_mode_retrait": selectedModeRetrait == null ? null : selectedModeRetrait!.idModeRetrait,
                                         "beneficiaire": selectedBeneficiaire,
                                         "source": paysDestinationModel,
                                         "destination": selectedDesinaion,

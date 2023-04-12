@@ -125,6 +125,7 @@ class HistoryCard extends StatelessWidget {
                       }
                     },
                   ),
+                  /*
                   if (demande.facture != null)
                     InkWell(
                       onTap: () {
@@ -152,7 +153,7 @@ class HistoryCard extends StatelessWidget {
                           ),
                           child: const Text("Nouveau Transfert similaire", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
                       ),
-                    ),
+                    ),*/
                 ],
               ),
             );
