@@ -15,14 +15,15 @@ import 'package:provider/provider.dart';
 
 class SendView extends StatefulWidget {
   BeneficiaireModel? beneficiaire;
-  SendView({Key? key, this.beneficiaire}) : super(key: key);
+  String? destination;
+  double? amount;
+  SendView({Key? key, this.beneficiaire, this.destination, this.amount}) : super(key: key);
 
   @override
   State<SendView> createState() => _SendViewState();
 }
 
 class _SendViewState extends State<SendView> {
-
   TextEditingController _fromController = TextEditingController();
   TextEditingController _toController = TextEditingController();
   DemandesViewModel demandesViewModel = DemandesViewModel();
@@ -67,10 +68,17 @@ class _SendViewState extends State<SendView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!loadBeneficiaire && widget.beneficiaire != null) {
-      setState(() {
-        selectedBeneficiaire = widget.beneficiaire;
-      });
+    if (!loadBeneficiaire) {
+      if (widget.beneficiaire != null) {
+        setState(() {
+          selectedBeneficiaire = widget.beneficiaire;
+        });
+      }
+      if (widget.amount != null) {
+        setState(() {
+          insert(widget.amount, _fromController);
+        });
+      }
     }
     return Scaffold(
         appBar: CustomAppBar(
@@ -101,6 +109,13 @@ class _SendViewState extends State<SendView> {
                         );
                       default:
                         paysDestinationModel = value.paysDestination.data!;
+                        if (widget.destination != null) {
+                          for (var element in paysDestinationModel!.destination!) {
+                            if (element.codePaysDest == widget.destination) {
+                              selectedDesinaion = element;
+                            }
+                          }
+                        }
                         // selectedDesinaion ??= paysDestinationModel!.destination![0];
                         /*if(selectedModeRetrait == null) {
                           if (
@@ -295,7 +310,7 @@ class _SendViewState extends State<SendView> {
                                               if (selectedDesinaion != null)
                                               Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 15, height: 15, fit: BoxFit.contain),
                                               const SizedBox(width: 10,),
-                                              Text(selectedDesinaion == null ? "Séléctionner p  ays de destination" :selectedDesinaion!.paysDest.toString(), style: const TextStyle(
+                                              Text(selectedDesinaion == null ? "Séléctionner le pays de destination" :selectedDesinaion!.paysDest.toString(), style: const TextStyle(
                                                   fontSize: 12  ,
                                                   fontWeight: FontWeight.w500
                                               ),),
@@ -384,6 +399,7 @@ class _SendViewState extends State<SendView> {
                                             },
                                             child: Row(
                                               children: [
+                                                if (selectedModeRetrait != null)
                                                 Text(selectedModeRetrait!.modeRetrait.toString()),
                                                 const SizedBox(width: 5,),
                                                 const Icon(Icons.arrow_drop_down, color: Colors.green,)
@@ -395,9 +411,9 @@ class _SendViewState extends State<SendView> {
                                     ],
                                   )
                               ),
-                              if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              if (selectedModeRetrait != null && selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
                               const SizedBox(height: 20,),
-                              if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
+                              if (selectedModeRetrait != null && selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && selectedDesinaion!.modeRetrait!.isNotEmpty)
                               Text(selectedModeRetrait!.infosModeRetrait.toString(), style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,
@@ -456,7 +472,9 @@ class _SendViewState extends State<SendView> {
 
                               InkWell(
                                 onTap: () {
-                                  if (beneficiaires == null) {
+                                  if (selectedDesinaion == null) {
+                                    Utils.flushBarErrorMessage("Vous devez selectionner une destination", context);
+                                  } else if (beneficiaires == null) {
                                     DemandesViewModel demandesViewModel2 = DemandesViewModel();
                                     demandesViewModel2.beneficiaires([], context);
                                     showModalBottomSheet(

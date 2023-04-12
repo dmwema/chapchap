@@ -219,7 +219,10 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                             onTap: () {
                                                               Navigator.push(
                                                                 context,
-                                                                MaterialPageRoute(builder: (context) => SendView(beneficiaire: beneficiaire,)),
+                                                                MaterialPageRoute(builder: (context) => SendView(
+                                                                  beneficiaire: beneficiaire,
+                                                                  destination: beneficiaire.codePays,
+                                                                )),
                                                               );
                                                             },
                                                             child: Container(

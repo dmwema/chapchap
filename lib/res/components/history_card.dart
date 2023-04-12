@@ -1,7 +1,9 @@
+import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
+import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -122,7 +124,35 @@ class HistoryCard extends StatelessWidget {
                         Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
                       }
                     },
-                  )
+                  ),
+                  if (demande.facture != null)
+                    InkWell(
+                      onTap: () {
+                        BeneficiaireModel beneficiaire = BeneficiaireModel(
+                          codePays: demande.codePaysDest,
+                          idBeneficiaire: demande.idBeneficiaire,
+                          telBeneficiaire: demande.telBeneficiaire,
+                          paysMonnaie: demande.paysCodeMonnaieDest,
+                          nomBeneficiaire: demande.beneficiaire,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SendView(
+                            beneficiaire: beneficiaire,
+                            destination: demande.codePaysDest,
+                            amount: double.parse(demande.montanceDest.toString().replaceAll(',', '.')),
+                          )),
+                        );
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: const Text("Nouveau Transfert similaire", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                      ),
+                    ),
                 ],
               ),
             );
