@@ -35,6 +35,9 @@ class _RegisterViewState extends State<RegisterView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   AuthViewModel authViewModel = AuthViewModel();
 
+  bool confirmPolicy = false;
+  bool confirmNewsletter = false;
+
   @override
   void initState() {
     super.initState();
@@ -226,6 +229,53 @@ class _RegisterViewState extends State<RegisterView> {
                               password: false,
                             ),
                             const SizedBox(height: 20,),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  confirmPolicy = !confirmPolicy;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                    checkColor: Colors.white,
+                                    value: confirmPolicy,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        confirmPolicy = !confirmPolicy;
+                                      });
+                                    },
+                                  ),
+                                  const Flexible(
+                                    child: Text("J'accepte les politiques de chapchap. *"),
+                                  )
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  confirmNewsletter = !confirmNewsletter;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                    checkColor: Colors.white,
+                                    value: confirmNewsletter,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        confirmNewsletter = !confirmNewsletter;
+                                      });
+                                    },
+                                  ),
+                                  const Flexible(
+                                    child: Text("Je m'abonne à la news letter pour recevoir des emails de notification."),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20,),
                             const Text("Les champs avec astérisque(*) sont obligatoire", style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold
@@ -254,6 +304,8 @@ class _RegisterViewState extends State<RegisterView> {
                                     Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
                                   }  else if (_passwordController.text != _confirmPasswordController.text) {
                                     Utils.flushBarErrorMessage("Les deux mot de passes ne correspondent pas", context);
+                                  }  else if (!confirmPolicy) {
+                                    Utils.flushBarErrorMessage("Vous devez accepter nos politiques avant de continuer", context);
                                   } else {
                                     Map data = {
                                       "username": _emailController.text,
