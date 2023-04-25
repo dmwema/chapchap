@@ -42,6 +42,18 @@ class HistoryCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      const Text("Numéro", style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                      ),),
+                      Text(demande.idDemande.toString()),
+                    ],
+                  ),
+                  const SizedBox(height: 10,),
+                  const Divider(),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       const Text("Date", style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
@@ -177,7 +189,13 @@ class HistoryCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontSize: 15,
                 ),),
-                const SizedBox(height: 7,),
+                const SizedBox(height: 5,),
+                Text("#${demande.idDemande}", style: TextStyle(
+                  color: Colors.black.withOpacity(.7),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold
+                ),),
+                const SizedBox(height: 5,),
                 Text("Envoi argent à ${demande.beneficiaire}", style: TextStyle(
                     color: Colors.black.withOpacity(.5),
                     fontSize: 12
