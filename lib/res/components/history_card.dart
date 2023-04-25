@@ -1,5 +1,6 @@
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
+import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
@@ -90,6 +91,18 @@ class HistoryCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      const Text("Mode de retrait", style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),),
+                      Text("${demande.modeRetrait}"),
+                    ],
+                  ),
+                  const SizedBox(height: 10,),
+                  const Divider(),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       const Text("Sens du transfert", style: TextStyle(
                           fontWeight: FontWeight.bold
                       ),),
@@ -123,49 +136,57 @@ class HistoryCard extends StatelessWidget {
                   const SizedBox(height: 10,),
                   const Divider(),
                   const SizedBox(height: 10,),
-                  if (demande.lienPaiement != null && demande.facture == null)
-                  RoundedButton(
-                    title: "Payer",
-                    onPress: () async {
-                      String url = demande.lienPaiement.toString();
-                      var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                      if(urllaunchable){
-                        await launch(url); //launch is from url_launcher package to launch URL
-                        Navigator.pushNamed(context,RoutesName.home);
-                      }else{
-                        Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
-                      }
+                  InkWell(
+                    onTap: () {
+                      BeneficiaireModel beneficiaire = BeneficiaireModel(
+                        codePays: demande.codePaysDest,
+                        idBeneficiaire: demande.idBeneficiaire,
+                        telBeneficiaire: demande.telBeneficiaire,
+                        paysMonnaie: demande.paysCodeMonnaieDest,
+                        nomBeneficiaire: demande.beneficiaire,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SendView(
+                          beneficiaire: beneficiaire,
+                          destination: demande.codePaysDest,
+                          modeRetrait: demande.idModeRetrait,
+                          amount: double.parse(demande.montanceDest.toString().replaceAll(',', '.').replaceAll(' ', '')),
+                        )),
+                      );
                     },
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: const Text("Nouveau Transfert similaire", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                    ),
                   ),
-                  /*
-                  if (demande.facture != null)
+                  if (demande.lienPaiement != null && demande.facture == null)
+                  const SizedBox(height: 10,),
+                  if (demande.lienPaiement != null && demande.facture == null)
                     InkWell(
-                      onTap: () {
-                        BeneficiaireModel beneficiaire = BeneficiaireModel(
-                          codePays: demande.codePaysDest,
-                          idBeneficiaire: demande.idBeneficiaire,
-                          telBeneficiaire: demande.telBeneficiaire,
-                          paysMonnaie: demande.paysCodeMonnaieDest,
-                          nomBeneficiaire: demande.beneficiaire,
-                        );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SendView(
-                            beneficiaire: beneficiaire,
-                            destination: demande.codePaysDest,
-                            amount: double.parse(demande.montanceDest.toString().replaceAll(',', '.')),
-                          )),
-                        );
+                      onTap: () async {
+                        String url = demande.lienPaiement.toString();
+                        var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                        if(urllaunchable){
+                          await launch(url); //launch is from url_launcher package to launch URL
+                          Navigator.pushNamed(context,RoutesName.home);
+                        }else{
+                          Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                        }
                       },
                       child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                           decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: AppColors.primaryColor,
                               borderRadius: BorderRadius.circular(30)
                           ),
-                          child: const Text("Nouveau Transfert similaire", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                          child: const Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
                       ),
-                    ),*/
+                    ),
                 ],
               ),
             );

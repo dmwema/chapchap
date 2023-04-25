@@ -17,7 +17,8 @@ class SendView extends StatefulWidget {
   BeneficiaireModel? beneficiaire;
   String? destination;
   double? amount;
-  SendView({Key? key, this.beneficiaire, this.destination, this.amount}) : super(key: key);
+  int? modeRetrait;
+  SendView({Key? key, this.beneficiaire, this.destination, this.amount, this.modeRetrait}) : super(key: key);
 
   @override
   State<SendView> createState() => _SendViewState();
@@ -34,6 +35,8 @@ class _SendViewState extends State<SendView> {
   BeneficiaireModel? selectedBeneficiaire;
 
   bool loadBeneficiaire = false;
+  bool loadedDestination = false;
+  bool loadedModeRetrait = false;
 
   @override
   void dispose() {
@@ -79,7 +82,11 @@ class _SendViewState extends State<SendView> {
           insert(widget.amount, _fromController);
         });
       }
+      setState(() {
+        loadBeneficiaire = true;
+      });
     }
+
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
@@ -109,12 +116,30 @@ class _SendViewState extends State<SendView> {
                         );
                       default:
                         paysDestinationModel = value.paysDestination.data!;
-                        if (widget.destination != null) {
-                          for (var element in paysDestinationModel!.destination!) {
-                            if (element.codePaysDest == widget.destination) {
-                              selectedDesinaion = element;
+                        if (!loadedDestination) {
+                          if (widget.destination != null) {
+                            for (var element in paysDestinationModel!.destination!) {
+                              if (element.codePaysDest == widget.destination) {
+                                selectedDesinaion = element;
+                              }
                             }
                           }
+                          loadedDestination = true;
+                        }
+
+                        if (selectedDesinaion != null && widget.amount != null && selectedBeneficiaire != null) {
+                          _toController.text = (widget.amount! * double.parse(selectedDesinaion!.rate.toString())).toStringAsFixed(2);
+                        }
+
+                        if (!loadedModeRetrait) {
+                          if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && widget.modeRetrait != null) {
+                            for (var element in selectedDesinaion!.modeRetrait!) {
+                              if (widget.modeRetrait == element.idModeRetrait) {
+                                selectedModeRetrait = element;
+                              }
+                            }
+                          }
+                          loadedModeRetrait = true;
                         }
                         // selectedDesinaion ??= paysDestinationModel!.destination![0];
                         /*if(selectedModeRetrait == null) {
@@ -265,10 +290,11 @@ class _SendViewState extends State<SendView> {
                                                                   selectedDesinaion!.modeRetrait != null
                                                                     && selectedDesinaion!.modeRetrait!.isNotEmpty
                                                                 ) {
-                                                                  selectedModeRetrait = selectedDesinaion!.modeRetrait![0];
+                                                                  selectedModeRetrait = null;
                                                                 }
                                                                 _toController.clear();
                                                                 _fromController.clear();
+                                                                insert(00, _toController);
                                                               });
                                                               Navigator.pop(context);
                                                             },

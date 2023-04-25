@@ -1,5 +1,7 @@
 class DemandeModel {
   int? idDemande;
+  int? idModeRetrait;
+  String? modeRetrait;
   String? lienPaiement;
   String? progression;
   String? facture;
@@ -22,6 +24,8 @@ class DemandeModel {
 
   DemandeModel(
       {this.idDemande,
+        this.idModeRetrait,
+        this.modeRetrait,
         this.lienPaiement,
         this.progression,
         this.facture,
@@ -44,6 +48,8 @@ class DemandeModel {
 
   DemandeModel.fromJson(Map<String, dynamic> json) {
     idDemande = json['id_demande'];
+    idModeRetrait = json['id_mode_retrait'];
+    modeRetrait = json['mode_retrait'];
     lienPaiement = json['lien_paiement'];
     progression = json['progression'];
     facture = json['facture'];
@@ -68,6 +74,8 @@ class DemandeModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id_demande'] = this.idDemande;
+    data['id_mode_retrait'] = this.idModeRetrait;
+    data['mode_retrait'] = this.modeRetrait;
     data['lien_paiement'] = this.lienPaiement;
     data['progression'] = this.progression;
     data['facture'] = this.facture;
