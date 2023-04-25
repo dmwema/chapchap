@@ -10,9 +10,11 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/view_model/services/image_picker_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatefulWidget {
@@ -101,6 +103,107 @@ class _ProfileViewState extends State<ProfileView> {
                                           cacheImage: true, // allow widget to cache image against provided url
                                           showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
                                         ),
+                                      const SizedBox(height: 10,),
+                                      InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              context: context,
+                                              builder: (context) =>  Container(
+                                                padding: const EdgeInsets.all(30),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 20,),
+                                                    InkWell(
+                                                      child: Container(
+                                                        padding: const EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 10),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.black,
+                                                            borderRadius: BorderRadius.circular(30),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: const [
+                                                              Icon(Icons.image, color: Colors.white,),
+                                                              SizedBox(width: 20,),
+                                                              Text("Importer de la gallerie", style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontSize: 14
+                                                              ),)
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onTap: () {
+                                                        ImagePickerService(source: ImageSource.gallery).piclImage().then((value) {
+                                                          if (value != null) {
+                                                            authViewModel.userImage({"img": value}, context: context);
+                                                            Navigator.pop(context);
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                    const SizedBox(height: 10,),
+                                                    InkWell(
+                                                      child: Container(
+                                                        padding: const EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 10),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.black,
+                                                            borderRadius: BorderRadius.circular(30),
+                                                        ),
+
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: const [
+                                                              Icon(Icons.camera_alt, color: Colors.white,),
+                                                              SizedBox(width: 20,),
+                                                              Text("Prendre une photo", style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontSize: 14
+                                                              ),)
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onTap: () async {
+                                                        await ImagePickerService(source: ImageSource.camera).piclImage().then((value) {
+                                                          // request
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.vertical(
+                                                    top: Radius.circular(30),
+                                                  )
+                                              )
+                                          );
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.black
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const [
+                                              Icon(Icons.edit, color: Colors.white, size: 15,),
+                                              SizedBox(width: 5,),
+                                              Text("Modifier la photo", style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white
+                                              ),)
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                       const SizedBox(height: 20,),
                                       if (user != null)
                                         Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(

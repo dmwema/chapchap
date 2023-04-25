@@ -21,4 +21,6 @@ class AppUrl {
   static var deleteRecipient = '$baseUrl/delete_beneficiaire';
   static var applyPromo = '$baseUrl/appliquer_code_promo';
   static var myPromo = '$baseUrl/my_code_promo';
+  static var cancelSend = '$baseUrl/annuler_transfert';
+  static var updateImage = '$baseUrl/up_profil_client';
 }

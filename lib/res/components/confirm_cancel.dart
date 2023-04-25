@@ -1,19 +1,22 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/model/user_model.dart';
 
-class ConfirmDelete extends StatelessWidget {
-  final int recipientId;
+class ConfirmCancel extends StatelessWidget {
+  final int demandeId;
   final DemandesViewModel  demandesViewModel;
+  final TextEditingController _motifController = TextEditingController();
 
-  const ConfirmDelete({Key? key, required this.recipientId, required this.demandesViewModel}) : super(key: key);
+  ConfirmCancel({Key? key, required this.demandeId, required this.demandesViewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      padding: EdgeInsets.only(left: 30, right: 30, top: 30, bottom: MediaQuery.of(context).viewInsets.bottom + 30),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -25,15 +28,32 @@ class ConfirmDelete extends StatelessWidget {
           const SizedBox(height: 10,),
           Column(
             children: const [
-              Text("Voulez-vous vraiment supprimer ce bénéficiaire ?",
+              Text("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Divider(),
+              Text("Des frais de transactions peuvent s'appliquer.",
                 style: TextStyle(
                   color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17,
+                  fontSize: 13,
                 ),
                 textAlign: TextAlign.center,
               ),
             ],
+          ),
+          const SizedBox(height: 10,),
+          CustomFormField(
+            hint: "Motif",
+            label: "Motif",
+            radius: const BorderRadius.all(Radius.circular(10)),
+            controller: _motifController,
+            type: TextInputType.text, password: false,
+            maxLines: 2,
           ),
           const SizedBox(height: 20,),
           Row(
@@ -41,9 +61,18 @@ class ConfirmDelete extends StatelessWidget {
             children: [
               RoundedButton(
                 onPress: () {
-                  demandesViewModel.deleteRecipient(context, recipientId);
+                  if (_motifController.text.isEmpty) {
+                    Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
+                  } else {
+                    Map data = {
+                      "idDemande" : demandeId,
+                      "motif": _motifController.text
+                    };
+                    demandesViewModel.cancelSend(context, data);
+                  }
                 },
-                title: "Supprimer",
+                title: "Confirmer",
+                loading: demandesViewModel.loading,
               ),
               const SizedBox(width: 10,),
               InkWell(

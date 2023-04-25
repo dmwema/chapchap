@@ -17,6 +17,15 @@ class AuthRepository {
     }
   }
 
+  Future<dynamic> userImage (data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getMultipartApiResponse(AppUrl.updateImage, data, context: context, filename: "img");
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> registerApi (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.registerEndPoint, data, context: context);

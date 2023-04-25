@@ -157,20 +157,22 @@ class NetworkApiService extends BaseApiServices {
   @override
   Future getMultipartApiResponse(String url, data, {required BuildContext context, required String filename}) async {
     dynamic responseJson;
+    await getUserData ().then((value) {
+      user = value;
+    });
     try {
       var postUri = Uri.parse(url);
-
       http.MultipartRequest request = http.MultipartRequest("POST", postUri);
+      request.headers["Authorization"] = 'Bearer ${user.token}';
 
       http.MultipartFile multipartFile = await http.MultipartFile.fromPath(filename, data[filename].path);
-
       request.files.add(multipartFile);
 
       http.StreamedResponse response = await request.send();
       var responseData = await http.Response.fromStream(response);
       responseJson = returnResponse(responseData, context);
     } on SocketException {
-      // Navigator.pushNamed(context, RoutesName.network_error);
+      Utils.flushBarErrorMessage("Pas de connexion internet", context);
     }
     return responseJson;
 

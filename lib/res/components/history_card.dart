@@ -1,10 +1,14 @@
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/confirm_cancel.dart';
+import 'package:chapchap/res/components/confirm_delete.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
+import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/views/send_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,15 +35,15 @@ class HistoryCard extends StatelessWidget {
                   const Text("Informations de l'opération", style: TextStyle(
                       fontWeight: FontWeight.w600
                   ),),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Text(demande.progression.toString(),
                       style: TextStyle(
                       fontSize: 13,
                       color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
                   ),),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -49,9 +53,9 @@ class HistoryCard extends StatelessWidget {
                       Text(demande.idDemande.toString()),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -61,9 +65,9 @@ class HistoryCard extends StatelessWidget {
                       Text(demande.date.toString()),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -73,9 +77,9 @@ class HistoryCard extends StatelessWidget {
                       Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}"),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -85,9 +89,9 @@ class HistoryCard extends StatelessWidget {
                       Text("${demande.montanceDest} ${demande.paysCodeMonnaieDest}"),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -97,9 +101,9 @@ class HistoryCard extends StatelessWidget {
                       Text("${demande.modeRetrait}"),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,9 +113,9 @@ class HistoryCard extends StatelessWidget {
                       Text("${demande.paysSrce} vers ${demande.paysDest}"),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -121,9 +125,9 @@ class HistoryCard extends StatelessWidget {
                       Text(demande.beneficiaire.toString()),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -133,9 +137,9 @@ class HistoryCard extends StatelessWidget {
                       Text(demande.telBeneficiaire.toString()),
                     ],
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   const Divider(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 5,),
                   InkWell(
                     onTap: () {
                       BeneficiaireModel beneficiaire = BeneficiaireModel(
@@ -161,7 +165,63 @@ class HistoryCard extends StatelessWidget {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(30)
                         ),
-                        child: const Text("Nouveau Transfert similaire", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Icon(Icons.send_and_archive_outlined, color: Colors.white,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Nouveau Transfert similaire",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13
+                              ),
+                            )
+                          ],
+                        )
+                    ),
+                  ),
+                  if (demande.facture == null)
+                  const SizedBox(height: 10,),
+                  if (demande.facture == null)
+                  InkWell(
+                    onTap: () {
+                      DemandesViewModel demandeViewModel = DemandesViewModel();
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
+                        },
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Icon(Icons.cancel_outlined, color: Colors.white,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Annuler la demande",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13
+                              ),
+                            ),
+                          ],
+                        )
                     ),
                   ),
                   if (demande.lienPaiement != null && demande.facture == null)
@@ -181,10 +241,17 @@ class HistoryCard extends StatelessWidget {
                       child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                           decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
+                              color: CupertinoColors.activeGreen,
                               borderRadius: BorderRadius.circular(30)
                           ),
-                          child: const Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.money, color: Colors.white,),
+                              SizedBox(width: 5,),
+                              Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),),
+                            ],
+                          )
                       ),
                     ),
                 ],

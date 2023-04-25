@@ -187,7 +187,8 @@ class _SendViewState extends State<SendView> {
                                       fontSize: 18,
                                     ),),
                                     const SizedBox(width: 10,),
-                                    Expanded(child: TextFormField(
+                                    Expanded(
+                                        child: TextFormField(
                                       controller: _fromController,
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {

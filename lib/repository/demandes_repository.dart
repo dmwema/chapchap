@@ -2,7 +2,6 @@ import 'package:chapchap/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/data/network/base_api_services.dart';
 import 'package:chapchap/data/network/network_api_service.dart';
-import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_url.dart';
 
 class DemandesRepository {
@@ -101,6 +100,15 @@ class DemandesRepository {
   Future<dynamic> deleteRecipient ({required BuildContext context, required recipientId}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse("${AppUrl.deleteRecipient}/$recipientId", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> cancelSend ({required BuildContext context, required Map data}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.cancelSend, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

@@ -17,6 +17,23 @@ class AuthViewModel with ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> userImage(data, {required BuildContext context}) async {
+    _repository.userImage(data, context: context).then((value) {
+      UserModel user = UserModel.fromJson(value['data']);
+      print("*******************************************************************************");
+      print(value);
+      String message = "Photo de profile profile enrégistrée avec succès!";
+      UserViewModel().updateImage(user).then((value) {
+        Utils.toastMessage(message);
+        print("kkkkkkkkkkkkkkkkkkkkkkkkkkoooooooooooooooooooooookkk");
+        print(user.photoProfil);
+      });
+    }).onError((error, stackTrace) {
+      print("**************** Erreur *********************");
+      print(error.toString());
+    });
+  }
+
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
     await _repository.loginApi(data, context: context).then((value) {

@@ -11,6 +11,13 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
+  Future<bool> updateImage(UserModel user) async {
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString('photoProfil', user.photoProfil.toString());
+    notifyListeners();
+    return true;
+  }
+
   Future<bool> updateUser(UserModel user, bool token, bool reset) async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     if (token) {

@@ -281,6 +281,22 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
+  Future<void>  cancelSend(BuildContext context, Map data) async {
+    setLoading(true);
+    await _repository.cancelSend(context: context, data: data).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value["message"]);
+          Navigator.pop(context);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+          Navigator.pushNamed(context, RoutesName.home);
+        }
+      }
+    });
+  }
+
   Future<void> applyPromo(BuildContext context, Map data) async {
     setLoading(true);
     await _repository.applyPromo(context: context, data: data).then((value) async {
