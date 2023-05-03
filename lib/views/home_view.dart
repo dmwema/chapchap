@@ -106,7 +106,28 @@ class _HomeViewState extends State<HomeView> {
                 fontWeight: FontWeight.w600,
                 color: Colors.black
             ),),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.historyWP);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black
+                ),
+                child: const Text(
+                  "Demandes avec problèmes",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15,),
             ChangeNotifierProvider<DemandesViewModel>(
                 create: (BuildContext context) => demandesViewModel,
                 child: Consumer<DemandesViewModel>(

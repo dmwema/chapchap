@@ -37,7 +37,7 @@ class ConfirmCancel extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Divider(),
-              Text("Des frais de transactions peuvent s'appliquer.",
+              Text("Des frais d'annulation pourraient s'appliquer.",
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 13,
@@ -72,7 +72,6 @@ class ConfirmCancel extends StatelessWidget {
                   }
                 },
                 title: "Confirmer",
-                loading: demandesViewModel.loading,
               ),
               const SizedBox(width: 10,),
               InkWell(

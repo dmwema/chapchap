@@ -58,7 +58,7 @@ class InvoiceCard extends StatelessWidget {
                   fontSize: 14,
                   color: Colors.black.withOpacity(.4),
                 ),),
-                const Text("Enrégistrée", style: TextStyle(
+                Text(demande.progression.toString(), style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.green

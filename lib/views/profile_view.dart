@@ -154,7 +154,6 @@ class _ProfileViewState extends State<ProfileView> {
                                                             color: Colors.black,
                                                             borderRadius: BorderRadius.circular(30),
                                                         ),
-
                                                         child: Center(
                                                           child: Row(
                                                             mainAxisSize: MainAxisSize.min,
@@ -171,7 +170,10 @@ class _ProfileViewState extends State<ProfileView> {
                                                       ),
                                                       onTap: () async {
                                                         await ImagePickerService(source: ImageSource.camera).piclImage().then((value) {
-                                                          // request
+                                                          if (value != null) {
+                                                            authViewModel.userImage({"img": value}, context: context);
+                                                            Navigator.pop(context);
+                                                          }
                                                         });
                                                       },
                                                     ),

@@ -3,19 +3,20 @@ import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/invoice_card.dart';
+import 'package:chapchap/res/components/history_card.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InvoicesView extends StatefulWidget {
-  const InvoicesView({Key? key}) : super(key: key);
+class HistoryWithProblemView extends StatefulWidget {
+  const HistoryWithProblemView({Key? key}) : super(key: key);
 
   @override
-  State<InvoicesView> createState() => _InvoicesViewState();
+  State<HistoryWithProblemView> createState() => _HistoryWithProblemState();
 }
 
-class _InvoicesViewState extends State<InvoicesView> {
+class _HistoryWithProblemState extends State<HistoryWithProblemView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
 
   @override
@@ -23,14 +24,18 @@ class _InvoicesViewState extends State<InvoicesView> {
     super.initState();
     demandesViewModel.myDemandes([], context, null);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Factures",
-        showBack: true,
-      ),
-      drawer: const AppbarDrawer(),
+        appBar: CustomAppBar(
+          showBack: true,
+          title: 'Historique',
+          backUrl: RoutesName.home,
+        ),
+        drawer: const AppbarDrawer(),
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         body: ChangeNotifierProvider<DemandesViewModel>(
             create: (BuildContext context) => demandesViewModel,
             child: Consumer<DemandesViewModel>(
@@ -48,17 +53,10 @@ class _InvoicesViewState extends State<InvoicesView> {
                         child: Text(value.demandeList.message.toString()),
                       );
                     default:
-                      List invoiceList = [];
-                      for (var element in value.demandeList.data) {
-                        DemandeModel demande = DemandeModel.fromJson(element);
-                        if (demande.facture != null && demande.facture != 'null' && demande.facture != '') {
-                          invoiceList.add(element);
-                        }
-                      }
-                      if (invoiceList.isEmpty) {
+                      if (value.demandeList.data!.length == 0) {
                         return Center(
                           child: Text(
-                            "Aucune facture trouvée",
+                            "Aucune transaction éffectuée",
                             style: TextStyle(
                               color: Colors.black.withOpacity(.2),
                             ),
@@ -74,18 +72,16 @@ class _InvoicesViewState extends State<InvoicesView> {
                               itemCount: value.demandeList.data!.length,
                               itemBuilder: (context, index) {
                                 DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                if (current.facture != null) {
-                                  return Column(
+                                return Column(
                                   children: [
-                                    InvoiceCard(
+                                    HistoryCard(
                                       demande: current,
+                                      hasProblem: true,
                                     ),
                                     const SizedBox(height: 5,),
                                     const Divider(),
                                   ],
                                 );
-                                }
-                                return Container();
                               },
                             )),
                           ],

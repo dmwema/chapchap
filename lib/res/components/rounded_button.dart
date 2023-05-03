@@ -29,7 +29,11 @@ class RoundedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30)
         ),
         child: Center(
-          child: loading ? const CircularProgressIndicator(color: Colors.white) :Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+          child: loading ? const SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(color: Colors.white)
+         ) :Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold),),
         ),
       ),
     );

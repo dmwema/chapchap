@@ -1,10 +1,13 @@
+import 'package:chapchap/res/app_colors.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/repository/auth_repository.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AuthViewModel with ChangeNotifier{
   final _repository = AuthRepository();
@@ -20,16 +23,11 @@ class AuthViewModel with ChangeNotifier{
   Future<void> userImage(data, {required BuildContext context}) async {
     _repository.userImage(data, context: context).then((value) {
       UserModel user = UserModel.fromJson(value['data']);
-      print("*******************************************************************************");
-      print(value);
-      String message = "Photo de profile profile enrégistrée avec succès!";
+      String message = "Photo de profil enrégistrée avec succès!";
       UserViewModel().updateImage(user).then((value) {
         Utils.toastMessage(message);
-        print("kkkkkkkkkkkkkkkkkkkkkkkkkkoooooooooooooooooooooookkk");
-        print(user.photoProfil);
       });
     }).onError((error, stackTrace) {
-      print("**************** Erreur *********************");
       print(error.toString());
     });
   }
@@ -40,12 +38,75 @@ class AuthViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          UserModel user = UserModel.fromJson(value['data']);
-          user.token = value['token'];
-          UserViewModel().updateUser(user, true, false).then((value) {
-            Utils.toastMessage("Vous êtes connectés avec succès");
-            Navigator.pushNamed(context, RoutesName.home);
-          });
+          if (value['data'] != null && value['data']['verify_identity_url'] != null) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return Dialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.error_outline_outlined,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                        const SizedBox(height: 20,),
+                        Text(
+                          value['message'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        const SizedBox(height: 20,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                child: const Text("Vérifier l'identité", style: TextStyle(color: Colors.white),),
+                              ),
+                              onTap: () async {
+                                print(value['data']['verify_identity_url']);
+                                String url = value['data']['verify_identity_url'];
+                                var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                                if(urllaunchable){
+                                  await launch(url); //launch is from url_launcher package to launch URL
+                                  Navigator.pop(context);
+                                }else{
+                                  Navigator.pop(context);
+                                  Utils.toastMessage("Impossible d'ouvrir l'url");
+                                }
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            UserModel user = UserModel.fromJson(value['data']);
+            user.token = value['token'];
+            UserViewModel().updateUser(user, true, false).then((value) {
+              Utils.toastMessage("Vous êtes connectés avec succès");
+              Navigator.pushNamed(context, RoutesName.home);
+            });
+          }
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }

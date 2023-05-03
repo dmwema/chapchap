@@ -20,6 +20,7 @@ class HomeCard extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap,
       child: Container(
             width: (MediaQuery.of(context).size.width - 60)  / 2,
             height: h,
@@ -52,7 +53,6 @@ class HomeCard extends StatelessWidget {
               ),
             )
         ),
-      onTap: onTap,
       );
   }
 }

@@ -16,6 +16,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> myDemandesWP (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.myDemandesWPEndPoint , data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> paysDestination (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.paysDestinationsEndPoint , data, context: context, auth: true);
@@ -109,6 +118,9 @@ class DemandesRepository {
   Future<dynamic> cancelSend ({required BuildContext context, required Map data}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.cancelSend, data, context: context, auth: true);
+      Utils.flushBarErrorMessage("message", context);
+      print("response");
+      print(response);
       return response;
     } catch(e) {
       rethrow;

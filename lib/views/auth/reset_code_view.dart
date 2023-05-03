@@ -165,7 +165,7 @@ class ResetCodeView extends StatelessWidget {
                 title: 'Vérifier',
                 loading: false, onPress: () {
                   Navigator.pushNamed(context, RoutesName.newPassword);
-              },
+                },
               ),
             ],
           ),

@@ -10,6 +10,7 @@ import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/coupon_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
+import 'package:chapchap/views/history_w_problemes.dart';
 import 'package:chapchap/views/home_view.dart';
 import 'package:chapchap/views/invoice_detail_view.dart';
 import 'package:chapchap/views/invoices_view.dart';
@@ -40,6 +41,12 @@ class Routes {
       case RoutesName.history:
         return PageTransition(
             child: HistoryView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.historyWP:
+        return PageTransition(
+            child: HistoryWithProblemView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

@@ -14,8 +14,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HistoryCard extends StatelessWidget {
   DemandeModel demande;
+  bool? hasProblem;
 
-  HistoryCard({super.key, required this.demande});
+  HistoryCard({super.key, required this.demande, this.hasProblem});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +48,10 @@ class HistoryCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Numéro", style: TextStyle(
+                      const Text("ID Transaction", style: TextStyle(
                           fontWeight: FontWeight.bold,
                       ),),
-                      Text(demande.idDemande.toString()),
+                      Text("#${demande.idDemande}"),
                     ],
                   ),
                   const SizedBox(height: 5,),
@@ -140,6 +141,7 @@ class HistoryCard extends StatelessWidget {
                   const SizedBox(height: 5,),
                   const Divider(),
                   const SizedBox(height: 5,),
+                  if (hasProblem != true)
                   InkWell(
                     onTap: () {
                       BeneficiaireModel beneficiaire = BeneficiaireModel(
@@ -182,9 +184,9 @@ class HistoryCard extends StatelessWidget {
                         )
                     ),
                   ),
-                  if (demande.facture == null)
+                  if (demande.facture == null && hasProblem != true && hasProblem != true)
                   const SizedBox(height: 10,),
-                  if (demande.facture == null)
+                  if (demande.facture == null && hasProblem != true && hasProblem != true)
                   InkWell(
                     onTap: () {
                       DemandesViewModel demandeViewModel = DemandesViewModel();
@@ -224,9 +226,9 @@ class HistoryCard extends StatelessWidget {
                         )
                     ),
                   ),
-                  if (demande.lienPaiement != null && demande.facture == null)
+                  if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
                   const SizedBox(height: 10,),
-                  if (demande.lienPaiement != null && demande.facture == null)
+                  if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
                     InkWell(
                       onTap: () async {
                         String url = demande.lienPaiement.toString();
@@ -250,6 +252,34 @@ class HistoryCard extends StatelessWidget {
                               Icon(Icons.money, color: Colors.white,),
                               SizedBox(width: 5,),
                               Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),),
+                            ],
+                          )
+                      ),
+                    ),
+                  if (hasProblem == true)
+                    InkWell(
+                      onTap: () {
+                        DemandesViewModel demandeViewModel = DemandesViewModel();
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.edit, color: Colors.white,),
+                              SizedBox(width: 5,),
+                              Text(
+                                "Modifier",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
+                                ),
+                              ),
                             ],
                           )
                       ),

@@ -88,6 +88,23 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
+  Future<void> myDemandesWProblems(dynamic data, BuildContext context, int? n) async {
+    setLoading(true);
+    await _repository.myDemandesWP(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setDemandeList(ApiResponse.completed(value["data"]));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
   Future<void> paysDestinations(dynamic data, BuildContext context) async {
     setLoading(true);
     await _repository.paysDestination(data, context: context).then((value) {
@@ -287,10 +304,10 @@ class DemandesViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          Utils.toastMessage(value["message"]);
-          Navigator.pop(context);
+          Utils.toastMessage("Demande d'annulation envoyée avec succès");
+          Navigator.pushNamed(context, RoutesName.home);
         } else {
-          Utils.flushBarErrorMessage(value['message'], context);
+          Utils.flushBarErrorMessage("Impossible d'éffectuer l'opération. Veuillez réessayer plutard.", context);
           Navigator.pushNamed(context, RoutesName.home);
         }
       }

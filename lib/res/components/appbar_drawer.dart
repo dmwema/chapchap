@@ -72,25 +72,27 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
               showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
             ),
             const SizedBox(width: 10,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "",
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600
+                  ),
                 ),
-              ),
-              const SizedBox(height: 7,),
-              Text(
-                user != null ? user!.emailClient.toString(): "",
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.white.withOpacity(.5),
+                const SizedBox(height: 7,),
+                Text(
+                  user != null ? user!.emailClient.toString(): "",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white.withOpacity(.5),
+                  ),
                 ),
+              ],
               ),
-            ],
             )
           ],
         ),
