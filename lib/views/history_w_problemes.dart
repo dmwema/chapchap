@@ -22,7 +22,7 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
   @override
   void initState() {
     super.initState();
-    demandesViewModel.myDemandes([], context, null);
+    demandesViewModel.myDemandesWProblems([], context, null);
   }
 
   @override
@@ -30,7 +30,7 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
     return Scaffold(
         appBar: CustomAppBar(
           showBack: true,
-          title: 'Historique',
+          title: 'Demandes avec problemes',
           backUrl: RoutesName.home,
         ),
         drawer: const AppbarDrawer(),

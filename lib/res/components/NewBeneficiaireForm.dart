@@ -48,7 +48,12 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.only(
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 20
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

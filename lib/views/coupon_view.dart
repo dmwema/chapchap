@@ -1,6 +1,5 @@
 
 import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/promo.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -94,7 +93,7 @@ class _CouponViewState extends State<CouponView> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               const Text(
-                                                'Rabis de 10\$ !',
+                                                'Rabais de 10\$ !',
                                                 style: TextStyle(
                                                   color: Colors.orange,
                                                   fontWeight: FontWeight.bold,
@@ -202,7 +201,7 @@ class _CouponViewState extends State<CouponView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Rabis de 10\$ !',
+                          'Rabais de 10\$ !',
                           style: TextStyle(
                             color: Colors.orange,
                             fontWeight: FontWeight.bold,

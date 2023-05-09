@@ -1,9 +1,7 @@
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/confirm_cancel.dart';
-import 'package:chapchap/res/components/confirm_delete.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/res/components/modal/change_beneficiaire_modal.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -12,14 +10,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HistoryCard extends StatelessWidget {
+class HistoryCard extends StatefulWidget {
   DemandeModel demande;
   bool? hasProblem;
 
   HistoryCard({super.key, required this.demande, this.hasProblem});
 
   @override
+  State<HistoryCard> createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends State<HistoryCard> {
+  @override
   Widget build(BuildContext context) {
+    DemandeModel demande = widget.demande;
+    bool? hasProblem = widget.hasProblem;
+
     return InkWell(
       onTap: () {
         showModalBottomSheet(
@@ -37,6 +43,7 @@ class HistoryCard extends StatelessWidget {
                       fontWeight: FontWeight.w600
                   ),),
                   const SizedBox(height: 5,),
+                  if (demande.progression != null)
                   Text(demande.progression.toString(),
                       style: TextStyle(
                       fontSize: 13,
@@ -260,20 +267,31 @@ class HistoryCard extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         DemandesViewModel demandeViewModel = DemandesViewModel();
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (context) {
+                            return ChangeBeneficiaireModal(demande: demande,);
+                          }
+                        );
                       },
                       child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: Row(
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
                               Icon(Icons.edit, color: Colors.white,),
                               SizedBox(width: 5,),
                               Text(
-                                "Modifier",
+                                "Changer de beneficiaire",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -333,6 +351,7 @@ class HistoryCard extends StatelessWidget {
                     fontSize: 16
                 ),),
                 const SizedBox(height: 5,),
+                if (demande.progression != null)
                 Text(demande.progression.toString(), style: TextStyle(
                     color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
                     fontWeight: FontWeight.w500,

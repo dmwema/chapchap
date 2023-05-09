@@ -2,12 +2,8 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/appbar_drawer.dart';
-import 'package:chapchap/res/components/country_select_modal.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/res/components/payment_methods_modal.dart';
-import 'package:chapchap/res/components/recipient_card.dart';
-import 'package:chapchap/res/components/send_bottom_modal.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +68,27 @@ class _HistoryViewState extends State<HistoryView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, RoutesName.historyWP);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.black
+                                ),
+                                child: const Text(
+                                  "Demandes avec problèmes",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 15,),
                             Expanded(child: ListView.builder(
                               itemCount: value.demandeList.data!.length,
                               itemBuilder: (context, index) {
