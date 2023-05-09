@@ -1,6 +1,7 @@
 class DemandeModel {
   int? idDemande;
   int? idModeRetrait;
+  int? idAnnulation;
   String? modeRetrait;
   String? lienPaiement;
   String? progression;
@@ -23,32 +24,37 @@ class DemandeModel {
   String? paysCodeMonnaieDest;
 
   DemandeModel(
-      {this.idDemande,
-        this.idModeRetrait,
-        this.modeRetrait,
-        this.lienPaiement,
-        this.progression,
-        this.facture,
-        this.date,
-        this.datePaidBen,
-        this.montantNet,
-        this.montanceSrce,
-        this.montanceDest,
-        this.codePaysSrce,
-        this.codePaysDest,
-        this.paysSrce,
-        this.paysDest,
-        this.idBeneficiaire,
-        this.beneficiaire,
-        this.telBeneficiaire,
-        this.paysMonnaieSrce,
-        this.paysCodeMonnaieSrce,
-        this.paysMonnaieDest,
-        this.paysCodeMonnaieDest});
+    {
+      this.idDemande,
+      this.idAnnulation,
+      this.idModeRetrait,
+      this.modeRetrait,
+      this.lienPaiement,
+      this.progression,
+      this.facture,
+      this.date,
+      this.datePaidBen,
+      this.montantNet,
+      this.montanceSrce,
+      this.montanceDest,
+      this.codePaysSrce,
+      this.codePaysDest,
+      this.paysSrce,
+      this.paysDest,
+      this.idBeneficiaire,
+      this.beneficiaire,
+      this.telBeneficiaire,
+      this.paysMonnaieSrce,
+      this.paysCodeMonnaieSrce,
+      this.paysMonnaieDest,
+      this.paysCodeMonnaieDest
+    }
+  );
 
   DemandeModel.fromJson(Map<String, dynamic> json) {
     idDemande = json['id_demande'];
     idModeRetrait = json['id_mode_retrait'];
+    idAnnulation = json['id_annulation'];
     modeRetrait = json['mode_retrait'];
     lienPaiement = json['lien_paiement'];
     progression = json['progression'];
@@ -75,6 +81,7 @@ class DemandeModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id_demande'] = this.idDemande;
     data['id_mode_retrait'] = this.idModeRetrait;
+    data['id_annulation'] = idAnnulation;
     data['mode_retrait'] = this.modeRetrait;
     data['lien_paiement'] = this.lienPaiement;
     data['progression'] = this.progression;

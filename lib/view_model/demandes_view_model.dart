@@ -214,6 +214,26 @@ class DemandesViewModel with ChangeNotifier{
     return false;
   }
 
+  Future<void> changeBeneficiaire(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.changeBeneficiaire(data, context: context).then((value) {
+      if (value != null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage("Demande modifiée avec succès.");
+          Navigator.pushNamed(context, RoutesName.history);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+          setLoading(false);
+        }
+      }
+      setLoading(false);
+    }).onError((error, stackTrace) {
+      Utils.toastMessage("Une erreur est suvenue, veuillez ressayer plutard");
+      setLoading(false);
+    });
+  }
+
   Future<dynamic> transfert(dynamic data, BuildContext context) async {
     setLoading(true);
     await _repository.transfert(data, context: context).then((value) async {

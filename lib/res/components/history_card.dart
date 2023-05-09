@@ -191,9 +191,19 @@ class _HistoryCardState extends State<HistoryCard> {
                         )
                     ),
                   ),
-                  if (demande.facture == null && hasProblem != true && hasProblem != true)
+                  if (
+                    demande.idAnnulation == null
+                    && demande.facture == null
+                    && hasProblem != true
+                    && hasProblem != true
+                  )
                   const SizedBox(height: 10,),
-                  if (demande.facture == null && hasProblem != true && hasProblem != true)
+                  if (
+                    demande.idAnnulation == null
+                    && demande.facture == null
+                    && hasProblem != true
+                    && hasProblem != true
+                  )
                   InkWell(
                     onTap: () {
                       DemandesViewModel demandeViewModel = DemandesViewModel();

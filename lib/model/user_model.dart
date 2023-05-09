@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class UserModel {
   int? time;
   int? idClient;
@@ -11,6 +13,7 @@ class UserModel {
   String? photoProfil;
   String? emailClient;
   String? adresse;
+  int? soldeParrainage;
   String? codeParrainage;
   String? validationCompte;
   int? commissionParrainage;
@@ -23,6 +26,7 @@ class UserModel {
       {this.time,
         this.idClient,
         this.client,
+        this.soldeParrainage,
         this.nomClient,
         this.prenomClient,
         this.telClient,
@@ -45,6 +49,7 @@ class UserModel {
     idClient = json['idClient'];
     client = json['client'];
     nomClient = json['nomClient'];
+    soldeParrainage = json['solde_parrainage'];
     prenomClient = json['prenomClient'];
     telClient = json['telClient'];
     username = json['username'];
@@ -68,6 +73,7 @@ class UserModel {
     data['idClient'] = this.idClient;
     data['adresse'] = this.adresse;
     data['client'] = this.client;
+    data['solde_parrainage'] = soldeParrainage;
     data['token'] = this.token;
     data['nomClient'] = this.nomClient;
     data['prenomClient'] = this.prenomClient;

@@ -2,6 +2,7 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,57 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
+          Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5 - 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(demande.date.toString(), style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),),
+                    const SizedBox(height: 5,),
+                    Text("#${demande.idDemande}", style: TextStyle(
+                        color: Colors.black.withOpacity(.7),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold
+                    ),),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5 - 30,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16
+                    ),),
+                    const SizedBox(height: 5,),
+                    if (demande.progression != null)
+                      Text(demande.progression.toString(), style: TextStyle(
+                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 11
+                      ),)
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Divider(),
+          const SizedBox(height: 10,),
           const Text(
             "Si vous ne trouvez pas le bénéficiaire, vous pouvez l'ajouter en faisant :",
             style: TextStyle(
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w500
             ),
           ),
           const SizedBox(height: 5,),
@@ -288,7 +336,16 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
             const SizedBox(height: 15,),
           InkWell(
             onTap: () {
-
+              if (selectedBeneficiaire == null) {
+                Utils.flushBarErrorMessage("Vous devez séléctionner un bénéficiaire.", context);
+              } else {
+                Map data = {
+                  "idDemande": demande.idDemande,
+                  "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire
+                };
+                DemandesViewModel changeBeneficiaireDemande = DemandesViewModel();
+                demandeViewModel.changeBeneficiaire(data, context);
+              }
             },
             child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),

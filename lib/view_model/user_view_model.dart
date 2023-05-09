@@ -28,6 +28,9 @@ class UserViewModel with ChangeNotifier {
       sp.setString('client', user.client.toString());
       sp.setString('adresse', user.adresse.toString());
       sp.setString('nomClient', user.nomClient.toString());
+      if (user.soldeParrainage != null) {
+        sp.setInt('soldeParrainage', user.soldeParrainage!);
+      }
       sp.setString('prenomClient', user.prenomClient.toString());
       sp.setString('telClient', user.telClient.toString());
       sp.setString('username', user.username.toString());
@@ -37,6 +40,9 @@ class UserViewModel with ChangeNotifier {
       sp.setString('photoProfil', user.photoProfil.toString());
       sp.setString('emailClient', user.emailClient.toString());
       sp.setString('codeParrainage', user.codeParrainage.toString());
+      if (user.paysMonnaie != null) {
+        sp.setString('paysMonnaie', user.paysMonnaie.toString());
+      }
       sp.setString('validationCompte', user.validationCompte.toString());
       if (user.commissionParrainage != null) {
         sp.setInt('commissionParrainage', user.commissionParrainage!);
@@ -55,9 +61,11 @@ class UserViewModel with ChangeNotifier {
     String? token = sp.getString('token');
     String? adresse = sp.getString('adresse');
     String? client = sp.getString('client');
+    int? soldeParrainage = sp.getInt('soldeParrainage');
     String? nomClient = sp.getString('nomClient');
     String? prenomClient = sp.getString('prenomClient');
     String? telClient = sp.getString('telClient');
+    String? paysMonnaie = sp.getString('paysMonnaie');
     String? username = sp.getString('username');
     int? idTypeClient = sp.getInt('idTypeClient');
     String? photoProfil = sp.getString('photoProfil');
@@ -76,12 +84,14 @@ class UserViewModel with ChangeNotifier {
       emailClient: emailClient,
       idTypeClient: idTypeClient,
       nomClient: nomClient,
+      paysMonnaie: paysMonnaie,
       photoProfil: photoProfil,
       prenomClient: prenomClient,
       telClient: telClient,
       token: token,
       username: username,
       idPays: idPays,
+      soldeParrainage: soldeParrainage,
       adresse: adresse,
       validationCompte: validationCompte,
       codePays: codePays
