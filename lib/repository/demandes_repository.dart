@@ -25,6 +25,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> downloadInvoice(String url, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(url , [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> changeBeneficiaire (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.changeBeneficiaire , data, context: context, auth: true);

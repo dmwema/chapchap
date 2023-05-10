@@ -233,7 +233,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                           },
                         ),
                         const Flexible(
-                          child: Text("Je confirme que le numéro entré est correcte. En cas d'erreur, ChapChap n'est pas responsable."),
+                          child: Text("Je confirme que le numéro entré est correct. En cas d'erreur, ChapChap n'est pas responsable et aucun remboursement ne pourra être généré.."),
                         )
                       ],
                     ),

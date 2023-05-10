@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/repository/demandes_repository.dart';
@@ -212,6 +215,27 @@ class DemandesViewModel with ChangeNotifier{
       setLoading(false);
     });
     return false;
+  }
+  Future<dynamic> getFileContent(String url, {required BuildContext context}) async {
+    dynamic res = await _repository.downloadInvoice(url, context: context);
+    dynamic response = res;
+
+    if (response != null) {
+      final Directory? appDir = Platform.isAndroid
+          ? await getExternalStorageDirectory()
+          : await getApplicationDocumentsDirectory();
+      String tempPath = appDir!.path;
+      final String fileName =
+          "${DateTime
+              .now()
+              .microsecondsSinceEpoch}.pdf";
+      File file = File('$tempPath/$fileName');
+      if (!await file.exists()) {
+        await file.create();
+      }
+      // await file.writeAsBytes(response);
+      return file;
+    }
   }
 
   Future<void> changeBeneficiaire(dynamic data, BuildContext context) async {

@@ -37,7 +37,6 @@ class NetworkApiService extends BaseApiServices {
       ).timeout(const Duration(seconds: 120));
       responseJson = returnResponse(response, context);
     } on SocketException {
-      //Navigator.pushNamed(context, RoutesName.network_error);
       return;
     }
     return responseJson;

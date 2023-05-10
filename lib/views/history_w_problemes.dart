@@ -56,7 +56,7 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
                       if (value.demandeList.data!.length == 0) {
                         return Center(
                           child: Text(
-                            "Aucune transaction éffectuée",
+                            "Aucune demande avec problème signalée.",
                             style: TextStyle(
                               color: Colors.black.withOpacity(.2),
                             ),
