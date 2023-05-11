@@ -4,6 +4,7 @@ import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
@@ -217,8 +218,7 @@ class DemandesViewModel with ChangeNotifier{
     return false;
   }
   Future<dynamic> getFileContent(String url, {required BuildContext context}) async {
-    dynamic res = await _repository.downloadInvoice(url, context: context);
-    dynamic response = res;
+    Response response = await _repository.downloadInvoice(url, context: context);
 
     if (response != null) {
       final Directory? appDir = Platform.isAndroid
@@ -233,7 +233,7 @@ class DemandesViewModel with ChangeNotifier{
       if (!await file.exists()) {
         await file.create();
       }
-      // await file.writeAsBytes(response);
+      await file.writeAsBytes(response.bodyBytes);
       return file;
     }
   }

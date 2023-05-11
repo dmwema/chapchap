@@ -138,7 +138,9 @@ class _ProfileViewState extends State<ProfileView> {
                                                         ),
                                                       ),
                                                       onTap: () {
-                                                        ImagePickerService(source: ImageSource.gallery).piclImage().then((value) {
+                                                        ImagePickerService(
+                                                          source: ImageSource.gallery
+                                                        ).piclImage().then((value) {
                                                           if (value != null) {
                                                             authViewModel.userImage({"img": value}, context: context);
                                                             Navigator.pop(context);

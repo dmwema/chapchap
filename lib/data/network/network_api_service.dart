@@ -77,7 +77,7 @@ class NetworkApiService extends BaseApiServices {
 
   @override
   Future getPostDownloadApiResponse(String url, dynamic data, {required BuildContext context, bool auth = false, String contentType = "application/json"}) async {
-    dynamic responseJson;
+    dynamic response;
 
     await getUserData ().then((value) {
       user = value;
@@ -92,20 +92,18 @@ class NetworkApiService extends BaseApiServices {
       'Authorization': 'Bearer ${user.token}'
     };
     try {
-      http.Response response = await http.post(
+      response = await http.post(
         Uri.parse(url),
         body: jsonEncode(data),
         headers: auth? header_auth: header,
       ).timeout(const Duration(seconds: 120));
-
-      responseJson = response;
 
     } on SocketException {
       //Navigator.pushNamed(context, RoutesName.network_error);
     } catch (e) {
       rethrow;
     }
-    return responseJson;
+    return response;
   }
 
   @override
