@@ -76,6 +76,39 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
+  Future getPostDownloadApiResponse(String url, dynamic data, {required BuildContext context, bool auth = false, String contentType = "application/json"}) async {
+    dynamic responseJson;
+
+    await getUserData ().then((value) {
+      user = value;
+    });
+
+    var header = {
+      'Content-Type': contentType
+    };
+
+    var header_auth = {
+      'Content-Type': contentType,
+      'Authorization': 'Bearer ${user.token}'
+    };
+    try {
+      http.Response response = await http.post(
+        Uri.parse(url),
+        body: jsonEncode(data),
+        headers: auth? header_auth: header,
+      ).timeout(const Duration(seconds: 120));
+
+      responseJson = response;
+
+    } on SocketException {
+      //Navigator.pushNamed(context, RoutesName.network_error);
+    } catch (e) {
+      rethrow;
+    }
+    return responseJson;
+  }
+
+  @override
   Future getDeleteApiResponse(String url, {required BuildContext context, bool auth = true, String contentType = "application/json"}) async {
     dynamic responseJson;
 

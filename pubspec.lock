@@ -5,10 +5,10 @@ packages:
     dependency: "direct main"
     description:
       name: another_flushbar
-      sha256: fa09f8a4ca582c417669b7b1d0e85ce65bd074d80bb0dcbb1302ad1b22bdc3ef
+      sha256: "19bf9520230ec40b300aaf9dd2a8fefcb277b25ecd1c4838f530566965befc2a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.12.29"
+    version: "1.12.30"
   archive:
     dependency: transitive
     description:
@@ -425,10 +425,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "271e0448e82268b3fa1cb2a48e4a911cbc2135587123d7df8e7ca703c5b10da2"
+      sha256: cc3e183c6dc00b24f3d07a913cc30f4fb7b54ec9aac1c135df27e3b5faf487be
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.6+11"
+    version: "0.8.6+12"
   image_picker_for_web:
     dependency: transitive
     description:
