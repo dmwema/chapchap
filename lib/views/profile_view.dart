@@ -318,7 +318,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),),
                               const SizedBox(height: 5,),
                               const Divider(),
-                              const SizedBox(height: 15,),
+                              const SizedBox(height: 5,),
                               Text("Adresse", style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black.withOpacity(.6)
@@ -328,15 +328,21 @@ class _ProfileViewState extends State<ProfileView> {
                                   fontSize: 17,
                                   fontWeight: FontWeight.w600
                               ),),
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
                               const SizedBox(height: 5,),
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
                               const Divider(),
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
                               const SizedBox(height: 5,),
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
                               Text("Solde Parrainage", style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black.withOpacity(.6)
                               ),),
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
                               const SizedBox(height: 5,),
-                              Text(user!.soldeParrainage != null && user!.soldeParrainage != 'null' ? "${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}" : "-", style: const TextStyle(
+                              if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
+                              Text("${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}", style: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w600
                               ),),

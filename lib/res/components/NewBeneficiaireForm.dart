@@ -263,7 +263,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                   }  else if (_telConfirmController.text.isEmpty) {
                     Utils.flushBarErrorMessage("L'adresse est obligatoire", context);
                   } else if (_adresseController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Saisissez le champs de confirmation du nuéro de téléphone", context);
+                    Utils.flushBarErrorMessage("Saisissez le champs de confirmation du numéro de téléphone", context);
                   }  else if (_telController.text != _telConfirmController.text) {
                     Utils.flushBarErrorMessage("Les deux numéros ne correspondent pas", context);
                   } else if (selectedDesinaion!.codePaysDest == "ca" && _emailController.text.isEmpty) {

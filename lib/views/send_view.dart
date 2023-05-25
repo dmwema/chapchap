@@ -141,17 +141,6 @@ class _SendViewState extends State<SendView> {
                           }
                           loadedModeRetrait = true;
                         }
-                        // selectedDesinaion ??= paysDestinationModel!.destination![0];
-                        /*if(selectedModeRetrait == null) {
-                          if (
-                          paysDestinationModel!.destination![0].modeRetrait != null
-                              && paysDestinationModel!.destination![0].modeRetrait!.isNotEmpty
-                          ) {
-                            selectedModeRetrait = paysDestinationModel!
-                                .destination![0]
-                                .modeRetrait![0];
-                          }
-                        }*/
                         return Padding(
                           padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom + 20,

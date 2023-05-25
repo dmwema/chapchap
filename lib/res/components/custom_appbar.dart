@@ -5,7 +5,7 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   bool showBack;
   bool red;
