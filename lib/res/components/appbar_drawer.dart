@@ -191,11 +191,26 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                     ),),
                     const SizedBox(height: 5,),
                     if (user != null)
-                    Text(user!.codeParrainage.toString(), style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      color: AppColors.primaryColor
-                    ),)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(user!.codeParrainage.toString(), style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: AppColors.primaryColor
+                        ),),
+                        // Container(
+                        //   width: 30,
+                        //   height: 30,
+                        //   padding: EdgeInsets.all(5),
+                        //   decoration: BoxDecoration(
+                        //     color: AppColors.primaryColor,
+                        //     borderRadius: BorderRadius.circular(20)
+                        //   ),
+                        //   child: const Icon(Icons.share_outlined, size: 15, color: Colors.white,),
+                        // )
+                      ],
+                    )
                   ],
                 ),
                 onTap: () {
