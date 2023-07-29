@@ -91,8 +91,8 @@ class InvoiceDetailView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)
                         ),
                         padding: EdgeInsets.all(15),
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Icon(Icons.delete_outline_rounded, color: Colors.white,),
                             SizedBox(width: 10,),
                             Text("Supprimer", style: TextStyle(
@@ -102,7 +102,7 @@ class InvoiceDetailView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    const SizedBox(width: 15,),
                     InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RoutesName.pay);
@@ -113,8 +113,8 @@ class InvoiceDetailView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)
                         ),
                         padding: EdgeInsets.all(15),
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Icon(Icons.money, color: Colors.white,),
                             SizedBox(width: 10,),
                             Text("Payer", style: TextStyle(

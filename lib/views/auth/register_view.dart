@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
@@ -30,6 +32,9 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
 
+  bool loading = false;
+  var _openResult = 'Unknown';
+
   PaysModel? selectedPays;
   List paysList = [];
   DemandesViewModel demandesViewModel = DemandesViewModel();
@@ -43,6 +48,18 @@ class _RegisterViewState extends State<RegisterView> {
     super.initState();
     demandesViewModel.paysActifs([], context);
   }
+
+  Future<void> openFile(String filePath) async {
+    final result = await OpenFilex.open(filePath);
+
+    setState(() {
+      _openResult = "type=${result.type}  message=${result.message}";
+      loading = false;
+    });
+  }
+
+  bool loadingPdf1 = false;
+  bool loadingPdf2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +133,7 @@ class _RegisterViewState extends State<RegisterView> {
                               controller: _confirmPasswordController,
                               hint: "Confirmer le mot de passe *",
                               password: true,
-                              prefixIcon: Icon(Icons.lock_person_outlined),
+                              prefixIcon: const Icon(Icons.lock_person_outlined),
                             ),
                             const SizedBox(height: 20,),
                             InkWell(
@@ -252,6 +269,108 @@ class _RegisterViewState extends State<RegisterView> {
                                 ],
                               ),
                             ),
+                            Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        if (!loadingPdf1) {
+                                          setState(() {
+                                            loadingPdf1 = true;
+                                          });
+                                          DemandesViewModel demandeVM = DemandesViewModel();
+                                          File file = await demandeVM.getFileContent("https://chapchap.ca/privacy_policy", context: context);
+                                          try {
+                                            openFile(file.path);
+                                          } catch (error) {
+                                            Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                                          }
+
+                                          setState(() {
+                                            loadingPdf1 = false;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              if (!loadingPdf1)
+                                                const Icon(Icons.download, color: Colors.white, size: 16),
+                                              if (loadingPdf1)
+                                                const SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2,),
+                                                ),
+                                              const SizedBox(width: 10,),
+                                              const Text("Politique de confidentialité", style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12
+                                              ),),
+                                            ],
+                                          )
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    InkWell(
+                                      onTap: () async {
+                                        if (!loadingPdf2) {
+                                          setState(() {
+                                            loadingPdf2 = true;
+                                          });
+                                          DemandesViewModel demandeVM = DemandesViewModel();
+                                          File file = await demandeVM.getFileContent("https://chapchap.ca/terms_of_condition", context: context);
+                                          try {
+                                            openFile(file.path);
+                                          } catch (error) {
+                                            Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                                          }
+
+                                          setState(() {
+                                            loadingPdf2 = false;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              if (!loadingPdf2)
+                                                const Icon(Icons.download, color: Colors.white, size: 16),
+                                              if (loadingPdf2)
+                                                const SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2,),
+                                                ),
+                                              SizedBox(width: 10,),
+                                              Text("Conditions d'utilisation", style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12
+                                              ),),
+                                            ],
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20,),
                             InkWell(
                               onTap: () {
                                 setState(() {
