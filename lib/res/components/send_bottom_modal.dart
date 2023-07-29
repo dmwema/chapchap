@@ -21,6 +21,9 @@ class _SendBottomModalState extends State<SendBottomModal> {
   bool loadingPromoSucces = false;
   bool load = false;
   double montantSrc = 0;
+  double montantDest = 0;
+  bool fromToSens = true;
+  double rate = 0;
   double promoRabais = 0;
   final TextEditingController _promoContoller = TextEditingController();
   @override
@@ -28,7 +31,10 @@ class _SendBottomModalState extends State<SendBottomModal> {
     if (!load) {
       setState(() {
         montantSrc = double.parse(widget.data["montant_srce"]);
+        montantDest = double.parse(widget.data["montant_dest"]);
         load = true;
+        rate = widget.data["rate"];
+        fromToSens = widget.data["fromToSens"];
       });
     }
     return Column(
@@ -325,6 +331,17 @@ class _SendBottomModalState extends State<SendBottomModal> {
                   ),
                   InkWell(
                     onTap: () {
+                      double source = 0;
+                      double destination = 0;
+
+                      if (fromToSens) {
+                        source = montantSrc;
+                        destination = montantSrc * rate;
+                      } else {
+                        destination = montantDest;
+                        source = montantDest / rate;
+                      }
+
                       if (!loading) {
                         setState(() {
                           loading = true;
@@ -333,8 +350,8 @@ class _SendBottomModalState extends State<SendBottomModal> {
                           "idBeneficiaire": widget.data["idBeneficiaire"],
                           "codePromo": _promoContoller.text,
                           "code_pays_srce": widget.data["code_pays_srce"],
-                          "montant_srce": montantSrc,
-                          "montant_dest":widget.data["montant_dest"],
+                          "montant_srce": source,
+                          "montant_dest": destination,
                           "code_pays_dest": widget.data["code_pays_dest"],
                           "id_mode_retrait": widget.data["id_mode_retrait"]
                         };
@@ -345,8 +362,6 @@ class _SendBottomModalState extends State<SendBottomModal> {
                           });
                         });
                       }
-
-                      //Navigator.pushNamed(context, RoutesName.sendSuccess);
                     },
                     child: Container(
                         width: (MediaQuery.of(context).size.width - 40) * 0.5,

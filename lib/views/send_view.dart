@@ -33,6 +33,7 @@ class _SendViewState extends State<SendView> {
   ModeRetrait?  selectedModeRetrait;
   List? beneficiaires;
   BeneficiaireModel? selectedBeneficiaire;
+  bool fromToToSens = true;
 
   bool loadBeneficiaire = false;
   bool loadedDestination = false;
@@ -181,6 +182,9 @@ class _SendViewState extends State<SendView> {
                                       controller: _fromController,
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {
+                                        setState(() {
+                                          fromToToSens = true;
+                                        });
                                         if (selectedDesinaion != null) {
                                           if (value != "") {
                                             insert(double.parse(value) * double.parse(selectedDesinaion!.rate.toString()), _toController);
@@ -232,6 +236,9 @@ class _SendViewState extends State<SendView> {
                                             controller: _toController,
                                             keyboardType: TextInputType.number,
                                             onChanged: (value) {
+                                              setState(() {
+                                                fromToToSens = false;
+                                              });
                                               if (selectedDesinaion != null) {
                                                 if (value != "") {
                                                   insert(double.parse(value) / double.parse(selectedDesinaion!.rate.toString()), _fromController);
@@ -736,6 +743,8 @@ class _SendViewState extends State<SendView> {
                                         "code_pays_srce": paysDestinationModel!.codePaysSrce,
                                         "montant_srce": _fromController.text,
                                         "montant_dest":_toController.text,
+                                        "fromToSens": fromToToSens,
+                                        "rate": double.parse(selectedDesinaion!.rate.toString()),
                                         "code_pays_dest": selectedDesinaion!.codePaysDest,
                                         "id_mode_retrait": selectedModeRetrait == null ? null : selectedModeRetrait!.idModeRetrait,
                                         "beneficiaire": selectedBeneficiaire,
