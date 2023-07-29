@@ -70,6 +70,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> beneficiairesArchive (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.beneficiairesArchiveEndPoint , data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> paysActif (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.paysActifsEndPoint, data, context: context, auth: true);
@@ -127,6 +136,24 @@ class DemandesRepository {
   Future<dynamic> deleteRecipient ({required BuildContext context, required recipientId}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse("${AppUrl.deleteRecipient}/$recipientId", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> archiveRecipient ({required BuildContext context, required recipientId}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.archiveRecipient}/$recipientId", [], context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> desarchiveRecipient ({required BuildContext context, required recipientId}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.desarchiveRecipient}/$recipientId", [], context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

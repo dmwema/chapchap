@@ -18,6 +18,7 @@ import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:chapchap/views/auth/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
+import 'package:chapchap/views/recipient_archive.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
@@ -59,6 +60,12 @@ class Routes {
       case RoutesName.recipeints:
         return PageTransition(
             child: RecipientsView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.recipeintsArchive:
+        return PageTransition(
+            child: RecipientsArchiveView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

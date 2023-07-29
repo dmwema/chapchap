@@ -6,6 +6,7 @@ class RoutesName {
   static const String historyWP = 'history_screen_wp';
   static const String exchange = 'exchange_screen';
   static const String recipeints = 'recipeints_screen';
+  static const String recipeintsArchive = 'recipeints_screen_archive';
   static const String profile = 'profile_screen';
 
   static const String splash = 'splash_screen';

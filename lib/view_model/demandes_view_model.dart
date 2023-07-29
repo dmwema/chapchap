@@ -177,6 +177,23 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
+  Future<void> beneficiairesArchive(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.beneficiairesArchive(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setBeneficiairesList(ApiResponse.completed(value["data"]));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
   Future<void> paysActifs(dynamic data, BuildContext context) async {
     setLoading(true);
     await _repository.paysActif(data, context: context).then((value) {
@@ -330,6 +347,36 @@ class DemandesViewModel with ChangeNotifier{
   Future<void>  deleteRecipient(BuildContext context, int id) async {
     setLoading(true);
     await _repository.deleteRecipient(context: context, recipientId: id).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value["message"]);
+          Navigator.pushNamed(context, RoutesName.recipeints);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
+  }
+
+  Future<void>  archiveRecipient(BuildContext context, int id) async {
+    setLoading(true);
+    await _repository.archiveRecipient(context: context, recipientId: id).then((value) async {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value["message"]);
+          Navigator.pushNamed(context, RoutesName.recipeints);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    });
+  }
+
+  Future<void>  desarchiveRecipient(BuildContext context, int id) async {
+    setLoading(true);
+    await _repository.desarchiveRecipient(context: context, recipientId: id).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
