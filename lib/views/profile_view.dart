@@ -44,9 +44,16 @@ class _ProfileViewState extends State<ProfileView> {
     demandesViewModel.paysActifs([], context);
   }
 
+  bool loadEmail = false;
+  bool loadSMS = false;
+
   Future<void> _openUrl(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
+      setState(() {
+        loadEmail = false;
+        loadSMS = false;
+      });
     } else {
       throw 'Could not launch $url';
     }
@@ -439,7 +446,10 @@ class _ProfileViewState extends State<ProfileView> {
                                                   const SizedBox(height: 15,),
                                                   InkWell(
                                                     onTap: () {
-                                                      if (user != null) {
+                                                      if (user != null && !loadEmail && !loadSMS) {
+                                                        setState(() {
+                                                          loadEmail = true;
+                                                        });
                                                         _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
                                                       }
                                                     },
@@ -449,9 +459,16 @@ class _ProfileViewState extends State<ProfileView> {
                                                           color: AppColors.primaryColor,
                                                           borderRadius: BorderRadius.circular(5)
                                                       ),
-                                                      child: const Row(
+                                                      child: Row(
                                                         children: [
-                                                          Text("Partager par mail", style: TextStyle(
+                                                          if (loadEmail)
+                                                          const SizedBox(
+                                                            width: 20,
+                                                            height: 20,
+                                                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text("Partager par mail", style: TextStyle(
                                                               color: Colors.white
                                                           ),)
                                                         ],
@@ -461,7 +478,10 @@ class _ProfileViewState extends State<ProfileView> {
                                                   const SizedBox(height: 15,),
                                                   InkWell(
                                                     onTap: () {
-                                                      if (user != null) {
+                                                      if (user != null && !loadEmail && !loadSMS) {
+                                                        setState(() {
+                                                          loadSMS = true;
+                                                        });
                                                         _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
                                                       }
                                                     },
@@ -471,9 +491,16 @@ class _ProfileViewState extends State<ProfileView> {
                                                           color: Colors.black,
                                                           borderRadius: BorderRadius.circular(5)
                                                       ),
-                                                      child: const Row(
+                                                      child: Row(
                                                         children: [
-                                                          Text("Partager par SMS", style: TextStyle(
+                                                          if (loadSMS)
+                                                          const SizedBox(
+                                                            width: 20,
+                                                            height: 20,
+                                                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text("Partager par SMS", style: TextStyle(
                                                               color: Colors.white
                                                           ),)
                                                         ],
