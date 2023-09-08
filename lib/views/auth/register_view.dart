@@ -13,6 +13,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -281,12 +282,19 @@ class _RegisterViewState extends State<RegisterView> {
                                           setState(() {
                                             loadingPdf1 = true;
                                           });
-                                          DemandesViewModel demandeVM = DemandesViewModel();
-                                          File file = await demandeVM.getFileContent("https://chapchap.ca/privacy_policy", context: context);
-                                          try {
-                                            openFile(file.path);
-                                          } catch (error) {
-                                            Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                                          // DemandesViewModel demandeVM = DemandesViewModel();
+                                          // File file = await demandeVM.getFileContent("https://chapchap.ca/privacy_policy", context: context);
+                                          // try {
+                                          //   openFile(file.path);
+                                          // } catch (error) {
+                                          //   Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                                          // }
+
+                                          var urllaunchable = await canLaunch("https://chapchap.ca/privacy_policy"); //canLaunch is from url_launcher package
+                                          if(urllaunchable){
+                                            await launch("https://chapchap.ca/privacy_policy"); //launch is from url_launcher package to launch URL
+                                          }else{
+                                            Utils.toastMessage("Impossible d'ouvrir l'url des politiques");
                                           }
 
                                           setState(() {
@@ -327,21 +335,27 @@ class _RegisterViewState extends State<RegisterView> {
                                           setState(() {
                                             loadingPdf2 = true;
                                           });
-                                          DemandesViewModel demandeVM = DemandesViewModel();
-                                          File file = await demandeVM.getFileContent("https://chapchap.ca/terms_of_condition", context: context);
-                                          try {
-                                            openFile(file.path);
-                                          } catch (error) {
-                                            Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
-                                          }
+                                          // DemandesViewModel demandeVM = DemandesViewModel();
+                                          // File file = await demandeVM.getFileContent("https://chapchap.ca/terms_of_condition", context: context);
+                                          // try {
+                                          //   openFile(file.path);
+                                          // } catch (error) {
+                                          //   Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                                          // }
 
+                                          var urllaunchable = await canLaunch("https://chapchap.ca/terms_of_condition"); //canLaunch is from url_launcher package
+                                          if(urllaunchable){
+                                            await launch("https://chapchap.ca/terms_of_condition"); //launch is from url_launcher package to launch URL
+                                          }else{
+                                            Utils.toastMessage("Impossible d'ouvrir l'url des politiques");
+                                          }
                                           setState(() {
                                             loadingPdf2 = false;
                                           });
                                         }
                                       },
                                       child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                           decoration: BoxDecoration(
                                             color: Colors.black,
                                             borderRadius: BorderRadius.circular(20),

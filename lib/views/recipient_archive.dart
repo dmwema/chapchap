@@ -33,15 +33,6 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.primaryColor,
-          onPressed: () {
-            Navigator.pushNamed(context, RoutesName.newBeneficiaire);
-          },
-          child: const Center(
-            child: Icon(Icons.person_add_alt_1),
-          ),
-        ),
         appBar: CustomAppBar(
           showBack: true,
           title: "Bénéficiaires",

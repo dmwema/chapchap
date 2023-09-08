@@ -263,9 +263,9 @@ class _HistoryCardState extends State<HistoryCard> {
                               color: CupertinoColors.activeGreen,
                               borderRadius: BorderRadius.circular(30)
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Icon(Icons.money, color: Colors.white,),
                               SizedBox(width: 5,),
                               Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),),

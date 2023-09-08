@@ -9,11 +9,11 @@ import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 
 class PhoneVerification extends StatelessWidget {
-  TextEditingController _controller1 = TextEditingController();
-  TextEditingController _controller2 = TextEditingController();
-  TextEditingController _controller3 = TextEditingController();
-  TextEditingController _controller4 = TextEditingController();
-  TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
 
   AuthViewModel authViewModel = AuthViewModel();
 

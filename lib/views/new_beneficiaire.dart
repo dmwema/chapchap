@@ -71,7 +71,7 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
                       }
                     })
             )
-        )
+        ),
     );
   }
 }

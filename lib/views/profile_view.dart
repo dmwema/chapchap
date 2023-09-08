@@ -482,11 +482,11 @@ class _ProfileViewState extends State<ProfileView> {
                                                         setState(() {
                                                           loadSMS = true;
                                                         });
-                                                        _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
+                                                        _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}");
                                                       }
                                                     },
                                                     child: Container(
-                                                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                                                       decoration: BoxDecoration(
                                                           color: Colors.black,
                                                           borderRadius: BorderRadius.circular(5)
