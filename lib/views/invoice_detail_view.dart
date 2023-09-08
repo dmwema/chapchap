@@ -113,7 +113,7 @@ class InvoiceDetailView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)
                         ),
                         padding: EdgeInsets.all(15),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(Icons.money, color: Colors.white,),
                             SizedBox(width: 10,),
