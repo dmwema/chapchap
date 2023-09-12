@@ -106,7 +106,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
 
   Future<void> _openUrl(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));git
+      await launchUrl(Uri.parse(url));
       setState(() {
         loadEmail = false;
         loadSMS = false;
