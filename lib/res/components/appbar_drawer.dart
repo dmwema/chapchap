@@ -4,6 +4,7 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppbarDrawer extends StatefulWidget {
   const AppbarDrawer({Key? key}) : super(key: key);
@@ -14,6 +15,9 @@ class AppbarDrawer extends StatefulWidget {
 
 class _AppbarDrawerState extends State<AppbarDrawer> {
   UserModel? user;
+
+  bool loadEmail = false;
+  bool loadSMS = false;
 
   @override
   void initState() {
@@ -100,6 +104,17 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
     );
   }
 
+  Future<void> _openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));git
+      setState(() {
+        loadEmail = false;
+        loadSMS = false;
+      });
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   Widget buildMenuItems (BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -199,16 +214,110 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                             fontSize: 20,
                             color: AppColors.primaryColor
                         ),),
-                        // Container(
-                        //   width: 30,
-                        //   height: 30,
-                        //   padding: EdgeInsets.all(5),
-                        //   decoration: BoxDecoration(
-                        //     color: AppColors.primaryColor,
-                        //     borderRadius: BorderRadius.circular(20)
-                        //   ),
-                        //   child: const Icon(Icons.share_outlined, size: 15, color: Colors.white,),
-                        // )
+
+                        InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                builder: (context) {
+                                  return Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text("Partager votre code de parrainage", style: TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ),),
+                                        const SizedBox(height: 15,),
+                                        InkWell(
+                                          onTap: () {
+                                            if (user != null && !loadEmail && !loadSMS) {
+                                              setState(() {
+                                                loadEmail = true;
+                                              });
+                                              _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
+                                            }
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                            decoration: BoxDecoration(
+                                                color: AppColors.primaryColor,
+                                                borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                if (loadEmail)
+                                                  const SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                                  ),
+                                                const SizedBox(width: 10,),
+                                                const Text("Partager par mail", style: TextStyle(
+                                                    color: Colors.white
+                                                ),)
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 15,),
+                                        InkWell(
+                                          onTap: () {
+                                            if (user != null && !loadEmail && !loadSMS) {
+                                              setState(() {
+                                                loadSMS = true;
+                                              });
+                                              _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}");
+                                            }
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                            decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                if (loadSMS)
+                                                  const SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                                  ),
+                                                const SizedBox(width: 10,),
+                                                const Text("Partager par SMS", style: TextStyle(
+                                                    color: Colors.white
+                                                ),)
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                            );
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: const Icon(Icons.share_outlined, size: 15, color: Colors.white,),
+                          ),
+                        )
                       ],
                     )
                   ],
