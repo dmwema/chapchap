@@ -353,7 +353,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                           "montant_srce": source,
                           "montant_dest": destination,
                           "code_pays_dest": widget.data["code_pays_dest"],
-                          "id_mode_retrait": widget.data["id_mode_retrait"]
+                          "id_mode_retrait": widget.data["id_mode_retrait"],
                         };
 
                         demandesViewModel.transfert(data2, context).then((value) {

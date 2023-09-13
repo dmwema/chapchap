@@ -27,7 +27,7 @@ class PaysModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['idPays'] = this.idPays;
     data['pays_nom'] = this.paysNom;
     data['pays_monnaie'] = this.paysMonnaie;
