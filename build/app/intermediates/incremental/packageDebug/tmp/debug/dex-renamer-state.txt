@@ -1,0 +1,4 @@
+#Wed Sep 13 17:06:48 WAT 2023
+base.0=/Users/quickdepquickdep/development/chapchap/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

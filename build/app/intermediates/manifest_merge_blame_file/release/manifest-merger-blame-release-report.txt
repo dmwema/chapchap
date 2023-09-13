@@ -1,0 +1,519 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.wizmea.chapchap_app"
+4    android:versionCode="36"
+5    android:versionName="3.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="20"
+8-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+11-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:5-77
+11-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:22-74
+12    <!-- See https://developer.android.com/training/package-visibility -->
+13    <queries>
+13-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:10:5-14:15
+14        <intent>
+14-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-13:18
+15            <action android:name="android.intent.action.VIEW" />
+15-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-65
+15-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:12:21-62
+16        </intent>
+17
+18        <package android:name="com.google.android.apps.maps" />
+18-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-64
+18-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:10:18-61
+19        <package android:name="com.google.android.apps.mapslite" />
+19-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-68
+19-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:11:18-65
+20        <package android:name="com.autonavi.minimap" />
+20-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-56
+20-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:12:18-53
+21        <package android:name="com.baidu.BaiduMap" />
+21-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:13:9-54
+21-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:13:18-51
+22        <package android:name="com.waze" />
+22-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:14:9-44
+22-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:14:18-41
+23        <package android:name="ru.yandex.yandexnavi" />
+23-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:15:9-56
+23-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:15:18-53
+24        <package android:name="ru.yandex.yandexmaps" />
+24-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:16:9-56
+24-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:16:18-53
+25        <package android:name="com.citymapper.app.release" />
+25-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:17:9-62
+25-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:17:18-59
+26        <package android:name="com.mapswithme.maps.pro" />
+26-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:18:9-59
+26-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:18:18-56
+27        <package android:name="net.osmand" />
+27-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:19:9-46
+27-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:19:18-43
+28        <package android:name="net.osmand.plus" />
+28-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:20:9-51
+28-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:20:18-48
+29        <package android:name="ru.dublgis.dgismobile" />
+29-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:21:9-57
+29-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:21:18-54
+30        <package android:name="com.tencent.map" />
+30-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:22:9-51
+30-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:22:18-48
+31        <package android:name="com.here.app.maps" />
+31-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:23:9-53
+31-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:23:18-50
+32        <package android:name="com.huawei.maps.app" />
+32-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:24:9-55
+32-->[:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/release/AndroidManifest.xml:24:18-52
+33    </queries>
+34
+35    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+35-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:16:5-77
+35-->[:flutter_downloader] /Users/quickdepquickdep/development/chapchap/build/flutter_downloader/intermediates/merged_manifest/release/AndroidManifest.xml:16:22-74
+36    <uses-permission
+36-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:10:5-12:38
+37        android:name="android.permission.READ_EXTERNAL_STORAGE"
+37-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-64
+38        android:maxSdkVersion="32" />
+38-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-35
+39    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+39-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:13:5-76
+39-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:13:22-73
+40    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+40-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:14:5-75
+40-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:14:22-72
+41    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Include required permissions for Google Maps API to run. -->
+41-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:15:5-75
+41-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:15:22-72
+42    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+42-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:23:5-79
+42-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:23:22-76
+43    <uses-permission android:name="android.permission.INTERNET" />
+43-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:24:5-67
+43-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:24:22-64
+44
+45    <uses-feature
+45-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:26:5-28:35
+46        android:glEsVersion="0x00020000"
+46-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:27:9-41
+47        android:required="true" />
+47-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:28:9-32
+48
+49    <uses-permission android:name="android.permission.WAKE_LOCK" />
+49-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:25:5-68
+49-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:25:22-65
+50    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+50-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:27:5-81
+50-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:27:22-78
+51    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+51-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:28:5-77
+51-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:28:22-74
+52
+53    <permission
+53-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
+54        android:name="com.wizmea.chapchap_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+54-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
+55        android:protectionLevel="signature" />
+55-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
+56
+57    <uses-permission android:name="com.wizmea.chapchap_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+57-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
+57-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
+58
+59    <application
+60        android:name="android.app.Application"
+60-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:6:9-42
+61        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+61-->[androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
+62        android:icon="@mipmap/launcher_icon"
+62-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:7:9-45
+63        android:label="Transfert CHAPCHAP"
+63-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:5:9-43
+64        android:networkSecurityConfig="@xml/network_security_config" >
+64-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:8:8-68
+65        <activity
+65-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:10:9-30:20
+66            android:name="com.wizmea.chapchap_app.MainActivity"
+66-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:11:13-64
+67            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+67-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:15:13-163
+68            android:exported="true"
+68-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:12:13-36
+69            android:hardwareAccelerated="true"
+69-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:16:13-47
+70            android:launchMode="singleTop"
+70-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:13:13-43
+71            android:theme="@style/LaunchTheme"
+71-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:14:13-47
+72            android:windowSoftInputMode="adjustResize" >
+72-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:17:13-55
+73
+74            <!--
+75                 Specifies an Android theme to apply to this Activity as soon as
+76                 the Android process has started. This theme is visible to the user
+77                 while the Flutter UI initializes. After that, this theme continues
+78                 to determine the Window background behind the Flutter UI.
+79            -->
+80            <meta-data
+80-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:22:13-25:17
+81                android:name="io.flutter.embedding.android.NormalTheme"
+81-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:23:15-70
+82                android:resource="@style/NormalTheme" />
+82-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:24:15-52
+83
+84            <intent-filter>
+84-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:26:13-29:29
+85                <action android:name="android.intent.action.MAIN" />
+85-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:27:17-68
+85-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:27:25-66
+86
+87                <category android:name="android.intent.category.LAUNCHER" />
+87-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:28:17-76
+87-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:28:27-74
+88            </intent-filter>
+89        </activity>
+90        <!--
+91             Don't delete the meta-data below.
+92             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+93        -->
+94        <meta-data
+94-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:33:9-35:33
+95            android:name="flutterEmbedding"
+95-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:34:13-44
+96            android:value="2" />
+96-->/Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:35:13-30
+97
+98        <provider
+98-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-18:20
+99            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+99-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-82
+100            android:authorities="com.wizmea.chapchap_app.flutter.image_provider"
+100-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-74
+101            android:exported="false"
+101-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-37
+102            android:grantUriPermissions="true" >
+102-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-47
+103            <meta-data
+103-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+104                android:name="android.support.FILE_PROVIDER_PATHS"
+104-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+105                android:resource="@xml/flutter_image_picker_file_paths" />
+105-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+106        </provider>
+107
+108        <activity
+108-->[:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-13:74
+109            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+109-->[:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-74
+110            android:exported="false"
+110-->[:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-37
+111            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+111-->[:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-71
+112
+113        <provider
+113-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:18:9-27:20
+114            android:name="com.crazecoder.openfile.FileProvider"
+114-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:19:13-64
+115            android:authorities="com.wizmea.chapchap_app.fileProvider.com.crazecoder.openfile"
+115-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-88
+116            android:exported="false"
+116-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:21:13-37
+117            android:grantUriPermissions="true" >
+117-->[:open_filex] /Users/quickdepquickdep/development/chapchap/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:22:13-47
+118            <meta-data
+118-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+119                android:name="android.support.FILE_PROVIDER_PATHS"
+119-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+120                android:resource="@xml/filepaths" />
+120-->[:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+121        </provider> <!-- Needs to be explicitly declared on P+ -->
+122        <uses-library
+122-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:39:9-41:40
+123            android:name="org.apache.http.legacy"
+123-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:40:13-50
+124            android:required="false" />
+124-->[com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:41:13-37
+125
+126        <activity
+126-->[com.google.android.gms:play-services-base:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/cbc8de6ef0e1a7bd18cbc893e20cf399/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+127            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+127-->[com.google.android.gms:play-services-base:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/cbc8de6ef0e1a7bd18cbc893e20cf399/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+128            android:exported="false"
+128-->[com.google.android.gms:play-services-base:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/cbc8de6ef0e1a7bd18cbc893e20cf399/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+129            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+129-->[com.google.android.gms:play-services-base:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/cbc8de6ef0e1a7bd18cbc893e20cf399/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+130
+131        <meta-data
+131-->[com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+132            android:name="com.google.android.gms.version"
+132-->[com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+133            android:value="@integer/google_play_services_version" />
+133-->[com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+134
+135        <provider
+135-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:31:9-39:20
+136            android:name="androidx.startup.InitializationProvider"
+136-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:32:13-67
+137            android:authorities="com.wizmea.chapchap_app.androidx-startup"
+137-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:33:13-68
+138            android:exported="false" >
+138-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:34:13-37
+139            <meta-data
+139-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:36:13-38:52
+140                android:name="androidx.work.WorkManagerInitializer"
+140-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:37:17-68
+141                android:value="androidx.startup" />
+141-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:38:17-49
+142            <meta-data
+142-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+143                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+143-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+144                android:value="androidx.startup" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+145        </provider>
+146
+147        <service
+147-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:41:9-46:35
+148            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+148-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:42:13-88
+149            android:directBootAware="false"
+149-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:43:13-44
+150            android:enabled="@bool/enable_system_alarm_service_default"
+150-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:44:13-72
+151            android:exported="false" />
+151-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:45:13-37
+152        <service
+152-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:47:9-53:35
+153            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+153-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:48:13-84
+154            android:directBootAware="false"
+154-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:49:13-44
+155            android:enabled="@bool/enable_system_job_service_default"
+155-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:50:13-70
+156            android:exported="true"
+156-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:51:13-36
+157            android:permission="android.permission.BIND_JOB_SERVICE" />
+157-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:52:13-69
+158        <service
+158-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:54:9-59:35
+159            android:name="androidx.work.impl.foreground.SystemForegroundService"
+159-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:55:13-81
+160            android:directBootAware="false"
+160-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:56:13-44
+161            android:enabled="@bool/enable_system_foreground_service_default"
+161-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:57:13-77
+162            android:exported="false" />
+162-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:58:13-37
+163
+164        <receiver
+164-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:61:9-66:35
+165            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+165-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:62:13-88
+166            android:directBootAware="false"
+166-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:63:13-44
+167            android:enabled="true"
+167-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:64:13-35
+168            android:exported="false" />
+168-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:65:13-37
+169        <receiver
+169-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:67:9-77:20
+170            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+170-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:68:13-106
+171            android:directBootAware="false"
+171-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:69:13-44
+172            android:enabled="false"
+172-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:70:13-36
+173            android:exported="false" >
+173-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:71:13-37
+174            <intent-filter>
+174-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:73:13-76:29
+175                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+175-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:74:17-87
+175-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:74:25-84
+176                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+176-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:75:17-90
+176-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:75:25-87
+177            </intent-filter>
+178        </receiver>
+179        <receiver
+179-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:78:9-88:20
+180            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+180-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:79:13-104
+181            android:directBootAware="false"
+181-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:80:13-44
+182            android:enabled="false"
+182-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:81:13-36
+183            android:exported="false" >
+183-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:82:13-37
+184            <intent-filter>
+184-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:84:13-87:29
+185                <action android:name="android.intent.action.BATTERY_OKAY" />
+185-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:85:17-77
+185-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:85:25-74
+186                <action android:name="android.intent.action.BATTERY_LOW" />
+186-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:86:17-76
+186-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:86:25-73
+187            </intent-filter>
+188        </receiver>
+189        <receiver
+189-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:89:9-99:20
+190            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+190-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:90:13-104
+191            android:directBootAware="false"
+191-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:91:13-44
+192            android:enabled="false"
+192-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:92:13-36
+193            android:exported="false" >
+193-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:93:13-37
+194            <intent-filter>
+194-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:95:13-98:29
+195                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+195-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:96:17-83
+195-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:96:25-80
+196                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+196-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:97:17-82
+196-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:97:25-79
+197            </intent-filter>
+198        </receiver>
+199        <receiver
+199-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:100:9-109:20
+200            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+200-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:101:13-103
+201            android:directBootAware="false"
+201-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:102:13-44
+202            android:enabled="false"
+202-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:103:13-36
+203            android:exported="false" >
+203-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:104:13-37
+204            <intent-filter>
+204-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:106:13-108:29
+205                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+205-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:107:17-79
+205-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:107:25-76
+206            </intent-filter>
+207        </receiver>
+208        <receiver
+208-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:110:9-121:20
+209            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+209-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:111:13-88
+210            android:directBootAware="false"
+210-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:112:13-44
+211            android:enabled="false"
+211-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:113:13-36
+212            android:exported="false" >
+212-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:114:13-37
+213            <intent-filter>
+213-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:116:13-120:29
+214                <action android:name="android.intent.action.BOOT_COMPLETED" />
+214-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:117:17-79
+214-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:117:25-76
+215                <action android:name="android.intent.action.TIME_SET" />
+215-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:118:17-73
+215-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:118:25-70
+216                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+216-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:119:17-81
+216-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:119:25-78
+217            </intent-filter>
+218        </receiver>
+219        <receiver
+219-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:122:9-131:20
+220            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+220-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:123:13-99
+221            android:directBootAware="false"
+221-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:124:13-44
+222            android:enabled="@bool/enable_system_alarm_service_default"
+222-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:125:13-72
+223            android:exported="false" >
+223-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:126:13-37
+224            <intent-filter>
+224-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:128:13-130:29
+225                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+225-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:129:17-98
+225-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:129:25-95
+226            </intent-filter>
+227        </receiver>
+228        <receiver
+228-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:132:9-142:20
+229            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+229-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:133:13-78
+230            android:directBootAware="false"
+230-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:134:13-44
+231            android:enabled="true"
+231-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:135:13-35
+232            android:exported="true"
+232-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:136:13-36
+233            android:permission="android.permission.DUMP" >
+233-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:137:13-57
+234            <intent-filter>
+234-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:139:13-141:29
+235                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+235-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:140:17-88
+235-->[androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:140:25-85
+236            </intent-filter>
+237        </receiver>
+238
+239        <uses-library
+239-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+240            android:name="androidx.window.extensions"
+240-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+241            android:required="false" />
+241-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+242        <uses-library
+242-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+243            android:name="androidx.window.sidecar"
+243-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+244            android:required="false" />
+244-->[androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+245
+246        <receiver
+246-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+247            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+247-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+248            android:directBootAware="false"
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+249            android:enabled="true"
+249-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+250            android:exported="true"
+250-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+251            android:permission="android.permission.DUMP" >
+251-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+252            <intent-filter>
+252-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+253                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+253-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+253-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+254            </intent-filter>
+255            <intent-filter>
+255-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+256                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+256-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+256-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+257            </intent-filter>
+258            <intent-filter>
+258-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+259                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+259-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+259-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+260            </intent-filter>
+261            <intent-filter>
+261-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+262                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+262-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+262-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/fc67a8c26d3d91a0e34d141f2ef06eec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+263            </intent-filter>
+264        </receiver>
+265
+266        <service
+266-->[androidx.room:room-runtime:2.2.5] /Users/quickdepquickdep/.gradle/caches/transforms-3/938a3987eeb50fda9f90a85e6852b090/transformed/room-runtime-2.2.5/AndroidManifest.xml:25:9-28:40
+267            android:name="androidx.room.MultiInstanceInvalidationService"
+267-->[androidx.room:room-runtime:2.2.5] /Users/quickdepquickdep/.gradle/caches/transforms-3/938a3987eeb50fda9f90a85e6852b090/transformed/room-runtime-2.2.5/AndroidManifest.xml:26:13-74
+268            android:directBootAware="true"
+268-->[androidx.room:room-runtime:2.2.5] /Users/quickdepquickdep/.gradle/caches/transforms-3/938a3987eeb50fda9f90a85e6852b090/transformed/room-runtime-2.2.5/AndroidManifest.xml:27:13-43
+269            android:exported="false" />
+269-->[androidx.room:room-runtime:2.2.5] /Users/quickdepquickdep/.gradle/caches/transforms-3/938a3987eeb50fda9f90a85e6852b090/transformed/room-runtime-2.2.5/AndroidManifest.xml:28:13-37
+270    </application>
+271
+272</manifest>
