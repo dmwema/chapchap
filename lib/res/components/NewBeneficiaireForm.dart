@@ -272,12 +272,12 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                     Utils.flushBarErrorMessage("Vous devez cocher la case de la confirmation du numéro de téléphone", context);
                   } else {
                     Map data = {
-                      "id_pays": selectedDesinaion!.idPaysDest,
+                      "id_pays": selectedDesinaion!.idPaysDest.toString(),
                       "emailBeneficiaire": _emailController.text,
                       "nomBeneficiaire": _nomController.text,
                       "telBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telController.text,
                       "telConfirmBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telConfirmController.text,
-                      "adresseBeneficiaire":"",
+                      "adresseBeneficiaire": _adresseController.text,
                       "banque":"",
                       "swift":"",
                       "iban":"",
@@ -285,9 +285,11 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                       "id_transit":"",
                       "id_compte":""
                     };
-                    demandesViewModel.newBeneficiaire(data, context).then((value) {
+                    demandesViewModel.newBeneficiaire(data, context, redirect: widget.redirect == true).then((value) {
                       if (widget.redirect != true) {
                         Navigator.pop(widget.parentCotext);
+                      } else {
+                        Navigator.pushNamed(context, RoutesName.recipeints);
                       }
                       setState(() {
                         loading = false;

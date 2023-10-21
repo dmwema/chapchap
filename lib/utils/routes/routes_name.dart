@@ -26,4 +26,5 @@ class RoutesName {
 
   static const String phoneVerificatiob = 'phone_verification';
   static const String couponView = 'coupon_view';
+  static const String localAuthView = 'local_auth_view';
 }

@@ -244,7 +244,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                                               setState(() {
                                                 loadEmail = true;
                                               });
-                                              _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
+                                              _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}%0AUtilise%20le%20pour%20t%E2%80%99inscrire%20sur%20transfert%20ChapChap%20et%20b%C3%A9n%C3%A9ficie%20de%2010%24%20gratuit");
                                             }
                                           },
                                           child: Container(
@@ -276,7 +276,7 @@ class _AppbarDrawerState extends State<AppbarDrawer> {
                                               setState(() {
                                                 loadSMS = true;
                                               });
-                                              _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}");
+                                              _openUrl("sms:&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}%0AUtilise%20le%20pour%20t%E2%80%99inscrire%20sur%20transfert%20ChapChap%20et%20b%C3%A9n%C3%A9ficie%20de%2010%24%20gratuit");
                                             }
                                           },
                                           child: Container(

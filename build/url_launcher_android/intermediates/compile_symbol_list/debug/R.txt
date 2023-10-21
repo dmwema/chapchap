@@ -31,12 +31,18 @@ int attr splitRatio 0x0
 int attr ttcIndex 0x0
 int color androidx_core_ripple_material_light 0x0
 int color androidx_core_secondary_text_default_material_light 0x0
+int color browser_actions_bg_grey 0x0
+int color browser_actions_divider_color 0x0
+int color browser_actions_text_color 0x0
+int color browser_actions_title_color 0x0
 int color call_notification_answer_color 0x0
 int color call_notification_decline_color 0x0
 int color notification_action_color_filter 0x0
 int color notification_icon_bg_color 0x0
 int color ripple_material_light 0x0
 int color secondary_text_default_material_light 0x0
+int dimen browser_actions_context_menu_max_width 0x0
+int dimen browser_actions_context_menu_min_padding 0x0
 int dimen compat_button_inset_horizontal_material 0x0
 int dimen compat_button_inset_vertical_material 0x0
 int dimen compat_button_padding_horizontal_material 0x0
@@ -118,6 +124,11 @@ int id actions 0x0
 int id androidx_window_activity_scope 0x0
 int id async 0x0
 int id blocking 0x0
+int id browser_actions_header_text 0x0
+int id browser_actions_menu_item_icon 0x0
+int id browser_actions_menu_item_text 0x0
+int id browser_actions_menu_items 0x0
+int id browser_actions_menu_view 0x0
 int id chronometer 0x0
 int id dialog_button 0x0
 int id forever 0x0
@@ -155,6 +166,8 @@ int id time 0x0
 int id title 0x0
 int id view_tree_lifecycle_owner 0x0
 int integer status_bar_notification_info_maxnum 0x0
+int layout browser_actions_context_menu_page 0x0
+int layout browser_actions_context_menu_row 0x0
 int layout custom_dialog 0x0
 int layout notification_action 0x0
 int layout notification_action_tombstone 0x0
@@ -169,6 +182,10 @@ int string call_notification_hang_up_action 0x0
 int string call_notification_incoming_text 0x0
 int string call_notification_ongoing_text 0x0
 int string call_notification_screening_text 0x0
+int string copy_toast_msg 0x0
+int string fallback_menu_item_copy_link 0x0
+int string fallback_menu_item_open_in_browser 0x0
+int string fallback_menu_item_share_link 0x0
 int string status_bar_notification_info_overflow 0x0
 int style TextAppearance_Compat_Notification 0x0
 int style TextAppearance_Compat_Notification_Info 0x0
@@ -244,3 +261,4 @@ int styleable SplitPlaceholderRule_splitLayoutDirection 1
 int styleable SplitPlaceholderRule_splitMinSmallestWidth 2
 int styleable SplitPlaceholderRule_splitMinWidth 3
 int styleable SplitPlaceholderRule_splitRatio 4
+int xml image_share_filepaths 0x0

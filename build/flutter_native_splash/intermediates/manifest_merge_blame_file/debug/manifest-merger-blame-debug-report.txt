@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.2/android/src/main/AndroidManifest.xml
+6-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.4/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.2/android/src/main/AndroidManifest.xml
+7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.4/android/src/main/AndroidManifest.xml
 8
 9</manifest>

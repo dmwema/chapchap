@@ -1,4 +1,5 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/views/auth/local_auth_view.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/new_password.dart';
 import 'package:chapchap/views/auth/password_reset_view.dart';
@@ -42,6 +43,12 @@ class Routes {
       case RoutesName.history:
         return PageTransition(
             child: HistoryView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.localAuthView:
+        return PageTransition(
+            child: LocalAuthView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

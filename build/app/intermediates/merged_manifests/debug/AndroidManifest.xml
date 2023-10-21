@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wizmea.chapchap_app"
-    android:versionCode="36"
+    android:versionCode="37"
     android:versionName="3.0.0" >
 
     <uses-sdk
@@ -13,6 +13,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" /> <!-- See https://developer.android.com/training/package-visibility -->
     <queries>
         <intent>
@@ -42,7 +43,8 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Include required permissions for Google Maps API to run. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- suppress DeprecatedClassUsageInspection -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" /> <!-- Include required permissions for Google Maps API to run. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
@@ -63,9 +65,8 @@
         android:name="android.app.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
-        android:icon="@mipmap/launcher_icon"
-        android:label="Transfert CHAPCHAP"
-        android:networkSecurityConfig="@xml/network_security_config" >
+        android:icon="@mipmap/ic_launcher"
+        android:label="chapchap" >
         <activity
             android:name="com.wizmea.chapchap_app.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

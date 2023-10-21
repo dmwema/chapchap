@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:4:5-36:19
+INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:5:5-35:19
 MERGED from [:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-19:19
 MERGED from [:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-19:19
 MERGED from [:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-14:19
@@ -34,14 +34,15 @@ MERGED from [androidx.room:room-runtime:2.2.5] /Users/quickdepquickdep/.gradle/c
 	android:name
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
-INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
-INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
-INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
-MERGED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
+ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
+MERGED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
 MERGED from [:maps_launcher] /Users/quickdepquickdep/development/chapchap/build/maps_launcher/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:google_maps_flutter_android] /Users/quickdepquickdep/development/chapchap/build/google_maps_flutter_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
+MERGED from [:local_auth_android] /Users/quickdepquickdep/development/chapchap/build/local_auth_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/quickdepquickdep/development/chapchap/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:sqflite] /Users/quickdepquickdep/development/chapchap/build/sqflite/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:url_launcher_android] /Users/quickdepquickdep/development/chapchap/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-16:12
@@ -54,13 +55,16 @@ MERGED from [:open_filex] /Users/quickdepquickdep/development/chapchap/build/ope
 MERGED from [:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-27:12
 MERGED from [:fluttertoast] /Users/quickdepquickdep/development/chapchap/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:workmanager] /Users/quickdepquickdep/development/chapchap/build/workmanager/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:17:1-29:12
 MERGED from [com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:17:1-44:12
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/b29e4a6236bce9b56cdb79df754885f8/transformed/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/cbc8de6ef0e1a7bd18cbc893e20cf399/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:16:1-24:12
 MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/f044586c019c0d2c5b4126453781ceb5/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:2:1-6:12
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:16:1-26:12
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cdd53e85b04dc369f38bd7cfdfdfb0d3/transformed/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a0f45278b39d46712812a03027c781d9/transformed/appcompat-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.6.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cc1e3d40f37d9d536c32fdbcb4886f59/transformed/fragment-1.6.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.activity:activity:1.7.2] /Users/quickdepquickdep/.gradle/caches/transforms-3/82572ac8e61fe23514aab0a7aeae0310/transformed/jetified-activity-1.7.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.browser:browser:1.5.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/b06f4dd5bd3a8c82f4b237a87dd463a0/transformed/browser-1.5.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:17:1-145:12
 MERGED from [androidx.webkit:webkit:1.5.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/2e1192e00b1716543031eef37ddc41b2/transformed/webkit-1.5.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/38cf60b6dcc0be87a5f9e317f8530d3c/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
@@ -68,8 +72,8 @@ MERGED from [androidx.core:core-ktx:1.10.1] /Users/quickdepquickdep/.gradle/cach
 MERGED from [androidx.media:media:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/76b2de5bb41329134f4098c225462207/transformed/media-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/8fdb88e94fe44bb5de768eb251d7106b/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/ed92792eddd08dec6989c8caf1e731df/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f0f4b34cfb1fdcd2dc68ad837aa7d3b7/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/be5365f6ab1a86a092047afce36ed6f6/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/769e7a6a071ee2280c60a119ee27968f/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -77,11 +81,14 @@ MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/quickdep
 MERGED from [androidx.customview:customview:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/79e6b2485b9742c0426f495643bc4649/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/08c6ab11bd3fcd07004bf0785d0e0502/transformed/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a3a3bbba8be04472920e9fe8ca9125d7/transformed/asynclayoutinflater-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/1bdbd2daf96eef1d9c1dc9c8b343f2d6/transformed/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d3ed1889983f72556a43874cf4f91763/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/7b9e20109c8af8f2858714b8cbd22a6d/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/ca97d97fdaec6699e68bfbb727ff9d35/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-service:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/c15c391f3fe7e4e4c45631657908ba8e/transformed/jetified-lifecycle-service-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/0311481252661f3ed0def7c48951b536/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/9bace0d1e0e160221ab24ec205c7f35a/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/0bfbffdc7bc1d0c9be48f1cd199bc7b9/transformed/lifecycle-runtime-2.6.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/87a7be650bc7b3e90c0a0fa4fb805d15/transformed/jetified-lifecycle-viewmodel-savedstate-2.6.1/AndroidManifest.xml:17:1-22:12
@@ -109,18 +116,26 @@ INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/debug
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
+		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-37:12
+		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:1-36:12
 		INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:1:11-69
-uses-permission#android.permission.QUERY_ALL_PACKAGES
-ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:5-77
+uses-permission#android.permission.USE_BIOMETRIC
+ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:5-71
+MERGED from [:local_auth_android] /Users/quickdepquickdep/development/chapchap/build/local_auth_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
+MERGED from [:local_auth_android] /Users/quickdepquickdep/development/chapchap/build/local_auth_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
+MERGED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:24:5-72
+MERGED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:24:5-72
 	android:name
-		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:22-74
+		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:3:22-69
+uses-permission#android.permission.QUERY_ALL_PACKAGES
+ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:4:5-77
+	android:name
+		ADDED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml:4:22-74
 uses-sdk
 INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/quickdepquickdep/development/chapchap/android/app/src/main/AndroidManifest.xml
@@ -131,6 +146,8 @@ MERGED from [:google_maps_flutter_android] /Users/quickdepquickdep/development/c
 MERGED from [:google_maps_flutter_android] /Users/quickdepquickdep/development/chapchap/build/google_maps_flutter_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:image_picker_android] /Users/quickdepquickdep/development/chapchap/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:local_auth_android] /Users/quickdepquickdep/development/chapchap/build/local_auth_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:local_auth_android] /Users/quickdepquickdep/development/chapchap/build/local_auth_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_plugin_android_lifecycle] /Users/quickdepquickdep/development/chapchap/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_plugin_android_lifecycle] /Users/quickdepquickdep/development/chapchap/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:sqflite] /Users/quickdepquickdep/development/chapchap/build/sqflite/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
@@ -155,6 +172,8 @@ MERGED from [:fluttertoast] /Users/quickdepquickdep/development/chapchap/build/f
 MERGED from [:fluttertoast] /Users/quickdepquickdep/development/chapchap/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:workmanager] /Users/quickdepquickdep/development/chapchap/build/workmanager/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:workmanager] /Users/quickdepquickdep/development/chapchap/build/workmanager/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/b29e4a6236bce9b56cdb79df754885f8/transformed/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
@@ -165,10 +184,14 @@ MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/quickdepq
 MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/f044586c019c0d2c5b4126453781ceb5/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/44d1b418c59ebf648708ab520e1f14e9/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cdd53e85b04dc369f38bd7cfdfdfb0d3/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.fragment:fragment:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cdd53e85b04dc369f38bd7cfdfdfb0d3/transformed/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a0f45278b39d46712812a03027c781d9/transformed/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a0f45278b39d46712812a03027c781d9/transformed/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.6.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cc1e3d40f37d9d536c32fdbcb4886f59/transformed/fragment-1.6.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.6.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/cc1e3d40f37d9d536c32fdbcb4886f59/transformed/fragment-1.6.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.activity:activity:1.7.2] /Users/quickdepquickdep/.gradle/caches/transforms-3/82572ac8e61fe23514aab0a7aeae0310/transformed/jetified-activity-1.7.2/AndroidManifest.xml:20:5-44
 MERGED from [androidx.activity:activity:1.7.2] /Users/quickdepquickdep/.gradle/caches/transforms-3/82572ac8e61fe23514aab0a7aeae0310/transformed/jetified-activity-1.7.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.5.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/b06f4dd5bd3a8c82f4b237a87dd463a0/transformed/browser-1.5.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.5.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/b06f4dd5bd3a8c82f4b237a87dd463a0/transformed/browser-1.5.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.webkit:webkit:1.5.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/2e1192e00b1716543031eef37ddc41b2/transformed/webkit-1.5.0/AndroidManifest.xml:20:5-44
@@ -183,10 +206,10 @@ MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/quickdepquickd
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/8fdb88e94fe44bb5de768eb251d7106b/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/ed92792eddd08dec6989c8caf1e731df/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/ed92792eddd08dec6989c8caf1e731df/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f0f4b34cfb1fdcd2dc68ad837aa7d3b7/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f0f4b34cfb1fdcd2dc68ad837aa7d3b7/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d45eb25309a57ad4cfb868e04325463b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/quickdepquickdep/.gradle/caches/transforms-3/4a29f4c2cf5f9e22e622ef993c4413ee/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/be5365f6ab1a86a092047afce36ed6f6/transformed/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
@@ -201,16 +224,22 @@ MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/quickd
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/08c6ab11bd3fcd07004bf0785d0e0502/transformed/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a3a3bbba8be04472920e9fe8ca9125d7/transformed/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/a3a3bbba8be04472920e9fe8ca9125d7/transformed/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/1bdbd2daf96eef1d9c1dc9c8b343f2d6/transformed/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/1bdbd2daf96eef1d9c1dc9c8b343f2d6/transformed/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d3ed1889983f72556a43874cf4f91763/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/d3ed1889983f72556a43874cf4f91763/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/7b9e20109c8af8f2858714b8cbd22a6d/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/7b9e20109c8af8f2858714b8cbd22a6d/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.10.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/fe42033b107c99448303fdb83d8c6965/transformed/core-1.10.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/ca97d97fdaec6699e68bfbb727ff9d35/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/ca97d97fdaec6699e68bfbb727ff9d35/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-service:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/c15c391f3fe7e4e4c45631657908ba8e/transformed/jetified-lifecycle-service-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-service:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/c15c391f3fe7e4e4c45631657908ba8e/transformed/jetified-lifecycle-service-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/0311481252661f3ed0def7c48951b536/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/0311481252661f3ed0def7c48951b536/transformed/lifecycle-livedata-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/beae06bfe773db89a87476e370a7cce5/transformed/lifecycle-livedata-core-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/9bace0d1e0e160221ab24ec205c7f35a/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/9bace0d1e0e160221ab24ec205c7f35a/transformed/lifecycle-viewmodel-2.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/0bfbffdc7bc1d0c9be48f1cd199bc7b9/transformed/lifecycle-runtime-2.6.1/AndroidManifest.xml:5:5-44
@@ -393,6 +422,10 @@ package#com.huawei.maps.app
 ADDED from [:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/debug/AndroidManifest.xml:24:9-55
 	android:name
 		ADDED from [:map_launcher] /Users/quickdepquickdep/development/chapchap/build/map_launcher/intermediates/merged_manifest/debug/AndroidManifest.xml:24:18-52
+uses-permission#android.permission.USE_FINGERPRINT
+ADDED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:27:5-74
+	android:name
+		ADDED from [androidx.biometric:biometric:1.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/f28196c92b48602270adea925704d3c9/transformed/biometric-1.1.0/AndroidManifest.xml:27:22-71
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [com.google.android.gms:play-services-maps:18.1.0] /Users/quickdepquickdep/.gradle/caches/transforms-3/dd7f577d92e65ca76c4f9b0ed8758f3a/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml:23:5-79
 MERGED from [androidx.work:work-runtime:2.7.1] /Users/quickdepquickdep/.gradle/caches/transforms-3/23522514f96d754a79d52c4cb12f3f22/transformed/work-runtime-2.7.1/AndroidManifest.xml:26:5-79

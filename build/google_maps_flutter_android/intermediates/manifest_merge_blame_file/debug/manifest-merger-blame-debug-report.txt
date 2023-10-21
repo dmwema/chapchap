@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="20"
-6-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.4.16/android/src/main/AndroidManifest.xml
+6-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.5.1/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="20" />
-7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.4.16/android/src/main/AndroidManifest.xml
+7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.5.1/android/src/main/AndroidManifest.xml
 8
 9</manifest>

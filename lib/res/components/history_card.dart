@@ -192,16 +192,12 @@ class _HistoryCardState extends State<HistoryCard> {
                     ),
                   ),
                   if (
-                    demande.idAnnulation == null
-                    && demande.facture == null
-                    && hasProblem != true
+                    demande.facture == null
                     && hasProblem != true
                   )
                   const SizedBox(height: 10,),
                   if (
-                    demande.idAnnulation == null
-                    && demande.facture == null
-                    && hasProblem != true
+                    demande.facture == null
                     && hasProblem != true
                   )
                   InkWell(

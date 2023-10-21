@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileView extends StatefulWidget {
@@ -37,10 +38,20 @@ class _ProfileViewState extends State<ProfileView> {
 
   PaysModel selectedFrom = PaysModel();
   bool changed = false;
+  bool localAuthEnabled = false;
+  SharedPreferences? preferences;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    preferences = await SharedPreferences.getInstance();
+    bool? lAuth;
+    if (preferences != null) {
+      lAuth = preferences!.getBool('local_auth');
+    }
+    setState(() {
+      localAuthEnabled = lAuth == true;
+    });
     demandesViewModel.paysActifs([], context);
   }
 
@@ -236,6 +247,32 @@ class _ProfileViewState extends State<ProfileView> {
                                             fontSize: 13,
                                             color: Colors.black.withOpacity(.6)
                                         ),),
+                                      const SizedBox(height: 10,),
+                                      Container(
+                                        padding: const EdgeInsets.only(left: 15, right: 5),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 1),
+                                          borderRadius: BorderRadius.circular(30)
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Text("Connexion avec Face ID", style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12
+                                            ),),
+                                            Switch(
+                                              value: localAuthEnabled, //set true to enable switch by default
+                                              onChanged: (bool value) {
+                                                localAuthEnabled = value;
+                                                if (preferences != null) {
+                                                  preferences!.setBool('local_auth', value);
+                                                }
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   )
                               ),
@@ -450,7 +487,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                         setState(() {
                                                           loadEmail = true;
                                                         });
-                                                        _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20" + user!.codeParrainage.toString());
+                                                        _openUrl("mailto:?subject=Partage%20du%20code%20de%20parrainage%20ChapChap&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}%0AUtilise%20le%20pour%20t%E2%80%99inscrire%20sur%20transfert%20ChapChap%20et%20b%C3%A9n%C3%A9ficie%20de%2010%24%20gratuit");
                                                       }
                                                     },
                                                     child: Container(
@@ -482,7 +519,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                         setState(() {
                                                           loadSMS = true;
                                                         });
-                                                        _openUrl("sms:?body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}");
+                                                        _openUrl("sms:&body=Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20${user!.codeParrainage}%0AUtilise%20le%20pour%20t%E2%80%99inscrire%20sur%20transfert%20ChapChap%20et%20b%C3%A9n%C3%A9ficie%20de%2010%24%20gratuit");
                                                       }
                                                     },
                                                     child: Container(

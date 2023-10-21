@@ -281,7 +281,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                   Text("Montant bénéficiaire", style: TextStyle(
                       color: Colors.black.withOpacity(.5)
                   ),),
-                  Text(widget.data['montant_dest'] + " " + widget.data['destination']!.paysCodeMonnaieDest.toString(), style: const TextStyle(
+                  Text("$montantDest ${widget.data['destination']!.paysCodeMonnaieDest}", style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                   ),)
@@ -334,13 +334,8 @@ class _SendBottomModalState extends State<SendBottomModal> {
                       double source = 0;
                       double destination = 0;
 
-                      if (fromToSens) {
-                        source = montantSrc;
-                        destination = montantSrc * rate;
-                      } else {
-                        destination = montantDest;
-                        source = montantDest / rate;
-                      }
+                      source = montantSrc;
+                      destination = montantDest;
 
                       if (!loading) {
                         setState(() {

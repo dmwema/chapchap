@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:1:1-12:12
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:1:1-12:12
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:1:1-12:12
+ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:1:1-12:12
 	package
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:2:3-40
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:2:3-40
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:1:11-69
 queries
-ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:5:5-9:15
+ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:5:5-9:15
 intent#action:name:android.intent.action.VIEW
-ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:6:9-8:18
+ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:6:9-8:18
 action#android.intent.action.VIEW
-ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:7:13-65
+ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:7:13-65
 	android:name
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:7:21-62
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:7:21-62
 uses-permission#android.permission.POST_NOTIFICATIONS
-ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:10:5-77
+ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:10:5-77
 	android:name
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml:10:22-74
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml:10:22-74
 uses-sdk
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.1/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+		ADDED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4/android/src/main/AndroidManifest.xml

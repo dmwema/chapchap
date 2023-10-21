@@ -5,46 +5,46 @@
 5
 6    <uses-sdk
 7        android:minSdkVersion="16"
-7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml
+7-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml
 8        android:targetSdkVersion="16" />
-8-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml
+8-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml
 9
 10    <uses-permission
-10-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:5:5-7:38
+10-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:5:5-7:38
 11        android:name="android.permission.READ_EXTERNAL_STORAGE"
-11-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:6:9-64
+11-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:6:9-64
 12        android:maxSdkVersion="32" />
-12-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:7:9-35
+12-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:7:9-35
 13    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-13-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:9:5-76
-13-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:9:22-73
+13-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:9:5-76
+13-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:9:22-73
 14    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-14-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:10:5-75
-14-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:10:22-72
+14-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:10:5-75
+14-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:10:22-72
 15    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-15-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:11:5-75
-15-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:11:22-72
+15-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:11:5-75
+15-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:11:22-72
 16
 17    <application>
-17-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:13:5-25:19
+17-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:13:5-25:19
 18        <provider
-18-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:14:9-24:20
+18-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:14:9-24:20
 19            android:name="com.crazecoder.openfile.FileProvider"
-19-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:15:13-64
+19-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:15:13-64
 20            android:authorities="${applicationId}.fileProvider.com.crazecoder.openfile"
-20-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:16:13-88
+20-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:16:13-88
 21            android:exported="false"
-21-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:17:13-37
+21-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:17:13-37
 22            android:grantUriPermissions="true"
-22-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:18:13-47
+22-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:18:13-47
 23            tools:replace="android:authorities" >
-23-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:19:13-48
+23-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:19:13-48
 24            <meta-data
-24-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:20:13-23:20
+24-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:20:13-23:20
 25                android:name="android.support.FILE_PROVIDER_PATHS"
-25-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:21:17-67
+25-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:21:17-67
 26                android:resource="@xml/filepaths" />
-26-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.2/android/src/main/AndroidManifest.xml:22:17-50
+26-->/Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4/android/src/main/AndroidManifest.xml:22:17-50
 27        </provider>
 28    </application>
 29

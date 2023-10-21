@@ -213,13 +213,17 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<bool> newBeneficiaire(dynamic data, BuildContext context) async {
+  Future<bool> newBeneficiaire(dynamic data, BuildContext context, {bool redirect = false}) async {
+
     setLoading(true);
     await _repository.newBeneficiaire(data, context: context).then((value) {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Bénéficiaire enrégistré avec succès");
+          if (redirect) {
+            Navigator.pushNamed(context, RoutesName.recipeints);
+          }
           return true;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
