@@ -7,6 +7,7 @@ import 'package:chapchap/repository/auth_repository.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthViewModel with ChangeNotifier{
@@ -30,6 +31,16 @@ class AuthViewModel with ChangeNotifier{
     }).onError((error, stackTrace) {
       print(error.toString());
     });
+  }
+
+  Future<bool> getLocalAuth() async {
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.getBool('local_auth') == true;
+  }
+
+  Future<void> setLocalAuth(value) async {
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setBool('local_auth', value);
   }
 
   Future<void> loginApi(dynamic data, BuildContext context) async {

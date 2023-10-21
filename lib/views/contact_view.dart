@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({Key? key}) : super(key: key);
@@ -27,6 +29,14 @@ class _ContactViewState extends State<ContactView> {
     });
   }
 
+  Future<void> _openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +56,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("tel://+15143701555");
                   },
                 ),
                 ProfileMenu(
@@ -54,7 +64,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("tel://+14384929679");
                   },
                 ),
                 ProfileMenu(
@@ -62,7 +72,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("tel://+2250574454802");
                   },
                 ),
                 ProfileMenu(
@@ -70,7 +80,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("tel://+22670060642");
                   },
                 ),
                 ProfileMenu(
@@ -78,7 +88,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.phone,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("tel://+237697230957");
                   },
                 ),
                 ProfileMenu(
@@ -86,7 +96,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.alternate_email_sharp,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    _openUrl("mailto:?subject=Contact&body=Entrez%20votre%20message");
                   },
                 ),
                 ProfileMenu(
@@ -94,7 +104,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.map_outlined,
                   noIcon: true,
                   onTap: () {
-                    //Navigator.pushNamed(context, RoutesName.personnal_informations);
+                    MapsLauncher.launchQuery("8304 Chemin Devonshire, Mont-Royal, H4P 2P7, QC, Canada Suite 260");
                   },
                 ),
                 const SizedBox(height: 20,),

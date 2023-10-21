@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -11,6 +12,7 @@ import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/services/image_picker_service.dart';
+import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,15 +44,15 @@ class _ProfileViewState extends State<ProfileView> {
   SharedPreferences? preferences;
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    preferences = await SharedPreferences.getInstance();
-    bool? lAuth;
-    if (preferences != null) {
-      lAuth = preferences!.getBool('local_auth');
-    }
+    loadPr();
     setState(() {
-      localAuthEnabled = lAuth == true;
+      AuthViewModel().getLocalAuth().then((value) {
+        setState(() {
+          localAuthEnabled = value;
+        });
+      });
     });
     demandesViewModel.paysActifs([], context);
   }
@@ -68,6 +70,12 @@ class _ProfileViewState extends State<ProfileView> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  Future loadPr() async {
+    setState(() async {
+      preferences = await SharedPreferences.getInstance();
+    });
   }
 
   @override
@@ -257,17 +265,28 @@ class _ProfileViewState extends State<ProfileView> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Text("Connexion avec Face ID", style: TextStyle(
+                                            Text("Connexion avec ${Platform.isAndroid ? 'Empreinte digitale': 'Face ID'}", style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12
                                             ),),
                                             Switch(
                                               value: localAuthEnabled, //set true to enable switch by default
                                               onChanged: (bool value) {
-                                                localAuthEnabled = value;
-                                                if (preferences != null) {
-                                                  preferences!.setBool('local_auth', value);
-                                                }
+                                                LocalAuthService.canAuthenticate().then((value2) {
+                                                  if (value2) {
+                                                    LocalAuthService.authenticate().then((value3) {
+                                                      if (value3) {
+                                                        authViewModel.setLocalAuth(value).then((res) {
+                                                          setState(() {
+                                                            localAuthEnabled = value;
+                                                          });
+                                                        });
+                                                      }
+                                                    });
+                                                  } else {
+                                                    Utils.flushBarErrorMessage("Votre téléphone ne supprote pas cette fonctionnalité", context);
+                                                  }
+                                                });
                                               },
                                             )
                                           ],

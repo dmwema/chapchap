@@ -3,12 +3,12 @@ import 'package:local_auth/local_auth.dart';
 class LocalAuthService {
   static final _auth = LocalAuthentication();
 
-  static Future<bool> _canAuthenticate () async  =>
+  static Future<bool> canAuthenticate () async  =>
       await _auth.canCheckBiometrics || await _auth.isDeviceSupported();
 
   static Future<bool> authenticate() async {
     try {
-      if (!await _canAuthenticate()) return false;
+      if (!await canAuthenticate()) return false;
       return await _auth.authenticate(
           localizedReason: 'Authentifiez vous pour pouvoir accéder à l\'application',
           // authMessages: <AuthMessages> [
