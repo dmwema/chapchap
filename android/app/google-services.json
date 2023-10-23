@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1071606818456",
+    "project_id": "transfert-chapchap-inc",
+    "storage_bucket": "transfert-chapchap-inc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071606818456:android:d7e75c02b7afdf24c552ed",
+        "android_client_info": {
+          "package_name": "com.wizmea.chapchap_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-YmFeF67vmVPOwcubPJ3KWwWDfiagw4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
