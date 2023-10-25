@@ -4,6 +4,12 @@
 	<dict>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Autorisez l'application à utiliser votre gallerie pour modifier votre photo de profile</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Autorisez l'application à utiliser votre camera pour modifier votre photo de profile</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Autorisez l'application à lancer votre maps</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
