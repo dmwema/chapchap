@@ -5,6 +5,7 @@ import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  NotificationsService notificationsService = NotificationsService();
 
   ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
 
@@ -107,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
               RoundedButton(
                 title: 'Se connecter',
                 loading: authViewModel.loading,
-                onPress: () {
+                onPress: () async {
                   if (!authViewModel.loading) {
                     if (_emailController.text.isEmpty) {
                       Utils.flushBarErrorMessage("Vous devez entrer l'adresse mail", context);
@@ -116,14 +118,27 @@ class _LoginViewState extends State<LoginView> {
                     } else if (_passwordController.text.length < 6) {
                       Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
                     } else {
+                      String? token;
+                      notificationsService.isTokenRefresh();
+                      await notificationsService.getDeviceToken().then((value) {
+                        token = value;
+                      });
+                      print("******************************");
+                      print("******************************");
+                      print("******************************");
+                      print(token);
+                      print("******************************");
+                      print("******************************");
+                      print("******************************");
                       Map data = {
                         'username': _emailController.text.toString(),
                         'password': _passwordController.text.toString(),
+                        'phoneId': token
                       };
+
                       authViewModel.loginApi(data, context);
                     }
                   }
-
                 },
               ),
               const SizedBox(height: 20,),

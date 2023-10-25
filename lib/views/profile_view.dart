@@ -231,7 +231,7 @@ class _ProfileViewState extends State<ProfileView> {
                                             borderRadius: BorderRadius.circular(20),
                                             color: Colors.black
                                           ),
-                                          child: const Row(
+                                          child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Icon(Icons.edit, color: Colors.white, size: 15,),
@@ -265,7 +265,7 @@ class _ProfileViewState extends State<ProfileView> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text("Connexion avec ${Platform.isAndroid ? 'Empreinte digitale': 'Face ID'}", style: const TextStyle(
+                                            Text("Verrouillage par ${Platform.isAndroid ? 'Empreinte digitale': 'Face ID'}", style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12
                                             ),),
@@ -441,7 +441,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                child: const Row(
+                                child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(Icons.check_circle_sharp, color: Colors.white, size: 20,),

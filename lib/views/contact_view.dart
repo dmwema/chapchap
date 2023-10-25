@@ -96,7 +96,7 @@ class _ContactViewState extends State<ContactView> {
                   icon: Icons.alternate_email_sharp,
                   noIcon: true,
                   onTap: () {
-                    _openUrl("mailto:?subject=Contact&body=Entrez%20votre%20message");
+                    _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
                   },
                 ),
                 ProfileMenu(

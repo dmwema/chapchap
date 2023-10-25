@@ -23,6 +23,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
   double montantSrc = 0;
   double montantDest = 0;
   bool fromToSens = true;
+  bool promo = false;
   double rate = 0;
   double promoRabais = 0;
   final TextEditingController _promoContoller = TextEditingController();
@@ -182,6 +183,7 @@ class _SendBottomModalState extends State<SendBottomModal> {
                             _promoContoller.clear();
                             setState(() {
                               montantSrc = montantSrc - demandeVM.applyDetail.data["reductionPromo"];
+                              promo = true;
                               promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
                               loadingPromoSucces = true;
                             });
@@ -334,8 +336,21 @@ class _SendBottomModalState extends State<SendBottomModal> {
                       double source = 0;
                       double destination = 0;
 
-                      source = montantSrc;
-                      destination = montantDest;
+                      if (fromToSens) {
+                        source = montantSrc;
+                        if (promo) {
+                          destination = (montantSrc + promoRabais) * rate;
+                        } else {
+                          destination = montantSrc * rate;
+                        }
+                      } else {
+                        if (promo) {
+                          source = (montantDest / rate) - promoRabais;
+                        } else {
+                          source = montantDest / rate;
+                        }
+                        destination = montantDest;
+                      }
 
                       if (!loading) {
                         setState(() {

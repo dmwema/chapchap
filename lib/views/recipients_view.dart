@@ -58,7 +58,7 @@ class _RecipientsViewState extends State<RecipientsView> {
               child: Container(
                   padding: const EdgeInsets.only(top: 10, bottom: 5, left: 20, right: 20),
                   color: Colors.grey.withOpacity(.2),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(

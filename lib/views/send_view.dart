@@ -178,32 +178,33 @@ class _SendViewState extends State<SendView> {
                                     ),),
                                     const SizedBox(width: 10,),
                                     Expanded(
-                                        child: TextFormField(
-                                      controller: _fromController,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fromToToSens = true;
-                                        });
-                                        if (selectedDesinaion != null) {
-                                          if (value != "") {
-                                            insert(double.parse(value) * double.parse(selectedDesinaion!.rate.toString()), _toController);
+                                      child: TextFormField(
+                                        controller: _fromController,
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            fromToToSens = true;
+                                          });
+                                          if (selectedDesinaion != null) {
+                                            if (value != "") {
+                                              insert(double.parse(value) * double.parse(selectedDesinaion!.rate.toString()), _toController);
+                                            } else {
+                                              insert("", _toController);
+                                            }
                                           } else {
-                                            insert("", _toController);
+                                            Utils.flushBarErrorMessage("Vous devez selectionner un pays de destination", context);
                                           }
-                                        } else {
-                                          Utils.flushBarErrorMessage("Vous devez selectionner un pays de destination", context);
-                                        }
-                                      },
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "0.00",
-                                        contentPadding: EdgeInsets.zero,
-                                      ),
-                                      style: const TextStyle(
-                                          fontSize: 18
-                                      ),
-                                    ))
+                                        },
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "0.00",
+                                          contentPadding: EdgeInsets.zero,
+                                        ),
+                                        style: const TextStyle(
+                                            fontSize: 18
+                                        ),
+                                      )
+                                    )
                                   ],
                                 ),
                               ),
