@@ -1,19 +1,19 @@
 PODS:
   - app_settings (5.1.1):
     - Flutter
-  - Firebase/CoreOnly (10.15.0):
-    - FirebaseCore (= 10.15.0)
-  - Firebase/Messaging (10.15.0):
+  - Firebase/CoreOnly (10.16.0):
+    - FirebaseCore (= 10.16.0)
+  - Firebase/Messaging (10.16.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 10.15.0)
-  - firebase_core (2.19.0):
-    - Firebase/CoreOnly (= 10.15.0)
+    - FirebaseMessaging (~> 10.16.0)
+  - firebase_core (2.20.0):
+    - Firebase/CoreOnly (= 10.16.0)
     - Flutter
-  - firebase_messaging (14.7.1):
-    - Firebase/Messaging (= 10.15.0)
+  - firebase_messaging (14.7.2):
+    - Firebase/Messaging (= 10.16.0)
     - firebase_core
     - Flutter
-  - FirebaseCore (10.15.0):
+  - FirebaseCore (10.16.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
@@ -24,7 +24,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.15.0):
+  - FirebaseMessaging (10.16.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleDataTransport (~> 9.2)
@@ -189,13 +189,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
-  Firebase: 66043bd4579e5b73811f96829c694c7af8d67435
-  firebase_core: fd674fcc642742ef7289acea60bd21a1a021bd98
-  firebase_messaging: 4f6c9f2920785b409108c8b5f1f8cdaf89d8def2
-  FirebaseCore: 2cec518b43635f96afe7ac3a9c513e47558abd2e
+  Firebase: 25899099b77d255a636e3579c3d9dce10ec150d5
+  firebase_core: 2e0e89436a00b664a23bebb08859e5fede7215e9
+  firebase_messaging: 2b2ed8f43ca8289caebfa324ada472e527bebcdf
+  FirebaseCore: 65a801af84cca84361ef9eac3fd868656968a53b
   FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
   FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
-  FirebaseMessaging: 0c0ae1eb722ef0c07f7801e5ded8dccd1357d6d4
+  FirebaseMessaging: 80b4a086d20ed4fd385a702f4bfa920e14f5064d
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_downloader: b7301ae057deadd4b1650dc7c05375f10ff12c39
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
@@ -217,10 +217,10 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
   workmanager: 0afdcf5628bbde6924c21af7836fed07b42e30e6
 
-PODFILE CHECKSUM: 26519c81689f55e304d5594ba5afa73f36348764
+PODFILE CHECKSUM: 84a49678c092cfe2a374664239aba7ca48d15b37
 
 COCOAPODS: 1.12.1
