@@ -13,12 +13,12 @@ class SplashService {
     bool? lAuth = preferences.getBool('local_auth');
     getUserDate().then((value) {
       if (value.token == 'null' || value.token == '' || value.token == null || value.idClient == null || value.idClient == 'null' || value.idClient == '') {
-        Navigator.pushNamed(context, RoutesName.login);
+        Navigator.pushReplacementNamed(context, RoutesName.login);
       } else {
         if (lAuth == true) {
-          Navigator.pushNamed(context, RoutesName.localAuthView);
+          Navigator.pushReplacementNamed(context, RoutesName.localAuthView);
         } else {
-          Navigator.pushNamed(context, RoutesName.home);
+          Navigator.pushReplacementNamed(context, RoutesName.home);
         }
       }
     }).onError((error, stackTrace) {
