@@ -23,7 +23,6 @@ import 'package:chapchap/views/recipient_archive.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
-import 'package:chapchap/views/web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -147,12 +146,6 @@ class Routes {
       case RoutesName.contactView:
         return PageTransition(
             child: ContactView(),
-            type: PageTransitionType.rightToLeft,
-            settings: settings
-        );
-      case RoutesName.webViewPage:
-        return PageTransition(
-            child: WebViewPage(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

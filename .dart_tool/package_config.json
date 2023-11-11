@@ -884,30 +884,6 @@
       "languageVersion": "2.14"
     },
     {
-      "name": "webview_flutter",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/webview_flutter-2.8.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "webview_flutter_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/webview_flutter_android-2.10.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "webview_flutter_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/webview_flutter_platform_interface-1.9.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "webview_flutter_wkwebview",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-2.9.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "win32",
       "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/win32-5.0.9",
       "packageUri": "lib/",
@@ -944,7 +920,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-10-31T20:02:28.034502Z",
+  "generated": "2023-11-11T22:25:36.271787Z",
   "generator": "pub",
   "generatorVersion": "3.0.2"
 }

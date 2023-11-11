@@ -1,6 +1,7 @@
 class AppUrl {
-  // static var domainName = 'https://app.chapchap.ca';
-  static var domainName = 'https://sandbox-app.chapchap.ca';
+  static var domainName = 'https://app.chapchap.ca';
+
+  // static var domainName = 'https://sandbox-app.chapchap.ca';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';
@@ -15,7 +16,7 @@ class AppUrl {
   static var beneficiairesEndPoint = '$baseUrl/my_beneficiaires';
   static var beneficiairesArchiveEndPoint = '$baseUrl/my_beneficiaires_archives';
   static var paysActifsEndPoint = '$baseUrl/get_pays';
-  static var newBeneficiaire = '$baseUrl/creat_beneficiaire';
+  static var newBeneficiaire = '$baseUrl/creat_beneficiairerolandosou';
   static var beneficiaireInfo = '$baseUrl/infos_beneficiaires';
   static var trasfert = '$baseUrl/transfert';
   static var myInfos = '$baseUrl/my_infos_';

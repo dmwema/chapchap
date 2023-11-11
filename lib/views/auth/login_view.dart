@@ -119,22 +119,28 @@ class _LoginViewState extends State<LoginView> {
                       Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
                     } else {
                       String? token;
-                      notificationsService.isTokenRefresh();
-                      await notificationsService.getDeviceToken().then((value) {
-                        token = value;
-                      });
-                      print("******************************");
-                      print("******************************");
-                      print("******************************");
-                      print(token);
-                      print("******************************");
-                      print("******************************");
-                      print("******************************");
+                      try {
+                        notificationsService.isTokenRefresh();
+                        await notificationsService.getDeviceToken().then((value) {
+                          token = value;
+                        });
+                      } catch (e) {
+                        print(e.toString());
+                      }
+
                       Map data = {
                         'username': _emailController.text.toString(),
                         'password': _passwordController.text.toString(),
                         'phoneId': token
                       };
+
+                      print("***************************************");
+                      print("***************************************");
+                      print("***************************************");
+                      print(data);
+                      print("***************************************");
+                      print("***************************************");
+                      print("***************************************");
 
                       authViewModel.loginApi(data, context);
                     }
