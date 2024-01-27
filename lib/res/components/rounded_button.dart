@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -20,19 +21,19 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     color ??= const Color(0xFF29216B);
-    return InkWell(
-      onTap: onPress,
+    return CupertinoButton(
+      onPressed: onPress,
+      color: AppColors.primaryColor,
+      pressedOpacity: .7,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(30)
+            borderRadius: BorderRadius.circular(10)
         ),
         child: Center(
           child: loading ? const SizedBox(
             width: 20,
             height: 20,
-            child: CircularProgressIndicator(color: Colors.white)
+            child: CupertinoActivityIndicator(color: Colors.white)
          ) :Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold),),
         ),
       ),

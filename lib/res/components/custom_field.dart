@@ -1,3 +1,5 @@
+import 'package:chapchap/res/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,7 +7,6 @@ class CustomFormField extends StatelessWidget {
   final String label;
   final String hint;
   final int? maxLines;
-  final bool password;
   final TextInputType? type;
   final FocusNode? focusNode;
   final bool obscurePassword;
@@ -18,9 +19,9 @@ class CustomFormField extends StatelessWidget {
   final void Function()? onPressed;
 
   CustomFormField({
+    super.key,
     required this.label,
     required this.hint,
-    required this.password,
     this.type,
     this.focusNode,
     this.radius,
@@ -41,26 +42,25 @@ class CustomFormField extends StatelessWidget {
   }
 
   @override
+
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CupertinoTextField(
       controller: controller,
       keyboardType: type,
       obscureText: obscurePassword,
       focusNode: focusNode,
       maxLines: maxLines,
-      onFieldSubmitted: onFieldSubmitted,
-      decoration: InputDecoration(
-          hintText: hint,
-          labelText: label,
-          border: OutlineInputBorder(
-            borderRadius: radius ?? const BorderRadius.all(Radius.circular(35)),
-          ),
-          contentPadding: const EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16),
-          suffixIcon: suffixIcon,
-          prefixIcon: prefixIcon
+      decoration: BoxDecoration(
+        color: AppColors.formFieldColor,
+        border: Border.all(color: AppColors.formFieldBorderColor),
+        borderRadius: BorderRadius.circular(6)
       ),
+      onSubmitted: onFieldSubmitted,
+      placeholder: hint,
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       inputFormatters: inputFormatters,
       onTap: onPressed,
+      suffix: suffixIcon,
     );
   }
 }

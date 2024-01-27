@@ -152,7 +152,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               label: "Nom du bénéficiaire *",
               hint: "Entrez le nom du bénéficiaire *",
               controller: _nomController,
-              password: false,
             ),
             const SizedBox(height: 20,),
             CustomFormField(
@@ -160,7 +159,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               hint: "Entrez l'adresse e-mail du bénéficiaire ${emailRequired ? '*': ''}",
               controller: _emailController,
               type: TextInputType.emailAddress,
-              password: false,
             ),
             const SizedBox(height: 20,),
             Row(
@@ -184,7 +182,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                   hint: "Entrez le numero de téléphone du bénéficiaire ",
                   controller: _telController,
                   type: TextInputType.phone,
-                  password: false,
                   radius: const BorderRadius.only(topRight: Radius.circular(35), bottomRight: Radius.circular(35)),
                 ),)
               ],
@@ -211,7 +208,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                   hint: "Confirmez le téléphone du bénéficiaire ",
                   controller: _telConfirmController,
                   type: TextInputType.phone,
-                  password: false,
                   radius: const BorderRadius.only(topRight: Radius.circular(35), bottomRight: Radius.circular(35)),
                 ))
               ],
@@ -245,7 +241,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               label: "Adresse du bénéficiaire *",
               hint: "Entrez l'adresse du bénéficiaire *",
               controller: _adresseController,
-              password: false,
             ),
             const SizedBox(height: 20,),
             RoundedButton(

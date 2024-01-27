@@ -52,7 +52,7 @@ class ConfirmCancel extends StatelessWidget {
             label: "Motif",
             radius: const BorderRadius.all(Radius.circular(10)),
             controller: _motifController,
-            type: TextInputType.text, password: false,
+            type: TextInputType.text,
             maxLines: 2,
           ),
           const SizedBox(height: 20,),

@@ -329,7 +329,6 @@ class _ProfileViewState extends State<ProfileView> {
                                                         label: "Adresse",
                                                         controller: _adresseController,
                                                         hint: "Entrez votre adresse",
-                                                        password: false
                                                     ),
                                                     const SizedBox(height: 20,),
                                                     RoundedButton(
@@ -658,7 +657,6 @@ class _ProfileViewState extends State<ProfileView> {
                                                         label: "Mot de passe actuel",
                                                         hint: "Mot de passe actuel",
                                                         controller: _oldPasswordContoller,
-                                                        password: false
                                                     ),
                                                     const SizedBox(height: 10,),
                                                     const Divider(),
@@ -666,14 +664,12 @@ class _ProfileViewState extends State<ProfileView> {
                                                         label: "Nouveau mot de passe",
                                                         controller: _newPasswordController,
                                                         hint: "Nouveau mot de passe",
-                                                        password: false
                                                     ),
                                                     const SizedBox(height: 20,),
                                                     CustomFormField(
                                                         label: "Confirmer le Nouveau mot de passe",
                                                         controller: _newPasswordConfirmController,
                                                         hint: "Confirmer le Nouveau mot de passe",
-                                                        password: false
                                                     ),
 
                                                     const SizedBox(height: 20,),

@@ -18,12 +18,12 @@ class SliderPage extends StatelessWidget {
         children: [
           Image.asset(image, width: width * 0.6,),
           const SizedBox(height: 60,),
-          Container(
+          SizedBox(
             width: 200,
-            child: Text(title, style: TextStyle(
-                fontSize: 20,
+            child: Text(title, style: const TextStyle(
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primaryColor
+                color: Colors.black
             ), textAlign: TextAlign.center,),
           ),
           /*Text(title, style: TextStyle(
@@ -31,7 +31,7 @@ class SliderPage extends StatelessWidget {
           ),),*/
           const SizedBox(height: 20,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Text(description, style: TextStyle(
                 height: 1.5,
                 fontSize: 15, fontWeight: FontWeight.normal, letterSpacing: 0.7,

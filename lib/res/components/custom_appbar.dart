@@ -3,14 +3,16 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   bool showBack;
   bool red;
+  bool showHelp;
   String? backUrl;
-  CustomAppBar({Key? key, this.title, this.showBack = false, this.red = false, this.backUrl}) : super(key: key);
+  CustomAppBar({Key? key, this.title, this.showHelp = true, this.showBack = false, this.red = false, this.backUrl}) : super(key: key);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -37,77 +39,51 @@ class _CustomAppBarState extends State<CustomAppBar> {
     final String? title = widget.title;
     bool showBack = widget.showBack;
     bool red = widget.red;
+    bool showHelp = widget.showHelp;
 
-    return AppBar(
-      title: Row(
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (red)
-            Container(
-              width: 35, height: 35,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/logo.png"),
-                  fit: BoxFit.contain
-                )
-              ),
-            ),
-          if (red)
-            const SizedBox(width: 10,),
-          Text(title ?? "", style: TextStyle(fontWeight: FontWeight.bold, color: !red ? Colors.black.withOpacity(.9): Colors.white.withOpacity(.9)),),
-
-          if (!red && user != null && user!.photoProfil  != null)
-            Expanded(child: Align(
-              alignment: Alignment.centerRight,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.profile);
-                },
-                child: CircularProfileAvatar(
-                  user!.photoProfil.toString(),
-                  radius: 20,
-                  initialsText: Text(
-                    "CC",
-                    style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-                  ),  // sets initials text, set your own style, default Text('')
-                  elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                  foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-                  cacheImage: true, // allow widget to cache image against provided url
-                  showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+          Padding(
+            padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (showBack)
+                IconButton(
+                    onPressed: () {
+                      if (widget.backUrl != null)  {
+                        Navigator.pushNamed(context, widget.backUrl.toString());
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: const Icon(CupertinoIcons.back, color: Colors.black, size: 20,)
                 ),
-              ),
-            ))
+                if (showHelp)
+                  Expanded(child: Align(
+                    alignment: Alignment.centerRight,
+                    child: InkWell(
+                      onTap: () {
+                      },
+                      child: IconButton(
+                        onPressed: () {
+
+                        },
+                        icon: const Icon(CupertinoIcons.question_circle, color: Colors.black, size: 20,),
+                      ),
+                    ),
+                  ))
+              ],
+            ),
+          ),
+          //Padding(
+          //  padding: const EdgeInsets.symmetric(horizontal: 20),
+          //  child: Text(title ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+          //),
         ],
-      ),
-      elevation: 1,
-      leading: Builder(builder: (BuildContext context) {
-        if (showBack) {
-          return IconButton(
-              onPressed: () {
-                if (widget.backUrl != null)  {
-                  Navigator.pushNamed(context, widget.backUrl.toString());
-                } else {
-                  Navigator.pop(context);
-                  }
-              },
-              icon: red ? const Icon(Icons.chevron_left_rounded, color: Colors.white, size: 40,): Image.asset("assets/back.png")
-          );
-        }
-        return IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: Image.asset("assets/menu.png")
-        );
-      },
-      ),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(0)
-          )
-      ),
-      backgroundColor: red ? AppColors.primaryColor: Colors.white,
-      iconTheme: const IconThemeData(
-          color: Colors.white
       ),
     );
   }

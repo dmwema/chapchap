@@ -1,6 +1,9 @@
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/slider.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/views/auth/login_view.dart';
+import 'package:chapchap/views/auth/welcome_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -68,45 +71,79 @@ class OnBoardingViewState extends State<OnBoardingView> {
                     }
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      if (!is_last) {
-                        _controller.nextPage(
-                            duration: Duration(milliseconds: 800),
-                            curve: Curves.easeInOutQuint
-                        );
-                      } else {
-                        // go Home
-                        Navigator.pushNamed(context, RoutesName.login);
-                      }
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      height: 60,
-                      alignment: Alignment.center,
-                      width: _currentPage != (_pages.length - 1) ? 70 : 160,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      child: (_currentPage == (_pages.length - 1)?
-                      const Text(
-                        "Commencer", style:
-                      TextStyle(
-                          color: Colors.white,
-                          fontSize: 20
-                      ),
-                      ):
-                      const Icon(Icons.chevron_right_rounded, size: 30, color: Colors.white,)
-                      )
-                      ,),
-                  ),
                   const SizedBox(
-                    height: 40,
+                    height: 70,
                   )
                 ],
-              )
-
+              ),
+              Positioned(
+                bottom: 20,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => WelcomeView(),
+                                ),
+                                    (route) => false,
+                              );
+                            },
+                            child: const Text("Sauter", style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600
+                            ),)
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (!is_last) {
+                              _controller.nextPage(
+                                  duration: const Duration(milliseconds: 800),
+                                  curve: Curves.easeInOutQuint
+                              );
+                            } else {
+                              // go Home
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => WelcomeView(),
+                                ),
+                                    (route) => false,
+                              );
+                            }
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: 50,
+                            alignment: Alignment.center,
+                            width: _currentPage != (_pages.length - 1) ? 50 : 160,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: (_currentPage == (_pages.length - 1)?
+                            const Text(
+                              "Commencer", style:
+                            TextStyle(
+                                color: Colors.white,
+                                fontSize: 20
+                            ),
+                            ):
+                            const Icon(Icons.chevron_right_rounded, size: 30, color: Colors.white,)
+                            )
+                            ,),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         )
