@@ -17,6 +17,7 @@ class CustomFormField extends StatelessWidget {
   void Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
   final void Function()? onPressed;
+  final void Function(String)? onChanged;
 
   CustomFormField({
     super.key,
@@ -28,6 +29,7 @@ class CustomFormField extends StatelessWidget {
     this.obscurePassword = false,
     this.suffixIcon,
     this.onFieldSubmitted,
+    this.onChanged,
     this.inputFormatters,
     this.controller, this.maxLines, this.onPressed, this.prefixIcon
   });
@@ -56,6 +58,7 @@ class CustomFormField extends StatelessWidget {
         borderRadius: BorderRadius.circular(6)
       ),
       onSubmitted: onFieldSubmitted,
+      onChanged: onChanged,
       placeholder: hint,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       inputFormatters: inputFormatters,

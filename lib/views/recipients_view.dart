@@ -39,9 +39,25 @@ class _RecipientsViewState extends State<RecipientsView> {
               commonAppBar(
                 context: context,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(width: 10,),
+                    Container(
+                      width: 25, height: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: AppColors.primaryColor
+                      ),
+                      child: const Center(
+                        child: Icon(CupertinoIcons.add, size: 15, color: Colors.white,),
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 10,),
               InkWell(
@@ -443,7 +459,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(child: Icon(CupertinoIcons.person_2_fill, color: AppColors.primaryColor,), onTap: () {
-                      Navigator.pushNamed(context, RoutesName.recipeints);
+                      // Navigator.pushNamed(context, RoutesName.recipeints);
                     }),
                     const SizedBox(height: 5), // The dummy child
                     Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: AppColors.primaryColor,),)
