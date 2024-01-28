@@ -1,17 +1,13 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/confirm_delete.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/modal/confirm_archive.dart';
-import 'package:chapchap/res/components/modal/confirm_desarchive.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/views/send_view.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,20 +29,25 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-          showBack: true,
-          title: "Bénéficiaires",
-          backUrl: RoutesName.recipeints,
-        ),
-        drawer: const AppbarDrawer(),
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
-        body: Column(
+      backgroundColor: AppColors.formFieldColor,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              child: const Text("Bénéficiaires archivés"),
+            commonAppBar(
+              context: context,
+              backArrow: true,
+              backClick: () {
+                Navigator.pushNamed(context, RoutesName.recipeints);
+              }
             ),
+            const SizedBox(height: 20,),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text("Bénéficiaires archivés", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+            ),
+            const SizedBox(height: 10,),
             Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
                 create: (BuildContext context) => demandesViewModel,
                 child: Consumer<DemandesViewModel>(
@@ -55,8 +56,8 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                         case Status.LOADING:
                           return SizedBox(
                             height: MediaQuery.of(context).size.height - 200,
-                            child: Center(
-                              child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                            child: const Center(
+                              child: CupertinoActivityIndicator(color: Colors.black,),
                             ),
                           );
                         case Status.ERROR:
@@ -67,157 +68,216 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                           if (value.beneficiairesList.data!.length == 0) {
                             return Center(
                               child: Text(
-                                "Aucun bénéficiaire enrégistré",
+                                "Aucun bénéficiaire archivé",
                                 style: TextStyle(
                                   color: Colors.black.withOpacity(.2),
                                 ),
                               ),
                             );
                           }
-                          return Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
-                              child: ListView.builder(
-                                itemCount: value.beneficiairesList.data!.length,
-                                itemBuilder: (context, index) {
-                                  BeneficiaireModel current = BeneficiaireModel.fromJson(value.beneficiairesList.data![index]);
-                                  return InkWell(
-                                      onTap: (){
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder: (context) {
-                                            return Container(
-                                              padding: const EdgeInsets.all(20),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children:  [
-                                                  CircularProfileAvatar(
-                                                    "",
-                                                    radius: 25, // sets radius, default 50.0
-                                                    backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
-                                                    initialsText: Text(
-                                                      current.nomBeneficiaire!.split(" ").length == 2 ? current.nomBeneficiaire!.split(" ")[0][0] + current.nomBeneficiaire!.split(" ")[1][0] : current.nomBeneficiaire!.split(" ")[0][0],
-                                                      style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-                                                    ),  // sets initials text, set your own style, default Text('')
-                                                    elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                                                    foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-                                                    cacheImage: true, // allow widget to cache image against provided url
-                                                    showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-                                                  ),
-                                                  const SizedBox(height: 20,),
-                                                  Text(current.nomBeneficiaire.toString(), style: const TextStyle(
-                                                      fontWeight: FontWeight.w600
+                          return ListView.builder(
+                            itemCount: value.beneficiairesList.data!.length,
+                            itemBuilder: (context, index) {
+                              BeneficiaireModel beneficiaire = BeneficiaireModel.fromJson(value.beneficiairesList.data![index]);
+                              return InkWell(
+                                  onTap: (){
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return Container(
+                                          padding: const EdgeInsets.all(20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children:  [
+                                              CircularProfileAvatar(
+                                                "",
+                                                radius: 25, // sets radius, default 50.0
+                                                backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
+                                                initialsText: Text(
+                                                  beneficiaire.nomBeneficiaire!.split(" ").length == 2 ? beneficiaire.nomBeneficiaire!.split(" ")[0][0] + beneficiaire.nomBeneficiaire!.split(" ")[1][0] : beneficiaire.nomBeneficiaire!.split(" ")[0][0],
+                                                  style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                                                ),  // sets initials text, set your own style, default Text('')
+                                                elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
+                                                foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+                                                cacheImage: true, // allow widget to cache image against provided url
+                                                showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+                                              ),
+                                              const SizedBox(height: 10,),
+                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18
+                                              ),),
+                                              const SizedBox(height: 5,),
+                                              Text(beneficiaire.telBeneficiaire.toString(), style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black.withOpacity(.5)
+                                              ),),
+                                              const SizedBox(height: 10,),
+                                              const Divider(),
+                                              const SizedBox(height: 5,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  const Text("Pays", style: TextStyle(
+                                                      fontWeight: FontWeight.bold
                                                   ),),
-                                                  const SizedBox(height: 10,),
-                                                  Text(current.telBeneficiaire.toString(), style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.black.withOpacity(.5)
-                                                  ),),
-                                                  const SizedBox(height: 10,),
-                                                  const Divider(),
-                                                  const SizedBox(height: 10,),
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      const Text("Pays", style: TextStyle(
-                                                          fontWeight: FontWeight.bold
-                                                      ),),
-                                                      Row(
-                                                        children: [
-                                                          Image.asset("packages/country_icons/icons/flags/png/${current.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                          const SizedBox(width: 10,),
-                                                          Text("(${current.codePays})"),
-                                                        ],
-                                                      )
+                                                      Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
+                                                      const SizedBox(width: 10,),
+                                                      Text("(${beneficiaire.paysMonnaie})"),
                                                     ],
-                                                  ),
-                                                  const SizedBox(height: 10,),
-                                                  const Divider(),
-                                                  const SizedBox(height: 10,),
-                                                  const SizedBox(height: 20,),
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(height: 5,),
+                                              const Divider(),
+                                              const SizedBox(height: 20,),
+                                              Wrap(
+                                                spacing: 5,
+                                                runSpacing: 5,
+                                                crossAxisAlignment: WrapCrossAlignment.center,
+                                                alignment: WrapAlignment.spaceBetween,
+                                                children: [
                                                   InkWell(
                                                     onTap: () {
                                                       DemandesViewModel demandesViewModel3 = DemandesViewModel();
-                                                      showModalBottomSheet(
+                                                      showCupertinoDialog(
                                                         context: context,
-                                                        isScrollControlled: true,
-                                                        builder: (context) {
-                                                          return ConfirmDesrchive(recipientId: current.idBeneficiaire!.toInt(), demandesViewModel: demandesViewModel3);
+                                                        builder: (BuildContext context) {
+                                                          return CupertinoAlertDialog(
+                                                            title: Text('Confirmer'),
+                                                            content: Text('Voulez-vous vraimer desarchiver ce bénéficiaire ?'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                child: const Text('Annuler', style: TextStyle(
+                                                                    color: Colors.black
+                                                                ),),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop(); // Fermer le dialogue
+                                                                },
+                                                              ),
+                                                              CupertinoDialogAction(
+                                                                child: Text('Confirmer', style: TextStyle(
+                                                                    color: AppColors.primaryColor
+                                                                ),),
+                                                                onPressed: () async {
+                                                                  Navigator.of(context).pop();
+                                                                  Navigator.of(context).pop();
+                                                                  await demandesViewModel.desarchiveRecipient(context, beneficiaire.idBeneficiaire!.toInt()).then((value) {
+                                                                    setState(() {
+                                                                      demandesViewModel.beneficiairesArchive([], context);
+                                                                    });
+                                                                  });// Fermer le dialogue
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
                                                         },
-                                                        shape: const RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.vertical(
-                                                            top: Radius.circular(20),
-                                                          ),
-                                                        ),
                                                       );
                                                     },
                                                     child: Container(
-                                                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                                         decoration: BoxDecoration(
                                                             color: Colors.black,
-                                                            borderRadius: BorderRadius.circular(30)
+                                                            borderRadius: BorderRadius.circular(5)
                                                         ),
-                                                        child: Text("Desarchiver ${current.nomBeneficiaire}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),)
+                                                        child: const Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
+                                                            SizedBox(width: 3,),
+                                                            Text("Desarchiver", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
+                                                          ],
+                                                        )
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 10,),
                                                   InkWell(
                                                     onTap: () {
-                                                      DemandesViewModel demandesViewModel3 = DemandesViewModel();
-                                                      showModalBottomSheet(
+                                                      showCupertinoDialog(
                                                         context: context,
-                                                        isScrollControlled: true,
-                                                        builder: (context) {
-                                                          return ConfirmDelete(recipientId: current.idBeneficiaire!.toInt(), demandesViewModel: demandesViewModel3);
+                                                        builder: (BuildContext context) {
+                                                          return CupertinoAlertDialog(
+                                                            title: Text('Confirmer'),
+                                                            content: Text('Voulez-vous vraimer supprimer ce bénéficiaire ?'),
+                                                            actions: [
+                                                              CupertinoDialogAction(
+                                                                child: const Text('Annuler', style: TextStyle(
+                                                                    color: Colors.black
+                                                                ),),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop(); // Fermer le dialogue
+                                                                },
+                                                              ),
+                                                              CupertinoDialogAction(
+                                                                child: Text('Confirmer', style: TextStyle(
+                                                                    color: AppColors.primaryColor
+                                                                ),),
+                                                                onPressed: () async {
+                                                                  Navigator.of(context).pop();
+                                                                  Navigator.of(context).pop();
+                                                                  await demandesViewModel.deleteRecipient(context, beneficiaire.idBeneficiaire!.toInt()).then((value) {
+                                                                    setState(() {
+                                                                      demandesViewModel.beneficiaires([], context);
+                                                                    });
+                                                                  });// Fermer le dialogue
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
                                                         },
-                                                        shape: const RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.vertical(
-                                                            top: Radius.circular(20),
-                                                          ),
-                                                        ),
                                                       );
                                                     },
                                                     child: Container(
-                                                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                                         decoration: BoxDecoration(
                                                             color: Colors.red,
-                                                            borderRadius: BorderRadius.circular(30)
+                                                            borderRadius: BorderRadius.circular(5)
                                                         ),
-                                                        child: const Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+                                                        child: const Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
+                                                            SizedBox(width: 3,),
+                                                            Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
+                                                          ],
+                                                        )
                                                     ),
                                                   ),
                                                 ],
-                                              ),
-                                            );
-                                          },
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20),
-                                            ),
+                                              )
+                                            ],
                                           ),
                                         );
                                       },
-                                      child: Column(
-                                        children: [
-                                          RecipientCard2(
-                                            name: "${current.nomBeneficiaire} (${current.codePays})",
-                                            address: current.codePays.toString(),
-                                            phone: current.telBeneficiaire.toString(),
-                                          ),
-                                          const SizedBox(height: 20,)
-                                        ],
-                                      )
-                                  );
-                                },
-                              )
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      RecipientCard2(
+                                        name: "${beneficiaire.nomBeneficiaire}",
+                                        address: beneficiaire.codePays.toString(),
+                                        phone: beneficiaire.telBeneficiaire.toString(),
+                                      ),
+                                    ],
+                                  )
+                              );
+                            },
                           );
                       }
                     })
             ))
           ],
-        )
+        ),
+      ),
     );
   }
 }

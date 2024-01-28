@@ -348,49 +348,50 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<void>  deleteRecipient(BuildContext context, int id) async {
+  Future<bool>  deleteRecipient(BuildContext context, int id) async {
     setLoading(true);
     await _repository.deleteRecipient(context: context, recipientId: id).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage(value["message"]);
-          Navigator.pushNamed(context, RoutesName.recipeints);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     });
+    return true;
   }
 
-  Future<void>  archiveRecipient(BuildContext context, int id) async {
+  Future<bool> archiveRecipient(BuildContext context, int id) async {
     setLoading(true);
     await _repository.archiveRecipient(context: context, recipientId: id).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage(value["message"]);
-          Navigator.pushNamed(context, RoutesName.recipeints);
+          // Navigator.pushNamed(context, RoutesName.recipeints);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     });
+    return true;
   }
 
-  Future<void>  desarchiveRecipient(BuildContext context, int id) async {
+  Future<bool> desarchiveRecipient(BuildContext context, int id) async {
     setLoading(true);
     await _repository.desarchiveRecipient(context: context, recipientId: id).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage(value["message"]);
-          Navigator.pushNamed(context, RoutesName.recipeints);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     });
+    return true;
   }
 
   Future<void>  cancelSend(BuildContext context, Map data) async {

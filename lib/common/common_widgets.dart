@@ -19,6 +19,7 @@ Widget commonAppBar({
   bool? theme = false,
   Color? appBarColor,
   GestureTapCallback? editClick,
+  GestureTapCallback? backClick,
   GestureTapCallback? themeClick,
 }) {
   return Container(
@@ -41,7 +42,7 @@ Widget commonAppBar({
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () {
+                onTap: backClick ?? () {
                   Navigator.pop(context);
                 },
                 child: Container(

@@ -13,17 +13,16 @@ class RecipientCard2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          border: Border.all(color: Colors.black.withOpacity(.3), width: 1)
+          border: Border(
+            bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+          )
       ),
       child: Row(
         children: [
           CircularProfileAvatar(
             "",
-            radius: 25, // sets radius, default 50.0
+            radius: 20, // sets radius, default 50.0
             backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
             initialsText: Text(
               name.split(" ").length > 2 && name.split(" ")[1] != "" ? (name.split(" ")[0][0] + name.split(" ")[1][0]).toString() : name.split(" ")[0][0].toString(),
@@ -40,22 +39,22 @@ class RecipientCard2 extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(name, style: const TextStyle(
-                fontWeight: FontWeight.w600
+                  fontWeight: FontWeight.w600
               ),),
+              const SizedBox(width: 5,),
               const SizedBox(height: 5,),
               if (address != "null")
-              Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 15, fit: BoxFit.contain),
-              const SizedBox(height: 5,),
               Text(phone, style: const TextStyle(
                 fontSize: 11,fontWeight: FontWeight.w500
               ),),
             ],
           ),
-          const Expanded(
+          Expanded(
             child: Align(
             alignment: Alignment.centerRight,
-            child: Icon(Icons.arrow_drop_down),
-          ))
+            child: Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 13, fit: BoxFit.contain),
+            )
+          )
         ],
       ),
     );
