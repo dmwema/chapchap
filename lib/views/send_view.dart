@@ -3,7 +3,6 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/NewBeneficiaireForm.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/res/components/send_bottom_modal.dart';
@@ -89,13 +88,6 @@ class _SendViewState extends State<SendView> {
     }
 
     return Scaffold(
-        appBar: CustomAppBar(
-          showBack: true,
-          title: "Envoi d'argent",
-          backUrl: RoutesName.home,
-        ),
-        drawer:
-        const AppbarDrawer(),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(

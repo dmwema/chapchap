@@ -1,7 +1,6 @@
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/invoice_card.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -30,7 +29,6 @@ class _InvoicesViewState extends State<InvoicesView> {
         title: "Factures",
         showBack: true,
       ),
-      drawer: const AppbarDrawer(),
         body: ChangeNotifierProvider<DemandesViewModel>(
             create: (BuildContext context) => demandesViewModel,
             child: Consumer<DemandesViewModel>(

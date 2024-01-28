@@ -3,7 +3,6 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/res/components/home_card.dart';
@@ -40,7 +39,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const AppbarDrawer(),
       backgroundColor: AppColors.formFieldColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(

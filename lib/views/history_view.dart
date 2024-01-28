@@ -1,7 +1,6 @@
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/appbar_drawer.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -33,7 +32,6 @@ class _HistoryViewState extends State<HistoryView> {
           title: 'Historique',
           backUrl: RoutesName.home,
         ),
-        drawer: const AppbarDrawer(),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: ChangeNotifierProvider<DemandesViewModel>(

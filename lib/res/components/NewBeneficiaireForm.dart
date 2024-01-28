@@ -45,8 +45,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
     }
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(
-            top: 20,
+        padding: const EdgeInsets.only(
+            top: 10,
             left: 20,
             right: 20,
             bottom: 20
@@ -129,8 +129,9 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               child: Container(
                 padding: const EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16),
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(35)),
-                    border: Border.all(color: Colors.black26, width: 1)
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  color: AppColors.formFieldColor,
+                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1)
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,72 +148,110 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
             CustomFormField(
               label: "Nom du bénéficiaire *",
               hint: "Entrez le nom du bénéficiaire *",
               controller: _nomController,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
             CustomFormField(
               label: "Email du bénéficiaire ${emailRequired ? '*': ''}",
               hint: "Entrez l'adresse e-mail du bénéficiaire ${emailRequired ? '*': ''}",
               controller: _emailController,
               type: TextInputType.emailAddress,
             ),
-            const SizedBox(height: 20,),
-            Row(
-              children: [
-                SizedBox(width: 70, child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), bottomLeft: Radius.circular(35)),
-                  ),
-                  child: Padding(padding: const EdgeInsets.only(top: 15, bottom: 15, left: 16, right: 16), child: Center(
-                    child: Text(
-                      selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
-                      style: const TextStyle(
-                        fontSize: 12
+            const SizedBox(height: 10,),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  color: AppColors.formFieldColor,
+                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1)
+              ),
+              child: Row(
+                children: [
+                  SizedBox(child: Padding(padding: const EdgeInsets.only(bottom: 3), child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
+                        style: const TextStyle(
+                            fontSize: 14
+                        ),
                       ),
                     ),
-                  ),),
-                ),),
-                Expanded(child: CustomFormField(
-                  label: "Téléphone *",
-                  hint: "Entrez le numero de téléphone du bénéficiaire ",
-                  controller: _telController,
-                  type: TextInputType.phone,
-                  radius: const BorderRadius.only(topRight: Radius.circular(35), bottomRight: Radius.circular(35)),
-                ),)
-              ],
+                  ),),),
+                  Expanded(child: TextFormField(
+                    controller: _telController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: AppColors.formFieldColor,
+                      hintText: "Téléphone *",
+                      hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(.25)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.formFieldColor),// Changer la couleur de la bordure
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.formFieldColor),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 6),
+                    ),
+                    onTap: () {
+
+                    },
+                  ),)
+                ],
+              ),
             ),
-            const SizedBox(height: 20,),
-            Row(
-              children: [
-                SizedBox(width: 70, child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), bottomLeft: Radius.circular(35)),
-                  ),
-                  child: Padding(padding: const EdgeInsets.only(top: 15, bottom: 15, left: 16, right: 16), child: Center(
-                    child: Text(
-                      selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
-                      style: const TextStyle(
-                          fontSize: 12
+            const SizedBox(height: 10,),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  color: AppColors.formFieldColor,
+                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1)
+              ),
+              child: Row(
+                children: [
+                  SizedBox(child: Padding(padding: const EdgeInsets.only(bottom: 3), child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
+                        style: const TextStyle(
+                            fontSize: 14
+                        ),
                       ),
                     ),
-                  ),),
-                ),),
-                Expanded(child: CustomFormField(
-                  label: "Confirmez le téléphone *",
-                  hint: "Confirmez le téléphone du bénéficiaire ",
-                  controller: _telConfirmController,
-                  type: TextInputType.phone,
-                  radius: const BorderRadius.only(topRight: Radius.circular(35), bottomRight: Radius.circular(35)),
-                ))
-              ],
+                  ),),),
+                  Expanded(child: TextFormField(
+                    controller: _telConfirmController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: AppColors.formFieldColor,
+                      hintText: "Confirmer le téléphone *",
+                      hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(.25)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.formFieldColor),// Changer la couleur de la bordure
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.formFieldColor),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 6),
+                    ),
+                    onTap: () {
+
+                    },
+                  ),)
+                ],
+              ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
             InkWell(
               onTap: () {
                 setState(() {
@@ -222,6 +261,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               child: Row(
                 children: [
                   Checkbox(
+                    activeColor: AppColors.primaryColor,
                     checkColor: Colors.white,
                     value: confirmNumber,
                     onChanged: (bool? value) {
@@ -247,49 +287,51 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               loading: loading,
               title: "Enrégistrer",
               onPress: () {
-                setState(() {
-                  loading = true;
-                });
-                if (!demandesViewModel.loading) {
-                  if (selectedDesinaion == null) {
-                    Utils.flushBarErrorMessage("Vous devez choisir un pays", context);
-                  } else if (_telController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Le numéro de téléphone est obligatoire", context);
-                  }  else if (_telConfirmController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("L'adresse est obligatoire", context);
-                  } else if (_adresseController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Saisissez le champs de confirmation du numéro de téléphone", context);
-                  }  else if (_telController.text != _telConfirmController.text) {
-                    Utils.flushBarErrorMessage("Les deux numéros ne correspondent pas", context);
-                  } else if (selectedDesinaion!.codePaysDest == "ca" && _emailController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("L'adresse email est obligatoire", context);
-                  } else if (!confirmNumber) {
-                    Utils.flushBarErrorMessage("Vous devez cocher la case de la confirmation du numéro de téléphone", context);
-                  } else {
-                    Map data = {
-                      "id_pays": selectedDesinaion!.idPaysDest.toString(),
-                      "emailBeneficiaire": _emailController.text,
-                      "nomBeneficiaire": _nomController.text,
-                      "telBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telController.text,
-                      "telConfirmBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telConfirmController.text,
-                      "adresseBeneficiaire": _adresseController.text,
-                      "banque":"",
-                      "swift":"",
-                      "iban":"",
-                      "id_institution_financiere":"",
-                      "id_transit":"",
-                      "id_compte":""
-                    };
-                    demandesViewModel.newBeneficiaire(data, context, redirect: widget.redirect == true).then((value) {
-                      if (widget.redirect != true) {
-                        Navigator.pop(widget.parentCotext);
-                      } else {
-                        Navigator.pushNamed(context, RoutesName.recipeints);
-                      }
+                if (!loading) {
+                  if (!demandesViewModel.loading) {
+                    if (selectedDesinaion == null) {
+                      Utils.flushBarErrorMessage("Vous devez choisir un pays", context);
+                    } else if (_telController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("Le numéro de téléphone est obligatoire", context);
+                    }  else if (_telConfirmController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("L'adresse est obligatoire", context);
+                    } else if (_adresseController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("Saisissez le champs de confirmation du numéro de téléphone", context);
+                    }  else if (_telController.text != _telConfirmController.text) {
+                      Utils.flushBarErrorMessage("Les deux numéros ne correspondent pas", context);
+                    } else if (selectedDesinaion!.codePaysDest == "ca" && _emailController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("L'adresse email est obligatoire", context);
+                    } else if (!confirmNumber) {
+                      Utils.flushBarErrorMessage("Vous devez cocher la case de la confirmation du numéro de téléphone", context);
+                    } else {
                       setState(() {
-                        loading = false;
+                        loading = true;
                       });
-                    });
+                      Map data = {
+                        "id_pays": selectedDesinaion!.idPaysDest.toString(),
+                        "emailBeneficiaire": _emailController.text,
+                        "nomBeneficiaire": _nomController.text,
+                        "telBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telController.text,
+                        "telConfirmBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telConfirmController.text,
+                        "adresseBeneficiaire": _adresseController.text,
+                        "banque":"",
+                        "swift":"",
+                        "iban":"",
+                        "id_institution_financiere":"",
+                        "id_transit":"",
+                        "id_compte":""
+                      };
+                      demandesViewModel.newBeneficiaire(data, context, redirect: widget.redirect == true).then((value) {
+                        if (widget.redirect != true) {
+                          Navigator.pop(widget.parentCotext);
+                        } else {
+                          Navigator.pushNamed(context, RoutesName.recipeints);
+                        }
+                        setState(() {
+                          loading = false;
+                        });
+                      });
+                    }
                   }
                 }
               },

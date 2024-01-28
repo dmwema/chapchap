@@ -93,6 +93,12 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
+      case RoutesName.newBeneficiaire:
+        return PageTransition(
+            child: NewBeneficiaireView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
       case RoutesName.passwordReset:
         return PageTransition(
             child: PasswordResetView(),
@@ -152,7 +158,7 @@ class Routes {
       case RoutesName.newBeneficiaire:
         return PageTransition(
           child: const NewBeneficiaireView(),
-          type: PageTransitionType.rightToLeft,
+          type: PageTransitionType.bottomToTop,
           settings: settings,
         );
       case RoutesName.couponView:

@@ -46,14 +46,19 @@ class _RecipientsViewState extends State<RecipientsView> {
                   children: [
                     const Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(width: 10,),
-                    Container(
-                      width: 25, height: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: AppColors.primaryColor
-                      ),
-                      child: const Center(
-                        child: Icon(CupertinoIcons.add, size: 15, color: Colors.white,),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.newBeneficiaire);
+                      },
+                      child: Container(
+                        width: 25, height: 25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: AppColors.primaryColor
+                        ),
+                        child: const Center(
+                          child: Icon(CupertinoIcons.add, size: 15, color: Colors.white,),
+                        ),
                       ),
                     )
                   ],
