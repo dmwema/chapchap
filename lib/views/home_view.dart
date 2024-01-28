@@ -10,6 +10,7 @@ import 'package:chapchap/res/components/home_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +29,10 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    demandesViewModel.myDemandes([], context, 5);
+    demandesViewModel.myDemandes([], context, 20);
     UserViewModel().getUser().then((value) {
       setState(() {
-        user = value;
+      user = value;
       });
     });
   }
@@ -39,103 +40,83 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
       drawer: const AppbarDrawer(),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.formFieldColor,
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salut!", style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black.withOpacity(.5)
-            ),),
-            Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "", style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.black
-            ),),
-            const SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    HomeCard(
-                      h: 150,
-                      color: AppColors.primaryColor,
-                      icon: Icons.payment_rounded,
-                      title: "Envoi d'argent",
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.send);
-                      },
-                    ),
-                    const SizedBox(height: 20,),
-                    HomeCard(h: 90, color: AppColors.darkRed2, icon: Icons.bar_chart, title: "Bénéficiaires", onTap: (){
-                      Navigator.pushNamed(context, RoutesName.recipeints);
-                    },)
-                  ],
-                ),
-                SizedBox(width: 20,),
-                Column(
-                  children: [
-                    HomeCard(h: 90, color: AppColors.darkRed, icon: Icons.compare_arrows_rounded, title: "Taux de change", onTap: () {
-                      Navigator.pushNamed(context, RoutesName.exchange);
-                    },),
-                    const SizedBox(height: 20,),
-                    HomeCard(
-                      h: 150,
-                      color: AppColors.marronRed,
-                      icon: Icons.history_rounded,
-                      title: "Historique des transferts",
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.history);
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(height: 40,),
-            const Text("Dernières opérations", style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.black
-            ),),
-            const SizedBox(height: 10,),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, RoutesName.historyWP);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black
-                ),
-                child: const Text(
-                  "Demandes avec problèmes",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              decoration: const BoxDecoration(
+                color: Colors.white
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Salut!", style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black.withOpacity(.7)
+                  ),),
+                  Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "", style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black
+                  ),),
+                ],
               ),
             ),
-            const SizedBox(height: 15,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: AppColors.formFieldBorderColor)
+                )
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Dernières opérations", style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black
+                  ),),
+                  const SizedBox(height: 10,),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, RoutesName.historyWP);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.black
+                      ),
+                      child: const Text(
+                        "Demandes avec problèmes",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             ChangeNotifierProvider<DemandesViewModel>(
                 create: (BuildContext context) => demandesViewModel,
                 child: Consumer<DemandesViewModel>(
                     builder: (context, value, _){
                       switch (value.demandeList.status) {
                         case Status.LOADING:
-                          return Expanded(child: Center(
-                            child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                          return const Expanded(child: Center(
+                            child: CupertinoActivityIndicator(color: Colors.black),
                           ));
                         case Status.ERROR:
                           return Center(
@@ -155,15 +136,11 @@ class _HomeViewState extends State<HomeView> {
                               itemCount: value.demandeList.data!.length,
                               itemBuilder: (context, index) {
                                 DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                return Column(
-                                  children: [
-                                    HistoryCard(
-                                      demande: current,
-                                    ),
-                                    const SizedBox(height: 5,),
-                                    const Divider(),
-                                  ],
-                                );
+                                return
+                                  HistoryCard(
+                                    demande: current,
+                                  )
+                                ;
                               },
                             ));
                       }
@@ -171,7 +148,67 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-      )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      FloatingActionButton(
+        backgroundColor: AppColors.primaryColor, 
+        child: const Icon(CupertinoIcons.arrow_up_right), onPressed: () {
+          Navigator.pushNamed(context, RoutesName.send);
+      }
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: SizedBox(
+          height: 66,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(child: Icon(CupertinoIcons.square_grid_2x2_fill, color: AppColors.primaryColor,), onTap: () {
+                    // Navigator.pushNamed(context, RoutesName.send);
+                  }),
+                  const SizedBox(height: 5), // The dummy child
+                  Text("Accueil", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: AppColors.primaryColor),)
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(child: const Icon(CupertinoIcons.person_2), onTap: () {
+                    Navigator.pushNamed(context, RoutesName.recipeints);
+                  }),
+                  const SizedBox(height: 5), // The dummy child
+                  const Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)
+                ],
+              ),
+              const SizedBox(width: 40),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(child: const Icon(CupertinoIcons.arrow_right_arrow_left_circle), onTap: () {
+                    Navigator.pushNamed(context, RoutesName.exchange);
+                  }),
+                  const SizedBox(height: 5), // The dummy child
+                  const Flexible(child: Text("Change",  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),))
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
+                    Navigator.pushNamed(context, RoutesName.profile);
+                  }),
+                  const SizedBox(height: 5), // The dummy child
+                  const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)
+                ],
+              ),
+            ],
+          ),
+        )
+      ),
     );
   }
 }
