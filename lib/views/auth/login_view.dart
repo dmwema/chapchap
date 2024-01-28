@@ -9,6 +9,7 @@ import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  NotificationsService notificationsService = NotificationsService();
+  NotificationsService? notificationsService;
 
   ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
 
@@ -30,6 +31,20 @@ class _LoginViewState extends State<LoginView> {
   FocusNode passwordFocusNode = FocusNode();
 
   String? deviceToken;
+
+  @override
+  void initState() {
+    setState(() {
+      try {
+        notificationsService = NotificationsService();
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -56,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
                   context: context,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,25 +83,69 @@ class _LoginViewState extends State<LoginView> {
                       CustomFormField(
                         label: "Adresse électronique",
                         hint: "Adresse électronique",
+                        controller: _emailController,
+                        maxLines: 1,
                       ),
                       const SizedBox(height: 10,),
                       CustomFormField(
                         label: "Mot de passe",
                         hint: "Mot de passe",
-                        suffixIcon: const Padding(
-                          padding: EdgeInsets.only(right: 15),
-                          child: Icon(Icons.visibility_off, size: 20,),
+                        controller: _passwordController,
+                        maxLines: 1,
+                        obscurePassword: obscurePassword.value,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              obscurePassword.value = !obscurePassword.value;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: obscurePassword.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
+                          ),
                         ),
                       ),
                       TextButton(onPressed: () {
-
+                        Navigator.pushNamed(context, RoutesName.passwordReset);
                       }, child: const Text("Mot de passe oublié ?", style: TextStyle(
                         color: Colors.black
                       ),)),
                       const SizedBox(height: 20,),
-                      RoundedButton(title: "Se connecter", onPress: () {
+                      RoundedButton(
+                        title: "Se connecter",
+                        loading: authViewModel.loading,
+                        onPress: () async {
+                          if (!authViewModel.loading) {
+                            if (_emailController.text.isEmpty) {
+                              Utils.flushBarErrorMessage("Vous devez entrer l'adresse mail", context);
+                            } else if (_passwordController.text.isEmpty) {
+                              Utils.flushBarErrorMessage("Vous devez entrer le mot de passe", context);
+                            } else if (_passwordController.text.length < 6) {
+                              Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
+                            } else {
+                              String? token;
+                              if (notificationsService != null) {
+                                try {
+                                  notificationsService!.isTokenRefresh();
+                                  await notificationsService!.getDeviceToken().then((value) {
+                                    token = value;
+                                  });
+                                } catch (e) {
+                                  print(e.toString());
+                                }
+                              }
 
-                      })
+                              Map data = {
+                                'username': _emailController.text.toString(),
+                                'password': _passwordController.text.toString(),
+                                'phoneId': token
+                              };
+
+                              authViewModel.loginApi(data, context);
+                            }
+                          }
+                        }
+                      )
                     ],
                   ),
                 )
@@ -96,9 +155,9 @@ class _LoginViewState extends State<LoginView> {
               bottom: 10,
               child: TextButton(
                 onPressed: () {
-                  
+                  Navigator.pushNamed(context, RoutesName.register);
                 },
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

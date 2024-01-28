@@ -1,3 +1,4 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
@@ -19,66 +20,104 @@ class _NewPasswordState extends State<NewPassword> {
   TextEditingController _passController = TextEditingController();
   TextEditingController _passCnfController = TextEditingController();
   AuthViewModel authViewModel = AuthViewModel();
+  ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
+  ValueNotifier<bool> obscurePasswordConfirm = ValueNotifier<bool>(true);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthContainer(
-        child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-          child: Column(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Stack(
             children: [
-              const Text("Créez un nouveau mot de passe", style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold
-              ),),
-              const SizedBox(height: 20,),
-              CustomFormField(
-                label: "Code reçu *",
-                hint: "Entrez le code réçu dans le message",
-                type: TextInputType.number,
-                controller: _codeController,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  commonAppBar(
+                      context: context,
+                      backArrow: true
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Réinitialiser le mot de passe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                        const SizedBox(height: 10,),
+                        const Text("Veuillez saisir le code réçu et créez un nouveau mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black45), textAlign: TextAlign.left,),
+                        const SizedBox(height: 20,),
+                        CustomFormField(
+                          label: "Code",
+                          hint: "Code",
+                          controller: _codeController,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 10,),
+                        CustomFormField(
+                          label: "Mot de passe",
+                          hint: "Mot de passe",
+                          controller: _passController,
+                          maxLines: 1,
+                          obscurePassword: obscurePassword.value,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                obscurePassword.value = !obscurePassword.value;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: obscurePassword.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10,),
+                        CustomFormField(
+                          label: "Confirmer le mot de passe",
+                          hint: "Confirmer le mot de passe",
+                          controller: _passCnfController,
+                          maxLines: 1,
+                          obscurePassword: obscurePasswordConfirm.value,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                obscurePasswordConfirm.value = !obscurePasswordConfirm.value;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: obscurePasswordConfirm.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20,),
+                        RoundedButton(
+                            title: "Valider",
+                            loading: authViewModel.loading,
+                            onPress: () async {
+                              if (!authViewModel.loading) {
+                                if (_passCnfController.text.isEmpty || _passController.text.isEmpty || _codeController.text.isEmpty) {
+                                  Utils.flushBarErrorMessage("Tous les champs sont réquis", context);
+                                } else {
+                                  Map data = {
+                                    "password": _passController.text,
+                                    "password_cfrm": _passCnfController.text,
+                                    "code": _codeController.text
+                                  };
+                                  authViewModel.changePassword(data, context);
+                                }
+                              }
+                            }
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 10,),
-              const Divider(),
-              const SizedBox(height: 10,),
-              CustomFormField(
-                label: "Nouveau mot de passe *",
-                hint: "Nouveau mot de passe *",
-                controller: _passController,
-                prefixIcon: const Icon(Icons.lock_person_outlined),
-                suffixIcon: const Icon(Icons.visibility_off_outlined),
-              ),
-              SizedBox(height: 20,),
-              CustomFormField(
-                label: "Confirmer le mot de passe *",
-                controller: _passCnfController,
-                hint: "Confirmer le mot de passe *",
-                prefixIcon: const Icon(Icons.lock_person_outlined),
-                suffixIcon: const Icon(Icons.visibility_off_outlined),
-              ),
-              const SizedBox(height: 30,),
-              RoundedButton(
-                title: 'Enrégistrer',
-                loading: authViewModel.loading, onPress: () {
-                  if (!authViewModel.loading) {
-                    if (_passCnfController.text.isEmpty || _passController.text.isEmpty || _codeController.text.isEmpty) {
-                      Utils.flushBarErrorMessage("Tous les champs sont réquis", context);
-                    } else {
-                      Map data = {
-                        "password": _passController.text,
-                        "password_cfrm": _passCnfController.text,
-                        "code": _codeController.text
-                      };
-                      authViewModel.changePassword(data, context);
-                    }
-                  }
-              },
-              ),
-              const SizedBox(height: 20,),
             ],
           ),
-        ),
-      ),
-
+        )
     );
   }
 }

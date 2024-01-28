@@ -27,8 +27,9 @@ class Utils {
       message: message,
       forwardAnimationCurve: Curves.decelerate,
       icon: const Icon(Icons.error, size: 25, color: Colors.white,),
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 2),
       backgroundColor: Colors.red,
+      flushbarPosition: FlushbarPosition.TOP,
     )..show(context));
   }
 

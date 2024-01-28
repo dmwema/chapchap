@@ -1,3 +1,4 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
@@ -21,56 +22,58 @@ class _PasswordResetViewState extends State<PasswordResetView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthContainer(
-      child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Réinitialiser le mot de passe", style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold
-              ),),
-              const SizedBox(height: 20,),
-              CustomFormField(
-                label: "Adresse électronique",
-                controller: _usernameContoller,
-                hint: "Entrez l'adresse électronique",
-                prefixIcon: Icon(Icons.alternate_email_sharp),
-              ),
-              const SizedBox(height: 20,),
-              CustomFormField(
-                label: "Confirmer Adresse électronique",
-                controller: _usernameConfirmContoller,
-                hint: "Confirmer Adresse électronique",
-                prefixIcon: const Icon(Icons.alternate_email_sharp),
-              ),
-              const SizedBox(height: 30,),
-              RoundedButton(
-                title: 'Envoyer',
-                loading: authViewModel.loading,
-                onPress: () {
-                  if (_usernameConfirmContoller.text.isEmpty || _usernameContoller.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Vous devez saisir tous les champs", context);
-                  } else if (_usernameConfirmContoller.text != _usernameContoller.text) {
-                    Utils.flushBarErrorMessage("Les deux adresses ne correspondent pas", context);
-                  } else {
-                    Map data = {
-                      'username': _usernameContoller.text
-                    };
-                    authViewModel.resetPassword(data, context);
-                  }
-              },
-              ),
-              const SizedBox(height: 20,),
-              Text("Un message vous sera envoyé avec un code de récupération.", style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black.withOpacity(.7)
-              ), textAlign: TextAlign.center,),
-            ],
-          ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                commonAppBar(
+                  context: context,
+                  backArrow: true
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Réinitialiser le mot de passe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                      const SizedBox(height: 10,),
+                      const Text("Veuillez saisir l’adresse e-mail associé à votre profil. Nous enverrons un message contenant un code de réinitialisation du mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black45), textAlign: TextAlign.left,),
+                      const SizedBox(height: 20,),
+                      CustomFormField(
+                        label: "Adresse électronique",
+                        hint: "Adresse électronique",
+                        controller: _usernameContoller,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(height: 20,),
+                      RoundedButton(
+                          title: "Valider",
+                          loading: authViewModel.loading,
+                          onPress: () async {
+                            if (!authViewModel.loading) {
+                              if (_usernameContoller.text.isEmpty) {
+                                Utils.flushBarErrorMessage("Vous devez saisir votre adresse E-mail", context);
+                              } else {
+                                Map data = {
+                                  'username': _usernameContoller.text
+                                };
+                                authViewModel.resetPassword(data, context);
+                              }
+                            }
+                          }
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
-      ),
-
+      )
     );
   }
 }

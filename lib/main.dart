@@ -5,6 +5,7 @@ import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,14 +41,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  NotificationsService notificationsService = NotificationsService();
-
   @override
   void initState() {
     super.initState();
-    notificationsService.requestNotificationPermission();
-    notificationsService.initLocalNotifications(context);
-    notificationsService.firebaseInit();
+    try {
+      NotificationsService notificationsService = NotificationsService();
+      notificationsService.requestNotificationPermission();
+      notificationsService.initLocalNotifications(context);
+      notificationsService.firebaseInit();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 
   @override

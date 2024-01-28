@@ -1,5 +1,16 @@
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+Future<void> _openUrl(String url) async {
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launchUrl(Uri.parse(url));
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 Widget commonAppBar({
   BuildContext? context,
@@ -56,7 +67,59 @@ Widget commonAppBar({
               const Spacer(),
               GestureDetector(
                 onTap: () {
-
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Besoin d’aide ?", style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 22
+                              ),),
+                              const SizedBox(height: 20,),
+                              GestureDetector(
+                                onTap: () {
+                                  _openUrl("tel://+15143701555");
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
+                                    const SizedBox(width: 10,),
+                                    const Text("Applez-nous", style: TextStyle(
+                                      fontSize: 17
+                                    ),)
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
+                              GestureDetector(
+                                onTap: () {
+                                  _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
+                                    const SizedBox(width: 10,),
+                                    const Text("Envoyez nous un E-mail", style: TextStyle(
+                                        fontSize: 17
+                                    ),)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                      );
+                    },
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   height: 25,
