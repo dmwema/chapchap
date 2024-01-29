@@ -123,10 +123,29 @@ class _HomeViewState extends State<HomeView> {
                         default:
                           demandes = value.demandeList.data!;
                           if (demandes.isEmpty) {
-                            return Center(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
-                                child: const Text("Aucune opération trouvée"),
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.width,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Image.asset("assets/empty.png", width: 180,),
+                                    const SizedBox(height: 20,),
+                                    SizedBox(
+                                      width: 230,
+                                      child: Text(
+                                        "Aucune opération trouvée.",
+                                        style: TextStyle(
+                                          color: Colors.black.withOpacity(.4),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 40,),
+                                  ],
+                                ),
                               ),
                             );
                           }
@@ -197,7 +216,7 @@ class _HomeViewState extends State<HomeView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
-                    Navigator.pushNamed(context, RoutesName.profile);
+                    Navigator.pushNamed(context, RoutesName.accountView);
                   }),
                   const SizedBox(height: 5), // The dummy child
                   const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)

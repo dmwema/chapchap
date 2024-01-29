@@ -1,4 +1,5 @@
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/views/account_view.dart';
 import 'package:chapchap/views/auth/local_auth_view.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/new_password.dart';
@@ -21,6 +22,7 @@ import 'package:chapchap/views/pay_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipient_archive.dart';
 import 'package:chapchap/views/recipients_view.dart';
+import 'package:chapchap/views/recompense_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,13 @@ class Routes {
       case RoutesName.history:
         return PageTransition(
             child: HistoryView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+      case RoutesName.recompenseView:
+        return PageTransition(
+            child: RecomenseView(),
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.localAuthView:
@@ -54,6 +62,12 @@ class Routes {
       case RoutesName.historyWP:
         return PageTransition(
             child: HistoryWithProblemView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+      case RoutesName.accountView:
+        return PageTransition(
+            child: AccountView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
@@ -72,7 +86,7 @@ class Routes {
       case RoutesName.recipeintsArchive:
         return PageTransition(
             child: RecipientsArchiveView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.profile:

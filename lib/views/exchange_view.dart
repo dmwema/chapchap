@@ -57,7 +57,7 @@ class _ExchangeViewState extends State<ExchangeView> {
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.formFieldColor,
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: Column(
@@ -481,7 +481,7 @@ class _ExchangeViewState extends State<ExchangeView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
-                        Navigator.pushNamed(context, RoutesName.profile);
+                        Navigator.pushNamed(context, RoutesName.accountView);
                       }),
                       const SizedBox(height: 5), // The dummy child
                       const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)

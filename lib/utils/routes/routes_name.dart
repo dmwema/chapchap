@@ -12,8 +12,9 @@ class RoutesName {
   static const String splash = 'splash_screen';
   static const String login = 'login_screen';
   static const String register = 'register_screen';
-  static const String newRecipient = 'new_recipient';
+  static const String accountView = 'account_view';
   static const String passwordReset = 'password_reset_screen';
+  static const String recompenseView = 'recompenses_view';
   static const String resetCodeSend = 'reset_code_sent_screen';
   static const String newPassword = 'new_password_screen';
 

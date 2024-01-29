@@ -4,6 +4,7 @@ import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
 
@@ -90,11 +91,10 @@ class _InvoiceCardState extends State<InvoiceCard> {
                         const Icon(Icons.download, size: 20, color: Colors.white,),
                         if (loading)
                         const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
+                          width: 12,
+                          height: 12,
+                          child: CupertinoActivityIndicator(
                             color: Colors.white,
-                            strokeWidth: 3,
                           )
                         ),
                         SizedBox(width: loading ? 10 : 7,),

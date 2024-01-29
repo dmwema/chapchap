@@ -49,6 +49,7 @@ class CustomFormField extends StatelessWidget {
     return CupertinoTextField(
       controller: controller,
       keyboardType: type,
+      cursorColor: Colors.black,
       obscureText: obscurePassword,
       focusNode: focusNode,
       maxLines: maxLines,

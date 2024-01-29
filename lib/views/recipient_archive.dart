@@ -240,7 +240,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                         child: const Row(
                                                           mainAxisSize: MainAxisSize.min,
                                                           children: [
-                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
+                                                            Icon(CupertinoIcons.delete, size: 15, color: Colors.white,),
                                                             SizedBox(width: 3,),
                                                             Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
                                                           ],

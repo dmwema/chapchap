@@ -395,7 +395,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                         child: const Row(
                                                                           mainAxisSize: MainAxisSize.min,
                                                                           children: [
-                                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
+                                                                            Icon(CupertinoIcons.delete, size: 15, color: Colors.white,),
                                                                             SizedBox(width: 3,),
                                                                             Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
                                                                           ],
@@ -485,7 +485,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
-                      Navigator.pushNamed(context, RoutesName.profile);
+                      Navigator.pushNamed(context, RoutesName.accountView);
                     }),
                     const SizedBox(height: 5), // The dummy child
                     const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)

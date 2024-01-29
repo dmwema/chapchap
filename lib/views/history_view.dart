@@ -1,3 +1,4 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
@@ -5,6 +6,7 @@ import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,86 +29,106 @@ class _HistoryViewState extends State<HistoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-          showBack: true,
-          title: 'Historique',
-          backUrl: RoutesName.home,
-        ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.formFieldColor,
         resizeToAvoidBottomInset: false,
-        body: ChangeNotifierProvider<DemandesViewModel>(
-            create: (BuildContext context) => demandesViewModel,
-            child: Consumer<DemandesViewModel>(
-                builder: (context, value, _){
-                  switch (value.demandeList.status) {
-                    case Status.LOADING:
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height - 200,
-                        child: Center(
-                          child: CircularProgressIndicator(color: AppColors.primaryColor,),
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
+            children: [
+              commonAppBar(
+                context: context,
+                backArrow: true
+              ),
+              const SizedBox(height: 10,),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+                    )
+                ),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Mon historique", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.historyWP);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.black
                         ),
-                      );
-                    case Status.ERROR:
-                      return Center(
-                        child: Text(value.demandeList.message.toString()),
-                      );
-                    default:
-                      if (value.demandeList.data!.length == 0) {
-                        return Center(
-                          child: Text(
-                            "Aucune transaction éffectuée",
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(.2),
-                            ),
+                        child: const Text(
+                          "Demandes avec problèmes",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold
                           ),
-                        );
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, RoutesName.historyWP);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.black
-                                ),
-                                child: const Text(
-                                  "Demandes avec problèmes",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 15,),
-                            Expanded(child: ListView.builder(
-                              itemCount: value.demandeList.data!.length,
-                              itemBuilder: (context, index) {
-                                DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                return Column(
-                                  children: [
-                                    HistoryCard(
-                                      demande: current,
-                                    ),
-                                    const SizedBox(height: 5,),
-                                    const Divider(),
-                                  ],
-                                );
-                              },
-                            )),
-                          ],
                         ),
-                      );
-                  }
-                })
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ChangeNotifierProvider<DemandesViewModel>(
+                    create: (BuildContext context) => demandesViewModel,
+                    child: Consumer<DemandesViewModel>(
+                        builder: (context, value, _){
+                          switch (value.demandeList.status) {
+                            case Status.LOADING:
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height - 200,
+                                child: const Center(
+                                  child: CupertinoActivityIndicator(color: Colors.black,),
+                                ),
+                              );
+                            case Status.ERROR:
+                              return Center(
+                                child: Text(value.demandeList.message.toString()),
+                              );
+                            default:
+                              if (value.demandeList.data!.length == 0) {
+                                return Center(
+                                  child: Text(
+                                    "Aucune transaction éffectuée",
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(.2),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(child: ListView.builder(
+                                    itemCount: value.demandeList.data!.length,
+                                    itemBuilder: (context, index) {
+                                      DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                      return Column(
+                                        children: [
+                                          HistoryCard(
+                                            demande: current,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )),
+                                ],
+                              );
+                          }
+                        })
+                ),
+              ),
+            ],
+          ),
         )
     );
   }
