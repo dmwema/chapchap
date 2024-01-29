@@ -270,7 +270,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                 children: [
                                                   Icon(CupertinoIcons.check_mark_circled, color: Colors.white, size: 16,),
                                                   SizedBox(width: 5,),
-                                                  Text("Compte activé", style: TextStyle(
+                                                  Text("Compte actif", style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white,
                                                     fontSize: 12
@@ -524,31 +524,6 @@ class _ProfileViewState extends State<ProfileView> {
                                         ],
                                       ),
                                     ),
-                                    // if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
-                                    // const SizedBox(height: 5,),
-                                    // if (user!.soldeParrainage != null && user!.soldeParrainage != 'null')
-                                    // Text("${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}", style: const TextStyle(
-                                    //     fontSize: 17,
-                                    //     fontWeight: FontWeight.w600
-                                    // ),),
-                                    // const SizedBox(height: 20,),
-                                    // Container(
-                                    //   color: Colors.black.withOpacity(.07),
-                                    //   padding: const EdgeInsets.all(15),
-                                    //   child: Row(
-                                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    //     children: [
-                                    //       Text("CODE DE PARRAINAGE", style: TextStyle(
-                                    //           fontSize: 11,
-                                    //           fontWeight: FontWeight.w600,
-                                    //           color: Colors.black.withOpacity(.5)
-                                    //       ),),
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                    // const SizedBox(height: 20,),
-                                    //
-                                    // const SizedBox(height: 20,),
                                     const SizedBox(height: 20,),
                                     if (changed)
                                     RoundedButton(

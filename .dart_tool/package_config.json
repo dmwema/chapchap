@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "_flutterfire_internals",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/_flutterfire_internals-1.3.10",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/_flutterfire_internals-1.3.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -14,6 +14,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "ansicolor",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/ansicolor-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "app_settings",
       "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/app_settings-5.1.1",
       "packageUri": "lib/",
@@ -21,7 +27,7 @@
     },
     {
       "name": "archive",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/archive-3.4.6",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/archive-3.4.10",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -57,19 +63,19 @@
     },
     {
       "name": "cached_network_image",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image-3.3.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image-3.3.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-3.0.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_web",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image_web-1.1.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cached_network_image_web-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -123,9 +129,9 @@
     },
     {
       "name": "cross_file",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cross_file-0.3.3+6",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/cross_file-0.3.3+7",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "crypto",
@@ -147,13 +153,13 @@
     },
     {
       "name": "dbus",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dbus-0.7.8",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "2.17"
     },
     {
       "name": "dio",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dio-5.3.3",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dio-5.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -195,9 +201,9 @@
     },
     {
       "name": "file_selector_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/file_selector_platform_interface-2.6.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/file_selector_platform_interface-2.6.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "file_selector_windows",
@@ -207,7 +213,7 @@
     },
     {
       "name": "firebase_core",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_core-2.20.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_core-2.24.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -219,25 +225,25 @@
     },
     {
       "name": "firebase_core_web",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_core_web-2.8.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_core_web-2.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging-14.7.2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging-14.7.10",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.11",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.18",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "firebase_messaging_web",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.5.11",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.5.18",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -267,7 +273,7 @@
     },
     {
       "name": "flutter_downloader",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_downloader-1.11.6",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -303,7 +309,7 @@
     },
     {
       "name": "flutter_native_splash",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.7",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -339,7 +345,7 @@
     },
     {
       "name": "fluttertoast",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/fluttertoast-8.2.2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/fluttertoast-8.2.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -351,27 +357,27 @@
     },
     {
       "name": "google_maps_flutter",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter-2.5.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter-2.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "google_maps_flutter_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.5.2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.6.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "google_maps_flutter_ios",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_ios-2.3.2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_ios-2.3.6",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "google_maps_flutter_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.4.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.4.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "google_maps_flutter_web",
@@ -399,7 +405,7 @@
     },
     {
       "name": "image",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image-4.1.3",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image-4.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -411,9 +417,9 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_android-0.8.8+2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_android-0.8.9+3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "image_picker_for_web",
@@ -423,9 +429,9 @@
     },
     {
       "name": "image_picker_ios",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.8+2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.9+1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "image_picker_linux",
@@ -441,9 +447,9 @@
     },
     {
       "name": "image_picker_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_platform_interface-2.9.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image_picker_platform_interface-2.9.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "image_picker_windows",
@@ -489,27 +495,27 @@
     },
     {
       "name": "local_auth",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth-2.1.7",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth-2.1.8",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "local_auth_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_android-1.0.35",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_android-1.0.36",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "local_auth_ios",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_ios-1.1.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_ios-1.1.6",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "local_auth_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_platform_interface-1.0.8",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_platform_interface-1.0.10",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "local_auth_windows",
@@ -531,7 +537,7 @@
     },
     {
       "name": "mask_text_input_formatter",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/mask_text_input_formatter-2.5.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/mask_text_input_formatter-2.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -591,21 +597,21 @@
     },
     {
       "name": "path_provider",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider-2.1.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_android-2.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_provider_linux",
@@ -615,9 +621,9 @@
     },
     {
       "name": "path_provider_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_provider_windows",
@@ -633,21 +639,21 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/platform-3.1.3",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/platform-3.1.4",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "pointycastle",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/pointycastle-3.7.3",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/pointycastle-3.7.4",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "process",
@@ -657,7 +663,7 @@
     },
     {
       "name": "provider",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/provider-6.0.5",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/provider-6.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -687,9 +693,9 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.3.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.3.5",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "shared_preferences_linux",
@@ -699,9 +705,9 @@
     },
     {
       "name": "shared_preferences_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.3.1",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "shared_preferences_web",
@@ -747,13 +753,13 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/sqflite-2.3.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/sqflite-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/sqflite_common-2.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -789,9 +795,9 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/synchronized-3.1.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/synchronized-3.1.0+1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "term_glyph",
@@ -831,21 +837,21 @@
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "url_launcher_ios",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.4",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "url_launcher_linux",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "url_launcher_macos",
@@ -855,9 +861,9 @@
     },
     {
       "name": "url_launcher_platform_interface",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.2.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "url_launcher_web",
@@ -867,13 +873,13 @@
     },
     {
       "name": "url_launcher_windows",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "uuid",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/uuid-4.1.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/uuid-4.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -920,7 +926,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2024-01-27T11:47:12.350656Z",
+  "generated": "2024-01-29T16:31:20.114218Z",
   "generator": "pub",
   "generatorVersion": "3.0.2"
 }
