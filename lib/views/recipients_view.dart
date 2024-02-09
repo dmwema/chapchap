@@ -443,58 +443,7 @@ class _RecipientsViewState extends State<RecipientsView> {
         Navigator.pushNamed(context, RoutesName.send);
       }
       ),
-      bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          child: SizedBox(
-            height: 66,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(child: const Icon(CupertinoIcons.square_grid_2x2,), onTap: () {
-                      Navigator.pushNamed(context, RoutesName.home);
-                    }),
-                    const SizedBox(height: 5), // The dummy child
-                    const Text("Accueil", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10,),)
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(child: Icon(CupertinoIcons.person_2_fill, color: AppColors.primaryColor,), onTap: () {
-                      // Navigator.pushNamed(context, RoutesName.recipeints);
-                    }),
-                    const SizedBox(height: 5), // The dummy child
-                    Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: AppColors.primaryColor,),)
-                  ],
-                ),
-                const SizedBox(width: 40),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(child: const Icon(CupertinoIcons.arrow_right_arrow_left_circle), onTap: () {
-                      Navigator.pushNamed(context, RoutesName.exchange);
-                    }),
-                    const SizedBox(height: 5), // The dummy child
-                    const Flexible(child: Text("Change",  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),))
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
-                      Navigator.pushNamed(context, RoutesName.accountView);
-                    }),
-                    const SizedBox(height: 5), // The dummy child
-                    const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)
-                  ],
-                ),
-              ],
-            ),
-          )
-      ),
+      bottomNavigationBar: commonBottomAppBar(context: context, active: 1),
     );
   }
 }

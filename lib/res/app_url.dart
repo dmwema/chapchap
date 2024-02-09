@@ -1,7 +1,7 @@
 class AppUrl {
-  // static var domainName = 'https://app.chapchap.ca';
+  static var domainName = 'https://app.chapchap.ca';
 
-  static var domainName = 'https://sandbox-app.chapchap.ca';
+  // static var domainName = 'https://sandbox-app.chapchap.ca';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';

@@ -32,7 +32,7 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch(settings.name) {
       case RoutesName.home:
-        return PageTransition(child: HomeView(), type: PageTransitionType.leftToRight );
+        return PageTransition(child: HomeView(), type: PageTransitionType.fade );
       case RoutesName.onBoarding:
         return MaterialPageRoute(builder: (BuildContext context) => OnBoardingView());
       case RoutesName.send:
@@ -68,19 +68,19 @@ class Routes {
       case RoutesName.accountView:
         return PageTransition(
             child: AccountView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.fade,
             settings: settings
         );
       case RoutesName.exchange:
         return PageTransition(
             child: ExchangeView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.fade,
             settings: settings
         );
       case RoutesName.recipeints:
         return PageTransition(
             child: RecipientsView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.fade,
             settings: settings
         );
       case RoutesName.recipeintsArchive:
@@ -171,7 +171,7 @@ class Routes {
         );
       case RoutesName.newBeneficiaire:
         return PageTransition(
-          child: const NewBeneficiaireView(),
+          child: NewBeneficiaireView(),
           type: PageTransitionType.bottomToTop,
           settings: settings,
         );

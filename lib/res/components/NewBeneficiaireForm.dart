@@ -12,10 +12,11 @@ class NewBeneficiaireForm extends StatefulWidget {
   List destinations;
   BuildContext parentCotext;
   Destination? initialDestination;
+  DemandesViewModel? demandesViewModel;
   bool? redirect;
   bool? hideTitle;
 
-  NewBeneficiaireForm({super.key, required this.destinations, this.initialDestination, this.hideTitle,  required BuildContext this.parentCotext, this.redirect});
+  NewBeneficiaireForm({super.key, this.demandesViewModel, required this.destinations, this.initialDestination, this.hideTitle,  required BuildContext this.parentCotext, this.redirect});
 
   @override
   State<NewBeneficiaireForm> createState() => _NewBeneficiaireFormState();
@@ -33,16 +34,23 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
   bool loadDest = false;
   bool loading = false;
   bool confirmNumber = false;
+  bool canEditDestination = true;
 
   Destination? selectedDesinaion;
 
   @override
-  Widget build(BuildContext context) {
-    if(widget.initialDestination != null && !loadDest) {
+  void initState() {
+    if (widget.initialDestination != null) {
       setState(() {
-        selectedDesinaion = widget.initialDestination!;
+        canEditDestination = false;
+        selectedDesinaion = widget.initialDestination;
       });
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -62,7 +70,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               const SizedBox(height: 20,),
             InkWell(
               onTap: () {
-                if (widget.initialDestination == null) {
+                if (canEditDestination) {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
@@ -143,6 +151,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                         Text(selectedDesinaion!.paysDest.toString())
                       ],
                     ),
+                    if (canEditDestination)
                     const Icon(Icons.arrow_drop_down_sharp)
                   ],
                 ),
@@ -321,9 +330,14 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                         "id_transit":"",
                         "id_compte":""
                       };
-                      demandesViewModel.newBeneficiaire(data, context, redirect: widget.redirect == true).then((value) {
-                        if (widget.redirect != true) {
-                          Navigator.pop(widget.parentCotext);
+                      demandesViewModel.newBeneficiaire(data, widget.parentCotext, redirect: canEditDestination).then((value) async {
+                        if (widget.redirect != true || !canEditDestination)  {
+                          Future.delayed(const Duration(milliseconds: 500), () async {
+                            if (widget.demandesViewModel != null) {
+                              await widget.demandesViewModel!.beneficiaires([], context);
+                            }
+                            Navigator.pop(widget.parentCotext);
+                          });
                         } else {
                           Navigator.pushNamed(context, RoutesName.recipeints);
                         }

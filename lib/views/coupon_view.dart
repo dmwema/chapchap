@@ -258,8 +258,60 @@ class _CouponViewState extends State<CouponView> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                         ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10,),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 5),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Gains",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        "${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}",
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 22,
+                        ),
+                      ),
+                      const SizedBox(height: 5.0),
+                      SizedBox(
+                        width: 230,
+                        child: Flexible(
+                          child: Text(
+                            "Vous avez ${user!.soldeParrainage} ${user!.paysMonnaie ?? ''} comme solde de parrainage.",
+                            style: const TextStyle(
+                              color: Colors.black45,
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ],
                   ),

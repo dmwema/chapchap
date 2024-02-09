@@ -441,58 +441,7 @@ class _ExchangeViewState extends State<ExchangeView> {
             Navigator.pushNamed(context, RoutesName.send);
           }
           ),
-          bottomNavigationBar: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            child: SizedBox(
-              height: 66,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(child: const Icon(CupertinoIcons.square_grid_2x2,), onTap: () {
-                        Navigator.pushNamed(context, RoutesName.home);
-                      }),
-                      const SizedBox(height: 5), // The dummy child
-                      const Text("Accueil", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10,),)
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(child: const Icon(CupertinoIcons.person_2), onTap: () {
-                        Navigator.pushNamed(context, RoutesName.recipeints);
-                      }),
-                      const SizedBox(height: 5), // The dummy child
-                      const Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10,),)
-                    ],
-                  ),
-                  const SizedBox(width: 40),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(child: Icon(CupertinoIcons.arrow_right_arrow_left_circle_fill, color: AppColors.primaryColor,), onTap: () {
-                        // Navigator.pushNamed(context, RoutesName.exchange);
-                      }),
-                      const SizedBox(height: 5), // The dummy child
-                      Flexible(child: Text("Change",  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: AppColors.primaryColor,),))
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(child: const Icon(CupertinoIcons.person), onTap: () {
-                        Navigator.pushNamed(context, RoutesName.accountView);
-                      }),
-                      const SizedBox(height: 5), // The dummy child
-                      const Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10),)
-                    ],
-                  ),
-                ],
-              ),
-            )
-        ),
+        bottomNavigationBar: commonBottomAppBar(context: context, active: 2),
       ),
     );
   }
