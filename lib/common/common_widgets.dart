@@ -161,7 +161,11 @@ Widget commonBottomAppBar({
             GestureDetector(
               onTap: () {
                 if (active != 0) {
-                  Navigator.pushNamed(context, RoutesName.home);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.home,
+                        (route) => false,
+                  );
                 }
               },
               child: Column(
@@ -176,7 +180,11 @@ Widget commonBottomAppBar({
             GestureDetector(
               onTap: () {
                 if (active != 1) {
-                  Navigator.pushNamed(context, RoutesName.recipeints);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.recipeints,
+                        (route) => false,
+                  );
                 }
               },
               child: Column(
@@ -192,7 +200,11 @@ Widget commonBottomAppBar({
             GestureDetector(
               onTap: () {
                 if (active != 2) {
-                  Navigator.pushNamed(context, RoutesName.exchange);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.exchange,
+                        (route) => false,
+                  );
                 }
               },
               child: Column(
@@ -207,7 +219,11 @@ Widget commonBottomAppBar({
             GestureDetector(
               onTap: () {
                 if (active != 3) {
-                  Navigator.pushNamed(context, RoutesName.accountView);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.accountView,
+                        (route) => false,
+                  );
                 }
               },
               child: Column(

@@ -30,4 +30,5 @@ class AppUrl {
   static var cancelSend = '$baseUrl/annuler_transfert';
   static var updateImage = '$baseUrl/up_profil_client';
   static var changeBeneficiaire = '$baseUrl/change_beneficiaire_transfert';
+  static var allInfoMessages = '$baseUrl/get_all_msg_info';
 }

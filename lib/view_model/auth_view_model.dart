@@ -115,7 +115,11 @@ class AuthViewModel with ChangeNotifier{
             user.token = value['token'];
             UserViewModel().updateUser(user, true, false).then((value) {
               Utils.toastMessage("Vous êtes connectés avec succès");
-              Navigator.pushNamed(context, RoutesName.home);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RoutesName.home,
+                    (route) => false,
+              );
             });
           }
         } else {
@@ -139,7 +143,11 @@ class AuthViewModel with ChangeNotifier{
           user.token = value['token'];
           user.nomClient = value['message'];
           UserViewModel().saveUser(user).then((value) {
-            Navigator.pushNamed(context, RoutesName.phoneVerificatiob);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutesName.phoneVerificatiob,
+                  (route) => false,
+            );
           });
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
@@ -159,7 +167,11 @@ class AuthViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Mot de passe modifié avec succontextcès");
-          Navigator.pushNamed(context, RoutesName.login);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutesName.login,
+                (route) => false,
+          );
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
@@ -170,6 +182,16 @@ class AuthViewModel with ChangeNotifier{
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
+  }
+
+  Future<dynamic> getInfoMessages (BuildContext context) async {
+    dynamic response;
+    await _repository.getInfoMessages(context: context).then((value) {
+      response = value;
+    }).onError((error, stackTrace) {
+    });
+
+    return response;
   }
 
   Future<void> resetPassword(dynamic data, BuildContext context) async {
@@ -184,7 +206,11 @@ class AuthViewModel with ChangeNotifier{
           user.token = value['token'];
           UserViewModel().updateUser(user, true, true).then((value) {
             Utils.toastMessage(message);
-            Navigator.pushNamed(context, RoutesName.newPassword);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutesName.newPassword,
+                  (route) => false,
+            );
           });
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
@@ -221,7 +247,11 @@ class AuthViewModel with ChangeNotifier{
       setLoading(false);
       if (value["error"] != true){
         Utils.toastMessage(value["message"]);
-        Navigator.pushNamed(context, RoutesName.login);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.login,
+              (route) => false,
+        );
       } else {
         Utils.flushBarErrorMessage(value["message"], context);
       }

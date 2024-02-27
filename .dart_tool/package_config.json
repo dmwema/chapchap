@@ -159,7 +159,7 @@
     },
     {
       "name": "dio",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dio-5.4.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/dio-5.4.1",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -405,7 +405,7 @@
     },
     {
       "name": "image",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image-4.1.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/image-4.1.7",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -501,7 +501,7 @@
     },
     {
       "name": "local_auth_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_android-1.0.36",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/local_auth_android-1.0.37",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -537,7 +537,7 @@
     },
     {
       "name": "mask_text_input_formatter",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/mask_text_input_formatter-2.8.0",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/mask_text_input_formatter-2.9.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -579,7 +579,7 @@
     },
     {
       "name": "open_filex",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.3.4",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/open_filex-4.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -837,7 +837,7 @@
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.2",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -926,7 +926,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2024-01-30T22:13:21.519105Z",
+  "generated": "2024-02-27T18:27:24.823961Z",
   "generator": "pub",
-  "generatorVersion": "3.0.2"
+  "generatorVersion": "3.0.0"
 }

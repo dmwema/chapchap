@@ -92,7 +92,7 @@ class Routes {
       case RoutesName.profile:
         return PageTransition(
             child: ProfileView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.login:
@@ -128,7 +128,7 @@ class Routes {
       case RoutesName.invoices:
         return PageTransition(
             child: InvoicesView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.invoiceDetail:
@@ -166,7 +166,7 @@ class Routes {
       case RoutesName.contactView:
         return PageTransition(
             child: ContactView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.newBeneficiaire:
@@ -178,7 +178,7 @@ class Routes {
       case RoutesName.couponView:
         return PageTransition(
           child: const CouponView(),
-          type: PageTransitionType.rightToLeft,
+          type: PageTransitionType.bottomToTop,
           settings: settings,
         );
       default:

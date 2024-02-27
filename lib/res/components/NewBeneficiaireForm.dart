@@ -300,10 +300,12 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                   if (!demandesViewModel.loading) {
                     if (selectedDesinaion == null) {
                       Utils.flushBarErrorMessage("Vous devez choisir un pays", context);
-                    } else if (_telController.text.isEmpty) {
+                    } else if (_nomController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("Le nom du bénéficiaire est obligatoire est obligatoire", context);
+                    }  else if (_telController.text.isEmpty) {
                       Utils.flushBarErrorMessage("Le numéro de téléphone est obligatoire", context);
-                    }  else if (_telConfirmController.text.isEmpty) {
-                      Utils.flushBarErrorMessage("L'adresse est obligatoire", context);
+                    } else if (_telConfirmController.text.isEmpty) {
+                      Utils.flushBarErrorMessage("Vous devez confirmer le numéro de téléphone", context);
                     } else if (_adresseController.text.isEmpty) {
                       Utils.flushBarErrorMessage("Saisissez le champs de confirmation du numéro de téléphone", context);
                     }  else if (_telController.text != _telConfirmController.text) {
@@ -331,15 +333,30 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                         "id_compte":""
                       };
                       demandesViewModel.newBeneficiaire(data, widget.parentCotext, redirect: canEditDestination).then((value) async {
-                        if (widget.redirect != true || !canEditDestination)  {
-                          Future.delayed(const Duration(milliseconds: 500), () async {
-                            if (widget.demandesViewModel != null) {
-                              await widget.demandesViewModel!.beneficiaires([], context);
+                        print("********************************");
+                        print("********************************");
+                        print("********************************");
+                        print("********************************");
+                        print(value);
+                        if (value != null){
+                          if (value['error'] != true) {
+                            Utils.toastMessage("Bénéficiaire enrégistré avec succès");
+                            if (widget.redirect != true || !canEditDestination) {
+                              // Navigator.pushNamed(context, RoutesName.recipeints);
+                              Future.delayed(const Duration(milliseconds: 500), () async {
+                                if (widget.demandesViewModel != null) {
+                                  await widget.demandesViewModel!.beneficiaires([], context);
+                                }
+                                Navigator.pop(widget.parentCotext);
+                              });
+                            } else {
+                              Navigator.pushNamed(context, RoutesName.recipeints);
                             }
-                            Navigator.pop(widget.parentCotext);
-                          });
+                          } else {
+                            Utils.flushBarErrorMessage(value['message'], context);
+                          }
                         } else {
-                          Navigator.pushNamed(context, RoutesName.recipeints);
+                          Utils.flushBarErrorMessage("Une erreur est suvenue, veuillez ressayer plutard", context);
                         }
                         setState(() {
                           loading = false;

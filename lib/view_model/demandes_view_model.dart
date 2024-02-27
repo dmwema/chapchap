@@ -213,31 +213,21 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<bool> newBeneficiaire(dynamic data, BuildContext context, {bool redirect = false}) async {
+  Future<dynamic> newBeneficiaire(dynamic data, BuildContext context, {bool redirect = false}) async {
 
     setLoading(true);
+    Map? returnValue;
     await _repository.newBeneficiaire(data, context: context).then((value) {
-      if (value!=null){
-        setLoading(false);
-        if (value['error'] != true) {
-          Utils.toastMessage("Bénéficiaire enrégistré avec succès");
-          if (redirect) {
-            Navigator.pushNamed(context, RoutesName.recipeints);
-          }
-          return true;
-        } else {
-          Utils.flushBarErrorMessage(value['message'], context);
-          setLoading(false);
-        }
-      }
+      returnValue = value;
       setLoading(false);
     }).onError((error, stackTrace) {
       setPaysActif(ApiResponse.error(error.toString()));
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
-    return false;
+    return returnValue;
   }
+
   Future<dynamic> getFileContent(String url, {required BuildContext context}) async {
     Response response = await _repository.downloadInvoice(url, context: context);
 
