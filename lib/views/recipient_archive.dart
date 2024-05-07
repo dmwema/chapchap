@@ -2,7 +2,6 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/confirm_delete.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -42,7 +41,6 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                 Navigator.pushNamed(context, RoutesName.recipeints);
               }
             ),
-            const SizedBox(height: 20,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text("Bénéficiaires archivés", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
@@ -150,7 +148,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                         builder: (BuildContext context) {
                                                           return CupertinoAlertDialog(
                                                             title: Text('Confirmer'),
-                                                            content: Text('Voulez-vous vraimer desarchiver ce bénéficiaire ?'),
+                                                            content: Text('Voulez-vous vraiment desarchiver ce bénéficiaire ?'),
                                                             actions: [
                                                               CupertinoDialogAction(
                                                                 child: const Text('Annuler', style: TextStyle(
@@ -202,7 +200,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                         builder: (BuildContext context) {
                                                           return CupertinoAlertDialog(
                                                             title: Text('Confirmer'),
-                                                            content: Text('Voulez-vous vraimer supprimer ce bénéficiaire ?'),
+                                                            content: Text('Voulez-vous vraiment supprimer ce bénéficiaire ?'),
                                                             actions: [
                                                               CupertinoDialogAction(
                                                                 child: const Text('Annuler', style: TextStyle(

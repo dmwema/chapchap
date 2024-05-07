@@ -2,6 +2,7 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,10 +83,10 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
             ),
           ),
           const SizedBox(height: 5,),
-          Wrap(
+          const Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: const [
+            children: [
               Text("Accueil ", style: TextStyle(
                   fontWeight: FontWeight.bold
               ),),
@@ -163,22 +164,31 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                                                         Navigator.pop(context);
                                                       },
                                                       child: Container(
-                                                        padding: const EdgeInsets.all(10),
+                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                                         margin: const EdgeInsets.only(bottom: 10),
                                                         decoration: BoxDecoration(
                                                             border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
                                                             borderRadius: BorderRadius.circular(5)
                                                         ),
-                                                        child: Column(
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
+                                                                      fontWeight: FontWeight.w600,
+                                                                      fontSize: 12
+                                                                  ),),
+                                                                  const SizedBox(height: 5,),
+                                                                  Text(beneficiaire.telBeneficiaire.toString(), style: const TextStyle(
+                                                                    fontSize: 10
+                                                                  ),),
+                                                                ],
+                                                              ),
                                                               Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                              const SizedBox(height: 10,),
-                                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                                                  fontWeight: FontWeight.w600,
-                                                                  fontSize: 16
-                                                              ),),
-                                                              const SizedBox(height: 10,),
-                                                              Text(beneficiaire.telBeneficiaire.toString()),
                                                             ]
                                                         ),
                                                       ),
@@ -240,16 +250,25 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                                         border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
                                         borderRadius: BorderRadius.circular(5)
                                     ),
-                                    child: Column(
+                                    child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12
+                                              ),),
+                                              const SizedBox(height: 5,),
+                                              Text(beneficiaire.telBeneficiaire.toString(), style: const TextStyle(
+                                                  fontSize: 10
+                                              ),),
+                                            ],
+                                          ),
                                           Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                          const SizedBox(height: 10,),
-                                          Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16
-                                          ),),
-                                          const SizedBox(height: 10,),
-                                          Text(beneficiaire.telBeneficiaire.toString()),
                                         ]
                                     ),
                                   ),
@@ -276,10 +295,10 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                   border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text("Choisissez un bénéficiaire", style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 13,
@@ -334,8 +353,9 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
             ),
           if (selectedBeneficiaire != null)
             const SizedBox(height: 15,),
-          InkWell(
-            onTap: () {
+          RoundedButton(
+            title: "Enrégistrer",
+            onPress: () {
               if (selectedBeneficiaire == null) {
                 Utils.flushBarErrorMessage("Vous devez séléctionner un bénéficiaire.", context);
               } else {
@@ -347,28 +367,6 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                 demandeViewModel.changeBeneficiaire(data, context);
               }
             },
-            child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(30)
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.save, color: Colors.white,),
-                    SizedBox(width: 5,),
-                    Text(
-                      "Enrégistrer",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13
-                      ),
-                    ),
-                  ],
-                )
-            ),
           )
         ],
       ),

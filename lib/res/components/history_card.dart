@@ -147,10 +147,42 @@ class _HistoryCardState extends State<HistoryCard> {
                   const Divider(),
                   const SizedBox(height: 5,),
                   Wrap(
-                    spacing: 5,
-                    runSpacing: 5,
+                    spacing: 1,
+                    runSpacing: 1,
                     alignment: WrapAlignment.spaceBetween,
                     children: [
+                      if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
+                        InkWell(
+                          onTap: () async {
+                            String url = demande.lienPaiement.toString();
+                            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                            if(urllaunchable){
+                              await launch(url); //launch is from url_launcher package to launch URL
+                              Navigator.pushNamed(context,RoutesName.home);
+                            }else{
+                              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                            }
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                              decoration: BoxDecoration(
+                                  color: CupertinoColors.activeGreen,
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(CupertinoIcons.creditcard, color: Colors.white, size: 25,),
+                                  SizedBox(width: 10,),
+                                  Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                ],
+                              )
+                          ),
+                        ),
+                      if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
+                        const SizedBox(height: 10,),
                       if (hasProblem != true)
                         InkWell(
                           onTap: () {
@@ -167,18 +199,20 @@ class _HistoryCardState extends State<HistoryCard> {
                                 beneficiaire: beneficiaire,
                                 destination: demande.codePaysDest,
                                 modeRetrait: demande.idModeRetrait,
-                                amount: double.parse(demande.montanceDest.toString().replaceAll(',', '.').replaceAll(' ', '')),
+                                amount: double.parse(demande.montanceSrce.toString().replaceAll(',', '.').replaceAll(' ', '')),
                               )),
                             );
                           },
                           child: Container(
+                              width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               decoration: BoxDecoration(
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(5)
                               ),
                               child: const Row(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(CupertinoIcons.arrow_up_right, color: Colors.white, size: 15,),
                                   SizedBox(width: 5,),
@@ -220,13 +254,15 @@ class _HistoryCardState extends State<HistoryCard> {
                             );
                           },
                           child: Container(
+                              width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               decoration: BoxDecoration(
                                   color: Colors.red,
                                   borderRadius: BorderRadius.circular(5)
                               ),
                               child: const Row(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(CupertinoIcons.xmark_circle, color: Colors.white, size: 15,),
                                   SizedBox(width: 5,),
@@ -238,36 +274,6 @@ class _HistoryCardState extends State<HistoryCard> {
                                         fontSize: 10
                                     ),
                                   ),
-                                ],
-                              )
-                          ),
-                        ),
-                      if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
-                        const SizedBox(height: 10,),
-                      if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
-                        InkWell(
-                          onTap: () async {
-                            String url = demande.lienPaiement.toString();
-                            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                            if(urllaunchable){
-                              await launch(url); //launch is from url_launcher package to launch URL
-                              Navigator.pushNamed(context,RoutesName.home);
-                            }else{
-                              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
-                            }
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: CupertinoColors.activeGreen,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(CupertinoIcons.creditcard, color: Colors.white, size: 15,),
-                                  SizedBox(width: 5,),
-                                  Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
                                 ],
                               )
                           ),
@@ -289,13 +295,15 @@ class _HistoryCardState extends State<HistoryCard> {
                             );
                           },
                           child: Container(
+                              width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               decoration: BoxDecoration(
                                   color: Colors.red,
                                   borderRadius: BorderRadius.circular(5)
                               ),
                               child: const Row(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(CupertinoIcons.pencil, color: Colors.white, size: 15,),
                                   SizedBox(width: 5,),

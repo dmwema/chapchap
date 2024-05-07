@@ -23,6 +23,7 @@ class _ExchangeViewState extends State<ExchangeView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   PaysModel selectedFrom = PaysModel();
   Destination? selectedTo;
+  double tauxTransfert = 0;
   PaysDestinationModel? paysDestinationModel;
   List destinationsList = [];
   bool changed = false;
@@ -393,6 +394,13 @@ class _ExchangeViewState extends State<ExchangeView> {
                                               if (selectedTo != null) {
                                                 if (value != "") {
                                                   insert(double.parse(value) * double.parse(selectedTo!.rate.toString()), _toController);
+                                                  if (selectedTo != null) {
+                                                    if (value != "" && selectedTo!.taux_transfert != null) {
+                                                      setState(() {
+                                                        tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
+                                                      });
+                                                    }
+                                                  }
                                                 } else {
                                                   insert("", _toController);
                                                 }
@@ -415,12 +423,59 @@ class _ExchangeViewState extends State<ExchangeView> {
                                                 if (value != "") {
                                                   insert(double.parse(value) /
                                                       double.parse(selectedTo!.rate.toString()), _amountController);
+                                                  setState(() {
+                                                    tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
+                                                  });
                                                 } else {
                                                   insert("", _amountController);
                                                 }
                                               }
                                             },
-                                          )
+                                          ),
+                                          const SizedBox(height: 10,),
+                                          if (selectedFrom.idPays != null && selectedTo != null)
+                                            Text("1 ${selectedFrom.paysCodemonnaie} = ${selectedTo!.rate} ${selectedTo!.paysCodeMonnaieDest}", style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500
+                                            ),),
+                                          if (selectedFrom != null && selectedTo != null)
+                                            const SizedBox(height: 5,),
+                                          const Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
+                                              SizedBox(width: 5,),
+                                              Text("ChapChap utilise son propre taux de change!", style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.w500
+                                              ),),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5,),
+                                          Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.formFieldColor,
+                                                  border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  const Text("Frais de transfert", style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),),
+                                                  Text(paysDestinationModel == null ? "0.0" : "$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),)
+                                                ],
+                                              )
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -437,7 +492,10 @@ class _ExchangeViewState extends State<ExchangeView> {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
               backgroundColor: AppColors.primaryColor,
-              child: const Icon(CupertinoIcons.arrow_up_right), onPressed: () {
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40)
+              ),
+              child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
             Navigator.pushNamed(context, RoutesName.send);
           }
           ),

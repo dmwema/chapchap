@@ -5,6 +5,7 @@ class BeneficiaireModel {
   int? idBeneficiaire;
   String? emailBeneficiaire;
   String? nomBeneficiaire;
+  int? id_mode_retrait;
   String? telBeneficiaire;
   String? banque;
   String? swift;
@@ -17,6 +18,7 @@ class BeneficiaireModel {
       {this.idPays,
         this.codePays,
         this.paysMonnaie,
+        this.id_mode_retrait,
         this.idBeneficiaire,
         this.emailBeneficiaire,
         this.nomBeneficiaire,
@@ -30,6 +32,7 @@ class BeneficiaireModel {
 
   BeneficiaireModel.fromJson(Map<String, dynamic> json) {
     idPays = json['idPays'];
+    id_mode_retrait = json['id_mode_retrait'];
     codePays = json['code_pays'];
     paysMonnaie = json['pays_monnaie'];
     idBeneficiaire = json['idBeneficiaire'];
@@ -51,6 +54,7 @@ class BeneficiaireModel {
     data['pays_monnaie'] = this.paysMonnaie;
     data['idBeneficiaire'] = this.idBeneficiaire;
     data['emailBeneficiaire'] = this.emailBeneficiaire;
+    data['id_mode_retrait'] = id_mode_retrait;
     data['nomBeneficiaire'] = this.nomBeneficiaire;
     data['telBeneficiaire'] = this.telBeneficiaire;
     data['banque'] = this.banque;

@@ -62,7 +62,7 @@ class PhoneVerification extends StatelessWidget {
                           height: 40,
                           child: TextFormField(
                             controller: _controller1,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headlineMedium,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
@@ -87,7 +87,7 @@ class PhoneVerification extends StatelessWidget {
                           height: 40,
                           child: TextFormField(
                             controller: _controller2,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headlineMedium,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
@@ -112,7 +112,7 @@ class PhoneVerification extends StatelessWidget {
                           height: 40,
                           child: TextFormField(
                             controller: _controller3,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headlineMedium,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
@@ -137,7 +137,7 @@ class PhoneVerification extends StatelessWidget {
                           height: 40,
                           child: TextFormField(
                             controller: _controller4,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headlineMedium,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
@@ -162,7 +162,7 @@ class PhoneVerification extends StatelessWidget {
                           height: 40,
                           child: TextFormField(
                             controller: _controller5,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headlineMedium,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(

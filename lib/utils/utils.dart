@@ -4,7 +4,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:standard_dialogs/standard_dialogs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
@@ -22,6 +21,8 @@ class Utils {
     );
   }
 
+  static String messageParrainage = "Voici%20mon%20code%20de%20parrainage%20ChapChap%20%3A%20%24%7Buser%21.codeParrainage%7D%0AUtilise%20le%20pour%20t%E2%80%99inscrire%20sur%20transfert%20ChapChap%20et%20b%C3%A9n%C3%A9ficie%20de%2010%24%20gratuit%0A%0AT%C3%A9l%C3%A9charge%20l%27application%20ChapChap%20et%20suivant%20ce%20lien%0Ahttps%3A%2F%2Fwww.chapchap.ca";
+
   static void flushBarErrorMessage(String message, BuildContext context) {
     showFlushbar(context: context, flushbar: Flushbar(
       message: message,
@@ -38,22 +39,6 @@ class Utils {
       await launchUrl(_url);
     } else {
       throw "Could not launch $_url";
-    }
-  }
-
-  static void showDialog (BuildContext context, title, {bool isSuccess = true, description}) {
-    if (isSuccess) {
-      showSuccessDialog(context,
-          title: Text(title),
-          content: Text(description.toString()),
-          action: DialogAction(
-            title: const Text('OK'),
-          )
-      );
-    } else {
-      showErrorDialog(context,
-          title: Text(title));
-
     }
   }
 

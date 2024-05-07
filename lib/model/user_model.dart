@@ -4,8 +4,10 @@ class UserModel {
   int? time;
   int? idClient;
   String? client;
+  String? password;
   String? token;
   String? nomClient;
+  String? profession;
   String? prenomClient;
   String? telClient;
   String? username;
@@ -27,12 +29,14 @@ class UserModel {
         this.idClient,
         this.client,
         this.soldeParrainage,
+        this.profession,
         this.nomClient,
         this.prenomClient,
         this.telClient,
         this.username,
         this.idTypeClient,
         this.photoProfil,
+        this.password,
         this.emailClient,
         this.codeParrainage,
         this.validationCompte,
@@ -46,7 +50,9 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     time = json['time'];
-    idClient = json['idClient'];
+    idClient = int.parse(json['idClient'].toString());
+    password = json['password'];
+    profession = json['profession'];
     client = json['client'];
     nomClient = json['nomClient'];
     soldeParrainage = json['solde_parrainage'];
@@ -71,6 +77,7 @@ class UserModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['time'] = this.time;
     data['idClient'] = this.idClient;
+    data['password'] = password;
     data['adresse'] = this.adresse;
     data['client'] = this.client;
     data['solde_parrainage'] = soldeParrainage;
@@ -86,6 +93,7 @@ class UserModel {
     data['validationCompte'] = this.validationCompte;
     data['commissionParrainage'] = this.commissionParrainage;
     data['idPays'] = this.idPays;
+    data['profession'] = profession;
     data['code_pays'] = this.codePays;
     data['pays_monnaie'] = this.paysMonnaie;
     data['pays_nom'] = this.paysNom;

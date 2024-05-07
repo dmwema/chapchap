@@ -25,7 +25,7 @@ class RecipientCard2 extends StatelessWidget {
             radius: 20, // sets radius, default 50.0
             backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
             initialsText: Text(
-              name.split(" ").length > 2 && name.split(" ")[1] != "" ? (name.split(" ")[0][0] + name.split(" ")[1][0]).toString() : name.split(" ")[0][0].toString(),
+              getInitials(name),
               style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
             ),  // sets initials text, set your own style, default Text('')
             elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
@@ -58,5 +58,20 @@ class RecipientCard2 extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String getInitials(String name) {
+    List<String> nameParts = name.split(" ");
+
+    if (nameParts.length > 1 && nameParts[1].isNotEmpty) {
+      return "${nameParts[0][0]}${nameParts[1][0]}";
+    } else if (nameParts.length == 1) {
+      if (nameParts[0] == "") {
+        return "";
+      }
+      return nameParts[0][0];
+    } else {
+      return "";
+    }
   }
 }

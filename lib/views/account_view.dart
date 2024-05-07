@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
@@ -16,7 +18,9 @@ import 'package:chapchap/views/auth/login_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -28,6 +32,7 @@ class AccountView extends StatefulWidget {
 class _AccountViewState extends State<AccountView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   PaysModel selectedFrom = PaysModel();
+  bool loadingBio = false;
   UserModel? user;
   Destination? selectedTo;
   PaysDestinationModel? paysDestinationModel;
@@ -36,6 +41,21 @@ class _AccountViewState extends State<AccountView> {
   bool changed = false;
   SharedPreferences? preferences;
   bool localAuthEnabled = false;
+
+  bool loadEmail = false;
+  bool loadSMS = false;
+
+  Future<void> _openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+      setState(() {
+        loadEmail = false;
+        loadSMS = false;
+      });
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
@@ -55,8 +75,9 @@ class _AccountViewState extends State<AccountView> {
   }
 
   Future loadPr() async {
-    setState(() async {
-      preferences = await SharedPreferences.getInstance();
+    var pr = await SharedPreferences.getInstance();
+    setState(() {
+      preferences = pr;
     });
   }
 
@@ -248,33 +269,87 @@ class _AccountViewState extends State<AccountView> {
                                           Navigator.pushNamed(context, RoutesName.contactView);
                                         },
                                       ),
-                                      const Divider(),
-                                      const SizedBox(height: 10,),
-                                      ProfileMenu(
-                                        title: "Verrouillage biométrique",
-                                        icon: Icons.fingerprint,
-                                        noIcon: true,
-                                        padding: false,
-                                        suffix: CupertinoSwitch(
-                                          activeColor: AppColors.primaryColor,
-                                          value: localAuthEnabled,
-                                          onChanged: (value) {
-                                            LocalAuthService.canAuthenticate().then((value2) {
-                                              if (value2) {
-                                                LocalAuthService.authenticate().then((value3) {
-                                                  if (value3) {
-                                                    authViewModel.setLocalAuth(value).then((res) {
-                                                      setState(() {
-                                                        localAuthEnabled = value;
-                                                      });
+                                      InkWell(
+                                        onTap: () {
+
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          margin: const EdgeInsets.only(bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
+                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.08),
+                                                spreadRadius: 3,
+                                                blurRadius: 5,
+                                                offset: const Offset(0, 4), // changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Platform.isAndroid ? const Icon(Icons.fingerprint, color: Colors.black87, size: 16,) : Image.asset("assets/faceid.png", width: 16,),
+                                                    const SizedBox(width: 20,),
+                                                    Flexible(child: Text("Verrouillage biométrique".toString(), style: const TextStyle(color: Colors.black87, fontSize: 14),),),
+                                                  ],
+                                                ),
+                                              ),
+                                              CupertinoSwitch(
+                                                activeColor: AppColors.primaryColor,
+                                                value: localAuthEnabled,
+                                                onChanged: (value) async {
+                                                  if (!loadingBio) {
+                                                    setState(() {
+                                                      loadingBio = true;
+                                                    });
+                                                    await LocalAuthService.canAuthenticate().then((value2) async {
+                                                      if (value2) {
+                                                        await LocalAuthService.authenticate().then((value3) {
+                                                          if (value3) {
+                                                            authViewModel.setLocalAuth(value).then((res) {
+                                                              setState(() {
+                                                                localAuthEnabled = value;
+                                                                loadingBio = false;
+                                                              });
+                                                            });
+                                                          }
+                                                        });
+                                                      } else {
+                                                        Utils.flushBarErrorMessage("Votre téléphone ne supprote pas cette fonctionnalité", context);
+                                                      }
                                                     });
                                                   }
-                                                });
-                                              } else {
-                                                Utils.flushBarErrorMessage("Votre téléphone ne supprote pas cette fonctionnalité", context);
-                                              }
-                                            });
+                                                },
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      if (user != null)
+                                      ProfileMenu(
+                                        title: 'Parrainage "${user!.codeParrainage}"',
+                                        icon: CupertinoIcons.gift,
+                                        noIcon: true,
+                                        suffix: InkWell(
+                                          onTap: () {
+                                            final box = context.findRenderObject() as RenderBox?;
+                                            Share.share(
+                                              "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code de parrainage ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                                              sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                                            );
                                           },
+                                          child: Icon(Icons.share_rounded, color: AppColors.primaryColor, size: 20,),
                                         ),
                                         onTap: () {
                                         },
@@ -282,17 +357,43 @@ class _AccountViewState extends State<AccountView> {
                                       const SizedBox(height: 10,),
                                       GestureDetector(
                                         onTap: () {
-                                          UserViewModel().remove().then((value) {
-                                            if (value) {
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => LoginView(),
-                                                ),
-                                                    (route) => false,
+                                          showCupertinoDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text('Confirmer'),
+                                                content: const Text('Voulez-vous vraiment vous déconnecter ?'),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: const Text('Annuler', style: TextStyle(
+                                                        color: Colors.black
+                                                    ),),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop(); // Fermer le dialogue
+                                                    },
+                                                  ),
+                                                  CupertinoDialogAction(
+                                                    child: Text('Confirmer', style: TextStyle(
+                                                        color: AppColors.primaryColor
+                                                    ),),
+                                                    onPressed: () async {
+                                                      UserViewModel().remove().then((value) {
+                                                        if (value) {
+                                                          Navigator.pushAndRemoveUntil(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) => LoginView(),
+                                                            ),
+                                                                (route) => false,
+                                                          );
+                                                        }
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
                                               );
-                                            }
-                                          });
+                                            },
+                                          );
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -302,7 +403,7 @@ class _AccountViewState extends State<AccountView> {
                                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                                           child: const Center(
                                             child: Text(
-                                              "Se deconnecter",
+                                              "Se déconnecter",
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.black54,
@@ -327,7 +428,10 @@ class _AccountViewState extends State<AccountView> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
             backgroundColor: AppColors.primaryColor,
-            child: const Icon(CupertinoIcons.arrow_up_right), onPressed: () {
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40)
+            ),
+            child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
           Navigator.pushNamed(context, RoutesName.send);
         }
         ),

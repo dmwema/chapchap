@@ -26,6 +26,7 @@ class UserViewModel with ChangeNotifier {
     if (!reset) {
       sp.setInt('idClient', user.idClient!.toInt());
       sp.setString('client', user.client.toString());
+      sp.setString('password', user.password.toString());
       sp.setString('adresse', user.adresse.toString());
       sp.setString('nomClient', user.nomClient.toString());
       if (user.soldeParrainage != null) {
@@ -60,6 +61,7 @@ class UserViewModel with ChangeNotifier {
     int? idClient = sp.getInt('idClient');
     String? token = sp.getString('token');
     String? adresse = sp.getString('adresse');
+    String? password = sp.getString('password');
     String? client = sp.getString('client');
     int? soldeParrainage = sp.getInt('soldeParrainage');
     String? nomClient = sp.getString('nomClient');
@@ -85,6 +87,7 @@ class UserViewModel with ChangeNotifier {
       idTypeClient: idTypeClient,
       nomClient: nomClient,
       paysMonnaie: paysMonnaie,
+      password: password,
       photoProfil: photoProfil,
       prenomClient: prenomClient,
       telClient: telClient,
@@ -100,8 +103,7 @@ class UserViewModel with ChangeNotifier {
 
   Future<bool> remove() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.clear();
-    await sp.setBool('initScreen', true);
+    await sp.remove('token');
     return true;
   }
 }

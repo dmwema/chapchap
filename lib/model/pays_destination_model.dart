@@ -45,6 +45,7 @@ class PaysDestinationModel {
 class Destination {
   int? idSens;
   double? rate;
+  double? taux_transfert;
   int? idPaysDest;
   String? codePaysDest;
   String? paysDest;
@@ -55,6 +56,7 @@ class Destination {
 
   Destination(
       {this.idSens,
+        this.taux_transfert,
         this.rate,
         this.idPaysDest,
         this.codePaysDest,
@@ -67,6 +69,7 @@ class Destination {
   Destination.fromJson(Map<String, dynamic> json) {
     idSens = json['id_sens'];
     rate = json['rate'];
+    taux_transfert = json['taux_transfert'] == null ? null : double.parse(json['taux_transfert'].toString());
     idPaysDest = json['id_pays_dest'];
     codePaysDest = json['code_pays_dest'];
     paysDest = json['pays_dest'];
@@ -86,6 +89,7 @@ class Destination {
     data['id_sens'] = this.idSens;
     data['rate'] = this.rate;
     data['id_pays_dest'] = this.idPaysDest;
+    data['taux_transfert'] = this.taux_transfert;
     data['code_pays_dest'] = this.codePaysDest;
     data['pays_indictel_dest'] = this.paysIndictelDest;
     data['pays_dest'] = this.paysDest;

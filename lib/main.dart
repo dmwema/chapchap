@@ -1,3 +1,4 @@
+import 'package:chapchap/firebase_options.dart';
 import 'package:chapchap/utils/routes/routes.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
@@ -15,8 +16,16 @@ bool goHome = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
 
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = preferences.getBool('initScreen');
@@ -24,11 +33,6 @@ Future<void> main() async {
     await preferences.setBool('initScreen', true);
   }
   runApp(const MyApp());
-}
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {
@@ -64,6 +68,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => UserViewModel()),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'R0boto'
+        ),
         debugShowCheckedModeBanner: false,
         title: "ChapChap Transfert",
         initialRoute: (initScreen == false || initScreen == null) ? RoutesName.onBoarding: RoutesName.splash,

@@ -323,7 +323,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       },
                                     ),
                                     const Flexible(
-                                      child: Text("Je m'abonne à la news letter pour recevoir des emails de notification."),
+                                      child: Text("Je m'abonne à la newsletter pour recevoir des e-mails de notification."),
                                     )
                                   ],
                                 ),
@@ -438,13 +438,6 @@ class _RegisterViewState extends State<RegisterView> {
                                     setState(() {
                                       loadingPdf2 = true;
                                     });
-                                    // DemandesViewModel demandeVM = DemandesViewModel();
-                                    // File file = await demandeVM.getFileContent("https://chapchap.ca/terms_of_condition", context: context);
-                                    // try {
-                                    //   openFile(file.path);
-                                    // } catch (error) {
-                                    //   Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
-                                    // }
 
                                     var urllaunchable = await canLaunch("https://chapchap.ca/terms_of_condition"); //canLaunch is from url_launcher package
                                     if(urllaunchable){

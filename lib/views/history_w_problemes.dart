@@ -97,7 +97,8 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(child: ListView.builder(
+                                    ListView.builder(
+                                      shrinkWrap: true,
                                       itemCount: value.demandeList.data!.length,
                                       itemBuilder: (context, index) {
                                         DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
@@ -112,7 +113,7 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
                                           ],
                                         );
                                       },
-                                    )),
+                                    ),
                                   ],
                                 ),
                               );

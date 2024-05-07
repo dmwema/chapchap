@@ -117,11 +117,11 @@ class DemandesViewModel with ChangeNotifier{
         if (value['error'] != true) {
           setPaysDestination(ApiResponse.completed(PaysDestinationModel.fromJson(value["data"])));
         } else {
-          Utils.flushBarErrorMessage(value['message'], context);
+          //Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     }).onError((error, stackTrace) {
-      Utils.flushBarErrorMessage(error.toString(), context);
+      //Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
   }
@@ -168,11 +168,11 @@ class DemandesViewModel with ChangeNotifier{
         if (value['error'] != true) {
           setBeneficiairesList(ApiResponse.completed(value["data"]));
         } else {
-          Utils.flushBarErrorMessage(value['message'], context);
+          //Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     }).onError((error, stackTrace) {
-      Utils.flushBarErrorMessage(error.toString(), context);
+      //Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
   }
@@ -256,7 +256,11 @@ class DemandesViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Demande modifiée avec succès.");
-          Navigator.pushNamed(context, RoutesName.history);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutesName.home,
+                (route) => false,
+          );
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
           setLoading(false);
@@ -269,7 +273,8 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<dynamic> transfert(dynamic data, BuildContext context) async {
+  Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true}) async {
+    dynamic returnValue;
     setLoading(true);
     await _repository.transfert(data, context: context).then((value) async {
       if (value!=null){
@@ -279,22 +284,23 @@ class DemandesViewModel with ChangeNotifier{
           Utils.toastMessage("Demande enrégistrée avec succès");
 
           String url = value["data"]['lien_paiement'].toString();
-          var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-          if(urllaunchable){
-            await launch(url); //launch is from url_launcher package to launch URL
-            Navigator.pushNamed(context,RoutesName.home);
-          }else{
-            Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+          if (transfer) {
+            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+            if(urllaunchable){
+              await launch(url); //launch is from url_launcher package to launch URL
+              Navigator.pushNamed(context,RoutesName.home);
+            }else{
+              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+            }
           }
 
-          //Navigator.pushNamed(context, RoutesName.webViewPage, arguments: ScreenArguments(value["data"]['lien_paiement'].toString(), value["data"]['lien_paiement'].toString()));
-          return value;
+          returnValue = value;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     });
-    return true;
+    return returnValue;
   }
 
   Future<void> beneficiaireInfo(int id, BuildContext context) async {
@@ -338,19 +344,21 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<bool>  deleteRecipient(BuildContext context, int id) async {
+  Future<bool> deleteRecipient(BuildContext context, int id) async {
     setLoading(true);
+    bool success = true;
     await _repository.deleteRecipient(context: context, recipientId: id).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          Utils.toastMessage(value["message"]);
+          Utils.toastMessage("Bénéficiaire supprimé avec succès");
         } else {
-          Utils.flushBarErrorMessage(value['message'], context);
+          success = false;
+          Utils.flushBarErrorMessage("Vous ne pouvez pas supprimer ce bénéficiaire. Pensez plutôt à l'archiver", context);
         }
       }
     });
-    return true;
+    return success;
   }
 
   Future<bool> archiveRecipient(BuildContext context, int id) async {

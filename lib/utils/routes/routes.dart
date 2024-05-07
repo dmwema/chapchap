@@ -10,6 +10,7 @@ import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
 import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/coupon_view.dart';
+import 'package:chapchap/views/drc/drc_payment_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/history_w_problemes.dart';
@@ -38,7 +39,7 @@ class Routes {
       case RoutesName.send:
         return PageTransition(
             child: SendView(),
-            type: PageTransitionType.rightToLeft,
+            type: PageTransitionType.bottomToTop,
             settings: settings
         );
       case RoutesName.history:
@@ -140,6 +141,12 @@ class Routes {
       case RoutesName.pay:
         return PageTransition(
             child: PayView(),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
+      case RoutesName.drcPayment:
+        return PageTransition(
+            child: DRCPaymentView(),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

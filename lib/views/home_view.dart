@@ -10,12 +10,15 @@ import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/res/components/home_card.dart';
 import 'package:chapchap/res/components/info_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -31,6 +34,21 @@ class _HomeViewState extends State<HomeView> {
   List<dynamic> demandes = [];
 
   List<Widget> msgList = [];
+
+  bool loadEmail = false;
+  bool loadSMS = false;
+
+  Future<void> _openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+      setState(() {
+        loadEmail = false;
+        loadSMS = false;
+      });
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   void initState() {
@@ -55,6 +73,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final box = context.findRenderObject() as RenderBox?;
     return HideKeyBordContainer(
       child: Scaffold(
         backgroundColor: AppColors.formFieldColor,
@@ -95,16 +114,14 @@ class _HomeViewState extends State<HomeView> {
                           (route) => false,
                         );
                       },
-                      child: Container(
-                        child: Icon(CupertinoIcons.refresh, color: Colors.black,),
-                      ),
+                      child: const Icon(CupertinoIcons.refresh, color: Colors.black,),
                     )
                   ],
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(color: AppColors.formFieldBorderColor)
@@ -125,9 +142,9 @@ class _HomeViewState extends State<HomeView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset("assets/logo_black.png", width: 20,),
+                          Image.asset("assets/logo_red.png", width: 20,),
                           const SizedBox(width: 10,),
-                          const Flexible(child: Text("Bienvenue chez ChapChap, la meilleur application de transfert d’argent. Profitez de la belle experience!",
+                          const Flexible(child: Text("Bienvenue chez ChapChap, la meilleure application de transfert d’argent. Profitez de la belle expérience!",
                             style: TextStyle(
                                 fontSize: 11,
                                 color: Colors.black,
@@ -138,7 +155,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     ...msgList,
-                    const SizedBox(height: 10,)
                   ],
                 ),
               ),
@@ -150,35 +166,69 @@ class _HomeViewState extends State<HomeView> {
                         bottom: BorderSide(color: AppColors.formFieldBorderColor)
                     )
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("Dernières opérations", style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black
-                    ),),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.historyWP);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Dernières opérations", style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black
-                        ),
-                        child: const Text(
-                          "Demandes avec problèmes",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold
+                        ),),
+                        const SizedBox(height: 10,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, RoutesName.historyWP);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.black
+                            ),
+                            child: const Text(
+                              "Demandes avec problèmes",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
+                    if (user != null)
+                    InkWell(
+                      onTap: () {
+                        Share.share(
+                          "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(user!.codeParrainage.toString(), style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700
+                            ),),
+                            const SizedBox(width: 5,),
+                            Icon(Icons.share_rounded, size: 12, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -245,7 +295,10 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButton:
         FloatingActionButton(
           backgroundColor: AppColors.primaryColor, 
-          child: const Icon(CupertinoIcons.arrow_up_right), onPressed: () {
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40)
+          ),
+          child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
             Navigator.pushNamed(context, RoutesName.send);
         }
         ),

@@ -5,15 +5,12 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/services/image_picker_service.dart';
-import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,10 +93,9 @@ class _ProfileViewState extends State<ProfileView> {
                 context: context,
                 backArrow: true
               ),
-              const SizedBox(height: 10,),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Informations personnelles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                child: Text("Informations personnelles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), textAlign: TextAlign.left,),
               ),
               const SizedBox(height: 20,),
               Expanded(
@@ -513,6 +509,35 @@ class _ProfileViewState extends State<ProfileView> {
                                                 const SizedBox(width: 15,),
                                                 Flexible(
                                                   child: Text(user != null ? user!.telClient.toString() : "", style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.black
+                                                  ),),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border(
+                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+                                          )
+                                      ),
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                const Icon(Icons.work_outline_outlined, size: 15,),
+                                                const SizedBox(width: 15,),
+                                                Flexible(
+                                                  child: Text(user != null && user!.profession != null ? user!.profession.toString() : "-", style: const TextStyle(
                                                       fontSize: 14,
                                                       fontWeight: FontWeight.w400,
                                                       color: Colors.black

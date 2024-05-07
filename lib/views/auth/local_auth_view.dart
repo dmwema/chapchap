@@ -14,6 +14,7 @@ class LocalAuthView extends StatefulWidget {
 
 class _LocalAuthViewState extends State<LocalAuthView> {
   bool authenticated = false;
+  bool loadingBio = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +38,19 @@ class _LocalAuthViewState extends State<LocalAuthView> {
               const SizedBox(height: 10,),
               ElevatedButton(
                 onPressed: () async {
-                  LocalAuthService.authenticate().then((value) {
-                    if (value) {
-                      Navigator.pushNamed(context, RoutesName.home);
-                    }
-                  });
+                  if (!loadingBio) {
+                    setState(() {
+                      loadingBio = true;
+                    });
+                    await LocalAuthService.authenticate().then((value) {
+                      if (value) {
+                        Navigator.pushNamed(context, RoutesName.home);
+                      }
+                      setState(() {
+                        loadingBio = false;
+                      });
+                    });
+                  }
                 },
                 child: Text('Vérifier ${Platform.isAndroid ? 'l\'empreinte digitale' : 'le FaceID'}')
               ),

@@ -26,7 +26,7 @@ class ResetCodeView extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineMedium,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(
@@ -50,7 +50,7 @@ class ResetCodeView extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineMedium,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(
@@ -74,7 +74,7 @@ class ResetCodeView extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineMedium,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(
@@ -98,7 +98,7 @@ class ResetCodeView extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineMedium,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(
@@ -122,7 +122,7 @@ class ResetCodeView extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: TextFormField(
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineMedium,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(

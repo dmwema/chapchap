@@ -25,6 +25,7 @@ Widget commonAppBar({
   bool? backArrow = false,
   bool showHelp = true,
   bool? theme = false,
+  bool canClose = false,
   Color? appBarColor,
   GestureTapCallback? editClick,
   GestureTapCallback? backClick,
@@ -88,8 +89,8 @@ Widget commonAppBar({
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text("Besoin d’aide ?", style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 22
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22
                                 ),),
                                 const SizedBox(height: 20,),
                                 GestureDetector(
@@ -100,8 +101,8 @@ Widget commonAppBar({
                                     children: [
                                       Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
                                       const SizedBox(width: 10,),
-                                      const Text("Applez-nous", style: TextStyle(
-                                        fontSize: 17
+                                      const Text("Appelez-nous", style: TextStyle(
+                                          fontSize: 17
                                       ),)
                                     ],
                                   ),
@@ -115,7 +116,22 @@ Widget commonAppBar({
                                     children: [
                                       Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
                                       const SizedBox(width: 10,),
-                                      const Text("Envoyez nous un E-mail", style: TextStyle(
+                                      const Text("Envoyez-nous un e-mail", style: TextStyle(
+                                          fontSize: 17
+                                      ),)
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 20,),
+                                GestureDetector(
+                                  onTap: () {
+                                    _openUrl("https://wa.me/+14384929679");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset("assets/wa.png", width: 30,),
+                                      const SizedBox(width: 10,),
+                                      const Text("Message whatsapp", style: TextStyle(
                                           fontSize: 17
                                       ),)
                                     ],
@@ -133,9 +149,33 @@ Widget commonAppBar({
                     );
                   },
                   child: Container(
+                    width: 55,
+                    padding: const EdgeInsets.all(2),
+                    child: const Text("Aide ?", style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.black
+                    ), textAlign: TextAlign.end,),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: canClose,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Spacer(),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
                     width: 25,
                     padding: const EdgeInsets.all(2),
-                    child: const Icon(CupertinoIcons.question_circle, size: 20,),
+                    child: const Icon(CupertinoIcons.xmark, size: 20,),
                   ),
                 ),
               ],
@@ -153,6 +193,7 @@ Widget commonBottomAppBar({
 }) {
   return BottomAppBar(
       shape: const CircularNotchedRectangle(),
+      shadowColor: Colors.black,
       child: SizedBox(
         height: 66,
         child: Row(

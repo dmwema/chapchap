@@ -17,7 +17,7 @@ class PaysModel {
         this.codePays});
 
   PaysModel.fromJson(Map<String, dynamic> json) {
-    idPays = json['idPays'];
+    idPays = int.parse(json['idPays'].toString());
     paysNom = json['pays_nom'];
     paysMonnaie = json['pays_monnaie'];
     paysCodemonnaie = json['pays_codemonnaie'];

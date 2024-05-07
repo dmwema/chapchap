@@ -3,7 +3,7 @@
 // This file is generated from template in file `flutter_tools/lib/src/flutter_plugins.dart`.
 //
 
-// @dart = 2.17
+// @dart = 3.0
 
 import 'dart:io'; // flutter_ignore: dart_io_import.
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
@@ -15,7 +15,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher_android/url_launcher_android.dart';
 import 'package:google_maps_flutter_ios/google_maps_flutter_ios.dart';
 import 'package:image_picker_ios/image_picker_ios.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:path_provider_foundation/path_provider_foundation.dart';
 import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,6 +23,7 @@ import 'package:url_launcher_ios/url_launcher_ios.dart';
 import 'package:file_selector_linux/file_selector_linux.dart';
 import 'package:image_picker_linux/image_picker_linux.dart';
 import 'package:path_provider_linux/path_provider_linux.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences_linux/shared_preferences_linux.dart';
 import 'package:url_launcher_linux/url_launcher_linux.dart';
 import 'package:file_selector_macos/file_selector_macos.dart';
@@ -35,6 +36,7 @@ import 'package:file_selector_windows/file_selector_windows.dart';
 import 'package:image_picker_windows/image_picker_windows.dart';
 import 'package:local_auth_windows/local_auth_windows.dart';
 import 'package:path_provider_windows/path_provider_windows.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences_windows/shared_preferences_windows.dart';
 import 'package:url_launcher_windows/url_launcher_windows.dart';
 
@@ -127,10 +129,10 @@ class _PluginRegistrant {
       }
 
       try {
-        LocalAuthIOS.registerWith();
+        LocalAuthDarwin.registerWith();
       } catch (err) {
         print(
-          '`local_auth_ios` threw an error: $err. '
+          '`local_auth_darwin` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
@@ -195,6 +197,15 @@ class _PluginRegistrant {
       } catch (err) {
         print(
           '`path_provider_linux` threw an error: $err. '
+          'The app may not function as expected until you remove this plugin from pubspec.yaml'
+        );
+      }
+
+      try {
+        SharePlusLinuxPlugin.registerWith();
+      } catch (err) {
+        print(
+          '`share_plus` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
@@ -305,6 +316,15 @@ class _PluginRegistrant {
       } catch (err) {
         print(
           '`path_provider_windows` threw an error: $err. '
+          'The app may not function as expected until you remove this plugin from pubspec.yaml'
+        );
+      }
+
+      try {
+        SharePlusWindowsPlugin.registerWith();
+      } catch (err) {
+        print(
+          '`share_plus` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }

@@ -43,7 +43,8 @@ class AuthViewModel with ChangeNotifier{
     sp.setBool('local_auth', value);
   }
 
-  Future<void> loginApi(dynamic data, BuildContext context) async {
+  Future<void> loginApi(dynamic data, BuildContext context, bool biometric) async {
+    String password = data['password'];
     setLoading(true);
     await _repository.loginApi(data, context: context).then((value) {
       if (value!=null){
@@ -113,6 +114,7 @@ class AuthViewModel with ChangeNotifier{
           } else {
             UserModel user = UserModel.fromJson(value['data']);
             user.token = value['token'];
+            user.password = password;
             UserViewModel().updateUser(user, true, false).then((value) {
               Utils.toastMessage("Vous êtes connectés avec succès");
               Navigator.pushNamedAndRemoveUntil(
@@ -123,7 +125,9 @@ class AuthViewModel with ChangeNotifier{
             });
           }
         } else {
-          Utils.flushBarErrorMessage(value['message'], context);
+
+          String errorMessage = biometric ? "Impossible de se connecter avec la biométrie. Veuillez utiliser votre mot de passe. '$password'" : value['message'];
+          Utils.flushBarErrorMessage(errorMessage, context);
         }
       }
     }).onError((error, stackTrace) {

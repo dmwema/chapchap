@@ -18,6 +18,8 @@ class RoutesName {
   static const String resetCodeSend = 'reset_code_sent_screen';
   static const String newPassword = 'new_password_screen';
 
+  static const String drcPayment = 'drc_payment';
+
   static const String invoices = 'invoices_screen';
   static const String invoiceDetail = 'invoice_detail_screen';
   static const String pay = 'pay_screen';

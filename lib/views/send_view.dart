@@ -6,10 +6,10 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,11 +27,10 @@ class SendView extends StatefulWidget {
 
 class _SendViewState extends State<SendView> {
   int step = 0;
+  int steps = 4;
   final PageController _controller = PageController();
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
-  DemandesViewModel demandesViewModel = DemandesViewModel();
-  DemandesViewModel demandesViewModel2 = DemandesViewModel();
   FocusNode? currentFocus = FocusManager.instance.primaryFocus;
   PaysDestinationModel? paysDestinationModel;
   Destination? selectedDesinaion;
@@ -40,9 +39,13 @@ class _SendViewState extends State<SendView> {
   BeneficiaireModel? selectedBeneficiaire;
   bool fromToToSens = true;
 
+  double tauxTransfert = 0.0;
+
   bool loadBeneficiaire = false;
   bool loadedDestination = false;
   bool loadedModeRetrait = false;
+
+  bool vmCalled = false;
 
   bool loading = false;
   bool loadingPromo = false;
@@ -52,6 +55,7 @@ class _SendViewState extends State<SendView> {
 
   bool promo = false;
   double promoRabais = 0;
+  String promoCode = '';
 
   _onChanged(int index) {
     setState(() {
@@ -69,9 +73,6 @@ class _SendViewState extends State<SendView> {
   @override
   void initState() {
     super.initState();
-    demandesViewModel.paysDestinations([], context);
-    demandesViewModel.beneficiaires([], context);
-    demandesViewModel2.beneficiaires([], context);
   }
 
   void insert(content, TextEditingController controller) {
@@ -93,22 +94,9 @@ class _SendViewState extends State<SendView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!loadBeneficiaire) {
-      if (widget.beneficiaire != null) {
-        setState(() {
-          selectedBeneficiaire = widget.beneficiaire;
-        });
-      }
-      if (widget.amount != null) {
-        setState(() {
-          insert(widget.amount, _fromController);
-        });
-      }
-      setState(() {
-        loadBeneficiaire = true;
-      });
-    }
-
+    DemandesViewModel demandesViewModel = DemandesViewModel();
+    demandesViewModel.paysDestinations([], context);
+    demandesViewModel.beneficiaires([], context);
     final List pages = [
       SingleChildScrollView(
           child: ChangeNotifierProvider<DemandesViewModel>(
@@ -129,6 +117,26 @@ class _SendViewState extends State<SendView> {
                         );
                       default:
                         paysDestinationModel = value.paysDestination.data!;
+                        if (!loadBeneficiaire) {
+                          if (widget.beneficiaire != null) {
+                            selectedBeneficiaire = widget.beneficiaire;
+                            for (var element in paysDestinationModel!.destination!) {
+                              if (element.idPaysDest == widget.beneficiaire!.idPays) {
+                                selectedDesinaion = element;
+                                for (var rMode in element.modeRetrait!) {
+                                  if (widget.beneficiaire!.id_mode_retrait == rMode.idModeRetrait) {
+                                    selectedModeRetrait = rMode;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          if (widget.amount != null) {
+                            insert(widget.amount, _fromController);
+                          }
+                          loadBeneficiaire = true;
+                        }
+
                         if (!loadedDestination) {
                           if (widget.destination != null) {
                             for (var element in paysDestinationModel!.destination!) {
@@ -296,6 +304,9 @@ class _SendViewState extends State<SendView> {
                                             if (selectedDesinaion != null) {
                                               if (value != "") {
                                                 insert(double.parse(value) * double.parse(selectedDesinaion!.rate.toString()), _toController);
+                                                setState(() {
+                                                  tauxTransfert = double.parse(_fromController.text) * (selectedDesinaion!.taux_transfert! / 100);
+                                                });
                                               } else {
                                                 insert("", _toController);
                                               }
@@ -361,6 +372,9 @@ class _SendViewState extends State<SendView> {
                                             } else {
                                               Utils.flushBarErrorMessage("Vous devez selectionner un pays de destination", context);
                                             }
+                                            setState(() {
+                                              tauxTransfert = double.parse(_fromController.text) * (selectedDesinaion!.taux_transfert! / 100);
+                                            });
                                           },
                                           decoration: const InputDecoration(
                                               border: InputBorder.none,
@@ -381,7 +395,28 @@ class _SendViewState extends State<SendView> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 20,),
+                              const SizedBox(height: 10,),
+                              if (selectedDesinaion != null && paysDestinationModel != null)
+                                Text("1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}", style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500
+                                ),),
+                              if (selectedDesinaion != null && paysDestinationModel != null)
+                              const SizedBox(height: 5,),
+                              const Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
+                                  SizedBox(width: 5,),
+                                  Text("ChapChap utilise son propre taux de change!", style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w500
+                                  ),),
+                                ],
+                              ),
+                              const SizedBox(height: 15,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(bottom: 60),
@@ -424,118 +459,24 @@ class _SendViewState extends State<SendView> {
                                         const Text("Frais de transfert", style: TextStyle(
                                             fontSize: 12
                                         ),),
-                                        Text("0.00 ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}", style: const TextStyle(
+                                        Text(("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}"), style: const TextStyle(
                                             fontWeight: FontWeight.w600
                                         ),),
                                       ],
                                     ),
-                                    const Divider(),
-                                    if (promoRabais > 0)
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text("Rabais promo", style: TextStyle(
-                                            fontSize: 12
-                                        ),),
-                                        Text("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}", style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.primaryColor
-                                        ),),
-                                      ],
-                                    ),
-                                    if (promoRabais > 0)
-                                    const Divider(),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: (MediaQuery.of(context).size.width - 80) * 0.7,
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              label: const Text("CODE PROMO", style: TextStyle(
-                                                  fontSize: 12
-                                              ),),
-                                              contentPadding: const EdgeInsets.all(10),
-                                              fillColor: Colors.white,
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-                                                borderSide: BorderSide(
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                              ),
-                                              focusColor: AppColors.primaryColor,
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-                                                borderSide: BorderSide(
-                                                  color: Colors.black.withOpacity(.4),
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                            ),
-                                            controller: _promoContoller,
-                                            style: const TextStyle(
-                                                fontSize: 18
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            if (_promoContoller.text.isEmpty) {
-                                              Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
-                                            } else if (_fromController.text == "") {
-                                              Utils.flushBarErrorMessage("Vous devez entrer les montants", context);
-                                            } else {
-                                              double montantSrc = promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais) : double.parse(_fromController.text);
-                                              setState(() {
-                                                loadingPromo = true;
-                                                loadingPromoSucces = false;
-                                              });
-                                              DemandesViewModel demandeVM = DemandesViewModel();
-                                              Map data = {
-                                                "codePromo": _promoContoller.text,
-                                                "code_pays_srce": paysDestinationModel!.codePaysSrce.toString(),
-                                                "montant": montantSrc
-                                              };
-                                              demandeVM.applyPromo(context, data).then((value) {
-                                                setState(() {
-                                                  loadingPromo = false;
-                                                });
-                                                if (demandeVM.applyDetail.status == Status.COMPLETED) {
-                                                  _promoContoller.clear();
-                                                  setState(() {
-                                                    promo = true;
-                                                    promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
-                                                    loadingPromoSucces = true;
-                                                  });
-                                                }
-                                              });
-                                            }
-                                          },
-                                          child: Container(
-                                              width: (MediaQuery.of(context).size.width - 80) * 0.3,
-                                              decoration: BoxDecoration(
-                                                borderRadius: const BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-                                                color: AppColors.primaryColor,
-                                              ),
-                                              padding: const EdgeInsets.only(top: 16, bottom: 16.6),
-                                              child: Center(
-                                                child:
-                                                loadingPromo
-                                                    ? const SizedBox(
-                                                  width: 17, height: 17,
-                                                  child: CupertinoActivityIndicator(color: Colors.white, radius: 15,),
-                                                )
-                                                    : loadingPromoSucces
-                                                    ?
-                                                const Icon(Icons.check, color: Colors.white, size: 18,) :
-                                                const Text("Appliquer", style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.white
-                                                ),),
-                                              )
-                                          ),
-                                        )
-                                      ],
-                                    )
+                                    // if (promoRabais > 0)
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     const Text("Rabais promo", style: TextStyle(
+                                    //         fontSize: 12
+                                    //     ),),
+                                    //     Text("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}", style: TextStyle(
+                                    //         fontWeight: FontWeight.w600,
+                                    //         color: AppColors.primaryColor
+                                    //     ),),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -684,7 +625,7 @@ class _SendViewState extends State<SendView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NewBeneficiaireView(destination: selectedDesinaion, parentDemandViewModel: demandesViewModel2),
+                          builder: (context) => NewBeneficiaireView(destination: selectedDesinaion, parentDemandViewModel: demandesViewModel),
                         ),
                       );
                     },
@@ -718,7 +659,7 @@ class _SendViewState extends State<SendView> {
             ),
           ),
           Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
-              create: (BuildContext context) => demandesViewModel2,
+              create: (BuildContext context) => demandesViewModel,
               child: Consumer<DemandesViewModel>(
                   builder: (context, value, _){
                     switch (value.beneficiairesList.status) {
@@ -862,6 +803,98 @@ class _SendViewState extends State<SendView> {
                   )
               ),
               Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      color: Colors.black.withOpacity(.02),
+                      child: SizedBox(
+                        width: (MediaQuery.of(context).size.width) * 0.7,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              label: const Text("Entrez un code promo", style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                fontWeight: FontWeight.normal
+                              ),),
+                              fillColor: Colors.white,
+                              focusedBorder: InputBorder.none,
+                              focusColor: AppColors.primaryColor,
+                              enabledBorder: InputBorder.none,
+                              contentPadding: const EdgeInsets.symmetric(vertical: 10)
+                          ),
+                          controller: _promoContoller,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (_promoContoller.text.isEmpty) {
+                          Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
+                        } else if (_fromController.text == "") {
+                          Utils.flushBarErrorMessage("Vous devez entrer les montants", context);
+                        } else {
+                          double montantSrc = promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais) : double.parse(_fromController.text);
+                          setState(() {
+                            loadingPromo = true;
+                            loadingPromoSucces = false;
+                            promoCode = _promoContoller.text;
+                          });
+                          DemandesViewModel demandeVM = DemandesViewModel();
+                          Map data = {
+                            "codePromo": _promoContoller.text,
+                            "code_pays_srce": paysDestinationModel!.codePaysSrce.toString(),
+                            "montant": montantSrc
+                          };
+                          demandeVM.applyPromo(context, data).then((value) {
+                            setState(() {
+                              loadingPromo = false;
+                            });
+                            if (demandeVM.applyDetail.status == Status.COMPLETED) {
+                              _promoContoller.clear();
+                              setState(() {
+                                promo = true;
+                                promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
+                                loadingPromoSucces = true;
+                              });
+                            }
+                          });
+                        }
+                      },
+                      child: Container(
+                          width: (MediaQuery.of(context).size.width -60) * 0.3,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          padding: const EdgeInsets.only(top: 17, bottom: 17),
+                          child: Center(
+                            child:
+                            loadingPromo
+                                ? const SizedBox(
+                              width: 17, height: 17,
+                              child: CupertinoActivityIndicator(color: Colors.white, radius: 10,),
+                            )
+                                : loadingPromoSucces
+                                ?
+                            const Icon(Icons.check, color: Colors.white, size: 18,) :
+                            const Text("Appliquer", style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white
+                            ),),
+                          )
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
                       color: Colors.red.withOpacity(.1),
@@ -870,13 +903,15 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Montant à envoyer", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
+                      const Text("Montant à envoyer", style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12
                       ),),
                       Text("${_fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                       ),)
                     ],
                   )
@@ -890,13 +925,15 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Montant à recevoir", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
+                      const Text("Montant à recevoir", style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12
                       ),),
                       Text("${_toController.text} ${selectedDesinaion!.paysCodeMonnaieDest}", style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                       ),)
                     ],
                   )
@@ -910,13 +947,15 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Frais d'envoi", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
-                          fontSize: 12
+                      const Text("Frais de transfert", style: TextStyle(
+                          fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),),
-                      Text("0.00 ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
+                      Text("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),)
                     ],
                   )
@@ -931,17 +970,20 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Rabais promo", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
-                          fontSize: 12
+                      const Text("Rabais promo", style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                       ),),
                       Text("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                       ),)
                     ],
                   )
               ),
+              if (_fromController.text != "" && isDouble(_fromController.text))
               Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
@@ -952,13 +994,14 @@ class _SendViewState extends State<SendView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Total à payer", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600
+                          color: AppColors.primaryColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
                       ),),
-                      Text("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais).toString() : _fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
+                      Text("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais + tauxTransfert).toString() : tauxTransfert + double.parse(_fromController.text)} ${paysDestinationModel!.paysCodeMonnaieSrce}", style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold
                       ),)
                     ],
                   )
@@ -1026,309 +1069,6 @@ class _SendViewState extends State<SendView> {
                     ],
                   )
               ),
-              // if (promoRabais > 0)
-              //   const SizedBox(height: 5,),
-              // if (promoRabais > 0)
-              //   const Divider(),
-              // if (promoRabais > 0)
-              //   const SizedBox(height: 5,),
-              // if (promoRabais > 0)
-              //   Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       const Text("Rabais promo", style: TextStyle(
-              //           color: Colors.green,
-              //           fontWeight: FontWeight.bold
-              //       ),),
-              //       Text("- $promoRabais ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
-              //           fontSize: 14,
-              //           color: Colors.green,
-              //           fontWeight: FontWeight.bold
-              //       ),)
-              //     ],
-              //   ),
-              // const SizedBox(height: 10,),
-              // Container(
-              //   padding: const EdgeInsets.all(15),
-              //   color: Colors.blueGrey.withOpacity(.2),
-              //   child:
-              //   Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text("Montant à payer", style: TextStyle(
-              //           color: Colors.black.withOpacity(.8),
-              //           fontWeight: FontWeight.w500
-              //       ),),
-              //       Text("$montantSrc ${widget.data['source']!.paysCodeMonnaieSrce}", style: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w600
-              //       ),)
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(height: 15,),
-              // Row(
-              //   children: [
-              //     SizedBox(
-              //       width: (MediaQuery.of(context).size.width - 40) * 0.7,
-              //       child: TextFormField(
-              //         decoration: InputDecoration(
-              //           contentPadding: const EdgeInsets.all(10),
-              //           label: const Text("CODE PROMO", style: TextStyle(
-              //               fontSize: 12
-              //           ),),
-              //           fillColor: Colors.white,
-              //           focusedBorder: OutlineInputBorder(
-              //             borderRadius: const BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-              //             borderSide: BorderSide(
-              //               color: AppColors.primaryColor,
-              //             ),
-              //           ),
-              //           focusColor: AppColors.primaryColor,
-              //           enabledBorder: OutlineInputBorder(
-              //             borderRadius: const BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-              //             borderSide: BorderSide(
-              //               color: Colors.black.withOpacity(.4),
-              //               width: 1.0,
-              //             ),
-              //           ),
-              //         ),
-              //         controller: _promoContoller,
-              //         style: const TextStyle(
-              //             fontSize: 18
-              //         ),
-              //       ),
-              //     ),
-              //     InkWell(
-              //       onTap: () {
-              //         if (_promoContoller.text.isEmpty) {
-              //           Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
-              //         } else {
-              //           setState(() {
-              //             loadingPromo = true;
-              //             loadingPromoSucces = false;
-              //           });
-              //           DemandesViewModel demandeVM = DemandesViewModel();
-              //           Map data = {
-              //             "codePromo": _promoContoller.text,
-              //             "code_pays_srce": widget.data['source']!.codePaysSrce.toString(),
-              //             "montant": montantSrc
-              //           };
-              //           demandeVM.applyPromo(context, data).then((value) {
-              //             setState(() {
-              //               loadingPromo = false;
-              //             });
-              //             if (demandeVM.applyDetail.status == Status.COMPLETED) {
-              //               _promoContoller.clear();
-              //               setState(() {
-              //                 montantSrc = montantSrc - demandeVM.applyDetail.data["reductionPromo"];
-              //                 promo = true;
-              //                 promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
-              //                 loadingPromoSucces = true;
-              //               });
-              //             }
-              //           });
-              //         }
-              //       },
-              //       child: Container(
-              //           width: (MediaQuery.of(context).size.width - 40) * 0.3,
-              //           decoration: BoxDecoration(
-              //             borderRadius: const BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-              //             color: AppColors.primaryColor,
-              //           ),
-              //           padding: const EdgeInsets.only(top: 16, bottom: 16.6),
-              //           child: Center(
-              //             child: loadingPromo
-              //                 ? const SizedBox(
-              //               width: 17, height: 17,
-              //               child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3,),
-              //             )
-              //                 : loadingPromoSucces
-              //                 ?
-              //             const Icon(Icons.check, color: Colors.white, size: 18,)
-              //                 : const Text("Appliquer", style: TextStyle(
-              //                 fontWeight: FontWeight.w500,
-              //                 color: Colors.white
-              //             ),),
-              //           )
-              //       ),
-              //     )
-              //   ],
-              // ),
-              // const SizedBox(height: 15,),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text("Source", style: TextStyle(
-              //         color: Colors.black.withOpacity(.5)
-              //     ),),
-              //     Text(widget.data['source']!.paysSrce.toString(), style: const TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600
-              //     ),)
-              //   ],
-              // ),
-              // const SizedBox(height: 10,),
-              // const Divider(),
-              // const SizedBox(height: 5,),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text("Destination", style: TextStyle(
-              //         color: Colors.black.withOpacity(.5)
-              //     ),),
-              //     Text(widget.data['destination']!.paysDest.toString(), style: const TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600
-              //     ),)
-              //   ],
-              // ),
-              // const SizedBox(height: 10,),
-              // const Divider(),
-              // const SizedBox(height: 5,),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text("Bénéficiaire", style: TextStyle(
-              //         color: Colors.black.withOpacity(.5)
-              //     ),),
-              //     Text(widget.data['beneficiaire']!.nomBeneficiaire.toString(), style: const TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600
-              //     ),)
-              //   ],
-              // ),
-              // const SizedBox(height: 10,),
-              // const Divider(),
-              // const SizedBox(height: 5,),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text("Téléphone", style: TextStyle(
-              //         color: Colors.black.withOpacity(.5)
-              //     ),),
-              //     Text(widget.data['beneficiaire']!.telBeneficiaire.toString(), style: const TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600
-              //     ),)
-              //   ],
-              // ),
-              // const SizedBox(height: 10,),
-              // const Divider(),
-              // const SizedBox(height: 5,),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text("Montant bénéficiaire", style: TextStyle(
-              //         color: Colors.black.withOpacity(.5)
-              //     ),),
-              //     Text("$montantDest ${widget.data['destination']!.paysCodeMonnaieDest}", style: const TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600
-              //     ),)
-              //   ],
-              // ),
-              // if (widget.data['mode_retrait'] != null)
-              //   const SizedBox(height: 10,),
-              // if (widget.data['mode_retrait'] != null)
-              //   const Divider(),
-              // if (widget.data['mode_retrait'] != null)
-              //   const SizedBox(height: 5,),
-              // if (widget.data['mode_retrait'] != null)
-              //   Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text("Mode de retrait", style: TextStyle(
-              //           color: Colors.black.withOpacity(.5)
-              //       ),),
-              //       Text(widget.data['mode_retrait'], style: const TextStyle(
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w600
-              //       ),)
-              //     ],
-              //   ),
-              // const SizedBox(height: 15,),
-              //
-              // Row(
-              //   children: [
-              //     InkWell(
-              //       onTap: () {
-              //         Navigator.pop(context);
-              //       },
-              //       child: Container(
-              //           width: (MediaQuery.of(context).size.width - 40) * 0.5,
-              //           decoration: BoxDecoration(
-              //             borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-              //             color: AppColors.primaryColor,
-              //           ),
-              //           padding: const EdgeInsets.only(top: 16, bottom: 16.6),
-              //           child: const Center(
-              //             child: Text("Annuler", style: TextStyle(
-              //                 fontWeight: FontWeight.w500,
-              //                 color: Colors.white
-              //             ),),
-              //           )
-              //       ),
-              //     ),
-              //     InkWell(
-              //       onTap: () {
-              //         double source = 0;
-              //         double destination = 0;
-              //
-              //         if (fromToSens) {
-              //           source = montantSrc;
-              //           if (promo) {
-              //             destination = (montantSrc + promoRabais) * rate;
-              //           } else {
-              //             destination = montantSrc * rate;
-              //           }
-              //         } else {
-              //           if (promo) {
-              //             source = (montantDest / rate) - promoRabais;
-              //           } else {
-              //             source = montantDest / rate;
-              //           }
-              //           destination = montantDest;
-              //         }
-              //
-              //         if (!loading) {
-              //           setState(() {
-              //             loading = true;
-              //           });
-              //           Map data2 = {
-              //             "idBeneficiaire": widget.data["idBeneficiaire"],
-              //             "codePromo": _promoContoller.text,
-              //             "code_pays_srce": widget.data["code_pays_srce"],
-              //             "montant_srce": source,
-              //             "montant_dest": destination,
-              //             "code_pays_dest": widget.data["code_pays_dest"],
-              //             "id_mode_retrait": widget.data["id_mode_retrait"],
-              //           };
-              //
-              //           demandesViewModel.transfert(data2, context).then((value) {
-              //             setState(() {
-              //               loading = false;
-              //             });
-              //           });
-              //         }
-              //       },
-              //       child: Container(
-              //           width: (MediaQuery.of(context).size.width - 40) * 0.5,
-              //           decoration: BoxDecoration(
-              //             borderRadius: const BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-              //             color: Colors.black.withOpacity(.9),
-              //           ),
-              //           padding: loading ? const EdgeInsets.only(top: 9.7, bottom: 9.7) : const EdgeInsets.only(top: 16, bottom: 16.6),
-              //           child: Center(
-              //             child: !loading ? const Text("Confirmer", style: TextStyle(
-              //                 fontWeight: FontWeight.w500,
-              //                 color: Colors.white
-              //             ),): Image.asset("assets/loader_btn.gif", width: 30),
-              //           )
-              //       ),
-              //     )
-              //   ],
-              // ),
             ],
           )
         ],
@@ -1345,18 +1085,20 @@ class _SendViewState extends State<SendView> {
             children: [
               commonAppBar(
                 context: context,
-                backArrow: true,
+                backArrow: step > 0,
+                showHelp: false,
+                canClose: true,
                 appBarColor: Colors.white,
-                // backClick: () {
-                //   if (step > 0) {
-                //     _controller.previousPage(
-                //         duration: const Duration(milliseconds: 300),
-                //         curve: Curves.linear
-                //     );
-                //   } else {
-                //     Navigator.pop(context);
-                //   }
-                // }
+                backClick: () {
+                  if (step > 0) {
+                    _controller.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.linear
+                    );
+                  } else {
+                    Navigator.pop(context);
+                  }
+                }
               ),
               Center(child: Image.asset("assets/logo_black.png", width: 30,)),
               Container(
@@ -1369,7 +1111,7 @@ class _SendViewState extends State<SendView> {
                 height: 5,
                 child: FractionallySizedBox(
                   alignment: Alignment.centerLeft,
-                  widthFactor: 0.25 * (step + 1),
+                  widthFactor: (1 / steps) * (step + 1),
                   child: Container(
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
@@ -1411,6 +1153,7 @@ class _SendViewState extends State<SendView> {
                           width: MediaQuery.of(context).size.width - 40,
                           child: RoundedButton(
                             onPress: () {
+                              FocusScope.of(context).unfocus();
                               if (currentFocus != null) {
                                 currentFocus!.unfocus();
                               }
@@ -1429,11 +1172,19 @@ class _SendViewState extends State<SendView> {
                                 if (selectedModeRetrait == null) {
                                   Utils.flushBarErrorMessage("Vous devez séléctionner le mode de retrait", context);
                                 } else {
-                                  _controller.nextPage(
-                                      duration: const Duration(
-                                          milliseconds: 300),
-                                      curve: Curves.linear
-                                  );
+                                  if (widget.beneficiaire != null) {
+                                    _controller.animateToPage(
+                                      3,
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.linear,
+                                    );
+                                  } else {
+                                    _controller.nextPage(
+                                        duration: const Duration(
+                                            milliseconds: 300),
+                                        curve: Curves.linear
+                                    );
+                                  }
                                 }
                               } else if (step == 3) {
                                 DemandesViewModel demandesViewModel3 = DemandesViewModel();
@@ -1442,25 +1193,48 @@ class _SendViewState extends State<SendView> {
                                     loading = true;
                                   });
 
+                                  double fromAmount = 0;
+                                  double toAmount = 0;
+
+                                  if (fromToToSens) {
+                                    fromAmount = double.parse(_fromController.text);
+                                    toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
+                                  } else {
+                                    toAmount = double.parse(_toController.text);
+                                    fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
+                                  }
+                                  fromAmount += tauxTransfert;
+
+                                  if (promoRabais > 0) {
+                                    fromAmount -= promoRabais;
+                                  }
+
                                   Map data2 = {
                                     "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
-                                    "codePromo": _promoContoller.text,
+                                    "codePromo": promoCode,
                                     "code_pays_srce": paysDestinationModel!.codePaysSrce,
-                                    "montant_srce": promoRabais > 0 ? double.parse(_fromController.text) - promoRabais : _fromController.text,
-                                    "montant_dest": _toController.text,
+                                    "montant_srce": fromAmount,
+                                    "montant_dest": toAmount,
                                     "code_pays_dest": selectedDesinaion!.codePaysDest,
                                     "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
                                   };
-
-                                  demandesViewModel3.transfert(data2, context).then((value) {
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                  });
+                                  Navigator.pushNamed(context, RoutesName.drcPayment);
+                                  // demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd").then((value) {
+                                  //   if (paysDestinationModel!.codePaysSrce == "cd") {
+                                  //     Utils.flushBarErrorMessage("DRC", context);
+                                  //   }
+                                  //   print("*********************************************");
+                                  //   print("*********************************************");
+                                  //   print("*********************************************");
+                                  //   print(value);
+                                  //   setState(() {
+                                  //     loading = false;
+                                  //   });
+                                  // });
                                 }
                               }
                             },
-                            title: step < 3 ? "Continuer": "Confimer et payer",
+                            title: step < 3 ? "Continuer": "Confirmer et payer",
                             loading: loading,
                           ),
                         ),
@@ -1475,4 +1249,10 @@ class _SendViewState extends State<SendView> {
       ),
     );
   }
+
+  bool isDouble(String value) {
+    final doubleNumber = double.tryParse(value);
+    return doubleNumber != null;
+  }
+
 }

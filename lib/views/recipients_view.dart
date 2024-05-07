@@ -1,6 +1,7 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
+import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/confirm_delete.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
@@ -216,54 +217,18 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                   Text(beneficiaire.emailBeneficiaire.toString()),
                                                                 ],
                                                               ),
-                                                              if (beneficiaire.banque != null || beneficiaire.banque == "")
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.banque != null || beneficiaire.banque == "")
-                                                                const Divider(),
-                                                              if (beneficiaire.banque != null || beneficiaire.banque == "")
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.banque != null || beneficiaire.banque == "")
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    const Text("Banque", style: TextStyle(
-                                                                        fontWeight: FontWeight.bold
-                                                                    ),),
-                                                                    Text(beneficiaire.banque.toString()),
-                                                                  ],
-                                                                ),
-                                                              if (beneficiaire.swift != null)
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.swift != null)
-                                                                const Divider(),
-                                                              if (beneficiaire.swift != null)
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.swift != null)
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    const Text("Swift", style: TextStyle(
-                                                                        fontWeight: FontWeight.bold
-                                                                    ),),
-                                                                    Text(beneficiaire.swift.toString()),
-                                                                  ],
-                                                                ),
-                                                              if (beneficiaire.iban != null)
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.iban != null)
-                                                                const Divider(),
-                                                              if (beneficiaire.iban != null)
-                                                                const SizedBox(height: 5,),
-                                                              if (beneficiaire.iban != null)
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    const Text("Iban", style: TextStyle(
-                                                                        fontWeight: FontWeight.bold
-                                                                    ),),
-                                                                    Text(beneficiaire.iban.toString()),
-                                                                  ],
-                                                                ),
+                                                              const SizedBox(height: 5,),
+                                                              const Divider(),
+                                                              const SizedBox(height: 5,),
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  const Text("Téléphone", style: TextStyle(
+                                                                      fontWeight: FontWeight.bold
+                                                                  ),),
+                                                                  Text(beneficiaire.telBeneficiaire.toString()),
+                                                                ],
+                                                              ),
                                                               const SizedBox(height: 20,),
                                                               Wrap(
                                                                 spacing: 5,
@@ -282,19 +247,21 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                       );
                                                                     },
                                                                     child: Container(
-                                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                                        decoration: BoxDecoration(
-                                                                            color: Colors.black,
-                                                                            borderRadius: BorderRadius.circular(5)
-                                                                        ),
-                                                                        child: const Row(
-                                                                          mainAxisSize: MainAxisSize.min,
-                                                                          children: [
-                                                                            Icon(CupertinoIcons.arrow_up_right, size: 15, color: Colors.white,),
-                                                                            SizedBox(width: 3,),
-                                                                            Text("Nouveau Transfert", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                                          ],
-                                                                        )
+                                                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                                                      decoration: BoxDecoration(
+                                                                          color: Colors.green,
+                                                                          borderRadius: BorderRadius.circular(5)
+                                                                      ),
+                                                                      width: MediaQuery.of(context).size.width,
+                                                                      child: const Row(
+                                                                        mainAxisSize: MainAxisSize.max,
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Icon(CupertinoIcons.arrow_up_right, size: 15, color: Colors.white,),
+                                                                          SizedBox(width: 3,),
+                                                                          Text("Nouveau Transfert", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
+                                                                        ],
+                                                                      )
                                                                     ),
                                                                   ),
                                                                   InkWell(
@@ -305,7 +272,7 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                         builder: (BuildContext context) {
                                                                           return CupertinoAlertDialog(
                                                                             title: Text('Confirmer'),
-                                                                            content: Text('Voulez-vous vraimer archiver ce bénéficiaire ?'),
+                                                                            content: Text('Voulez-vous vraiment archiver ce bénéficiaire ?'),
                                                                             actions: [
                                                                               CupertinoDialogAction(
                                                                                 child: const Text('Annuler', style: TextStyle(
@@ -335,13 +302,15 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                       );
                                                                     },
                                                                     child: Container(
+                                                                        width: MediaQuery.of(context).size.width - 5,
                                                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                                                         decoration: BoxDecoration(
                                                                             color: Colors.black,
                                                                             borderRadius: BorderRadius.circular(5)
                                                                         ),
                                                                         child: const Row(
-                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          mainAxisSize: MainAxisSize.max,
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
                                                                           children: [
                                                                             Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
                                                                             SizedBox(width: 3,),
@@ -356,8 +325,8 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                         context: context,
                                                                         builder: (BuildContext context) {
                                                                           return CupertinoAlertDialog(
-                                                                            title: Text('Confirmer'),
-                                                                            content: Text('Voulez-vous vraimer supprimer ce bénéficiaire ?'),
+                                                                            title: const Text('Confirmer'),
+                                                                            content: const Text('Voulez-vous vraiment supprimer ce bénéficiaire ?'),
                                                                             actions: [
                                                                               CupertinoDialogAction(
                                                                                 child: const Text('Annuler', style: TextStyle(
@@ -374,11 +343,16 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                                 onPressed: () async {
                                                                                   Navigator.of(context).pop();
                                                                                   Navigator.of(context).pop();
+
+                                                                                  BuildContext modalContext = context;
+
                                                                                   await demandesViewModel.deleteRecipient(context, beneficiaire.idBeneficiaire!.toInt()).then((value) {
-                                                                                    setState(() {
-                                                                                      demandesViewModel.beneficiaires([], context);
-                                                                                    });
-                                                                                  });// Fermer le dialogue
+                                                                                    if (value) {
+                                                                                      setState(() {
+                                                                                        demandesViewModel.beneficiaires([], context);
+                                                                                      });
+                                                                                    }
+                                                                                  });
                                                                                 },
                                                                               ),
                                                                             ],
@@ -387,13 +361,15 @@ class _RecipientsViewState extends State<RecipientsView> {
                                                                       );
                                                                     },
                                                                     child: Container(
+                                                                        width: MediaQuery.of(context).size.width,
                                                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                                                         decoration: BoxDecoration(
                                                                             color: Colors.red,
                                                                             borderRadius: BorderRadius.circular(5)
                                                                         ),
                                                                         child: const Row(
-                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          mainAxisSize: MainAxisSize.max,
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
                                                                           children: [
                                                                             Icon(CupertinoIcons.delete, size: 15, color: Colors.white,),
                                                                             SizedBox(width: 3,),
@@ -438,8 +414,11 @@ class _RecipientsViewState extends State<RecipientsView> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryColor,
-        child: const Icon(CupertinoIcons.arrow_up_right), onPressed: () {
+          backgroundColor: AppColors.primaryColor,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40)
+          ),
+          child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
         Navigator.pushNamed(context, RoutesName.send);
       }
       ),
