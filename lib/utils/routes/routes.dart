@@ -146,7 +146,7 @@ class Routes {
         );
       case RoutesName.drcPayment:
         return PageTransition(
-            child: DRCPaymentView(),
+            child: DRCPaymentView(data: settings.arguments as Map,),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
@@ -158,15 +158,15 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
-      case RoutesName.newPassword:
+      case RoutesName.newPasswords:
         return PageTransition(
-            child: NewPassword(),
+            child: NewPassword(email: settings.arguments as String,),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
-      case RoutesName.phoneVerificatiob:
+      case RoutesName.phoneVerification:
         return PageTransition(
-            child: PhoneVerification(),
+            child: PhoneVerification(email: settings.arguments as String,),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

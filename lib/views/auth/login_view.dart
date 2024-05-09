@@ -149,11 +149,6 @@ class _LoginViewState extends State<LoginView> {
                                     await notificationsService!.getDeviceToken().then((value) {
                                       token = value;
                                     });
-                                    print("********************************");
-                                    print("********************************");
-                                    print("********************************");
-                                    print("********************************");
-                                    print(token);
                                   } catch (e) {
                                     print(e.toString());
                                   }

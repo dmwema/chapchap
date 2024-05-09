@@ -1,6 +1,4 @@
-import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/components/auth_container.dart';
-import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +9,7 @@ class ResetCodeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthContainer(
-        child: Padding(padding: EdgeInsets.all(20),
+        child: Padding(padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               const Text("Réinitialiser le mot de passe", style: TextStyle(
@@ -145,26 +143,30 @@ class ResetCodeView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20,),
-              SizedBox(height: 20,),
-              Container(
+              const SizedBox(height: 20,),
+              SizedBox(
                 width: 300,
                 child: Text("Un mail a été envoyé à votre adresse albakrsanogo@quickdep.ca pour terminer le processus .", style: TextStyle(
                     fontSize: 13,
                     color: Colors.black.withOpacity(.7)
                 ), textAlign: TextAlign.center,),
               ),
-              SizedBox(height: 10,),
-              Divider(),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
+              const Divider(),
+              const SizedBox(height: 10,),
               const Text("Veuillez consulter votre boîte de messagerie et saisir le code que vous avez reçu.", style: TextStyle(
                   fontSize: 13,
                 fontWeight: FontWeight.w500
                 ), textAlign: TextAlign.center,),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               RoundedButton(
                 title: 'Vérifier',
                 loading: false, onPress: () {
-                  Navigator.pushNamed(context, RoutesName.newPassword);
+                  Navigator.pushNamed(
+                    context,
+                    RoutesName.newPasswords,
+                    arguments: ""
+                  );
                 },
               ),
             ],

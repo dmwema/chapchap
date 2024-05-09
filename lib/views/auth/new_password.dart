@@ -9,7 +9,8 @@ import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
 
 class NewPassword extends StatefulWidget {
-  const NewPassword({Key? key}) : super(key: key);
+  String email;
+  NewPassword({required this.email, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NewPasswordState();
@@ -35,7 +36,10 @@ class _NewPasswordState extends State<NewPassword> {
                 children: [
                   commonAppBar(
                       context: context,
-                      backArrow: true
+                      backArrow: true,
+                    backClick: () {
+                        Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+                    }
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -103,7 +107,8 @@ class _NewPasswordState extends State<NewPassword> {
                                   Map data = {
                                     "password": _passController.text,
                                     "password_cfrm": _passCnfController.text,
-                                    "code": _codeController.text
+                                    "code": _codeController.text,
+                                    "username": widget.email
                                   };
                                   authViewModel.changePassword(data, context);
                                 }

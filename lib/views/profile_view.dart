@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';

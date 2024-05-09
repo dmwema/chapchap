@@ -61,7 +61,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                                 Map data = {
                                   'username': _usernameContoller.text
                                 };
-                                authViewModel.resetPassword(data, context);
+                                authViewModel.resetPasswords(data, context);
                               }
                             }
                           }

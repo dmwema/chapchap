@@ -16,7 +16,7 @@ class RoutesName {
   static const String passwordReset = 'password_reset_screen';
   static const String recompenseView = 'recompenses_view';
   static const String resetCodeSend = 'reset_code_sent_screen';
-  static const String newPassword = 'new_password_screen';
+  static const String newPasswords = 'new_password_screen';
 
   static const String drcPayment = 'drc_payment';
 
@@ -28,7 +28,7 @@ class RoutesName {
   static const String webViewPage = 'web_view_page';
   static const String newBeneficiaire = 'new_beneficiaire';
 
-  static const String phoneVerificatiob = 'phone_verification';
+  static const String phoneVerification = 'phone_verification';
   static const String couponView = 'coupon_view';
   static const String localAuthView = 'local_auth_view';
 }

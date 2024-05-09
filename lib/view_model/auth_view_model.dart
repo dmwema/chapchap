@@ -45,6 +45,7 @@ class AuthViewModel with ChangeNotifier{
 
   Future<void> loginApi(dynamic data, BuildContext context, bool biometric) async {
     String password = data['password'];
+    String username = data['username'];
     setLoading(true);
     await _repository.loginApi(data, context: context).then((value) {
       if (value!=null){
@@ -111,6 +112,9 @@ class AuthViewModel with ChangeNotifier{
                 );
               },
             );
+          } else if (value['data'] != null && value['data']['verify_identity'] == true) {
+            Utils.flushBarErrorMessage("Veuillez vérifier votre numéro de téléphone.", context);
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: username);
           } else {
             UserModel user = UserModel.fromJson(value['data']);
             user.token = value['token'];
@@ -149,8 +153,9 @@ class AuthViewModel with ChangeNotifier{
           UserViewModel().saveUser(user).then((value) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              RoutesName.phoneVerificatiob,
+              RoutesName.phoneVerification,
                   (route) => false,
+              arguments: data['email']
             );
           });
         } else {
@@ -198,7 +203,7 @@ class AuthViewModel with ChangeNotifier{
     return response;
   }
 
-  Future<void> resetPassword(dynamic data, BuildContext context) async {
+  Future<void> resetPasswords(dynamic data, BuildContext context) async {
     setLoading(true);
     _repository.resetPassword(data, context: context).then((value) {
       setLoading(false);
@@ -212,8 +217,9 @@ class AuthViewModel with ChangeNotifier{
             Utils.toastMessage(message);
             Navigator.pushNamedAndRemoveUntil(
               context,
-              RoutesName.newPassword,
+              RoutesName.newPasswords,
                   (route) => false,
+              arguments: data['username']
             );
           });
         } else {

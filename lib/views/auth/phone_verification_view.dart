@@ -16,9 +16,11 @@ class PhoneVerification extends StatelessWidget {
   final TextEditingController _controller4 = TextEditingController();
   final TextEditingController _controller5 = TextEditingController();
 
+  String email;
+
   AuthViewModel authViewModel = AuthViewModel();
 
-  PhoneVerification({Key? key}) : super(key: key);
+  PhoneVerification({required this.email, Key? key}) : super(key: key);
 
   Future<UserModel> getUserData () => UserViewModel().getUser();
   UserModel user = UserModel();
@@ -232,7 +234,8 @@ class PhoneVerification extends StatelessWidget {
                   return;
                 }
                 Map data = {
-                  "code": code
+                  "code": code,
+                  "username": email
                 };
                 if (user.nomClient != null) {
                   authViewModel.phoneVerificationConfirm(data, context);

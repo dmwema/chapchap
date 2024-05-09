@@ -57,7 +57,7 @@ class _SendViewState extends State<SendView> {
   double promoRabais = 0;
   String promoCode = '';
 
-  _onChanged(int index) {
+  _onChanged(int index) { 
     setState(() {
       step = index;
     });
@@ -1218,19 +1218,18 @@ class _SendViewState extends State<SendView> {
                                     "code_pays_dest": selectedDesinaion!.codePaysDest,
                                     "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
                                   };
-                                  Navigator.pushNamed(context, RoutesName.drcPayment);
-                                  // demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd").then((value) {
-                                  //   if (paysDestinationModel!.codePaysSrce == "cd") {
-                                  //     Utils.flushBarErrorMessage("DRC", context);
-                                  //   }
-                                  //   print("*********************************************");
-                                  //   print("*********************************************");
-                                  //   print("*********************************************");
-                                  //   print(value);
-                                  //   setState(() {
-                                  //     loading = false;
-                                  //   });
-                                  // });
+                                  demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd").then((value) {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    if (paysDestinationModel!.codePaysSrce == "cd") {
+                                      Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                        'idDemande': value['data']['idDemande'],
+                                        'nomBeneficiaire': value['data']['beneficiaire'],
+                                        'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
+                                      });
+                                    }
+                                  });
                                 }
                               }
                             },

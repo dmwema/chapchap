@@ -34,7 +34,7 @@ class RoundedButton extends StatelessWidget {
             width: 20,
             height: 20,
             child: CupertinoActivityIndicator(color: Colors.white)
-         ) :Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+         ) :Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),),
         ),
       ),
     );
