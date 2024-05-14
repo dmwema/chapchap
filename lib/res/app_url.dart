@@ -1,6 +1,6 @@
 class AppUrl {
-  static var domainName = 'https://app.chapchap.ca';
-  // static var domainName = 'https://sandbox-app.chapchap.ca';
+  // static var domainName = 'https://app.chapchap.ca';
+  static var domainName = 'https://sandbox-app.chapchap.ca';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';
@@ -21,6 +21,7 @@ class AppUrl {
   static var myInfos = '$baseUrl/my_infos_';
   static var editUser = '$baseUrl/up_client';
   static var uPass = '$baseUrl/up_password';
+  static var resendCode = '$baseUrl/resend_code_confirm';
   static var deleteRecipient = '$baseUrl/delete_beneficiaire';
   static var archiveRecipient = '$baseUrl/archiver_beneficiaire';
   static var desarchiveRecipient = '$baseUrl/desarchiver_beneficiaire';

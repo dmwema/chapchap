@@ -71,6 +71,15 @@ class AuthRepository {
     }
   }
 
+  Future<dynamic> resendCode (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resendCode, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> phoneVerificationConfirm (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.phoneVerificatiobEndPoint, data, context: context, auth: true);

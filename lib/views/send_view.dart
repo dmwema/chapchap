@@ -1224,7 +1224,7 @@ class _SendViewState extends State<SendView> {
                                     });
                                     if (paysDestinationModel!.codePaysSrce == "cd") {
                                       Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
-                                        'idDemande': value['data']['idDemande'],
+                                        'idDemande': value['data']['id_demande'],
                                         'nomBeneficiaire': value['data']['beneficiaire'],
                                         'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
                                       });

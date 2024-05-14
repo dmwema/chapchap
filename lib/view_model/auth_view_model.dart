@@ -251,6 +251,35 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
+  Future<void> resendCode(dynamic data, BuildContext context) async {
+    await _repository.resendCode(data, context: context).then((value) {
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print(value);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage("Code renvoyé avec succès");
+          Navigator.pop(context);
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print("************************************************");
+      print(error);
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
   Future<void> phoneVerificationConfirm(dynamic data, BuildContext context) async {
     setLoading(true);
     _repository.phoneVerificationConfirm(data, context: context).then((value) {

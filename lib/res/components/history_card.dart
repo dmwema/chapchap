@@ -154,13 +154,21 @@ class _HistoryCardState extends State<HistoryCard> {
                       if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
                         InkWell(
                           onTap: () async {
-                            String url = demande.lienPaiement.toString();
-                            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                            if(urllaunchable){
-                              await launch(url); //launch is from url_launcher package to launch URL
-                              Navigator.pushNamed(context,RoutesName.home);
-                            }else{
-                              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                            if (demande.codePaysSrce == "cd") {
+                              Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                'idDemande': demande.idDemande,
+                                'nomBeneficiaire': demande.beneficiaire,
+                                'montant': "${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}",
+                              });
+                            } else {
+                              String url = demande.lienPaiement.toString();
+                              var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                              if(urllaunchable){
+                                await launch(url); //launch is from url_launcher package to launch URL
+                                Navigator.pushNamed(context,RoutesName.home);
+                              }else{
+                                Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                              }
                             }
                           },
                           child: Container(

@@ -6,6 +6,7 @@ import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewPassword extends StatefulWidget {
@@ -23,6 +24,8 @@ class _NewPasswordState extends State<NewPassword> {
   AuthViewModel authViewModel = AuthViewModel();
   ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
   ValueNotifier<bool> obscurePasswordConfirm = ValueNotifier<bool>(true);
+
+  bool resending = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,34 @@ class _NewPasswordState extends State<NewPassword> {
                         const Text("Réinitialiser le mot de passe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
                         const SizedBox(height: 10,),
                         const Text("Veuillez saisir le code réçu et créez un nouveau mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black45), textAlign: TextAlign.left,),
+                        const SizedBox(height: 10,),
+                        InkWell(
+                          onTap: () async {
+                            if (!resending) {
+                              setState(() {
+                                resending = true;
+                              });
+
+                              Map data = {
+                                "username": widget.email
+                              };
+                              await authViewModel.resendCode(data, context);
+
+                              setState(() {
+                                resending = true;
+                              });
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              if (resending)
+                              const CupertinoActivityIndicator(radius: 8,),
+                              if (resending)
+                              const SizedBox(width: 7,),
+                              Text("Renvoyer le code ?", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColors.primaryColor), textAlign: TextAlign.left,),
+                            ],
+                          )
+                        ),
                         const SizedBox(height: 20,),
                         CustomFormField(
                           label: "Code",
