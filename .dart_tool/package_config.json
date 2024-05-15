@@ -662,6 +662,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pin_input_text_field",
+      "rootUri": "file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/pin_input_text_field-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.4",
       "packageUri": "lib/",
@@ -762,6 +768,12 @@
       "rootUri": "file:///C:/flutter/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "sms_autofill",
+      "rootUri": "file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/sms_autofill-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "source_span",
@@ -956,7 +968,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-05-08T13:54:59.369662Z",
+  "generated": "2024-05-15T13:01:55.281347Z",
   "generator": "pub",
   "generatorVersion": "3.3.3"
 }

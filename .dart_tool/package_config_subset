@@ -426,6 +426,10 @@ petitparser
 3.2
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-6.0.2/
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-6.0.2/lib/
+pin_input_text_field
+2.13
+file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/pin_input_text_field-4.5.1/
+file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/pin_input_text_field-4.5.1/lib/
 platform
 3.0
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.4/
@@ -490,6 +494,10 @@ shimmer
 2.12
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-2.0.0/
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-2.0.0/lib/
+sms_autofill
+2.12
+file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/sms_autofill-2.3.1/
+file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/sms_autofill-2.3.1/lib/
 source_span
 2.18
 file:///C:/Users/dmwema/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0/

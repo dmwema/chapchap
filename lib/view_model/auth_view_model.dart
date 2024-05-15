@@ -263,7 +263,6 @@ class AuthViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Code renvoyé avec succès");
-          Navigator.pop(context);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
