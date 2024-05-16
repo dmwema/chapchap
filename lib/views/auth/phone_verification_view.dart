@@ -1,5 +1,6 @@
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
@@ -24,6 +25,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
 
   Future<UserModel> getUserData () => UserViewModel().getUser();
   UserModel user = UserModel();
+  bool resending = false;
 
   @override
   void initState() {
@@ -58,7 +60,6 @@ class _PhoneVerificationState extends State<PhoneVerification> {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: MediaQuery.of(context).size.height - 110,
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -66,8 +67,8 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text("Code de vérification envoyé !", textAlign: TextAlign.center, style: TextStyle(
-                        color: AppColors.primaryColor, fontSize: 19, fontWeight: FontWeight.w500),
+                    const Text("Entrez le code de vérification!", textAlign: TextAlign.center, style: TextStyle(
+                        color: Colors.black, fontSize: 19, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
                       height: 5,
@@ -96,7 +97,34 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    const SizedBox(height: 30,),
+                    InkWell(
+                        onTap: () async {
+                          if (!resending) {
+                            setState(() {
+                              resending = true;
+                            });
+
+                            Map data = {
+                              "username": widget.data['username']
+                            };
+                            await authViewModel.resendCode(data, context, widget.data['token']);
+
+                            setState(() {
+                              resending = true;
+                            });
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            if (resending)
+                              const CupertinoActivityIndicator(radius: 8,),
+                            if (resending)
+                              const SizedBox(width: 7,),
+                            Text("Renvoyer le code ?", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColors.primaryColor), textAlign: TextAlign.left,),
+                          ],
+                        )
+                    ),
+                    const SizedBox(height: 20,),
                     if (widget.data['message'] != null)
                     Padding(
                       padding: const EdgeInsets.only(left: 40, right: 40,),

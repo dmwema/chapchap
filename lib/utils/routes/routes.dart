@@ -167,7 +167,7 @@ class Routes {
         );
       case RoutesName.newPasswords:
         return PageTransition(
-            child: NewPassword(email: settings.arguments as String,),
+            child: NewPassword(data: settings.arguments as Map,),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

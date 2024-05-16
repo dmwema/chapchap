@@ -71,9 +71,9 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> resendCode (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> resendCode (dynamic data, {required BuildContext context, required String token}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resendCode, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resendCode, data, context: context, auth: true, token: token);
       return response;
     } catch(e) {
       rethrow;

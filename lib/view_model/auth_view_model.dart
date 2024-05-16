@@ -256,8 +256,8 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
-  Future<void> resendCode(dynamic data, BuildContext context) async {
-    await _repository.resendCode(data, context: context).then((value) {
+  Future<void> resendCode(dynamic data, BuildContext context, String token) async {
+    await _repository.resendCode(data, context: context, token: token).then((value) {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
