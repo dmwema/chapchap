@@ -8,6 +8,7 @@ import 'package:chapchap/views/auth/phone_verification_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
+import 'package:chapchap/views/auth/update_phone_view.dart';
 import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/coupon_view.dart';
 import 'package:chapchap/views/drc/drc_payment_view.dart';
@@ -150,6 +151,12 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
+      case RoutesName.updatePhone:
+        return PageTransition(
+            child: UpdatePhoneView(data: settings.arguments as Map,),
+            type: PageTransitionType.rightToLeft,
+            settings: settings
+        );
       case RoutesName.splash:
         return MaterialPageRoute(builder: (BuildContext context) => const SplashView());
       case RoutesName.sendSuccess:
@@ -166,7 +173,7 @@ class Routes {
         );
       case RoutesName.phoneVerification:
         return PageTransition(
-            child: PhoneVerification(email: settings.arguments as String,),
+            child: PhoneVerification(data: settings.arguments as Map,),
             type: PageTransitionType.rightToLeft,
             settings: settings
         );

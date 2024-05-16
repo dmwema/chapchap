@@ -10,8 +10,8 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class PhoneVerification extends StatefulWidget {
-  String email;
-  PhoneVerification({required this.email, Key? key}) : super(key: key);
+  Map data;
+  PhoneVerification({required this.data, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PhoneVerificationState();
@@ -97,11 +97,11 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                     ),
                     const SizedBox(height: 20,),
                     const SizedBox(height: 30,),
-                    if (user.nomClient != null)
+                    if (widget.data['message'] != null)
                     Padding(
                       padding: const EdgeInsets.only(left: 40, right: 40,),
                       child: Text(
-                        user.nomClient.toString(),
+                        widget.data['message'],
                         style: const TextStyle(
                             color: Colors.black54,
                             height: 1.5,
@@ -126,7 +126,6 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                         }
                       },
                     ),*/
-        
                   ],
                 ),
               ),
@@ -143,7 +142,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   }
                   Map data = {
                     "code": otp,
-                    "username": widget.email
+                    "username": widget.data['username']
                   };
                   if (user.nomClient != null) {
                     authViewModel.phoneVerificationConfirm(data, context);

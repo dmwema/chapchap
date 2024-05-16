@@ -22,6 +22,7 @@ class AppUrl {
   static var editUser = '$baseUrl/up_client';
   static var uPass = '$baseUrl/up_password';
   static var resendCode = '$baseUrl/resend_code_confirm';
+  static var updatePhone = '$baseUrl/send_code_by_phone';
   static var deleteRecipient = '$baseUrl/delete_beneficiaire';
   static var archiveRecipient = '$baseUrl/archiver_beneficiaire';
   static var desarchiveRecipient = '$baseUrl/desarchiver_beneficiaire';
