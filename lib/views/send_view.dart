@@ -38,6 +38,7 @@ class _SendViewState extends State<SendView> {
   List? beneficiaires;
   BeneficiaireModel? selectedBeneficiaire;
   bool fromToToSens = true;
+  DemandesViewModel demandesViewModel = DemandesViewModel();
 
   double tauxTransfert = 0.0;
 
@@ -72,6 +73,8 @@ class _SendViewState extends State<SendView> {
 
   @override
   void initState() {
+    demandesViewModel.myDestinationsApi([], context);
+    demandesViewModel.beneficiaires([], context);
     super.initState();
   }
 
@@ -94,9 +97,6 @@ class _SendViewState extends State<SendView> {
 
   @override
   Widget build(BuildContext context) {
-    DemandesViewModel demandesViewModel = DemandesViewModel();
-    demandesViewModel.paysDestinations([], context);
-    demandesViewModel.beneficiaires([], context);
     final List pages = [
       SingleChildScrollView(
           child: ChangeNotifierProvider<DemandesViewModel>(

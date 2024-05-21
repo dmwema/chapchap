@@ -13,9 +13,6 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/view_model/services/local_auth_service.dart';
-import 'package:chapchap/view_model/services/notifications_service.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +227,7 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                                     } else {
                                       Map data = {
                                         'telephone': _phoneNumberController.text.toString(),
-                                        'username': widget.data['email']
+                                        'username': widget.data['email'],
                                       };
                                       await authViewModel.updatePhone(data, context, widget.data['token']);
                                       setState(() {

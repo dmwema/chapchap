@@ -1,5 +1,6 @@
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -55,6 +56,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
           appBar: CustomAppBar(
             title: "Vérification",
             showBack: true,
+            backUrl: RoutesName.login,
           ),
           body: Column(
             children: [
@@ -110,7 +112,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                             await authViewModel.resendCode(data, context, widget.data['token']);
 
                             setState(() {
-                              resending = true;
+                              resending = false;
                             });
                           }
                         },
@@ -163,7 +165,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                 child: RoundedButton(
                 title: 'Valider',
                 loading: authViewModel.loading,
-                onPress: (){
+                onPress: () async {
                   if (otp.length < 5) {
                     Utils.flushBarErrorMessage("Vous devez saisir tous les chiffres du code", context);
                     return;
@@ -173,7 +175,11 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                     "username": widget.data['username']
                   };
                   if (user.nomClient != null) {
-                    authViewModel.phoneVerificationConfirm(data, context);
+                    if (widget.data['update'] != null && widget.data['update'] == true) {
+                      await authViewModel.confirmPhoneVerification(data, context);
+                    } else {
+                      await authViewModel.confirmContact(data, context);
+                    }
                   }
                 },
               ),

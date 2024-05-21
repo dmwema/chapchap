@@ -24,7 +24,7 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
   @override
   void initState() {
     super.initState();
-    demandesViewModel.paysDestinations([], context);
+    demandesViewModel.myDestinationsApi([], context);
   }
 
   @override

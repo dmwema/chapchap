@@ -35,9 +35,9 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> resetPassword (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> passwordReset (dynamic data, {required BuildContext context}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resetPassword, data, context: context);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.passwordReset, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;
@@ -89,9 +89,18 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> phoneVerificationConfirm (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> confirmPhoneVerification (dynamic data, {required BuildContext context}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.phoneVerificatiobEndPoint, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.phoneVerificationEndPoint, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> confirmContact (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.confirmContact, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;
