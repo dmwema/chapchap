@@ -43,9 +43,9 @@ class DemandesRepository {
     }
   }
 
-  Future<dynamic> paysDestination (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> myDestinationsApi (dynamic data, {required BuildContext context}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.paysDestinationsEndPoint , data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.myDestinationsEndPoint , data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

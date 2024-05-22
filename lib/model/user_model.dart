@@ -1,11 +1,11 @@
-import 'dart:ffi';
-
 class UserModel {
   int? time;
   int? idClient;
   String? client;
   String? password;
   String? token;
+  bool? updatePhone;
+  bool? confirmContact;
   String? nomClient;
   String? profession;
   String? prenomClient;
@@ -32,10 +32,12 @@ class UserModel {
         this.profession,
         this.nomClient,
         this.prenomClient,
+        this.updatePhone,
         this.telClient,
         this.username,
         this.idTypeClient,
         this.photoProfil,
+        this.confirmContact,
         this.password,
         this.emailClient,
         this.codeParrainage,
@@ -55,9 +57,11 @@ class UserModel {
     profession = json['profession'];
     client = json['client'];
     nomClient = json['nomClient'];
+    updatePhone = json['update_phone'];
     soldeParrainage = json['solde_parrainage'];
     prenomClient = json['prenomClient'];
     telClient = json['telClient'];
+    confirmContact = json['confirm_contact'];
     username = json['username'];
     adresse = json['adresse'];
     idTypeClient = json['idTypeClient'];
@@ -79,6 +83,7 @@ class UserModel {
     data['idClient'] = this.idClient;
     data['password'] = password;
     data['adresse'] = this.adresse;
+    data['update_phone'] = updatePhone;
     data['client'] = this.client;
     data['solde_parrainage'] = soldeParrainage;
     data['token'] = this.token;
@@ -89,6 +94,7 @@ class UserModel {
     data['idTypeClient'] = this.idTypeClient;
     data['photoProfil'] = this.photoProfil;
     data['emailClient'] = this.emailClient;
+    data['confirm_contact'] = confirmContact;
     data['code_parrainage'] = this.codeParrainage;
     data['validationCompte'] = this.validationCompte;
     data['commissionParrainage'] = this.commissionParrainage;

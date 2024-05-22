@@ -63,6 +63,7 @@ dependencies:
   share_plus: ^7.2.2
   maps_launcher: ^2.2.0
   mask_text_input_formatter: ^2.4.0
+  sms_autofill: ^2.3.0
   flutter_time_picker_spinner: ^2.0.0
   flutter_downloader: ^1.10.2
   image_picker: ^0.8.6+3

@@ -112,9 +112,15 @@ class AuthViewModel with ChangeNotifier{
                 );
               },
             );
-          } else if (value['data'] != null && value['data']['verify_identity'] == true) {
-            Utils.flushBarErrorMessage("Veuillez vérifier votre numéro de téléphone.", context);
-            Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: username);
+          }
+          else if (value['data'] != null && value['data']['update_phone'] != null && value['data']['update_phone'] == true) {
+            String token = value['token'];
+            Utils.flushBarErrorMessage("Veuillez fournir votre numéro de téléphone pour continuer.", context);
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.updatePhone, (route) => false, arguments: {'email':username, 'token': token});
+          } else if (value['data'] != null && value['data']['confirm_contact'] != null && value['data']['confirm_contact'] == true) {
+            String token = value['token'];
+            Utils.flushBarErrorMessage(value['message'], context);
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: {'username': username, 'token': token, 'message': value['message'], 'update': false});
           } else {
             UserModel user = UserModel.fromJson(value['data']);
             user.token = value['token'];
@@ -145,6 +151,7 @@ class AuthViewModel with ChangeNotifier{
     _repository.registerApi(data, context: context).then((value) {
       setLoading(false);
       if (value!=null){
+        var token = value['data']['token'];
         setLoading(false);
         if (value['error'] != true) {
           UserModel user = UserModel();
@@ -155,7 +162,12 @@ class AuthViewModel with ChangeNotifier{
               context,
               RoutesName.phoneVerification,
                   (route) => false,
-              arguments: data['email']
+              arguments: {
+                'username': data['email'],
+                'token': token,
+                'update': false,
+                'message': 'Veuillez confirer votre identité avant de continuer'
+              }
             );
           });
         } else {
@@ -203,9 +215,9 @@ class AuthViewModel with ChangeNotifier{
     return response;
   }
 
-  Future<void> resetPasswords(dynamic data, BuildContext context) async {
+  Future<void> passwordReset(dynamic data, BuildContext context) async {
     setLoading(true);
-    _repository.resetPassword(data, context: context).then((value) {
+    await _repository.passwordReset(data, context: context).then((value) {
       setLoading(false);
       if (value!=null){
         setLoading(false);
@@ -219,7 +231,9 @@ class AuthViewModel with ChangeNotifier{
               context,
               RoutesName.newPasswords,
                   (route) => false,
-              arguments: data['username']
+              arguments: {
+                'username': data['username'],
+              }
             );
           });
         } else {
@@ -251,38 +265,63 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
-  Future<void> resendCode(dynamic data, BuildContext context) async {
-    await _repository.resendCode(data, context: context).then((value) {
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print(value);
+  Future<void> resendCode(dynamic data, BuildContext context, String token) async {
+    await _repository.resendCode(data, context: context, token: token).then((value) {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage("Code renvoyé avec succès");
-          Navigator.pop(context);
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }
     }).onError((error, stackTrace) {
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print("************************************************");
-      print(error);
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
   }
 
-  Future<void> phoneVerificationConfirm(dynamic data, BuildContext context) async {
+  Future<void> updatePhone(dynamic data, BuildContext context, String token) async {
+    await _repository.updatePhone(data, context: context, token: token).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          Utils.toastMessage(value['message']);
+          Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: {'username':data['username'], 'token': token, 'message': value['message'], 'update': true});
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> confirmPhoneVerification(dynamic data, BuildContext context) async {
     setLoading(true);
-    _repository.phoneVerificationConfirm(data, context: context).then((value) {
+    await _repository.confirmPhoneVerification(data, context: context).then((value) {
+      setLoading(false);
+      if (value["error"] != true){
+        Utils.toastMessage(value["message"]);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.login,
+              (route) => false,
+        );
+      } else {
+        Utils.flushBarErrorMessage(value["message"], context);
+      }
+
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> confirmContact(dynamic data, BuildContext context, String token) async {
+    setLoading(true);
+    await _repository.confirmContact(data, context: context, token: token).then((value) {
       setLoading(false);
       if (value["error"] != true){
         Utils.toastMessage(value["message"]);

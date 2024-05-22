@@ -10,8 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewPassword extends StatefulWidget {
-  String email;
-  NewPassword({required this.email, Key? key}) : super(key: key);
+  Map data;
+  NewPassword({required this.data, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NewPasswordState();
@@ -62,9 +62,9 @@ class _NewPasswordState extends State<NewPassword> {
                               });
 
                               Map data = {
-                                "username": widget.email
+                                "username": widget.data['username']
                               };
-                              await authViewModel.resendCode(data, context);
+                              await authViewModel.resendCode(data, context, widget.data['token']);
 
                               setState(() {
                                 resending = true;
@@ -139,7 +139,7 @@ class _NewPasswordState extends State<NewPassword> {
                                     "password": _passController.text,
                                     "password_cfrm": _passCnfController.text,
                                     "code": _codeController.text,
-                                    "username": widget.email
+                                    "username": widget.data['username']
                                   };
                                   authViewModel.changePassword(data, context);
                                 }

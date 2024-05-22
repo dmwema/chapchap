@@ -109,9 +109,9 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<void> paysDestinations(dynamic data, BuildContext context) async {
+  Future<void> myDestinationsApi(dynamic data, BuildContext context) async {
     setLoading(true);
-    await _repository.paysDestination(data, context: context).then((value) {
+    await _repository.myDestinationsApi(data, context: context).then((value) {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {

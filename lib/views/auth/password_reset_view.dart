@@ -1,9 +1,6 @@
 import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +16,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
   final TextEditingController _usernameContoller = TextEditingController();
   final TextEditingController _usernameConfirmContoller = TextEditingController();
   AuthViewModel authViewModel = AuthViewModel();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,16 +50,24 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                       const SizedBox(height: 20,),
                       RoundedButton(
                           title: "Valider",
-                          loading: authViewModel.loading,
+                          loading: loading,
                           onPress: () async {
-                            if (!authViewModel.loading) {
-                              if (_usernameContoller.text.isEmpty) {
-                                Utils.flushBarErrorMessage("Vous devez saisir votre adresse E-mail", context);
-                              } else {
-                                Map data = {
-                                  'username': _usernameContoller.text
-                                };
-                                authViewModel.resetPasswords(data, context);
+                            if (!loading) {
+                              setState(() {
+                                loading = true;
+                              });
+                              if (!authViewModel.loading) {
+                                if (_usernameContoller.text.isEmpty) {
+                                  Utils.flushBarErrorMessage("Vous devez saisir votre adresse E-mail", context);
+                                } else {
+                                  Map data = {
+                                    'username': _usernameContoller.text
+                                  };
+                                  await authViewModel.passwordReset(data, context);
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                }
                               }
                             }
                           }

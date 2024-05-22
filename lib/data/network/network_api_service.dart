@@ -43,7 +43,7 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
-  Future getPostApiResponse(String url, dynamic data, {required BuildContext context, bool auth = false, String contentType = "application/json"}) async {
+  Future getPostApiResponse(String url, dynamic data, {required BuildContext context, bool auth = false, String contentType = "application/json", String? token}) async {
     dynamic responseJson;
 
     await getUserData ().then((value) {
@@ -54,9 +54,15 @@ class NetworkApiService extends BaseApiServices {
       'Content-Type': contentType
     };
 
+    String? dataToken = user.token;
+    if (token != null) {
+      dataToken = token;
+    }
+
+
     var header_auth = {
       'Content-Type': contentType,
-      'Authorization': 'Bearer ${user.token}'
+      'Authorization': 'Bearer ${dataToken}'
     };
     try {
       http.Response response = await http.post(
