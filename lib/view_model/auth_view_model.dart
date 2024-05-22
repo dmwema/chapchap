@@ -116,7 +116,7 @@ class AuthViewModel with ChangeNotifier{
           else if (value['data'] != null && value['data']['update_phone'] != null && value['data']['update_phone'] == true) {
             String token = value['token'];
             Utils.flushBarErrorMessage("Veuillez fournir votre numéro de téléphone pour continuer.", context);
-            Navigator.pushNamedAndRemoveUntil(context, RoutesName.updatePhone, (route) => false, arguments: {'email':username, 'token': token});
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.updatePhone, (route) => false, arguments: {'email':username, 'token': token, 'message': value['message'], 'update': true});
           } else if (value['data'] != null && value['data']['confirm_contact'] != null && value['data']['confirm_contact'] == true) {
             String token = value['token'];
             Utils.flushBarErrorMessage("Veuillez vérifier votre numéro de téléphone.", context);
@@ -150,6 +150,8 @@ class AuthViewModel with ChangeNotifier{
     setLoading(true);
     _repository.registerApi(data, context: context).then((value) {
       setLoading(false);
+      String message = value['message'].toString();
+      String token = value['token'].toString();
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
@@ -161,7 +163,12 @@ class AuthViewModel with ChangeNotifier{
               context,
               RoutesName.phoneVerification,
                   (route) => false,
-              arguments: data['email']
+              arguments: {
+                'email': data['email'],
+                'message': message,
+                'token': token,
+                'update': false
+              }
             );
           });
         } else {
@@ -259,7 +266,7 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
-  Future<void> resendCode(dynamic data, BuildContext context, String token) async {
+  Future<void> resendCode(dynamic data, BuildContext context, String? token) async {
     await _repository.resendCode(data, context: context, token: token).then((value) {
       if (value!=null){
         setLoading(false);
@@ -281,7 +288,7 @@ class AuthViewModel with ChangeNotifier{
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage(value['message']);
-          Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: {'username':data['username'], 'token': token, 'message': value['message'], 'update': true});
+          Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: {'username':data['username'], 'token': value['token'], 'message': value['message'], 'update': true});
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
@@ -292,10 +299,9 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
-  Future<void> confirmPhoneVerification(dynamic data, BuildContext context) async {
+  Future<void> confirmPhoneVerification(dynamic data, BuildContext context, String token) async {
     setLoading(true);
-    await _repository.confirmPhoneVerification(data, context: context).then((value) {
-      setLoading(false);
+    await _repository.confirmPhoneVerification(data, context: context, token: token).then((value) {
       if (value["error"] != true){
         Utils.toastMessage(value["message"]);
         Navigator.pushNamedAndRemoveUntil(
@@ -306,16 +312,16 @@ class AuthViewModel with ChangeNotifier{
       } else {
         Utils.flushBarErrorMessage(value["message"], context);
       }
-
+      setLoading(false);
     }).onError((error, stackTrace) {
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
   }
 
-  Future<void> confirmContact(dynamic data, BuildContext context) async {
+  Future<void> confirmContact(dynamic data, BuildContext context, String token) async {
     setLoading(true);
-    await _repository.confirmContact(data, context: context).then((value) {
+    await _repository.confirmContact(data, context: context, token: token).then((value) {
       setLoading(false);
       if (value["error"] != true){
         Utils.toastMessage(value["message"]);

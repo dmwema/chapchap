@@ -67,7 +67,7 @@ class _NewPasswordState extends State<NewPassword> {
                               await authViewModel.resendCode(data, context, widget.data['token']);
 
                               setState(() {
-                                resending = true;
+                                resending = false;
                               });
                             }
                           },

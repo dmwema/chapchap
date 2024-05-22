@@ -16,6 +16,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -119,43 +120,50 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor)
-                    ),
-                  color: Colors.grey.withOpacity(.1)
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 200.0,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(color: AppColors.formFieldBorderColor)
                       ),
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/logo_red.png", width: 20,),
-                          const SizedBox(width: 10,),
-                          const Flexible(child: Text("Bienvenue chez ChapChap, la meilleure application de transfert d’argent. Profitez de la belle expérience!",
-                            style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500
-                            ),
-                          ))
-                        ],
-                      ),
+                    color: Colors.grey.withOpacity(.1)
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("assets/logo_red.png", width: 20,),
+                              const SizedBox(width: 10,),
+                              const Flexible(child: Text("Bienvenue chez ChapChap, la meilleure application de transfert d’argent. Profitez de la belle expérience!",
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ))
+                            ],
+                          ),
+                        ),
+                        ...msgList,
+                      ],
                     ),
-                    ...msgList,
-                  ],
+                  ),
                 ),
               ),
               Container(
@@ -248,30 +256,8 @@ class _HomeViewState extends State<HomeView> {
                           default:
                             demandes = value.demandeList.data!;
                             if (demandes.isEmpty) {
-                              return SizedBox(
-                                height: MediaQuery.of(context).size.width,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Image.asset("assets/empty.png", width: 180,),
-                                      const SizedBox(height: 20,),
-                                      SizedBox(
-                                        width: 230,
-                                        child: Text(
-                                          "Aucune opération trouvée.",
-                                          style: TextStyle(
-                                            color: Colors.black.withOpacity(.4),
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 40,),
-                                    ],
-                                  ),
-                                ),
+                              return const Padding(padding: EdgeInsets.all(20),
+                                child: Center(child: Text("Aucune opération récente.")),
                               );
                             }
                             return Expanded(child: ListView.builder(

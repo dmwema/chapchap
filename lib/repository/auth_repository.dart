@@ -71,7 +71,7 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> resendCode (dynamic data, {required BuildContext context, required String token}) async {
+  Future<dynamic> resendCode (dynamic data, {required BuildContext context, String? token}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.resendCode, data, context: context, auth: true, token: token);
       return response;
@@ -89,18 +89,18 @@ class AuthRepository {
     }
   }
 
-  Future<dynamic> confirmPhoneVerification (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> confirmPhoneVerification (dynamic data, {required BuildContext context, required String token}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.phoneVerificationEndPoint, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.phoneVerificationEndPoint, data, context: context, auth: true, token: token);
       return response;
     } catch(e) {
       rethrow;
     }
   }
 
-  Future<dynamic> confirmContact (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> confirmContact (dynamic data, {required BuildContext context, required String token}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.confirmContact, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.confirmContact, data, context: context, auth: true, token: token);
       return response;
     } catch(e) {
       rethrow;
