@@ -226,7 +226,7 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                                       Utils.flushBarErrorMessage("Vous devez entrer le numéro de téléphone", context);
                                     } else {
                                       Map data = {
-                                        'telephone': _phoneNumberController.text.toString(),
+                                        'telephone': selectedPays!.paysIndictel.toString() + _phoneNumberController.text.toString(),
                                         'username': widget.data['email'],
                                       };
                                       await authViewModel.updatePhone(data, context, widget.data['token']);

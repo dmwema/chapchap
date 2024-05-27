@@ -28,6 +28,8 @@ class _PhoneVerificationState extends State<PhoneVerification> {
   UserModel user = UserModel();
   bool resending = false;
 
+  bool loading = false;
+
   @override
   void initState() {
     listenOtp();
@@ -164,22 +166,30 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: RoundedButton(
                 title: 'Valider',
-                loading: authViewModel.loading,
+                loading: loading,
                 onPress: () async {
-                  if (otp.length < 5) {
-                    Utils.flushBarErrorMessage("Vous devez saisir tous les chiffres du code", context);
-                    return;
-                  }
-                  Map data = {
-                    "code": otp,
-                    "username": widget.data['username']
-                  };
-                  if (user.nomClient != null) {
-                    if (widget.data['update'] != null && widget.data['update'] == true) {
-                      await authViewModel.confirmPhoneVerification(data, context);
-                    } else {
-                      await authViewModel.confirmContact(data, context, widget.data['token']);
+                  if (!loading) {
+                    if (otp.length < 5) {
+                      Utils.flushBarErrorMessage("Vous devez saisir tous les chiffres du code", context);
+                      return;
                     }
+                    setState(() {
+                      loading = true;
+                    });
+                    Map data = {
+                      "code": otp,
+                      "username": widget.data['username']
+                    };
+                    if (user.nomClient != null) {
+                      if (widget.data['update'] != null && widget.data['update'] == true) {
+                        await authViewModel.confirmPhoneVerification(data, context, widget.data['token']);
+                      } else {
+                        await authViewModel.confirmContact(data, context, widget.data['token']);
+                      }
+                    }
+                    setState(() {
+                      loading = false;
+                    });
                   }
                 },
               ),

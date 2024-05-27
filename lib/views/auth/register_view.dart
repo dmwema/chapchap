@@ -35,6 +35,9 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _professionController = TextEditingController();
 
+  ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
+  ValueNotifier<bool> obscurePasswordConfirm = ValueNotifier<bool>(true);
+
   bool loading = false;
   var _openResult = 'Unknown';
 
@@ -123,16 +126,40 @@ class _RegisterViewState extends State<RegisterView> {
                               const SizedBox(height: 10,),
                               CustomFormField(
                                 label: "Mot de passe *",
-                                controller: _passwordController,
                                 hint: "Mot de passe *",
-                                prefixIcon: const Icon(Icons.lock_person_outlined),
+                                controller: _passwordController,
+                                maxLines: 1,
+                                obscurePassword: obscurePassword.value,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      obscurePassword.value = !obscurePassword.value;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: obscurePassword.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 10,),
                               CustomFormField(
                                 label: "Confirmer le Mot de passe *",
                                 controller: _confirmPasswordController,
                                 hint: "Confirmer le mot de passe *",
-                                prefixIcon: const Icon(Icons.lock_person_outlined),
+                                maxLines: 1,
+                                obscurePassword: obscurePasswordConfirm.value,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      obscurePasswordConfirm.value = !obscurePasswordConfirm.value;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: obscurePasswordConfirm.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 10,),
                               InkWell(
