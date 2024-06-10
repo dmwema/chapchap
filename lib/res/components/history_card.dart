@@ -9,6 +9,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HistoryCard extends StatefulWidget {
@@ -40,6 +41,22 @@ class _HistoryCardState extends State<HistoryCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  [
+                  const SizedBox(height: 5,),
+                  if (demande.probleme != null)
+                    Row(
+                      children: [
+                        const Icon(Icons.error_outline, color: Colors.red, size: 30,),
+                        const SizedBox(width: 10,),
+                        Expanded(
+                          child: Text(demande.probleme.toString(), style: const TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                          ),),
+                        ),
+                      ],
+                    ),
+                  if (demande.probleme != null)
                   const SizedBox(height: 5,),
                   if (demande.progression != null)
                   Text(demande.progression.toString(),

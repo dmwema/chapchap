@@ -1,11 +1,8 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
