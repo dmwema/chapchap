@@ -4,18 +4,15 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/res/components/home_card.dart';
 import 'package:chapchap/res/components/info_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -33,6 +30,7 @@ class _HomeViewState extends State<HomeView> {
   DemandesViewModel  demandesViewModel = DemandesViewModel();
   AuthViewModel authViewModel = AuthViewModel();
   List<dynamic> demandes = [];
+  int? nbProblemes;
 
   List<Widget> msgList = [];
 
@@ -54,7 +52,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    demandesViewModel.myDemandes([], context, 20);
+    demandesViewModel.myDemandes([], context, 20).then((value) {
+      setState(() {
+        nbProblemes = value;
+      });
+    });
     UserViewModel().getUser().then((value) {
       setState(() {
       user = value;
@@ -197,13 +199,36 @@ class _HomeViewState extends State<HomeView> {
                                 borderRadius: BorderRadius.circular(5),
                                 color: Colors.black
                             ),
-                            child: const Text(
-                              "Demandes avec problèmes",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.bold
-                              ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  "Demandes avec problèmes",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                if (nbProblemes != null && nbProblemes! > 0)
+                                const SizedBox(width: 5),
+                                if (nbProblemes != null && nbProblemes! > 0)
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(nbProblemes.toString(), style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12
+                                    ),),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),

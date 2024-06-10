@@ -75,12 +75,18 @@ class DemandesViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> myDemandes(dynamic data, BuildContext context, int? n) async {
+  Future<int?> myDemandes(dynamic data, BuildContext context, int? n) async {
     setLoading(true);
+    int? returnValue;
     await _repository.myDemandes(data, context: context, n: n).then((value) {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
+          print('*******************');
+          print('*******************');
+          print('*******************');
+          print(data);
+          returnValue = value['nombre_probleme'] ?? int.parse(value['nombre_probleme'].toString());
           setDemandeList(ApiResponse.completed(value["data"]));
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
@@ -90,6 +96,7 @@ class DemandesViewModel with ChangeNotifier{
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
+    return returnValue;
   }
 
   Future<void> myDemandesWProblems(dynamic data, BuildContext context, int? n) async {

@@ -7,6 +7,7 @@ class DemandeModel {
   String? progression;
   String? facture;
   String? date;
+  String? probleme;
   String? datePaidBen;
   String? montantNet;
   String? montanceSrce;
@@ -31,6 +32,7 @@ class DemandeModel {
       this.modeRetrait,
       this.lienPaiement,
       this.progression,
+      this.probleme,
       this.facture,
       this.date,
       this.datePaidBen,
@@ -59,6 +61,7 @@ class DemandeModel {
     lienPaiement = json['lien_paiement'];
     progression = json['progression'];
     facture = json['facture'];
+    probleme = json['probleme'];
     date = json['date'];
     datePaidBen = json['datePaidBen'];
     montantNet = json['montant_net'];
@@ -85,6 +88,7 @@ class DemandeModel {
     data['mode_retrait'] = this.modeRetrait;
     data['lien_paiement'] = this.lienPaiement;
     data['progression'] = this.progression;
+    data['probleme'] = probleme;
     data['facture'] = this.facture;
     data['date'] = this.date;
     data['datePaidBen'] = this.datePaidBen;
