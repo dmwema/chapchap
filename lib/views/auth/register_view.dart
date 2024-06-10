@@ -288,12 +288,12 @@ class _RegisterViewState extends State<RegisterView> {
                                 hint: "Adresse complete *",
                               ),
                               const SizedBox(height: 10,),
-                              CustomFormField(
-                                label: "Profession actuelle *",
-                                controller: _professionController,
-                                hint: "Profession actuelle *",
-                              ),
-                              const SizedBox(height: 10,),
+                              // CustomFormField(
+                              //   label: "Profession actuelle *",
+                              //   controller: _professionController,
+                              //   hint: "Profession actuelle *",
+                              // ),
+                              // const SizedBox(height: 10,),
                               CustomFormField(
                                 label: "Code de parrainage",
                                 controller: _codeController,
@@ -367,8 +367,6 @@ class _RegisterViewState extends State<RegisterView> {
                                       Utils.flushBarErrorMessage("Vous devez entrer votre préom", context);
                                     } else if (_addressController.text.isEmpty) {
                                       Utils.flushBarErrorMessage("Vous devez entrer votre adresse de résidence", context);
-                                    } else if (_professionController.text.isEmpty) {
-                                      Utils.flushBarErrorMessage("Vous devez entrer votre profession actuelle", context);
                                     } else if (_phoneController.text.isEmpty) {
                                       Utils.flushBarErrorMessage("Vous devez entrer votre numéro de téléphone", context);
                                     }  else if (_emailController.text.isEmpty) {
@@ -391,7 +389,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         "email": _emailController.text,
                                         "idPays": selectedPays!.idPays,
                                         "adresse": _addressController.text,
-                                        "profession": _professionController.text,
+                                        // "profession": _professionController.text,
                                         "telephone": selectedPays!.paysIndictel.toString() + _phoneController.text,
                                         "code_parrainage": _codeController.text,
                                         "password": _passwordController.text
