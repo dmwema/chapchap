@@ -82,10 +82,6 @@ class DemandesViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          print('*******************');
-          print('*******************');
-          print('*******************');
-          print(data);
           returnValue = value['nombre_probleme'] ?? int.parse(value['nombre_probleme'].toString());
           setDemandeList(ApiResponse.completed(value["data"]));
         } else {

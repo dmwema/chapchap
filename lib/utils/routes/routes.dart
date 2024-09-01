@@ -21,12 +21,15 @@ import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:chapchap/views/auth/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
+import 'package:chapchap/views/pin/create_pin_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipient_archive.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/recompense_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
+import 'package:chapchap/views/wallet/wallet_home_view.dart';
+import 'package:chapchap/views/wallet/wallet_presentation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -195,6 +198,27 @@ class Routes {
           type: PageTransitionType.bottomToTop,
           settings: settings,
         );
+      case RoutesName.createPin:
+        return PageTransition(
+          child: const CreatePinView(),
+          type: PageTransitionType.bottomToTop,
+          settings: settings,
+        );
+
+
+      case RoutesName.walletPresentation:
+        return PageTransition(
+            child: const WalletPresentationView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+      case RoutesName.walletHome:
+        return PageTransition(
+            child: const WalletHomeView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

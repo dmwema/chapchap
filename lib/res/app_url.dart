@@ -1,6 +1,6 @@
 class AppUrl {
-  static var domainName = 'https://app.chapchap.ca';
-  // static var domainName = 'https://sandbox-app.chapchap.ca';
+  // static var domainName = 'https://app.chapchap.ca';
+  static var domainName = 'https://sandbox-app.chapchap.ca';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';
@@ -16,7 +16,7 @@ class AppUrl {
   static var beneficiairesEndPoint = '$baseUrl/my_beneficiaires';
   static var beneficiairesArchiveEndPoint = '$baseUrl/my_beneficiaires_archives';
   static var paysActifsEndPoint = '$baseUrl/get_pays';
-  static var beneficiaireInfo = '$baseUrl/infos_beneficiaires';
+  static var beneficiaireInfo = '$baseUrl/inf                     os_beneficiaires';
   static var newBeneficiaire = '$baseUrl/creat_beneficiaire';
   static var trasfert = '$baseUrl/transfert';
   static var myInfos = '$baseUrl/my_infos_';
@@ -33,4 +33,16 @@ class AppUrl {
   static var updateImage = '$baseUrl/up_profil_client';
   static var changeBeneficiaire = '$baseUrl/change_beneficiaire_transfert';
   static var allInfoMessages = '$baseUrl/get_all_msg_info';
+
+  // CODE PIN
+  static var createPin = '$baseUrl/creat_pin';
+  static var updatePin = '$baseUrl/update_pin';
+
+  // WALLET
+  static var getBalance = '$baseUrl/my_balance';
+  static var createWallet = '$baseUrl/creat_wallet';
+
+  static var getMyWallets = '$baseUrl/my_wallets';
+  static var transactionsHistory = '$baseUrl/historique_transactions_wallets';
+  static var rechargesHistory = '$baseUrl/historique_recharge_wallets';
 }

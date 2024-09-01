@@ -6,12 +6,14 @@ import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/view_model/pin_view_model.dart';
 import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
@@ -31,6 +33,7 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
+  PinViewModel pinViewModel = PinViewModel();
   PaysModel selectedFrom = PaysModel();
   bool loadingBio = false;
   UserModel? user;
@@ -252,21 +255,265 @@ class _AccountViewState extends State<AccountView> {
                                           Navigator.pushNamed(context, RoutesName.couponView);
                                         },
                                       ),
-                                      // if (user!.soldeParrainage != null && user!.soldeParrainage.toString() != 'null')
-                                      // ProfileMenu(
-                                      //   title: "Recompense",
-                                      //   icon: CupertinoIcons.gift,
-                                      //   noIcon: true,
-                                      //   onTap: () {
-                                      //     Navigator.pushNamed(context, RoutesName.recompenseView);
-                                      //   },
-                                      // ),
                                       ProfileMenu(
                                         title: "Nous joindre",
                                         icon: Icons.phone_outlined,
                                         noIcon: true,
                                         onTap: () {
                                           Navigator.pushNamed(context, RoutesName.contactView);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "${user!.pin == true ? 'Modifier le ' : ''}Code PIN",
+                                        icon: Icons.pin,
+                                        suffix: Container(
+                                          decoration: BoxDecoration(
+                                            color: user!.pin == true ? Colors.green.withOpacity(.2) : Colors.red.withOpacity(.2),
+                                            borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                          child: Text(user!.pin == true ? "Defini" : "Non defini", style: TextStyle(
+                                            fontSize: 12,
+                                            color: user!.pin == true ? Colors.green : Colors.red,
+                                            fontWeight: FontWeight.bold
+                                          ),)
+                                        ),
+                                        noIcon: true,
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              if (user!.pin != true) {
+                                                return Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(20)
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 30,
+                                                        horizontal: 30),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize
+                                                          .min,
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.info_outline,
+                                                          color: Colors.red,
+                                                          size: 60,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,),
+                                                        const Text(
+                                                          "CODE PIN ?",
+                                                          textAlign: TextAlign
+                                                              .center,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black,
+                                                              fontWeight: FontWeight
+                                                                  .bold
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,),
+                                                        const Text(
+                                                          "Le code PIN vous permet de renforcer la securite de votre compte",
+                                                          textAlign: TextAlign
+                                                              .center,
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment
+                                                              .center,
+                                                          children: [
+                                                            InkWell(
+                                                              child: Container(
+                                                                padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                    vertical: 15,
+                                                                    horizontal: 20),
+                                                                decoration: BoxDecoration(
+                                                                    color: AppColors
+                                                                        .primaryColor,
+                                                                    borderRadius: BorderRadius
+                                                                        .circular(
+                                                                        30)
+                                                                ),
+                                                                child: const Text(
+                                                                  "Definir un code PIN",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),),
+                                                              ),
+                                                              onTap: () {
+                                                                Navigator.pop(context);
+                                                                Utils.showPinDialog(user!, context, pinViewModel);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+
+                                              final TextEditingController oldPinController = TextEditingController();
+                                              final TextEditingController newPinController = TextEditingController();
+                                              final TextEditingController newPinConfirmController = TextEditingController();
+
+                                              return Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(
+                                                        20)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 30,
+                                                      horizontal: 30),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize
+                                                        .min,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons
+                                                            .edit_note,
+                                                        color: Colors
+                                                            .black,
+                                                        size: 60,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,),
+                                                      const Text(
+                                                        "Modifier le code PIN",
+                                                        textAlign: TextAlign
+                                                            .center,
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .black,
+                                                            fontWeight: FontWeight
+                                                                .bold
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,),
+                                                      CustomFormField(
+                                                        label: "Entrez le code PIN actuel",
+                                                        hint: "Entrez le code PIN actuel",
+                                                        type: TextInputType
+                                                            .number,
+                                                        controller: oldPinController,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,),
+                                                      const Divider(),
+                                                      const SizedBox(
+                                                        height: 10,),
+                                                      CustomFormField(
+                                                        label: "Entrez le nouveau code PIN",
+                                                        hint: "Entrez le nouveau code PIN",
+                                                        type: TextInputType
+                                                            .number,
+                                                        controller: newPinController  ,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,),
+                                                      CustomFormField(
+                                                        label: "Confirmez le nouveau code PIN",
+                                                        hint: "Confirmez le nouveau code PIN",
+                                                        type: TextInputType
+                                                            .number,
+                                                        controller: newPinConfirmController  ,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment
+                                                            .center,
+                                                        children: [
+                                                          InkWell(
+                                                            child: Container(
+                                                              padding: const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 15,
+                                                                  horizontal: 20),
+                                                              decoration: BoxDecoration(
+                                                                  color: AppColors
+                                                                      .primaryColor,
+                                                                  borderRadius: BorderRadius
+                                                                      .circular(
+                                                                      30)
+                                                              ),
+                                                              child: const Text(
+                                                                "Enregistrer",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),),
+                                                            ),
+                                                            onTap: () async {
+                                                              if (oldPinController.text =="") {
+                                                                Utils
+                                                                    .flushBarErrorMessage(
+                                                                    "Vous devez entrer le code PIN actuel",
+                                                                    context);
+                                                              } else
+                                                              if (newPinController
+                                                                  .text ==
+                                                                  "") {
+                                                                Utils
+                                                                    .flushBarErrorMessage(
+                                                                    "Vous devez entrer le nouveau code PIN",
+                                                                    context);
+                                                              } else
+                                                              if (newPinConfirmController
+                                                                  .text ==
+                                                                  "") {
+                                                                Utils
+                                                                    .flushBarErrorMessage(
+                                                                    "Vous devez confirmer le nouveau code PIN",
+                                                                    context);
+                                                              } else
+                                                              if (newPinController
+                                                                  .text !=
+                                                                  newPinConfirmController
+                                                                      .text) {
+                                                                Utils
+                                                                    .flushBarErrorMessage(
+                                                                    "Les deux pins ne correspondent pas",
+                                                                    context);
+                                                              } else {
+                                                                Map data = {
+                                                                  'code_pin': newPinController
+                                                                      .text,
+                                                                };
+                                                                await pinViewModel
+                                                                    .updatePin(
+                                                                    data,
+                                                                    context)
+                                                                    .then((
+                                                                    value) {
+                                                                  Navigator
+                                                                      .pop(
+                                                                      context);
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
                                         },
                                       ),
                                       InkWell(

@@ -32,4 +32,8 @@ class RoutesName {
   static const String phoneVerification = 'phone_verification';
   static const String couponView = 'coupon_view';
   static const String localAuthView = 'local_auth_view';
+
+  static const String walletPresentation = 'wallet_presentation_view';
+  static const String walletHome = 'wallet_home_view';
+  static const String createPin = 'create_pin_view';
 }

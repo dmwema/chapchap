@@ -8,9 +8,11 @@ import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/res/components/info_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:chapchap/view_model/wallet_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; 
 import 'package:flutter/widgets.dart';
@@ -27,7 +29,10 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   UserModel? user;
+
   DemandesViewModel  demandesViewModel = DemandesViewModel();
+  WalletViewModel walletViewModel = WalletViewModel();
+
   AuthViewModel authViewModel = AuthViewModel();
   List<dynamic> demandes = [];
   int? nbProblemes;
@@ -57,10 +62,13 @@ class _HomeViewState extends State<HomeView> {
         nbProblemes = value;
       });
     });
+
+
     UserViewModel().getUser().then((value) {
       setState(() {
       user = value;
       });
+      walletViewModel.getBalance(context, Utils.countryMoneyCode[user!.codePays.toString()]!);
     });
 
     authViewModel.getInfoMessages(context).then((value) {
@@ -109,15 +117,75 @@ class _HomeViewState extends State<HomeView> {
                         ),),
                       ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          RoutesName.home,
-                          (route) => false,
-                        );
-                      },
-                      child: const Icon(CupertinoIcons.refresh, color: Colors.black,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RoutesName.home,
+                                  (route) => false,
+                            );
+                          },
+                          child: const Icon(CupertinoIcons.refresh, color: Colors.black,),
+                        ),
+                        const SizedBox(width: 10,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RoutesName.walletPresentation,
+                                  (route) => false,
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.primaryColor
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                            child: ChangeNotifierProvider<WalletViewModel>(
+                                create: (BuildContext context) => walletViewModel,
+                                child: Consumer<WalletViewModel>(
+                                    builder: (context, value, _){
+                                      switch (value.balance.status) {
+                                        case Status.LOADING:
+                                          return const Row(
+                                            children: [
+                                              Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
+                                              SizedBox(width: 5,),
+                                              Text("Wallet", style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 12
+                                              ),)
+                                            ],
+                                          );
+                                        case Status.ERROR:
+                                          return Center(
+                                            child: Text(value.balance.message.toString()),
+                                          );
+                                        default:
+                                          var balance = value.balance.data!;
+                                          return Row(
+                                            children: [
+                                              const Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
+                                              const SizedBox(width: 5,),
+                                              Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontSize: 12
+                                              ),)
+                                            ],
+                                          );
+                                      }
+                                    })
+                            ),
+                          ),
+                        )
+                      ],
                     )
                   ],
                 ),

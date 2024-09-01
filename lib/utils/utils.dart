@@ -2,6 +2,11 @@ import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
+import 'package:chapchap/model/user_model.dart';
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_field.dart';
+import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/view_model/pin_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,6 +39,20 @@ class Utils {
     )..show(context));
   }
 
+  static Map<String, String> countryMoneyCode = {
+    'ca': 'CAD',
+    'cd': 'USD',
+    'cn': 'CNY',
+    'bj': 'XOF',
+    'bf': 'XOF',
+    'cm': 'XOF',
+    'gn': 'GNF',
+    'ci': 'XOF',
+    'ml': 'XOF',
+    'sn': 'XOF',
+    'tg': 'XOF',
+  };
+
   static Future<void> launchUrl(String _url) async {
     if (await canLaunchUrl(Uri.parse(_url))) {
       await launchUrl(_url);
@@ -48,6 +67,149 @@ class Utils {
         content: Text(message),
         backgroundColor: Colors.black,
       ),
+    );
+  }
+
+  static void showPinDialog (UserModel user, BuildContext context, PinViewModel pinViewModel) {
+    TextEditingController _pinController = TextEditingController();
+    TextEditingController _pinConfirmController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (
+          context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius
+                  .circular(
+                  20)
+          ),
+          child: Padding(
+            padding: const EdgeInsets
+                .symmetric(
+                vertical: 30,
+                horizontal: 30),
+            child: Column(
+              mainAxisSize: MainAxisSize
+                  .min,
+              children: [
+                const Icon(
+                  Icons
+                      .edit_note,
+                  color: Colors
+                      .black,
+                  size: 60,
+                ),
+                const SizedBox(
+                  height: 20,),
+                const Text(
+                  "Definir un code PIN",
+                  textAlign: TextAlign
+                      .center,
+                  style: TextStyle(
+                      color: Colors
+                          .black,
+                      fontWeight: FontWeight
+                          .bold
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,),
+                CustomFormField(
+                  label: "Entrez le code PIN",
+                  hint: "Entrez le code PIN",
+                  type: TextInputType
+                      .number,
+                  controller: _pinController,
+                ),
+                const SizedBox(
+                  height: 20,),
+                CustomFormField(
+                  label: "Confirmer le code PIN",
+                  hint: "Confirmer le code PIN",
+                  type: TextInputType
+                      .number,
+                  controller: _pinConfirmController,
+                ),
+                const SizedBox(
+                  height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .center,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        padding: const EdgeInsets
+                            .symmetric(
+                            vertical: 15,
+                            horizontal: 20),
+                        decoration: BoxDecoration(
+                            color: AppColors
+                                .primaryColor,
+                            borderRadius: BorderRadius
+                                .circular(
+                                30)
+                        ),
+                        child: const Text(
+                          "Enregistrer",
+                          style: TextStyle(
+                              color: Colors
+                                  .white),),
+                      ),
+                      onTap: () async {
+                        if (_pinController
+                            .text ==
+                            "") {
+                          Utils
+                              .flushBarErrorMessage(
+                              "Vous devez entrer le code PIN",
+                              context);
+                        } else
+                        if (_pinConfirmController
+                            .text ==
+                            "") {
+                          Utils
+                              .flushBarErrorMessage(
+                              "Vous devez confirmer le code PIN",
+                              context);
+                        } else
+                        if (_pinController
+                            .text !=
+                            _pinConfirmController
+                                .text) {
+                          Utils
+                              .flushBarErrorMessage(
+                              "Les deux pins ne correspondent pas",
+                              context);
+                        } else {
+                          Map data = {
+                            'code_pin': _pinController
+                                .text,
+                          };
+                          await pinViewModel
+                              .createPin(
+                              data,
+                              context)
+                              .then((
+                              value) {
+                            onTap: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RoutesName.home,
+                                    (route) => false,
+                              );
+                            };
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
