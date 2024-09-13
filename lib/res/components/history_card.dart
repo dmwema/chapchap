@@ -367,12 +367,12 @@ class _HistoryCardState extends State<HistoryCard> {
                 Container(
                   width: 40, height: 40,
                   decoration: BoxDecoration(
-                    color: demande.facture != null ? Colors.green.withOpacity(.3): (demande.lienPaiement != null ? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
+                    color: demande.facture != null ? Colors.green.withOpacity(.3): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: Center(
                     child: Icon(
-                      demande.facture != null ? CupertinoIcons.checkmark : (demande.lienPaiement != null ? (CupertinoIcons.refresh): CupertinoIcons.xmark), size: 20,
+                      demande.facture != null ? CupertinoIcons.checkmark : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh): CupertinoIcons.xmark), size: 20,
                       color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? (Colors.orange): Colors.red),
                     ),
                   ),
@@ -410,7 +410,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       const SizedBox(height: 5,),
                       if (demande.progression != null)
                       Text(demande.progression.toString(), style: TextStyle(
-                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? (Colors.orange): Colors.red),
+                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
                           fontWeight: FontWeight.w500,
                           fontSize: 9
                       ),)

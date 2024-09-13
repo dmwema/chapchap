@@ -5,6 +5,7 @@ class UserModel {
   String? password;
   String? token;
   bool? updatePhone;
+  bool? pin;
   bool? confirmContact;
   String? nomClient;
   String? profession;
@@ -33,6 +34,7 @@ class UserModel {
         this.nomClient,
         this.prenomClient,
         this.updatePhone,
+        this.pin,
         this.telClient,
         this.username,
         this.idTypeClient,
@@ -58,6 +60,7 @@ class UserModel {
     client = json['client'];
     nomClient = json['nomClient'];
     updatePhone = json['update_phone'];
+    pin = json['pin'];
     soldeParrainage = json['solde_parrainage'];
     prenomClient = json['prenomClient'];
     telClient = json['telClient'];
@@ -87,6 +90,7 @@ class UserModel {
     data['client'] = this.client;
     data['solde_parrainage'] = soldeParrainage;
     data['token'] = this.token;
+    data['pin'] = pin;
     data['nomClient'] = this.nomClient;
     data['prenomClient'] = this.prenomClient;
     data['telClient'] = this.telClient;

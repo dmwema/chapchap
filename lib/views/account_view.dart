@@ -6,12 +6,14 @@ import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/view_model/pin_view_model.dart';
 import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
@@ -31,6 +33,7 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
+  PinViewModel pinViewModel = PinViewModel();
   PaysModel selectedFrom = PaysModel();
   bool loadingBio = false;
   UserModel? user;
@@ -252,21 +255,120 @@ class _AccountViewState extends State<AccountView> {
                                           Navigator.pushNamed(context, RoutesName.couponView);
                                         },
                                       ),
-                                      // if (user!.soldeParrainage != null && user!.soldeParrainage.toString() != 'null')
-                                      // ProfileMenu(
-                                      //   title: "Recompense",
-                                      //   icon: CupertinoIcons.gift,
-                                      //   noIcon: true,
-                                      //   onTap: () {
-                                      //     Navigator.pushNamed(context, RoutesName.recompenseView);
-                                      //   },
-                                      // ),
                                       ProfileMenu(
                                         title: "Nous joindre",
                                         icon: Icons.phone_outlined,
                                         noIcon: true,
                                         onTap: () {
                                           Navigator.pushNamed(context, RoutesName.contactView);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "${user!.pin == true ? 'Modifier le ' : ''}Code PIN",
+                                        icon: Icons.pin,
+                                        suffix: Container(
+                                          decoration: BoxDecoration(
+                                            color: user!.pin == true ? Colors.green.withOpacity(.2) : Colors.red.withOpacity(.2),
+                                            borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                          child: Text(user!.pin == true ? "Defini" : "Non defini", style: TextStyle(
+                                            fontSize: 12,
+                                            color: user!.pin == true ? Colors.green : Colors.red,
+                                            fontWeight: FontWeight.bold
+                                          ),)
+                                        ),
+                                        noIcon: true,
+                                        onTap: () {
+                                          if (user!.pin != true) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(20)
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(vertical: 30,
+                                                          horizontal: 30),
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.info_outline,
+                                                            color: Colors.red,
+                                                            size: 60,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 20,),
+                                                          const Text(
+                                                            "CODE PIN ?",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight: FontWeight
+                                                                    .bold
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 20,),
+                                                          const Text(
+                                                            "Le code PIN vous permet de renforcer la securite de votre compte",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 20,),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              InkWell(
+                                                                child: Container(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      vertical: 15,
+                                                                      horizontal: 20),
+                                                                  decoration: BoxDecoration(
+                                                                      color: AppColors
+                                                                          .primaryColor,
+                                                                      borderRadius: BorderRadius
+                                                                          .circular(
+                                                                          30)
+                                                                  ),
+                                                                  child: const Text(
+                                                                    "Definir un code PIN",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),),
+                                                                ),
+                                                                onTap: () {
+                                                                  Navigator.pushNamedAndRemoveUntil(
+                                                                    context,
+                                                                    RoutesName.createPin,
+                                                                        (route) => false,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                              },
+                                            );
+                                          } else {
+                                            Navigator.pushNamed(context, RoutesName.updatePin);
+                                          }
                                         },
                                       ),
                                       InkWell(
@@ -360,7 +462,7 @@ class _AccountViewState extends State<AccountView> {
                                           showCupertinoDialog(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              return CupertinoAlertDialog(
+                                              return CupertinoAlertDialog (
                                                 title: const Text('Confirmer'),
                                                 content: const Text('Voulez-vous vraiment vous déconnecter ?'),
                                                 actions: [

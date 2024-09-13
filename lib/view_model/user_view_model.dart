@@ -28,6 +28,7 @@ class UserViewModel with ChangeNotifier {
       sp.setString('client', user.client.toString());
       sp.setString('password', user.password.toString());
       sp.setString('adresse', user.adresse.toString());
+      sp.setBool('pin', user.pin == true);
       sp.setString('nomClient', user.nomClient.toString());
       if (user.soldeParrainage != null) {
         sp.setInt('soldeParrainage', user.soldeParrainage!);
@@ -63,6 +64,7 @@ class UserViewModel with ChangeNotifier {
     String? adresse = sp.getString('adresse');
     String? password = sp.getString('password');
     String? client = sp.getString('client');
+    bool? pin = sp.getBool('pin');
     int? soldeParrainage = sp.getInt('soldeParrainage');
     String? nomClient = sp.getString('nomClient');
     String? prenomClient = sp.getString('prenomClient');
@@ -85,6 +87,7 @@ class UserViewModel with ChangeNotifier {
       commissionParrainage: commissionParrainage,
       emailClient: emailClient,
       idTypeClient: idTypeClient,
+      pin: pin,
       nomClient: nomClient,
       paysMonnaie: paysMonnaie,
       password: password,

@@ -27,12 +27,13 @@ Widget commonAppBar({
   bool? theme = false,
   bool canClose = false,
   Color? appBarColor,
+  Color? textColor,
   GestureTapCallback? editClick,
   GestureTapCallback? backClick,
   GestureTapCallback? themeClick,
 }) {
   return Container(
-    height: MediaQuery.of(context!).viewInsets.top + MediaQuery.of(context!).padding.top + 10,
+    height: MediaQuery.of(context!).viewInsets.top + MediaQuery.of(context!).padding.top + 20,
     width: double.infinity,
     color: appBarColor ?? AppColors.formFieldColor,
     padding: const EdgeInsets.only(
@@ -60,9 +61,9 @@ Widget commonAppBar({
                     height: 30,
                     width: 30,
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.arrow_back_ios,
-                      color: Colors.black,
+                      color: textColor ?? Colors.black,
                       size: 20,
                     ),
                   ),
@@ -151,10 +152,10 @@ Widget commonAppBar({
                   child: Container(
                     width: 55,
                     padding: const EdgeInsets.all(2),
-                    child: const Text("Aide ?", style: TextStyle(
+                    child: Text("Aide ?", style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
-                      color: Colors.black
+                      color: textColor ?? Colors.black
                     ), textAlign: TextAlign.end,),
                   ),
                 ),

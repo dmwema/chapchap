@@ -51,6 +51,7 @@ class CustomFormField extends StatelessWidget {
       keyboardType: type,
       cursorColor: Colors.black,
       obscureText: obscurePassword,
+      prefix: prefixIcon,
       focusNode: focusNode,
       maxLines: maxLines,
       decoration: BoxDecoration(

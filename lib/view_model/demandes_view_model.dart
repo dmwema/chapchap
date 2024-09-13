@@ -82,10 +82,6 @@ class DemandesViewModel with ChangeNotifier{
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
-          print('*******************');
-          print('*******************');
-          print('*******************');
-          print(data);
           returnValue = value['nombre_probleme'] ?? int.parse(value['nombre_probleme'].toString());
           setDemandeList(ApiResponse.completed(value["data"]));
         } else {
@@ -280,27 +276,30 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true}) async {
+  Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true, bool wallet = false}) async {
     dynamic returnValue;
     setLoading(true);
-    await _repository.transfert(data, context: context).then((value) async {
+    await _repository.transfert(data, context: context, wallet: wallet).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           final SharedPreferences sp = await SharedPreferences.getInstance();
-          Utils.toastMessage("Demande enrégistrée avec succès");
-
-          String url = value["data"]['lien_paiement'].toString();
-          if (transfer) {
-            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-            if(urllaunchable){
-              await launch(url); //launch is from url_launcher package to launch URL
-              Navigator.pushNamed(context,RoutesName.home);
-            }else{
-              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+          if (wallet == true) {
+            Utils.toastMessage(value["data"]["progression"]);
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+          } else {
+            Utils.toastMessage("Demande enrégistrée avec succès");
+            String url = value["data"]['lien_paiement'].toString();
+            if (transfer) {
+              var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+              if(urllaunchable){
+                await launch(url); //launch is from url_launcher package to launch URL
+                Navigator.pushNamed(context,RoutesName.home);
+              }else{
+                Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+              }
             }
           }
-
           returnValue = value;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);

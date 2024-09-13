@@ -97,9 +97,9 @@ class DemandesRepository {
     }
   }
 
-  Future<dynamic> transfert (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> transfert (dynamic data, {required BuildContext context, bool wallet = false}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.trasfert, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(wallet == true ? AppUrl.trasfertWallet : AppUrl.trasfert, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

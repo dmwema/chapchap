@@ -2,13 +2,17 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
+import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/view_model/pin_view_model.dart';
+import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +43,9 @@ class _SendViewState extends State<SendView> {
   BeneficiaireModel? selectedBeneficiaire;
   bool fromToToSens = true;
   DemandesViewModel demandesViewModel = DemandesViewModel();
+  DemandesViewModel demandesViewModel2 = DemandesViewModel();
+
+  PinViewModel pinViewModel = PinViewModel();
 
   double tauxTransfert = 0.0;
 
@@ -74,7 +81,7 @@ class _SendViewState extends State<SendView> {
   @override
   void initState() {
     demandesViewModel.myDestinationsApi([], context);
-    demandesViewModel.beneficiaires([], context);
+    demandesViewModel2.beneficiaires([], context);
     super.initState();
   }
 
@@ -659,7 +666,7 @@ class _SendViewState extends State<SendView> {
             ),
           ),
           Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
-              create: (BuildContext context) => demandesViewModel,
+              create: (BuildContext context) => demandesViewModel2,
               child: Consumer<DemandesViewModel>(
                   builder: (context, value, _){
                     switch (value.beneficiairesList.status) {
@@ -1151,90 +1158,263 @@ class _SendViewState extends State<SendView> {
                         padding: const EdgeInsets.all(20),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width - 40,
-                          child: RoundedButton(
-                            onPress: () {
-                              FocusScope.of(context).unfocus();
-                              if (currentFocus != null) {
-                                currentFocus!.unfocus();
-                              }
-                              if (step == 0) {
-                                if (selectedDesinaion == null) {
-                                  Utils.flushBarErrorMessage("Vous devez séléctionner un pays de destination", context);
-                                } else if (_fromController.text.isEmpty) {
-                                  Utils.flushBarErrorMessage("Vous devez entrer le montant", context);
-                                } else {
-                                  _controller.nextPage(
-                                      duration: const Duration(milliseconds: 300),
-                                      curve: Curves.linear
-                                  );
-                                }
-                              } else if (step == 1) {
-                                if (selectedModeRetrait == null) {
-                                  Utils.flushBarErrorMessage("Vous devez séléctionner le mode de retrait", context);
-                                } else {
-                                  if (widget.beneficiaire != null) {
-                                    _controller.animateToPage(
-                                      3,
-                                      duration: const Duration(milliseconds: 300),
-                                      curve: Curves.linear,
-                                    );
-                                  } else {
-                                    _controller.nextPage(
-                                        duration: const Duration(
-                                            milliseconds: 300),
-                                        curve: Curves.linear
-                                    );
+                          child: Column(
+                            children: [
+                              RoundedButton(
+                                onPress: () {
+                                  FocusScope.of(context).unfocus();
+                                  if (currentFocus != null) {
+                                    currentFocus!.unfocus();
                                   }
-                                }
-                              } else if (step == 3) {
-                                DemandesViewModel demandesViewModel3 = DemandesViewModel();
-                                if (!loading) {
-                                  setState(() {
-                                    loading = true;
-                                  });
+                                  if (step == 0) {
+                                    if (selectedDesinaion == null) {
+                                      Utils.flushBarErrorMessage("Vous devez séléctionner un pays de destination", context);
+                                    } else if (_fromController.text.isEmpty) {
+                                      Utils.flushBarErrorMessage("Vous devez entrer le montant", context);
+                                    } else {
+                                      _controller.nextPage(
+                                          duration: const Duration(milliseconds: 300),
+                                          curve: Curves.linear
+                                      );
+                                    }
+                                  } else if (step == 1) {
+                                    if (selectedModeRetrait == null) {
+                                      Utils.flushBarErrorMessage("Vous devez séléctionner le mode de retrait", context);
+                                    } else {
+                                      if (widget.beneficiaire != null) {
+                                        _controller.animateToPage(
+                                          3,
+                                          duration: const Duration(milliseconds: 300),
+                                          curve: Curves.linear,
+                                        );
+                                      } else {
+                                        _controller.nextPage(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            curve: Curves.linear
+                                        );
+                                      }
+                                    }
+                                  } else if (step == 3) {
+                                    DemandesViewModel demandesViewModel3 = DemandesViewModel();
+                                    if (!loading) {
+                                      setState(() {
+                                        loading = true;
+                                      });
 
-                                  double fromAmount = 0;
-                                  double toAmount = 0;
+                                      double fromAmount = 0;
+                                      double toAmount = 0;
 
-                                  if (fromToToSens) {
-                                    fromAmount = double.parse(_fromController.text);
-                                    toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
-                                  } else {
-                                    toAmount = double.parse(_toController.text);
-                                    fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
-                                  }
-                                  fromAmount += tauxTransfert;
+                                      if (fromToToSens) {
+                                        fromAmount = double.parse(_fromController.text);
+                                        toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
+                                      } else {
+                                        toAmount = double.parse(_toController.text);
+                                        fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
+                                      }
+                                      fromAmount += tauxTransfert;
 
-                                  if (promoRabais > 0) {
-                                    fromAmount -= promoRabais;
-                                  }
+                                      if (promoRabais > 0) {
+                                        fromAmount -= promoRabais;
+                                      }
 
-                                  Map data2 = {
-                                    "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
-                                    "codePromo": promoCode,
-                                    "code_pays_srce": paysDestinationModel!.codePaysSrce,
-                                    "montant_srce": fromAmount,
-                                    "montant_dest": toAmount,
-                                    "code_pays_dest": selectedDesinaion!.codePaysDest,
-                                    "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
-                                  };
-                                  demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd").then((value) {
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                    if (paysDestinationModel!.codePaysSrce == "cd") {
-                                      Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
-                                        'idDemande': value['data']['id_demande'],
-                                        'nomBeneficiaire': value['data']['beneficiaire'],
-                                        'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
+                                      Map data2 = {
+                                        "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
+                                        "codePromo": promoCode,
+                                        "code_pays_srce": paysDestinationModel!.codePaysSrce,
+                                        "montant_srce": fromAmount,
+                                        "montant_dest": toAmount,
+                                        "code_pays_dest": selectedDesinaion!.codePaysDest,
+                                        "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
+                                      };
+                                      demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd").then((value) {
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                        if (paysDestinationModel!.codePaysSrce == "cd") {
+                                          Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                            'idDemande': value['data']['id_demande'],
+                                            'nomBeneficiaire': value['data']['beneficiaire'],
+                                            'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
+                                          });
+                                        }
                                       });
                                     }
-                                  });
-                                }
-                              }
-                            },
-                            title: step < 3 ? "Continuer": "Confirmer et payer",
-                            loading: loading,
+                                  }
+                                },
+                                title: step < 3 ? "Continuer": "Confirmer et payer",
+                                loading: loading,
+                              ),
+                              if (step == 3)
+                              const SizedBox(height: 10,),
+                              if (step == 3)
+                              RoundedButton(
+                                color: Colors.black,
+                                wallet: true,
+                                onPress: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      final TextEditingController pinController = TextEditingController();
+
+                                      return Dialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius
+                                                .circular(
+                                                20)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets
+                                              .symmetric(
+                                              vertical: 30,
+                                              horizontal: 30),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize
+                                                .min,
+                                            children: [
+                                              const Icon(
+                                                Icons.warning_amber_rounded,
+                                                color: Colors.red,
+                                                size: 60,
+                                              ),
+                                              const SizedBox(height: 10,),
+                                              const Text("Code PIN",
+                                                textAlign: TextAlign
+                                                    .center,
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .black,
+                                                    fontWeight: FontWeight
+                                                        .bold
+                                                ),
+                                              ),
+                                              const Text("Les transactions par wallet sont protegées par Code PIN. Veuillez entrer votre Code PIN",
+                                                textAlign: TextAlign
+                                                    .center,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12
+                                                ),
+                                              ),
+                                              const SizedBox(height: 10,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      pinViewModel.resetPin(context);
+                                                    },
+                                                    child: Text("Code PIN oublié ?",
+                                                      textAlign: TextAlign
+                                                          .right,
+                                                      style: TextStyle(
+                                                          color: AppColors.primaryColor,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 12
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 20,),
+                                              CustomFormField(
+                                                label: "Code PIN",
+                                                hint: "Entrez le code PIN",
+                                                type: TextInputType.number,
+                                                controller: pinController  ,
+                                              ),
+                                              const SizedBox(
+                                                height: 20,),
+                                              if (!loading)
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  InkWell(
+                                                    child: Container(
+                                                      padding: const EdgeInsets.symmetric(
+                                                          vertical: 15,
+                                                          horizontal: 20),
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors
+                                                              .primaryColor,
+                                                          borderRadius: BorderRadius
+                                                              .circular(
+                                                              30)
+                                                      ),
+                                                      child: const Text(
+                                                        "Enregistrer",
+                                                        style: TextStyle(
+                                                            color: Colors.white),),
+                                                    ),
+                                                    onTap: () async {
+                                                      if (pinController.text =="") {
+                                                        Utils
+                                                            .flushBarErrorMessage(
+                                                            "Vous devez entrer le code PIN",
+                                                            context);
+                                                      } else {
+                                                        DemandesViewModel demandesViewModel3 = DemandesViewModel();
+                                                        if (!loading) {
+                                                          setState(() {
+                                                            loading = true;
+                                                          });
+
+                                                          double fromAmount = 0;
+                                                          double toAmount = 0;
+
+                                                          if (fromToToSens) {
+                                                            fromAmount = double.parse(_fromController.text);
+                                                            toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
+                                                          } else {
+                                                            toAmount = double.parse(_toController.text);
+                                                            fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
+                                                          }
+                                                          fromAmount += tauxTransfert;
+
+                                                          if (promoRabais > 0) {
+                                                            fromAmount -= promoRabais;
+                                                          }
+
+                                                          Map data2 = {
+                                                            "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
+                                                            "codePromo": promoCode,
+                                                            "code_pays_srce": paysDestinationModel!.codePaysSrce,
+                                                            "montant_srce": fromAmount,
+                                                            "montant_dest": toAmount,
+                                                            'code_pin': pinController.text,
+                                                            "code_pays_dest": selectedDesinaion!.codePaysDest,
+                                                            "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
+                                                          };
+                                                          demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd", wallet: true).then((value) {
+                                                            setState(() {
+                                                              loading = false;
+                                                            });
+                                                            if (paysDestinationModel!.codePaysSrce == "cd") {
+                                                              Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                                                'idDemande': value['data']['id_demande'],
+                                                                'nomBeneficiaire': value['data']['beneficiaire'],
+                                                                'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
+                                                              });
+                                                            }
+                                                          });
+                                                        }
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                title: "Payer avec wallet",
+                                loading: loading,
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -21,12 +21,20 @@ import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:chapchap/views/auth/on_boarding_view.dart';
 import 'package:chapchap/views/pay_view.dart';
+import 'package:chapchap/views/pin/create_pin_view.dart';
+import 'package:chapchap/views/pin/reset_pin_view.dart';
+import 'package:chapchap/views/pin/up_pin_view.dart';
 import 'package:chapchap/views/profile_view.dart';
 import 'package:chapchap/views/recipient_archive.dart';
 import 'package:chapchap/views/recipients_view.dart';
 import 'package:chapchap/views/recompense_view.dart';
 import 'package:chapchap/views/send_success_view.dart';
 import 'package:chapchap/views/send_view.dart';
+import 'package:chapchap/views/wallet/recharge_history_view.dart';
+import 'package:chapchap/views/wallet/recharge_view.dart';
+import 'package:chapchap/views/wallet/tansfert_comptes_view.dart';
+import 'package:chapchap/views/wallet/wallet_home_view.dart';
+import 'package:chapchap/views/wallet/wallet_presentation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -127,6 +135,12 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
+      // case RoutesName.walletRechargeHistoryView:
+      //   return PageTransition(
+      //       child: RechargeHistoryView(),
+      //       type: PageTransitionType.rightToLeft,
+      //       settings: settings
+      //   );
       case RoutesName.invoices:
         return PageTransition(
             child: InvoicesView(),
@@ -195,6 +209,46 @@ class Routes {
           type: PageTransitionType.bottomToTop,
           settings: settings,
         );
+      case RoutesName.createPin:
+        return PageTransition(
+          child: const CreatePinView(),
+          type: PageTransitionType.bottomToTop,
+          settings: settings,
+        );
+      case RoutesName.resetPin:
+        return PageTransition(
+          child: const ResetPinView(),
+          type: PageTransitionType.bottomToTop,
+          settings: settings,
+        );
+      case RoutesName.updatePin:
+        return PageTransition(
+          child: const UpPinView(),
+          type: PageTransitionType.bottomToTop,
+          settings: settings,
+        );
+
+
+      case RoutesName.transfertAccountWallet:
+        return PageTransition(
+            child: TransferCompteWalletView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+
+      case RoutesName.walletPresentation:
+        return PageTransition(
+            child: const WalletPresentationView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+      case RoutesName.walletHome:
+        return PageTransition(
+            child: const WalletHomeView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(
