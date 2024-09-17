@@ -1343,7 +1343,7 @@ class _SendViewState extends State<SendView> {
                                                               30)
                                                       ),
                                                       child: const Text(
-                                                        "Enregistrer",
+                                                        "Valider",
                                                         style: TextStyle(
                                                             color: Colors.white),),
                                                     ),

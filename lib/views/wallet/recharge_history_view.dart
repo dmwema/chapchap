@@ -192,7 +192,7 @@ class _RechargeHistoryViewState extends State<RechargeHistoryView> {
                                                   borderRadius: BorderRadius.circular(5)
                                                 ),
                                                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                                                child: const Text("Payer", style: TextStyle(
+                                                child: const Text("Recharger", style: TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white

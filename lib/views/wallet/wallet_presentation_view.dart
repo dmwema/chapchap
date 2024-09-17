@@ -63,18 +63,18 @@ class _ContactViewState extends State<WalletPresentationView> {
                         const SizedBox(height: 30,),
                         Image.asset('assets/wallet.gif', width: MediaQuery.of(context).size.width * 0.6,),
                         const SizedBox(height: 20,),
-                        const Text("Bienvenue a votre", style: TextStyle(
+                        const Text("Bienvenue dans votre", style: TextStyle(
                           fontSize: 25,
                           color: Colors.black87,
                         ), textAlign: TextAlign.center,),
                         const SizedBox(height: 5,),
-                        Text("portefeuille ChapChap", style: TextStyle(
+                        Text("CHAPCHAP WALLET", style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor
                         ), textAlign: TextAlign.center,),
                         const SizedBox(height: 10,),
-                        const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ",
+                        const Text("Une nouvelle expérience centrée sur la simplicité et le gain de temps.",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15
@@ -82,7 +82,7 @@ class _ContactViewState extends State<WalletPresentationView> {
                         if (user!.pin != true)
                         const SizedBox(height: 20,),
                         if (user!.pin != true)
-                        const Text("Pour commencer, veuillez creer un code PIN pour renforcer la securite de votre compte",
+                        const Text("Pour commencer, veuillez créer un code PIN pour renforcer la sécurité de votre Wallet!",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class _ContactViewState extends State<WalletPresentationView> {
             child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: RoundedButton(
-                  title: user!.pin == true ? "Commencer" : "Definir un code PIN",
+                  title: user!.pin == true ? "Commencer" : "Définir un code PIN",
                   onPress: () async {
                     if (user!.pin != true) {
                       Navigator.pushNamedAndRemoveUntil(

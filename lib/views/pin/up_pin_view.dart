@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpPinView extends StatefulWidget {
@@ -44,6 +45,10 @@ class _UpPinViewState extends State<UpPinView> {
   SharedPreferences? preferences;
   bool localAuthEnabled = false;
 
+  String? currentPin;
+  String? newPin;
+  String? confirmNewPin;
+
   bool loadEmail = false;
   bool loadSMS = false;
 
@@ -58,10 +63,6 @@ class _UpPinViewState extends State<UpPinView> {
       throw 'Could not launch $url';
     }
   }
-
-  final TextEditingController _oldPinController = TextEditingController();
-  final TextEditingController _pinController = TextEditingController();
-  final TextEditingController _pinConfirmController = TextEditingController();
 
   @override
   void initState() {
@@ -102,34 +103,72 @@ class _UpPinViewState extends State<UpPinView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Modifier le code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
-                    const SizedBox(
-                      height: 20,),
-                    CustomFormField(
-                      label: "Code PIN actuel",
-                      hint: "Entrez le code PIN actuel",
-                      type: TextInputType
-                          .number,
-                      controller: _oldPinController,
+                    const SizedBox(height: 20,),
+                    const Text("Code PIN actuel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    PinFieldAutoFill(
+                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
+                      currentCode: currentPin,
+                      codeLength: 5,
+                      decoration: BoxLooseDecoration(
+                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
+                          bgColorBuilder: const FixedColorBuilder(Colors.white),
+                          strokeWidth: 1,
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white
+                          ),
+                          radius: const Radius.circular(15)
+                      ),
+                      onCodeChanged: (code) {
+                          currentPin = code ?? '';
+                      },
                     ),
                     const SizedBox(height: 10,),
                     const Divider(),
                     const SizedBox(height: 10,),
-                    CustomFormField(
-                      label: "Nouveau code PIN",
-                      hint: "Entrez le nouveau code PIN",
-                      type: TextInputType
-                          .number,
-                      controller: _pinController,
+                    const Text("Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    PinFieldAutoFill(
+                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
+                      currentCode: newPin,
+                      codeLength: 5,
+                      decoration: BoxLooseDecoration(
+                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
+                          bgColorBuilder: const FixedColorBuilder(Colors.white),
+                          strokeWidth: 1,
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white
+                          ),
+                          radius: const Radius.circular(15)
+                      ),
+                      onCodeChanged: (code) {
+                          newPin = code ?? '';
+                      },
                     ),
-                    const SizedBox(
-                      height: 20,),
-                    CustomFormField(
-                      label: "Confirmer le nouveau code PIN",
-                      hint: "Confirmer le nouveau code PIN",
-                      type: TextInputType
-                          .number,
-                      controller: _pinConfirmController,
+                    const SizedBox(height: 20,),
+                    const Text("Confirmer le Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    PinFieldAutoFill(
+                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
+                      currentCode: currentPin,
+                      codeLength: 5,
+                      decoration: BoxLooseDecoration(
+                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
+                          bgColorBuilder: const FixedColorBuilder(Colors.white),
+                          strokeWidth: 1,
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white
+                          ),
+                          radius: const Radius.circular(15)
+                      ),
+                      onCodeChanged: (code) {
+                          confirmNewPin = code ?? '';
+                      },
                     ),
+
                     const SizedBox(
                       height: 20,),
                     Row(
@@ -140,45 +179,35 @@ class _UpPinViewState extends State<UpPinView> {
                             title: "Enregistrer",
                             loading: pinViewModel.loading,
                             onPress: () async {
-                              if (_oldPinController
-                                  .text ==
-                                  "") {
+                              if (currentPin == null || currentPin!.length < 5) {
                                 Utils
                                     .flushBarErrorMessage(
                                     "Vous devez entrer le code PIN actuel",
                                     context);
                               } else
-                              if (_pinController
-                                  .text ==
-                                  "") {
+                              if (newPin == null || newPin!.length < 5) {
                                 Utils
                                     .flushBarErrorMessage(
-                                    "Vous devez entrer le code PIN",
+                                    "Vous devez entrer le nouveau code PIN",
                                     context);
                               } else
-                              if (_pinConfirmController
-                                  .text ==
-                                  "") {
+                              if (confirmNewPin == null || confirmNewPin!.length < 5) {
                                 Utils
                                     .flushBarErrorMessage(
                                     "Vous devez confirmer le code PIN",
                                     context);
                               } else
-                              if (_pinController
-                                  .text !=
-                                  _pinConfirmController
-                                      .text) {
+                              if (newPin != confirmNewPin) {
                                 Utils
                                     .flushBarErrorMessage(
                                     "Les deux pins ne correspondent pas",
                                     context);
                               } else {
                                 Map data = {
-                                  'code_pin': _pinController.text,
-                                  'code_pin_old': _oldPinController.text
+                                  'code_pin': newPin,
+                                  'code_pin_old': currentPin
                                 };
 
-                                print("1111111111111111111111111");
                                 await pinViewModel.updatePin(data, context);
                               }
                             }

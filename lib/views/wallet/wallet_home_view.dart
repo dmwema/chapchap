@@ -163,9 +163,10 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                       );
                                     default:
                                       wallets = value.walletsList.data!;
-                                      currentWallet = wallets[0];
-                                      WalletViewModel viewModel = WalletViewModel();
-                                      getHistory(historyPage, currentWallet["currency"], viewModel);
+                                      if (wallets.isNotEmpty) {
+                                        currentWallet = wallets[0];
+                                        WalletViewModel viewModel = WalletViewModel();
+                                      }
                                       if (wallets.isEmpty && user != null) {
                                         return InkWell(
                                           onTap: () async {
@@ -338,40 +339,40 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.transfertAccountWallet);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.compare_arrows, color: Colors.black, size: 15,),
-                            SizedBox(width: 8,),
-                            Text(
-                              "Transfert entre comptes",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(height: 10,),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, RoutesName.transfertAccountWallet);
+                    //   },
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       color: Colors.white,
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Colors.black.withOpacity(0.2),
+                    //           spreadRadius: 2,
+                    //           blurRadius: 5,
+                    //           offset: const Offset(0, 3), // changes position of shadow
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                    //     child: const Row(
+                    //       children: [
+                    //         Icon(Icons.compare_arrows, color: Colors.black, size: 15,),
+                    //         SizedBox(width: 8,),
+                    //         Text(
+                    //           "Transfert entre comptes",
+                    //           style: TextStyle(
+                    //               fontWeight: FontWeight.w500,
+                    //               fontSize: 12
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(height: 10,),
                     // InkWell(
                     //   onTap: () {

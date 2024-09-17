@@ -7,11 +7,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Chapchap</string>
+	<string>Transfert ChapChap</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.wizmea.chapchapApp</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -27,26 +27,19 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Autorisez l'application à utiliser votre camera pour modifier votre photo de profile</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Authoriser le faceId pour dévérouiller l'application</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Autorisez l'application à lancer votre maps</string>
+	<string>ChapChap souhaite accéder à votre caméra pour définir votre photo de profil</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Autorisez l'application à utiliser votre gallerie pour modifier votre photo de profile</string>
+	<string>ChapChap souhaite accéder à votre gallerie pour définir votre photo de profil</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>UIStatusBarHidden</key>
-	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -60,7 +53,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>

@@ -24,6 +24,7 @@ class RoutesName {
   static const String invoices = 'invoices_screen';
   static const String invoiceDetail = 'invoice_detail_screen';
   static const String pay = 'pay_screen';
+  static const String confirmCancelView = 'confirm_cancel_view';
   static const String sendSuccess = 'send_success_screen';
   static const String contactView = 'contact_view';
   static const String webViewPage = 'web_view_page';

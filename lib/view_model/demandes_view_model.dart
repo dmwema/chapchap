@@ -21,6 +21,7 @@ class DemandesViewModel with ChangeNotifier{
   ApiResponse<dynamic> promoList = ApiResponse.loading();
   ApiResponse<dynamic> beneficiairesList = ApiResponse.loading();
   ApiResponse<dynamic> paysActifList = ApiResponse.loading();
+  ApiResponse<dynamic> modeRemboursementList = ApiResponse.loading();
   ApiResponse<dynamic> paysDestination = ApiResponse.loading();
   ApiResponse<dynamic> allPaysDestination = ApiResponse.loading();
   ApiResponse<dynamic> applyDetail = ApiResponse.loading();
@@ -37,6 +38,11 @@ class DemandesViewModel with ChangeNotifier{
 
   setDemandeList (ApiResponse<dynamic> response) {
     demandeList = response;
+    notifyListeners();
+  }
+
+  setModeRemboursementList (ApiResponse<dynamic> response) {
+    modeRemboursementList = response;
     notifyListeners();
   }
 
@@ -206,6 +212,25 @@ class DemandesViewModel with ChangeNotifier{
           setPaysActif(ApiResponse.completed(value["data"]));
         } else {
           setPaysActif(ApiResponse.error(value['message']));
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      setPaysActif(ApiResponse.error(error.toString()));
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
+  Future<void> modeRemboursements(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.modeRemboursement(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setModeRemboursementList(ApiResponse.completed(value["data"]));
+        } else {
+          setModeRemboursementList(ApiResponse.error(value['message']));
           Utils.flushBarErrorMessage(value['message'], context);
         }
       }

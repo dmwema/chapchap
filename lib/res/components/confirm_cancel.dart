@@ -3,15 +3,27 @@ import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/model/user_model.dart';
 
-class ConfirmCancel extends StatelessWidget {
+class ConfirmCancel extends StatefulWidget {
   final int demandeId;
   final DemandesViewModel  demandesViewModel;
-  final TextEditingController _motifController = TextEditingController();
+  const ConfirmCancel({Key? key, required this.demandeId, required this.demandesViewModel}) : super(key: key);
 
-  ConfirmCancel({Key? key, required this.demandeId, required this.demandesViewModel}) : super(key: key);
+  @override
+  State<ConfirmCancel> createState() => _ConfirmCancelState();
+}
+
+class _ConfirmCancelState extends State<ConfirmCancel> {
+  final TextEditingController _motifController = TextEditingController();
+  DemandesViewModel demandesViewModel = DemandesViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    demandesViewModel.modeRemboursements({}, context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +38,8 @@ class ConfirmCancel extends StatelessWidget {
             size: 50,
           ),
           const SizedBox(height: 10,),
-          Column(
-            children: const [
+          const Column(
+            children: [
               Text("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?",
                 style: TextStyle(
                   color: Colors.black,
@@ -65,10 +77,10 @@ class ConfirmCancel extends StatelessWidget {
                     Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
                   } else {
                     Map data = {
-                      "idDemande" : demandeId,
+                      "idDemande" : widget.demandeId,
                       "motif": _motifController.text
                     };
-                    demandesViewModel.cancelSend(context, data);
+                    widget.demandesViewModel.cancelSend(context, data);
                   }
                 },
                 title: "Confirmer",
@@ -76,13 +88,13 @@ class ConfirmCancel extends StatelessWidget {
               const SizedBox(width: 10,),
               InkWell(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       border: Border.all(color: AppColors.primaryColor, width: 2)
                   ),
                   child: Text("Annuler", style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primaryColor
                   ),),

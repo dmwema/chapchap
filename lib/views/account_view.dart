@@ -31,7 +31,7 @@ class AccountView extends StatefulWidget {
   State<AccountView> createState() => _AccountViewState();
 }
 
-class _AccountViewState extends State<AccountView> {
+class _AccountViewState extends State<AccountView> with SingleTickerProviderStateMixin {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   PinViewModel pinViewModel = PinViewModel();
   PaysModel selectedFrom = PaysModel();
@@ -63,10 +63,21 @@ class _AccountViewState extends State<AccountView> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
 
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
     loadPr();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 1.0, end: 1.2).animate(_controller);
+
     setState(() {
       AuthViewModel().getLocalAuth().then((value) {
         setState(() {
@@ -528,14 +539,18 @@ class _AccountViewState extends State<AccountView> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton:ScaleTransition(
+          scale: _animation,
+          child: FloatingActionButton(
             backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40)
+                borderRadius: BorderRadius.circular(30)
             ),
-            child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
-          Navigator.pushNamed(context, RoutesName.send);
-        }
+            onPressed: () {
+              Navigator.pushNamed(context, RoutesName.send);
+            },
+            child: const Icon(CupertinoIcons.arrow_up_right_circle, color: Colors.white, size: 35,),
+          ),
         ),
         bottomNavigationBar: commonBottomAppBar(context: context, active: 3),
       ),

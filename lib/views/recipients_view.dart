@@ -20,14 +20,33 @@ class RecipientsView extends StatefulWidget {
   State<RecipientsView> createState() => _RecipientsViewState();
 }
 
-class _RecipientsViewState extends State<RecipientsView> {
+class _RecipientsViewState extends State<RecipientsView> with SingleTickerProviderStateMixin {
   DemandesViewModel demandesViewModel = DemandesViewModel();
+
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 1.0, end: 1.2).animate(_controller);
+
     demandesViewModel.beneficiaires([], context);
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -413,14 +432,18 @@ class _RecipientsViewState extends State<RecipientsView> {
           ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:ScaleTransition(
+        scale: _animation,
+        child: FloatingActionButton(
           backgroundColor: AppColors.primaryColor,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40)
+              borderRadius: BorderRadius.circular(30)
           ),
-          child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
-        Navigator.pushNamed(context, RoutesName.send);
-      }
+          onPressed: () {
+            Navigator.pushNamed(context, RoutesName.send);
+          },
+          child: const Icon(CupertinoIcons.arrow_up_right_circle, color: Colors.white, size: 35,),
+        ),
       ),
       bottomNavigationBar: commonBottomAppBar(context: context, active: 1),
     );

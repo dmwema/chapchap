@@ -19,7 +19,7 @@ class ExchangeView extends StatefulWidget {
   State<ExchangeView> createState() => _ExchangeViewState();
 }
 
-class _ExchangeViewState extends State<ExchangeView> {
+class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderStateMixin {
   DemandesViewModel demandesViewModel = DemandesViewModel();
   PaysModel selectedFrom = PaysModel();
   Destination? selectedTo;
@@ -28,13 +28,29 @@ class _ExchangeViewState extends State<ExchangeView> {
   List destinationsList = [];
   bool changed = false;
 
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 1.0, end: 1.2).animate(_controller);
+
     demandesViewModel.paysActifs([], context);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void insert(content, TextEditingController controller) {
@@ -490,14 +506,18 @@ class _ExchangeViewState extends State<ExchangeView> {
             ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton:ScaleTransition(
+            scale: _animation,
+            child: FloatingActionButton(
               backgroundColor: AppColors.primaryColor,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)
+                  borderRadius: BorderRadius.circular(30)
               ),
-              child: const Icon(CupertinoIcons.arrow_up_right, color: Colors.white,), onPressed: () {
-            Navigator.pushNamed(context, RoutesName.send);
-          }
+              onPressed: () {
+                Navigator.pushNamed(context, RoutesName.send);
+              },
+              child: const Icon(CupertinoIcons.arrow_up_right_circle, color: Colors.white, size: 35,),
+            ),
           ),
         bottomNavigationBar: commonBottomAppBar(context: context, active: 2),
       ),

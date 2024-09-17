@@ -6,6 +6,7 @@ import 'package:chapchap/res/components/modal/change_beneficiaire_modal.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/views/confirm_cancel_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _HistoryCardState extends State<HistoryCard> {
                   const SizedBox(height: 5,),
                   if (demande.probleme != null)
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.error_outline, color: Colors.red, size: 30,),
                         const SizedBox(width: 10,),
@@ -259,24 +261,29 @@ class _HistoryCardState extends State<HistoryCard> {
                       )
                         const SizedBox(height: 10,),
                       if (
-                      demande.facture == null
-                          && hasProblem != true
+                        demande.facture == null
+                        && hasProblem != true
+                        && (demande.lienPaiement != null || demande.progression.toString().contains("En cours"))
                       )
                         InkWell(
                           onTap: () {
                             DemandesViewModel demandeViewModel = DemandesViewModel();
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) {
-                                return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
-                              },
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20),
+                            if (demande.isPaid == true) {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmCancelView(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel)));
+                            } else {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
+                                },
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           child: Container(
                               width: MediaQuery.of(context).size.width,
@@ -360,7 +367,7 @@ class _HistoryCardState extends State<HistoryCard> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children: [
@@ -384,11 +391,12 @@ class _HistoryCardState extends State<HistoryCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(demande.beneficiaire.toString(), style: const TextStyle(
-                        fontWeight: FontWeight.w600,
+                      Text(demande.beneficiaire.toString(), style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryColor,
                         fontSize: 15,
                       ),),
-                      const SizedBox(height: 2,),
+                      const SizedBox(height: 1,),
                       Text(demande.date.toString(), style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 10,
@@ -411,7 +419,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       if (demande.progression != null)
                       Text(demande.progression.toString(), style: TextStyle(
                           color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           fontSize: 9
                       ),)
                     ],

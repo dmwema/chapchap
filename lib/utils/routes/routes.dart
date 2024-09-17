@@ -9,6 +9,7 @@ import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
 import 'package:chapchap/views/auth/update_phone_view.dart';
+import 'package:chapchap/views/confirm_cancel_view.dart';
 import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/coupon_view.dart';
 import 'package:chapchap/views/drc/drc_payment_view.dart';

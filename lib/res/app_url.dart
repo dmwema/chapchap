@@ -16,6 +16,7 @@ class AppUrl {
   static var beneficiairesEndPoint = '$baseUrl/my_beneficiaires';
   static var beneficiairesArchiveEndPoint = '$baseUrl/my_beneficiaires_archives';
   static var paysActifsEndPoint = '$baseUrl/get_pays';
+  static var modeRemboursementApi = '$baseUrl/mode_remboursement';
   static var beneficiaireInfo = '$baseUrl/infos_beneficiaires';
   static var newBeneficiaire = '$baseUrl/creat_beneficiaire';
   static var trasfert = '$baseUrl/transfert';

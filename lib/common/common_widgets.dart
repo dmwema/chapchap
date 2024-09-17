@@ -193,92 +193,94 @@ Widget commonBottomAppBar({
   required int active
 }) {
   return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      shadowColor: Colors.black,
-      child: SizedBox(
-        height: 66,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                if (active != 0) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.home,
-                        (route) => false,
-                  );
-                }
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(active == 0 ? CupertinoIcons.square_grid_2x2_fill : CupertinoIcons.square_grid_2x2, color: active == 0 ? AppColors.primaryColor : null,),
-                  const SizedBox(height: 5), // The dummy child
-                  Text("Accueil", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: active == 0 ? AppColors.primaryColor : null,),)
-                ],
-              ),
+    color: Colors.white,
+    elevation: 50,
+    shape: const CircularNotchedRectangle(),
+    shadowColor: Colors.black,
+    child: SizedBox(
+      height: 66,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              if (active != 0) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  RoutesName.home,
+                      (route) => false,
+                );
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(active == 0 ? CupertinoIcons.square_grid_2x2_fill : CupertinoIcons.square_grid_2x2, color: active == 0 ? AppColors.primaryColor : null,),
+                const SizedBox(height: 5), // The dummy child
+                Text("Accueil", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 0 ? AppColors.primaryColor : null,),)
+              ],
             ),
-            GestureDetector(
-              onTap: () {
-                if (active != 1) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.recipeints,
-                        (route) => false,
-                  );
-                }
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(active == 1 ? CupertinoIcons.person_2_fill : CupertinoIcons.person_2, color: active == 1 ? AppColors.primaryColor : null,),
-                  const SizedBox(height: 5), // The dummy child
-                  Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: active == 1 ? AppColors.primaryColor : null,),)
-                ],
-              ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (active != 1) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  RoutesName.recipeints,
+                      (route) => false,
+                );
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(active == 1 ? CupertinoIcons.person_2_fill : CupertinoIcons.person_2, color: active == 1 ? AppColors.primaryColor : null,),
+                const SizedBox(height: 5), // The dummy child
+                Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 1 ? AppColors.primaryColor : null,),)
+              ],
             ),
-            const SizedBox(width: 40),
-            GestureDetector(
-              onTap: () {
-                if (active != 2) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.exchange,
-                        (route) => false,
-                  );
-                }
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(active == 2 ? CupertinoIcons.arrow_right_arrow_left_circle_fill : CupertinoIcons.arrow_right_arrow_left_circle, color: active == 2 ? AppColors.primaryColor : null,),
-                  const SizedBox(height: 5), // The dummy child
-                  Text("Change", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: active == 2 ? AppColors.primaryColor : null,),)
-                ],
-              ),
+          ),
+          const SizedBox(width: 40),
+          GestureDetector(
+            onTap: () {
+              if (active != 2) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  RoutesName.exchange,
+                      (route) => false,
+                );
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(active == 2 ? CupertinoIcons.arrow_right_arrow_left_circle_fill : CupertinoIcons.arrow_right_arrow_left_circle, color: active == 2 ? AppColors.primaryColor : null,),
+                const SizedBox(height: 5), // The dummy child
+                Text("Change", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 2 ? AppColors.primaryColor : null,),)
+              ],
             ),
-            GestureDetector(
-              onTap: () {
-                if (active != 3) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.accountView,
-                        (route) => false,
-                  );
-                }
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(active == 3 ? CupertinoIcons.person_fill : CupertinoIcons.person, color: active == 3 ? AppColors.primaryColor : null,),
-                  const SizedBox(height: 5),
-                  Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 10, color: active == 3 ? AppColors.primaryColor : null,),)
-                ],
-              ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (active != 3) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  RoutesName.accountView,
+                      (route) => false,
+                );
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(active == 3 ? CupertinoIcons.person_fill : CupertinoIcons.person, color: active == 3 ? AppColors.primaryColor : null,),
+                const SizedBox(height: 5),
+                Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 3 ? AppColors.primaryColor : null,),)
+              ],
             ),
-          ],
-        ),
-      )
+          ),
+        ],
+      ),
+    )
   );
 }
