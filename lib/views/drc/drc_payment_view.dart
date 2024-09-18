@@ -119,7 +119,7 @@ class _DRCPaymentViewSatet extends State<DRCPaymentView> {
                               ),),
                             ],
                           ),
-                          Divider(),
+                          const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

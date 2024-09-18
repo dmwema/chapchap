@@ -119,7 +119,7 @@ class AuthViewModel with ChangeNotifier{
             Navigator.pushNamedAndRemoveUntil(context, RoutesName.updatePhone, (route) => false, arguments: {'email':username, 'token': token, 'message': value['message'], 'update': true});
           } else if (value['data'] != null && value['data']['confirm_contact'] != null && value['data']['confirm_contact'] == true) {
             String token = value['token'];
-            Utils.flushBarErrorMessage("Veuillez vérifier votre numéro de téléphone.", context);
+            Utils.flushBarErrorMessage(value['message'], context);
             Navigator.pushNamedAndRemoveUntil(context, RoutesName.phoneVerification, (route) => false, arguments: {'username': username, 'token': token, 'message': value['message'], 'update': false});
           } else {
             UserModel user = UserModel.fromJson(value['data']);
@@ -164,7 +164,7 @@ class AuthViewModel with ChangeNotifier{
               RoutesName.phoneVerification,
                   (route) => false,
               arguments: {
-                'email': data['email'],
+                'username': data['email'],
                 'message': message,
                 'token': token,
                 'update': false

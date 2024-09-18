@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/auth_container.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';

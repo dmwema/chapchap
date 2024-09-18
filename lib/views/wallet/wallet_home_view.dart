@@ -117,7 +117,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     //   fontSize: 15,
                     // ),),
                     const SizedBox(height: 10,),
-                    Container(
+                     Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.black26

@@ -28,8 +28,8 @@ class _ExchangeViewState extends State<ExchangeView> {
   List destinationsList = [];
   bool changed = false;
 
-  TextEditingController _amountController = TextEditingController();
-  TextEditingController _toController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _toController = TextEditingController();
 
   @override
   void initState() {

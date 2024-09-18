@@ -518,35 +518,35 @@ class _ProfileViewState extends State<ProfileView> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border(
-                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-                                          )
-                                      ),
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons.work_outline_outlined, size: 15,),
-                                                const SizedBox(width: 15,),
-                                                Flexible(
-                                                  child: Text(user != null && user!.profession != null ? user!.profession.toString() : "-", style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.black
-                                                  ),),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   decoration: BoxDecoration(
+                                    //       color: Colors.white,
+                                    //       border: Border(
+                                    //           bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+                                    //       )
+                                    //   ),
+                                    //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                    //   child: Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    //     children: [
+                                    //       Expanded(
+                                    //         child: Row(
+                                    //           children: [
+                                    //             const Icon(Icons.work_outline_outlined, size: 15,),
+                                    //             const SizedBox(width: 15,),
+                                    //             Flexible(
+                                    //               child: Text(user != null && user!.profession != null ? user!.profession.toString() : "-", style: const TextStyle(
+                                    //                   fontSize: 14,
+                                    //                   fontWeight: FontWeight.w400,
+                                    //                   color: Colors.black
+                                    //               ),),
+                                    //             ),
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     const SizedBox(height: 20,),
                                     if (changed)
                                     RoundedButton(
