@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 3.1.8+76
+version: 3.1.10+78
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -55,12 +55,12 @@ dependencies:
   page_transition: "^2.0.9"
   path_provider: ^2.0.13
   dio: ^5.0.1
-  app_settings: ^5.1.1
   map_launcher: ^2.5.0+1
   jiffy: ^5.0.0
   email_validator: '^2.1.16'
   workmanager: ^0.5.1
   share_plus: ^7.2.2
+  super_cupertino_navigation_bar: ^2.1.2
   maps_launcher: ^2.2.0
   mask_text_input_formatter: ^2.4.0
   sms_autofill: ^2.3.1
@@ -71,6 +71,7 @@ dependencies:
   flutter_cupertino_date_picker_fork: ^1.0.7
   dbus: ^0.7.8
   xml: ^6.2.2
+  pin_code_fields: ^8.0.1
   image: ^4.0.15
   country_icons: ^2.0.2
 

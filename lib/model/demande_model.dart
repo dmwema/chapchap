@@ -15,6 +15,7 @@ class DemandeModel {
   String? codePaysSrce;
   String? codePaysDest;
   String? paysSrce;
+  bool? isPaid;
   String? paysDest;
   int? idBeneficiaire;
   String? beneficiaire;
@@ -29,6 +30,7 @@ class DemandeModel {
       this.idDemande,
       this.idAnnulation,
       this.idModeRetrait,
+      this.isPaid,
       this.modeRetrait,
       this.lienPaiement,
       this.progression,
@@ -56,6 +58,7 @@ class DemandeModel {
   DemandeModel.fromJson(Map<String, dynamic> json) {
     idDemande = json['id_demande'];
     idModeRetrait = json['id_mode_retrait'];
+    isPaid = json['is_paid'];
     idAnnulation = json['id_annulation'];
     modeRetrait = json['mode_retrait'];
     lienPaiement = json['lien_paiement'];
@@ -91,6 +94,7 @@ class DemandeModel {
     data['probleme'] = probleme;
     data['facture'] = this.facture;
     data['date'] = this.date;
+    data['is_paid'] = isPaid;
     data['datePaidBen'] = this.datePaidBen;
     data['montant_net'] = this.montantNet;
     data['montance_srce'] = this.montanceSrce;

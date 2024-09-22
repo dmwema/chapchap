@@ -31,6 +31,10 @@ class PinViewModel with ChangeNotifier{
     int? returnValue;
     await _repository.updatePin(data, context: context).then((value) {
       if (value!=null){
+        print("22222222222222222222");
+        print("22222222222222222222");
+        print(data);
+        print(value);
         setLoading(false);
         if (value['error'] != true) {
           Utils.toastMessage(value['message']);
@@ -41,11 +45,6 @@ class PinViewModel with ChangeNotifier{
           );
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutesName.accountView,
-                (route) => false,
-          );
         }
       }
     }).onError((error, stackTrace) {
@@ -59,6 +58,67 @@ class PinViewModel with ChangeNotifier{
     setLoading(true);
     int? returnValue;
     await _repository.createPin(data, context: context).then((value) async {
+      setLoading(false);
+      if (value!=null){
+        if (value['error'] != true) {
+          await UserViewModel().getUser().then((user) async {
+            user.pin = true;
+            await UserViewModel().updateUser(user, false, false).then((result) {
+              setLoading(false);
+              Utils.toastMessage(value['message']);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RoutesName.accountView,
+                    (route) => false,
+              );
+            });
+          });
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return returnValue;
+  }
+
+  Future<int?> resetPin(BuildContext context) async {
+    UserModel? user = UserModel();
+    await UserViewModel().getUser().then((value) {
+      user = value;
+      print(user!.toJson());
+    });
+    Map data = {
+      "username": user!.emailClient
+    };
+    setLoading(true);
+    int? returnValue;
+    await _repository.resetPin(data, context: context).then((value) async {
+      setLoading(false);
+      if (value!=null){
+        if (value['error'] != true) {
+          Utils.toastMessage(value['message']);
+          Navigator.pushNamed(
+            context,
+            RoutesName.resetPin,
+          );
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return returnValue;
+  }
+
+  Future<int?> changePin(dynamic data, BuildContext context) async {
+    setLoading(true);
+    int? returnValue;
+    await _repository.changePin(data, context: context).then((value) async {
       setLoading(false);
       if (value!=null){
         if (value['error'] != true) {

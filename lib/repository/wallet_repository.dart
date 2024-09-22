@@ -26,9 +26,45 @@ class WalletRepository {
     }
   }
 
+  Future<dynamic> getCurrencies ({required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.getCurrencies, {}, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> createWallet (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.createWallet, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> rechargeWallet (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.rechargeWallet, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> rechargeHistory ({required BuildContext context, required String currency}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.rechargesHistory}/$currency", {}, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> transactionsHistory ({required BuildContext context, required String currency}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse("${AppUrl.transactionsHistory}/$currency", {}, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

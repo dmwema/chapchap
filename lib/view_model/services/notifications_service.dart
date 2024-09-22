@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:app_settings/app_settings.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -29,7 +28,7 @@ class NotificationsService {
     } else if (settings != null && settings!.authorizationStatus == AuthorizationStatus.provisional) {
       print("provisional");
     } else {
-      AppSettings.openAppSettings(type: AppSettingsType.notification);
+      // AppSettings.openAppSettings(type: AppSettingsType.notification);
     }
   }
 

@@ -24,6 +24,7 @@ class RoutesName {
   static const String invoices = 'invoices_screen';
   static const String invoiceDetail = 'invoice_detail_screen';
   static const String pay = 'pay_screen';
+  static const String confirmCancelView = 'confirm_cancel_view';
   static const String sendSuccess = 'send_success_screen';
   static const String contactView = 'contact_view';
   static const String webViewPage = 'web_view_page';
@@ -35,5 +36,10 @@ class RoutesName {
 
   static const String walletPresentation = 'wallet_presentation_view';
   static const String walletHome = 'wallet_home_view';
+  static const String transfertAccountWallet = 'wallet_transfer_account_view';
   static const String createPin = 'create_pin_view';
+  static const String resetPin = 'reset_pin_view';
+  static const String updatePin = 'update_pin_view';
+  static const String walletRechargeHistoryView = 'recharges_history_view';
+  static const String walletTransfersHistoryView = 'transfers_history_view';
 }

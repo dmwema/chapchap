@@ -25,4 +25,22 @@ class PinRepository {
       rethrow;
     }
   }
+
+  Future<dynamic> resetPin (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.resetPin, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> changePin (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.changePin, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
 }

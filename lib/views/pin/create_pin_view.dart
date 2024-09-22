@@ -20,8 +20,6 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -88,10 +86,9 @@ class _CreatePinViewState extends State<CreatePinView> {
                   context: context,
                   backArrow: true,
                   backClick: () {
-                    Navigator.pushNamedAndRemoveUntil(
+                    Navigator.pushNamed(
                       context,
-                      RoutesName.walletPresentation,
-                          (route) => false,
+                      RoutesName.accountView,
                     );
                   }
                 ),
@@ -101,7 +98,7 @@ class _CreatePinViewState extends State<CreatePinView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Creer un code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    const Text("Définir un code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(
                       height: 20,),
                     CustomFormField(
@@ -160,16 +157,7 @@ class _CreatePinViewState extends State<CreatePinView> {
                                     .text,
                               };
                               await pinViewModel
-                                  .createPin(data, context)
-                                  .then((value) {
-                                onTap: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutesName.home,
-                                        (route) => false,
-                                  );
-                                };
-                              });
+                                  .createPin(data, context);
                             }
                           }
                         )

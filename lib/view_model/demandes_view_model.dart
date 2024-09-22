@@ -21,6 +21,7 @@ class DemandesViewModel with ChangeNotifier{
   ApiResponse<dynamic> promoList = ApiResponse.loading();
   ApiResponse<dynamic> beneficiairesList = ApiResponse.loading();
   ApiResponse<dynamic> paysActifList = ApiResponse.loading();
+  ApiResponse<dynamic> modeRemboursementList = ApiResponse.loading();
   ApiResponse<dynamic> paysDestination = ApiResponse.loading();
   ApiResponse<dynamic> allPaysDestination = ApiResponse.loading();
   ApiResponse<dynamic> applyDetail = ApiResponse.loading();
@@ -37,6 +38,11 @@ class DemandesViewModel with ChangeNotifier{
 
   setDemandeList (ApiResponse<dynamic> response) {
     demandeList = response;
+    notifyListeners();
+  }
+
+  setModeRemboursementList (ApiResponse<dynamic> response) {
+    modeRemboursementList = response;
     notifyListeners();
   }
 
@@ -216,6 +222,25 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
+  Future<void> modeRemboursements(dynamic data, BuildContext context) async {
+    setLoading(true);
+    await _repository.modeRemboursement(data, context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setModeRemboursementList(ApiResponse.completed(value["data"]));
+        } else {
+          setModeRemboursementList(ApiResponse.error(value['message']));
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      setPaysActif(ApiResponse.error(error.toString()));
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+  }
+
   Future<dynamic> newBeneficiaire(dynamic data, BuildContext context, {bool redirect = false}) async {
 
     setLoading(true);
@@ -276,27 +301,30 @@ class DemandesViewModel with ChangeNotifier{
     });
   }
 
-  Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true}) async {
+  Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true, bool wallet = false}) async {
     dynamic returnValue;
     setLoading(true);
-    await _repository.transfert(data, context: context).then((value) async {
+    await _repository.transfert(data, context: context, wallet: wallet).then((value) async {
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {
           final SharedPreferences sp = await SharedPreferences.getInstance();
-          Utils.toastMessage("Demande enrégistrée avec succès");
-
-          String url = value["data"]['lien_paiement'].toString();
-          if (transfer) {
-            var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-            if(urllaunchable){
-              await launch(url); //launch is from url_launcher package to launch URL
-              Navigator.pushNamed(context,RoutesName.home);
-            }else{
-              Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+          if (wallet == true) {
+            Utils.toastMessage(value["data"]["progression"]);
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+          } else {
+            Utils.toastMessage("Demande enrégistrée avec succès");
+            String url = value["data"]['lien_paiement'].toString();
+            if (transfer) {
+              var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+              if(urllaunchable){
+                await launch(url); //launch is from url_launcher package to launch URL
+                Navigator.pushNamed(context,RoutesName.home);
+              }else{
+                Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+              }
             }
           }
-
           returnValue = value;
         } else {
           Utils.flushBarErrorMessage(value['message'], context);

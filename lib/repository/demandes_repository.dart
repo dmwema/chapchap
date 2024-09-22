@@ -88,6 +88,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> modeRemboursement (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.modeRemboursementApi, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> newBeneficiaire (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.newBeneficiaire, data, context: context, auth: true);
@@ -97,9 +106,9 @@ class DemandesRepository {
     }
   }
 
-  Future<dynamic> transfert (dynamic data, {required BuildContext context}) async {
+  Future<dynamic> transfert (dynamic data, {required BuildContext context, bool wallet = false}) async {
     try  {
-      dynamic response = await _apiServices.getPostApiResponse(AppUrl.trasfert, data, context: context, auth: true);
+      dynamic response = await _apiServices.getPostApiResponse(wallet == true ? AppUrl.trasfertWallet : AppUrl.trasfert, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;
