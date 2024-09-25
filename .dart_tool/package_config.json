@@ -626,6 +626,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pin_code_fields",
+      "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/pin_code_fields-8.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "pin_input_text_field",
       "rootUri": "file:///Users/quickdepquickdep/.pub-cache/hosted/pub.dev/pin_input_text_field-4.5.2",
       "packageUri": "lib/",
@@ -932,7 +938,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-09-17T18:56:34.465096Z",
+  "generated": "2024-09-23T18:07:18.052659Z",
   "generator": "pub",
   "generatorVersion": "3.5.0-131.0.dev",
   "flutterRoot": "file:///Users/quickdepquickdep/flutter",
