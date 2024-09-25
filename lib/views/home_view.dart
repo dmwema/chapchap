@@ -1,5 +1,6 @@
 
 import 'package:chapchap/common/common_widgets.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -14,7 +15,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -39,7 +40,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   List<dynamic> demandes = [];
   int? nbProblemes;
 
-  List<Widget> msgList = [];
+  List<Map> msgList = [];
 
   bool loadEmail = false;
   bool loadSMS = false;
@@ -87,7 +88,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       if (value != null && value['error'] != true && value['data'] != null && value['data'].length > 0) {
         value['data'].forEach((element) => {
           setState(() {
-            msgList.add(InfoCard(type: element['type_msg_info'], content: element['msg']));
+            // msgList.add(InfoCard(type: element['type_msg_info'], content: element['msg']));
+            msgList.add(element);
           })
         });
       }
@@ -105,270 +107,309 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
     final box = context.findRenderObject() as RenderBox?;
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
-        body: SuperScaffold(
-          appBar: SuperAppBar(
-            border: const Border(bottom: BorderSide(color: Colors.black12, width: 1)),
-            backgroundColor: Colors.transparent,
-            // title: const Text("Hello"),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.accountView);
-                },
-                child: const Icon(CupertinoIcons.profile_circled, size: 28,),
-              ),
-            ),
-            // alwaysShowTitle: true,
-            largeTitle: SuperLargeTitle(
-              enabled: true,
-              largeTitle: "ChapChap",
-              textStyle: TextStyle(
-                color: AppColors.primaryColor,
-                fontSize: 30,
-                fontWeight: FontWeight.w900
-              )
-            ),
-            actions: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Share.share(
-                            "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
-                            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                          );
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: AppColors.primaryColor
-                            ),
-                            padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                            child: const Icon(Icons.share_outlined, color: Colors.white, size: 16,)
-                        ),
-                      ),
-                      const SizedBox(width: 5,),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RoutesName.home,
-                                (route) => false,
-                          );
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.black
-                            ),
-                            padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                            child: const Icon(CupertinoIcons.refresh, color: Colors.white, size: 16,)
-                        ),
-                      ),
-                      const SizedBox(width: 5,),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutesName.historyWP);
-                        },
-                        child: Stack(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.black54
-                                ),
-                                padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                                child: const Icon(CupertinoIcons.exclamationmark_triangle, color: Colors.white, size: 16,)
-                            ),
-                            if (nbProblemes != null && nbProblemes! > 0)
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Container(
-                                  width: 14,
-                                  height: 14,
-                                  padding: const EdgeInsets.only(bottom: 4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(nbProblemes.toString(), style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12
-                                    ),),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 5,),
-                      InkWell(
-                        onTap: () async {
-                          SharedPreferences preferences = await SharedPreferences.getInstance();
-                          bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
-
-                          if (presentationWalletPassed != true || user!.pin != true) {
-                            await preferences.setBool('wallet_presentation_passed', true);
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RoutesName.walletPresentation,
-                                  (route) => false,
-                            );
-                          } else {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RoutesName.walletHome,
-                                  (route) => false,
-                            );
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: AppColors.primaryColor
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
-                          child: ChangeNotifierProvider<WalletViewModel>(
-                              create: (BuildContext context) => walletViewModel,
-                              child: Consumer<WalletViewModel>(
-                                  builder: (context, value, _){
-                                    switch (value.balance.status) {
-                                      case Status.LOADING:
-                                        return const Row(
-                                          children: [
-                                            Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
-                                            SizedBox(width: 5,),
-                                            Text("Wallet", style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontSize: 12
-                                            ),)
-                                          ],
-                                        );
-                                      case Status.ERROR:
-                                        return Center(
-                                          child: Text(value.balance.message.toString()),
-                                        );
-                                      default:
-                                        var balance = value.balance.data!;
-                                        return Row(
-                                          children: [
-                                            const Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
-                                            const SizedBox(width: 5,),
-                                            Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontSize: 12
-                                            ),)
-                                          ],
-                                        );
-                                    }
-                                  })
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ),
-            searchBar: SuperSearchBar(
-              enabled: false,
-            ),
-            bottom: SuperAppBarBottom(
-              enabled: true,
-              height: 40,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text("Salut!,", style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black
-                    ),),
-                    const SizedBox(width: 5),
-                    Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "", style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black
-                    ),),
-                  ],
-                ),
-              ), // Any widget of yours
-            ),
-          ),
-          body: Column(
+        body: SafeArea(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 250.0,
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.2),
-                    // border: Border.all(color: Colors.black38, width: 1)
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.black54, width: 1)
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xffe86328), Color(0xffd34040)],
+                            stops: [0.25, 0.75],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                           ),
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset("assets/logo_red.png", width: 20,),
-                              const SizedBox(width: 10,),
-                              const Flexible(child: Text("Bienvenue chez ChapChap, la meilleure application de transfert d’argent. Profitez de la belle expérience!",
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600
-                                ),
-                              ))
+                              const Text("ChapChap Wallet", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 18
+                              ),),
+                              Text("Simple et Rapide", style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.white.withOpacity(.6),
+                                  fontWeight: FontWeight.w500
+                              ),)
                             ],
                           ),
+                          InkWell(
+                            onTap: () async {
+                              SharedPreferences preferences = await SharedPreferences.getInstance();
+                              bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                              if (presentationWalletPassed != true || user!.pin != true) {
+                                await preferences.setBool('wallet_presentation_passed', true);
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RoutesName.walletPresentation,
+                                      (route) => false,
+                                );
+                              } else {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RoutesName.walletHome,
+                                      (route) => false,
+                                );
+                              }
+                            },
+                            child: ChangeNotifierProvider<WalletViewModel>(
+                                create: (BuildContext context) => walletViewModel,
+                                child: Consumer<WalletViewModel>(
+                                    builder: (context, value, _){
+                                      switch (value.balance.status) {
+                                        case Status.LOADING:
+                                          return const Row(
+                                            children: [
+                                              Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
+                                              SizedBox(width: 5,),
+                                              Text("Wallet", style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 12
+                                              ),)
+                                            ],
+                                          );
+                                        case Status.ERROR:
+                                          return Center(
+                                            child: Text(value.balance.message.toString()),
+                                          );
+                                        default:
+                                          var balance = value.balance.data!;
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              const Text("SOLDE ACTUEL", style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                  color: Colors.white
+                                              ),),
+                                              Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.white,
+                                                  fontSize: 25
+                                              ),)
+                                            ],
+                                          );
+                                      }
+                                    })
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Salut!,", style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: Colors.black87
+                            ),),
+                            if (user != null)
+                              Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w800,
+                              ),)
+                          ],
                         ),
-                        ...msgList,
-                        const SizedBox(height: 5,),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Share.share(
+                                  "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                                  sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                                );
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.lightGrey
+                                  ),
+                                  padding: const EdgeInsets.only(left: 7, top: 7, bottom: 8, right: 7),
+                                  child: Icon(Icons.share_outlined, color: AppColors.primaryColor, size: 25,)
+                              ),
+                            ),
+                            const SizedBox(width: 10,),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RoutesName.home,
+                                      (route) => false,
+                                );
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.lightGrey
+                                  ),
+                                  padding: const EdgeInsets.only(left: 7, top: 7, bottom: 8, right: 7),
+                                  child: Icon(CupertinoIcons.refresh, color: AppColors.primaryColor, size: 25,)
+                              ),
+                            ),
+                            // const SizedBox(width: 5,),
+                            // InkWell(
+                            //   onTap: () {
+                            //     Navigator.pushNamed(context, RoutesName.historyWP);
+                            //   },
+                            //   child: Stack(
+                            //     children: [
+                            //       Container(
+                            //           decoration: BoxDecoration(
+                            //               borderRadius: BorderRadius.circular(5),
+                            //               color: Colors.black54
+                            //           ),
+                            //           padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
+                            //           child: const Icon(CupertinoIcons.exclamationmark_triangle, color: Colors.white, size: 16,)
+                            //       ),
+                            //       if (nbProblemes != null && nbProblemes! > 0)
+                            //         Positioned(
+                            //           top: 0,
+                            //           right: 0,
+                            //           child: Container(
+                            //             width: 14,
+                            //             height: 14,
+                            //             padding: const EdgeInsets.only(bottom: 4),
+                            //             decoration: BoxDecoration(
+                            //               color: Colors.red,
+                            //               borderRadius: BorderRadius.circular(10),
+                            //             ),
+                            //             child: Center(
+                            //               child: Text(nbProblemes.toString(), style: const TextStyle(
+                            //                   color: Colors.white,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   fontSize: 12
+                            //               ),),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
+                        )
                       ],
                     ),
+                  ],
+                ),
+              ),
+              Divider(
+                color: AppColors.lightGrey,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (msgList.isNotEmpty)
+                      CarouselSlider(
+                        options: CarouselOptions(height: 150.0),
+                        items: [1, ...msgList].map((element) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              if (element is int) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightGrey,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColors.primaryColor,
+                                              borderRadius: BorderRadius.circular(50)
+                                          ),
+                                          width: 80,
+                                          height: 80,
+                                          child: Center(child: Image.asset("assets/logo.png", width: 40,))
+                                      ),
+                                      const SizedBox(width: 15,),
+                                      Flexible(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Text("Bienvenue chez ChapChap",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                            Flexible(child: Text("La meilleure application de transfert d’argent. Profitez de la belle expérience!",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColors.textGrey,
+                                                  fontWeight: FontWeight.w500
+                                              ),
+                                            )),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text("Commencer",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: AppColors.primaryColor,
+                                                  fontWeight: FontWeight.w700
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else if (element is Map) {
+                                return InfoCard(type: element['type_msg_info'], content: element['msg']);
+                              }
+                              return Container();
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 5,),
+                    ],
                   ),
                 ),
+              ),
+              Divider(
+                color: AppColors.lightGrey,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                  border: const Border(
-                    top: BorderSide(color: Colors.black45),
-                    bottom: BorderSide(color: Colors.black45),
-                  ),
-                  color: AppColors.primaryColor.withOpacity(.1)
-                ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,7 +417,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Dernières opérations", style: TextStyle(
+                        Text("DERNIERES OPERATIONS", style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: Colors.black
@@ -385,6 +426,9 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     ),
                   ],
                 ),
+              ),
+              Divider(
+                color: AppColors.lightGrey,
               ),
               ChangeNotifierProvider<DemandesViewModel>(
                   create: (BuildContext context) => demandesViewModel,
@@ -407,21 +451,63 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                               );
                             }
                             return Expanded(child: ListView.builder(
-                                itemCount: value.demandeList.data!.length,
-                                itemBuilder: (context, index) {
-                                  DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                  return
-                                    HistoryCard(
-                                      demande: current,
-                                    )
-                                  ;
-                                },
-                              ));
+                              itemCount: value.demandeList.data!.length,
+                              itemBuilder: (context, index) {
+                                DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                return
+                                  HistoryCard(
+                                    demande: current,
+                                  )
+                                ;
+                              },
+                            ));
                         }
                       })
               ),
             ],
           ),
+          // child: SuperScaffold(
+          //   // appBar: SuperAppBar(
+          //   //   border: const Border(bottom: BorderSide(color: Colors.black12, width: 1)),
+          //   //   backgroundColor: Colors.transparent,
+          //   //   // alwaysShowTitle: true,
+          //   //   largeTitle: SuperLargeTitle(
+          //   //     enabled: true,
+          //   //     largeTitle: " Salut!, Daniel Mwema",
+          //   //     textStyle: const TextStyle(
+          //   //       color: Colors.black,
+          //   //       fontSize: 20,
+          //   //       fontWeight: FontWeight.w800
+          //   //     )
+          //   //   ),
+          //   //   actions: Padding(
+          //   //     padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+          //   //     child:
+          //   //   ),
+          //   //   titleSpacing: 0,
+          //   //   searchBar: SuperSearchBar(
+          //   //     enabled: false,
+          //   //   ),
+          //   //   bottom: SuperAppBarBottom(
+          //   //     enabled: true,
+          //   //     height: 50,
+          //   //     child: Padding(
+          //   //       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          //   //       child: Row(
+          //   //         crossAxisAlignment: CrossAxisAlignment.center,
+          //   //         children: [
+          //   //           Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "", style: const TextStyle(
+          //   //               fontSize: 23,
+          //   //               fontWeight: FontWeight.w800,
+          //   //               color: Colors.black
+          //   //           ),),
+          //   //         ],
+          //   //       ),
+          //   //     ), // Any widget of yours
+          //   //   ),
+          //   // ),
+          //   body:
+          // ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:ScaleTransition(

@@ -9,7 +9,9 @@ class AppColors {
 
   static Color get marronRed => const Color(0xFFAC5A37);
 
-  static Color get lightGrey => const Color(0xFFF1F1F1);
+  static Color get lightGrey => const Color(0xFFF5F5F5);
+
+  static Color get textGrey => const Color(0xFF565658);
 
   static Color get formFieldColor => const Color(0xFFF7F7F7);
   static Color get formFieldBorderColor => const Color(0xFFE2E2E2);

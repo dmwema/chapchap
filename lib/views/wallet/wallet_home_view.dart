@@ -98,7 +98,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
               commonAppBar(
                   context: context,
                   backArrow: true,
-                  textColor: Colors.white,
+                   textColor: Colors.white,
                   appBarColor: AppColors.primaryColor,
                   backClick: () {
                     Navigator.pushNamedAndRemoveUntil(

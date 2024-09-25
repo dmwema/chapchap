@@ -8,3 +8,5 @@ abstract class BaseApiServices {
   Future<dynamic> getMultipartApiResponse(String url, dynamic data, {required BuildContext context, required String filename});
   Future<dynamic> getDeleteApiResponse(String url, {required BuildContext context, bool auth = true, String contentType = "application/json"});
 }
+
+
