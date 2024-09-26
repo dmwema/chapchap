@@ -193,11 +193,9 @@ Widget commonBottomAppBar({
   required int active
 }) {
   return BottomAppBar(
-    color: Colors.white,
-    elevation: 50,
+    elevation: 0,
     shape: const CircularNotchedRectangle(),
-    shadowColor: Colors.black,
-    child: SizedBox(
+    child:  SizedBox(
       height: 66,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

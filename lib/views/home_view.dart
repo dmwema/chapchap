@@ -299,7 +299,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                             //             child: Center(
                             //               child: Text(nbProblemes.toString(), style: const TextStyle(
                             //                   color: Colors.white,
-                            //                   fontWeight: FontWeight.bold,
+                            //                   fontWeight: FonnbProblemes.toString()tWeight.bold,
                             //                   fontSize: 12
                             //               ),),
                             //             ),
@@ -326,7 +326,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     children: [
                       if (msgList.isNotEmpty)
                       CarouselSlider(
-                        options: CarouselOptions(height: 150.0),
+                        options: CarouselOptions(height: 120.0),
                         items: [1, ...msgList].map((element) {
                           return Builder(
                             builder: (BuildContext context) {
@@ -348,8 +348,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                               color: AppColors.primaryColor,
                                               borderRadius: BorderRadius.circular(50)
                                           ),
-                                          width: 80,
-                                          height: 80,
+                                          width: 60,
+                                          height: 60,
                                           child: Center(child: Image.asset("assets/logo.png", width: 40,))
                                       ),
                                       const SizedBox(width: 15,),
@@ -368,7 +368,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                             const SizedBox(
                                               height: 3,
                                             ),
-                                            Flexible(child: Text("La meilleure application de transfert d’argent. Profitez de la belle expérience!",
+                                            Flexible(child: Text("La meilleure application de transfert d’argent.",
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: AppColors.textGrey,
@@ -399,6 +399,55 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                           );
                         }).toList(),
                       ),
+                      if (!msgList.isNotEmpty)
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.lightGrey,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                width: 60,
+                                height: 60,
+                                child: Center(child: Image.asset("assets/logo.png", width: 40,))
+                            ),
+                            const SizedBox(width: 15,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Bienvenue chez ChapChap",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text("Commencer",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w700
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 5,),
                     ],
                   ),
@@ -410,59 +459,99 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: const Row(
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.black.withOpacity(.3), width: 1))
+                ),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("DERNIERES OPERATIONS", style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black
-                        ),),
-                      ],
-                    ),
+                    const Text("DERNIERES OPERATIONS", style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black
+                    ),),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.historyWP);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.black
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Problemes", style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold
+                            ),),
+                            if (nbProblemes != null && nbProblemes! > 0)
+                            const SizedBox(width: 5,),
+                            if (nbProblemes != null && nbProblemes! > 0)
+                            Text(nbProblemes.toString(), style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800
+                            ),)
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-              Divider(
-                color: AppColors.lightGrey,
-              ),
-              ChangeNotifierProvider<DemandesViewModel>(
-                  create: (BuildContext context) => demandesViewModel,
-                  child: Consumer<DemandesViewModel>(
-                      builder: (context, value, _){
-                        switch (value.demandeList.status) {
-                          case Status.LOADING:
-                            return const Expanded(child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.black),
-                            ));
-                          case Status.ERROR:
-                            return Center(
-                              child: Text(value.demandeList.message.toString()),
-                            );
-                          default:
-                            demandes = value.demandeList.data!;
-                            if (demandes.isEmpty) {
-                              return const Padding(padding: EdgeInsets.all(20),
-                                child: Center(child: Text("Aucune opération récente.")),
-                              );
+              Expanded(
+                child: Container(
+                  color: AppColors.lightGrey.withOpacity(.4),
+                  child: ChangeNotifierProvider<DemandesViewModel>(
+                      create: (BuildContext context) => demandesViewModel,
+                      child: Consumer<DemandesViewModel>(
+                          builder: (context, value, _){
+                            switch (value.demandeList.status) {
+                              case Status.LOADING:
+                                return const Expanded(child: Center(
+                                  child: CupertinoActivityIndicator(color: Colors.black),
+                                ));
+                              case Status.ERROR:
+                                return Center(
+                                  child: Text(value.demandeList.message.toString()),
+                                );
+                              default:
+                                demandes = value.demandeList.data!;
+                                if (demandes.isEmpty) {
+                                  return const Padding(padding: EdgeInsets.all(20),
+                                    child: Center(child: Text("Aucune opération récente.")),
+                                  );
+                                }
+                                return Expanded(child: ListView.builder(
+                                  itemCount: value.demandeList.data!.length,
+                                  itemBuilder: (context, index) {
+                                    DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                    if (index == 0) {
+                                      return Column(
+                                        children: [
+                                          const SizedBox(height: 20,),
+                                          HistoryCard(
+                                            demande: current,
+                                          )
+                                        ],
+                                      );
+                                    }
+                                    return
+                                      HistoryCard(
+                                        demande: current,
+                                      )
+                                    ;
+                                  },
+                                ));
                             }
-                            return Expanded(child: ListView.builder(
-                              itemCount: value.demandeList.data!.length,
-                              itemBuilder: (context, index) {
-                                DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                return
-                                  HistoryCard(
-                                    demande: current,
-                                  )
-                                ;
-                              },
-                            ));
-                        }
-                      })
+                          })
+                  ),
+                ),
               ),
             ],
           ),

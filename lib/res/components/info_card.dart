@@ -48,8 +48,8 @@ class InfoCard extends StatelessWidget {
               color: type == "PROMO" ? Colors.green : (type == "INFO" ? Colors.orange : AppColors.primaryColor),
               borderRadius: BorderRadius.circular(50),
             ),
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             child: Icon(icon, color: Colors.white, size: 40,)
           ),
           const SizedBox(width: 10,),
