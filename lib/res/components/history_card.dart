@@ -45,7 +45,7 @@ class _HistoryCardState extends State<HistoryCard> {
           isScrollControlled: true,
           builder: (context) {
             return Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,9 +55,8 @@ class _HistoryCardState extends State<HistoryCard> {
                   if (demande.probleme != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline, color: Colors.red, size: 30,),
-                        const SizedBox(width: 10,),
                         Expanded(
                           child: Text(demande.probleme.toString(), style: const TextStyle(
                             color: Colors.red,
@@ -72,8 +71,9 @@ class _HistoryCardState extends State<HistoryCard> {
                   if (demande.progression != null)
                   Text(demande.progression.toString(),
                       style: TextStyle(
-                      fontSize: 13,
-                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red),
                   ),),
                   const SizedBox(height: 5,),
                   const Divider(),

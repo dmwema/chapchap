@@ -154,7 +154,7 @@ Widget commonAppBar({
                     padding: const EdgeInsets.all(2),
                     child: Text("Aide ?", style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: 14,
                       color: textColor ?? Colors.black
                     ), textAlign: TextAlign.end,),
                   ),

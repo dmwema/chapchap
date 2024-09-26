@@ -417,9 +417,8 @@ class _SendViewState extends State<SendView> {
                                   Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
                                   SizedBox(width: 5,),
                                   Text("ChapChap utilise son propre taux de change!", style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w500
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600
                                   ),),
                                 ],
                               ),
@@ -1131,10 +1130,9 @@ class _SendViewState extends State<SendView> {
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
                 child: Text(step == 0 ? "Montant et pays" : (
                   step == 1 ? "Mode de reception" : ( step == 2 ? "Bénéficiaire" : "Terminer")
-                ), style: TextStyle(
-                  fontSize: 11,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w400
+                ), style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700
                 ),),
               ),
               Expanded(

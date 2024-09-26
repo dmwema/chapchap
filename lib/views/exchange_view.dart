@@ -74,7 +74,7 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-          backgroundColor: AppColors.formFieldColor,
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: Column(
@@ -83,6 +83,7 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
                 commonAppBar(
                   context: context,
                 ),
+                const SizedBox(height: 10,),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text("Taux de change", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),

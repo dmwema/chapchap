@@ -50,15 +50,16 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+             children: [
               commonAppBar(
                 context: context,
               ),
+              const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -104,11 +105,11 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(CupertinoIcons.archivebox, size: 15,),
+                            Icon(CupertinoIcons.archivebox_fill, size: 18,),
                             SizedBox(width: 10,),
                             Text("Bénéficiaires archivés", style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700
                             ),)
                           ],
                         ),
