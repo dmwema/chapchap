@@ -366,8 +366,13 @@ class _HistoryCardState extends State<HistoryCard> {
       },
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.black),
+              borderRadius: BorderRadius.circular(20)
+            ),
+            margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children: [
@@ -428,14 +433,6 @@ class _HistoryCardState extends State<HistoryCard> {
               ],
             ),
           ),
-          Container(
-            width: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-              )
-            ),
-          )
         ],
       ),
     );
