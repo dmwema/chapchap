@@ -112,6 +112,16 @@ class _HistoryViewState extends State<HistoryView> {
                                     itemCount: value.demandeList.data!.length,
                                     itemBuilder: (context, index) {
                                       DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                      if (index == 0) {
+                                        return Column(
+                                          children: [
+                                            const SizedBox(height: 20,),
+                                            HistoryCard(
+                                              demande: current,
+                                            ),
+                                          ],
+                                        );
+                                      }
                                       return Column(
                                         children: [
                                           HistoryCard(

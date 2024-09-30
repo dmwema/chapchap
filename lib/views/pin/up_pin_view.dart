@@ -1,30 +1,17 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
-import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/pin_view_model.dart';
-import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
-import 'package:chapchap/views/auth/login_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sms_autofill/sms_autofill.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UpPinView extends StatefulWidget {
   const UpPinView({Key? key}) : super(key: key);
@@ -44,38 +31,37 @@ class _UpPinViewState extends State<UpPinView> {
   bool changed = false;
   SharedPreferences? preferences;
   bool localAuthEnabled = false;
+  bool isObscured = true;
 
   String? currentPin;
   String? newPin;
   String? confirmNewPin;
 
+  String? currentPinMask;
+  String? newPinMask;
+  String? confirmNewPinMask;
+
+  StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
+  StreamController<ErrorAnimationType> errorController2 = StreamController<ErrorAnimationType>();
+  StreamController<ErrorAnimationType> errorController3 = StreamController<ErrorAnimationType>();
+
   bool loadEmail = false;
   bool loadSMS = false;
-
-  Future<void> _openUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-      setState(() {
-        loadEmail = false;
-        loadSMS = false;
-      });
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     UserViewModel().getUser().then((value) {
       setState(() {
         user = value;
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("ok");
     return HideKeyBordContainer(
       child: SafeArea(
         child: Scaffold(
@@ -106,69 +92,86 @@ class _UpPinViewState extends State<UpPinView> {
                     const SizedBox(height: 20,),
                     const Text("Code PIN actuel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(height: 10,),
-                    PinFieldAutoFill(
-                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
-                      currentCode: currentPin,
-                      codeLength: 5,
-                      decoration: BoxLooseDecoration(
-                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
-                          bgColorBuilder: const FixedColorBuilder(Colors.white),
-                          strokeWidth: 1,
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white
-                          ),
-                          radius: const Radius.circular(15)
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      errorAnimationController: errorController,
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(10),
+                        fieldHeight: 50,
+                        fieldWidth: 50,
+                        errorBorderColor: Colors.black45,
                       ),
-                      onCodeChanged: (code) {
-                          currentPin = code ?? '';
+                      onChanged: (value) {
+                        setState(() {
+                          currentPin = value;
+                        });
                       },
+                      appContext: context,
                     ),
                     const SizedBox(height: 10,),
                     const Divider(),
                     const SizedBox(height: 10,),
                     const Text("Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(height: 10,),
-                    PinFieldAutoFill(
-                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
-                      currentCode: newPin,
-                      codeLength: 5,
-                      decoration: BoxLooseDecoration(
-                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
-                          bgColorBuilder: const FixedColorBuilder(Colors.white),
-                          strokeWidth: 1,
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white
-                          ),
-                          radius: const Radius.circular(15)
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      errorAnimationController: errorController2,
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(10),
+                        fieldHeight: 50,
+                        fieldWidth: 50,
+                        errorBorderColor: Colors.black45,
                       ),
-                      onCodeChanged: (code) {
-                          newPin = code ?? '';
+                      onChanged: (value) {
+                        setState(() {
+                          newPin = value;
+                        });
                       },
+                      appContext: context,
                     ),
                     const SizedBox(height: 20,),
                     const Text("Confirmer le Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(height: 10,),
-                    PinFieldAutoFill(
-                      cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
-                      currentCode: currentPin,
-                      codeLength: 5,
-                      decoration: BoxLooseDecoration(
-                          strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
-                          bgColorBuilder: const FixedColorBuilder(Colors.white),
-                          strokeWidth: 1,
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white
-                          ),
-                          radius: const Radius.circular(15)
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      errorAnimationController: errorController3,
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(10),
+                        fieldHeight: 50,
+                        fieldWidth: 50,
+                        errorBorderColor: Colors.black45,
                       ),
-                      onCodeChanged: (code) {
-                          confirmNewPin = code ?? '';
+                      onChanged: (value) {
+                        setState(() {
+                          confirmNewPin = value;
+                        });
                       },
+                      appContext: context,
                     ),
-
                     const SizedBox(
                       height: 20,),
                     Row(
@@ -179,41 +182,43 @@ class _UpPinViewState extends State<UpPinView> {
                             title: "Enregistrer",
                             loading: pinViewModel.loading,
                             onPress: () async {
-                              if (currentPin == null || currentPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez entrer le code PIN actuel",
-                                    context);
-                              } else
-                              if (newPin == null || newPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez entrer le nouveau code PIN",
-                                    context);
-                              } else
-                              if (confirmNewPin == null || confirmNewPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez confirmer le code PIN",
-                                    context);
-                              } else
-                              if (newPin != confirmNewPin) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Les deux pins ne correspondent pas",
-                                    context);
-                              } else {
-                                Map data = {
-                                  'code_pin': newPin,
-                                  'code_pin_old': currentPin
-                                };
-
-                                await pinViewModel.updatePin(data, context);
-                              }
+                              print(currentPin);
+                              // return;
+                              // if (currentPin == null || currentPin!.length < 5) {
+                              //   Utils
+                              //       .flushBarErrorMessage(
+                              //       "Vous devez entrer le code PIN actuel",
+                              //       context);
+                              // } else
+                              // if (newPin == null || newPin!.length < 5) {
+                              //   Utils
+                              //       .flushBarErrorMessage(
+                              //       "Vous devez entrer le nouveau code PIN",
+                              //       context);
+                              // } else
+                              // if (confirmNewPin == null || confirmNewPin!.length < 5) {
+                              //   Utils
+                              //       .flushBarErrorMessage(
+                              //       "Vous devez confirmer le code PIN",
+                              //       context);
+                              // } else
+                              // if (newPin != confirmNewPin) {
+                              //   Utils
+                              //       .flushBarErrorMessage(
+                              //       "Les deux pins ne correspondent pas",
+                              //       context);
+                              // } else {
+                              //   Map data = {
+                              //     'code_pin': newPin,
+                              //     'code_pin_old': currentPin
+                              //   };
+                              //
+                              //   await pinViewModel.updatePin(data, context);
+                              // }
                             }
                         )
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

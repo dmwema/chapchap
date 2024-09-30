@@ -154,7 +154,7 @@ Widget commonAppBar({
                     padding: const EdgeInsets.all(2),
                     child: Text("Aide ?", style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: 14,
                       color: textColor ?? Colors.black
                     ), textAlign: TextAlign.end,),
                   ),
@@ -193,11 +193,9 @@ Widget commonBottomAppBar({
   required int active
 }) {
   return BottomAppBar(
-    color: Colors.white,
-    elevation: 50,
+    elevation: 0,
     shape: const CircularNotchedRectangle(),
-    shadowColor: Colors.black,
-    child: SizedBox(
+    child:  SizedBox(
       height: 66,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

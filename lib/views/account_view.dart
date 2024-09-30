@@ -6,7 +6,6 @@ import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -16,6 +15,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/pin_view_model.dart';
 import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:chapchap/view_model/wallet_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +36,7 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
   PinViewModel pinViewModel = PinViewModel();
   PaysModel selectedFrom = PaysModel();
   bool loadingBio = false;
+  WalletViewModel walletViewModel = WalletViewModel();
   UserModel? user;
   Destination? selectedTo;
   PaysDestinationModel? paysDestinationModel;
@@ -86,6 +87,13 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
       });
     });
     demandesViewModel.paysActifs([], context);
+
+    UserViewModel().getUser().then((value) {
+      setState(() {
+        user = value;
+      });
+      walletViewModel.getBalance(context, Utils.countryMoneyCode[user!.codePays.toString()]!);
+    });
   }
 
   Future loadPr() async {
@@ -114,11 +122,6 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel().getUser().then((value) {
-      setState(() {
-        user = value;
-      });
-    });
     return HideKeyBordContainer(
       child: Scaffold(
         backgroundColor: AppColors.formFieldColor,
@@ -272,6 +275,56 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                         noIcon: true,
                                         onTap: () {
                                           Navigator.pushNamed(context, RoutesName.contactView);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "Wallet",
+                                        icon: Icons.wallet,
+                                        suffix: ChangeNotifierProvider<WalletViewModel>(
+                                            create: (BuildContext context) => walletViewModel,
+                                            child: Consumer<WalletViewModel>(
+                                                builder: (context, value, _){
+                                                  switch (value.balance.status) {
+                                                    case Status.LOADING:
+                                                      return const CupertinoActivityIndicator();
+                                                    case Status.ERROR:
+                                                      return Container();
+                                                    default:
+                                                      var balance = value.balance.data!;
+                                                      return Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          color: AppColors.primaryColor
+                                                        ),
+                                                        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                                        child: Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
+                                                              fontWeight: FontWeight.w800,
+                                                              color: Colors.white,
+                                                              fontSize: 12
+                                                          ),)
+                                                      );
+                                                  }
+                                                })
+                                        ),
+                                        noIcon: true,
+                                        onTap: () async {
+                                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                                          bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                                          if (presentationWalletPassed != true || user!.pin != true) {
+                                            await preferences.setBool('wallet_presentation_passed', true);
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              RoutesName.walletPresentation,
+                                                  (route) => false,
+                                            );
+                                          } else {
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              RoutesName.walletHome,
+                                                  (route) => false,
+                                            );
+                                          }
                                         },
                                       ),
                                       ProfileMenu(

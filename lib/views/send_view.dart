@@ -16,6 +16,7 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 class SendView extends StatefulWidget {
@@ -417,9 +418,8 @@ class _SendViewState extends State<SendView> {
                                   Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
                                   SizedBox(width: 5,),
                                   Text("ChapChap utilise son propre taux de change!", style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w500
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600
                                   ),),
                                 ],
                               ),
@@ -1131,10 +1131,9 @@ class _SendViewState extends State<SendView> {
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
                 child: Text(step == 0 ? "Montant et pays" : (
                   step == 1 ? "Mode de reception" : ( step == 2 ? "Bénéficiaire" : "Terminer")
-                ), style: TextStyle(
-                  fontSize: 11,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w400
+                ), style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700
                 ),),
               ),
               Expanded(
@@ -1255,7 +1254,7 @@ class _SendViewState extends State<SendView> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      final TextEditingController pinController = TextEditingController();
+                                      String? pin;
 
                                       return Dialog(
                                         shape: RoundedRectangleBorder(
@@ -1317,11 +1316,28 @@ class _SendViewState extends State<SendView> {
                                                 ],
                                               ),
                                               const SizedBox(height: 20,),
-                                              CustomFormField(
-                                                label: "Code PIN",
-                                                hint: "Entrez le code PIN",
-                                                type: TextInputType.number,
-                                                controller: pinController  ,
+                                              PinCodeTextField(
+                                                length: 5,
+                                                obscureText: true,
+                                                animationType: AnimationType.fade,
+                                                animationDuration: const Duration(milliseconds: 300),
+                                                keyboardType: TextInputType.number,
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                cursorColor: Colors.black,
+                                                showCursor: true,
+                                                pinTheme: PinTheme(
+                                                  shape: PinCodeFieldShape.box,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  fieldHeight: 50,
+                                                  fieldWidth: 50,
+                                                  errorBorderColor: Colors.black45,
+                                                ),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    pin = value;
+                                                  });
+                                                },
+                                                appContext: context,
                                               ),
                                               const SizedBox(
                                                 height: 20,),
@@ -1348,7 +1364,7 @@ class _SendViewState extends State<SendView> {
                                                             color: Colors.white),),
                                                     ),
                                                     onTap: () async {
-                                                      if (pinController.text =="") {
+                                                      if (pin =="") {
                                                         Utils
                                                             .flushBarErrorMessage(
                                                             "Vous devez entrer le code PIN",
@@ -1382,7 +1398,7 @@ class _SendViewState extends State<SendView> {
                                                             "code_pays_srce": paysDestinationModel!.codePaysSrce,
                                                             "montant_srce": fromAmount,
                                                             "montant_dest": toAmount,
-                                                            'code_pin': pinController.text,
+                                                            'code_pin': pin,
                                                             "code_pays_dest": selectedDesinaion!.codePaysDest,
                                                             "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
                                                           };

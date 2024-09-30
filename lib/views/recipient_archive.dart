@@ -28,7 +28,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -41,6 +41,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                 Navigator.pushNamed(context, RoutesName.recipeints);
               }
             ),
+            const SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text("Bénéficiaires archivés", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),

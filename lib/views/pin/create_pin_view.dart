@@ -20,6 +20,7 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,8 +58,8 @@ class _CreatePinViewState extends State<CreatePinView> {
     }
   }
 
-  final TextEditingController _pinController = TextEditingController();
-  final TextEditingController _pinConfirmController = TextEditingController();
+  String? pin;
+  String? pinConfirm;
 
   @override
   void initState() {
@@ -101,21 +102,53 @@ class _CreatePinViewState extends State<CreatePinView> {
                     const Text("Définir un code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(
                       height: 20,),
-                    CustomFormField(
-                      label: "Entrez le code PIN",
-                      hint: "Entrez le code PIN",
-                      type: TextInputType
-                          .number,
-                      controller: _pinController,
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(10),
+                        fieldHeight: 50,
+                        fieldWidth: 50,
+                        errorBorderColor: Colors.black45,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          pin = value;
+                        });
+                      },
+                      appContext: context,
                     ),
                     const SizedBox(
                       height: 20,),
-                    CustomFormField(
-                      label: "Confirmer le code PIN",
-                      hint: "Confirmer le code PIN",
-                      type: TextInputType
-                          .number,
-                      controller: _pinConfirmController,
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(10),
+                        fieldHeight: 50,
+                        fieldWidth: 50,
+                        errorBorderColor: Colors.black45,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          pinConfirm = value;
+                        });
+                      },
+                      appContext: context,
                     ),
                     const SizedBox(
                       height: 20,),
@@ -127,34 +160,26 @@ class _CreatePinViewState extends State<CreatePinView> {
                           title: "Enregistrer",
                           loading: pinViewModel.loading,
                           onPress: () async {
-                            if (_pinController
-                                .text ==
-                                "") {
+                            if (pin == "") {
                               Utils
                                   .flushBarErrorMessage(
                                   "Vous devez entrer le code PIN",
                                   context);
                             } else
-                            if (_pinConfirmController
-                                .text ==
-                                "") {
+                            if (pinConfirm == "") {
                               Utils
                                   .flushBarErrorMessage(
                                   "Vous devez confirmer le code PIN",
                                   context);
                             } else
-                            if (_pinController
-                                .text !=
-                                _pinConfirmController
-                                    .text) {
+                            if (pin != pinConfirm) {
                               Utils
                                   .flushBarErrorMessage(
                                   "Les deux pins ne correspondent pas",
                                   context);
                             } else {
                               Map data = {
-                                'code_pin': _pinController
-                                    .text,
+                                'code_pin': pin,
                               };
                               await pinViewModel
                                   .createPin(data, context);

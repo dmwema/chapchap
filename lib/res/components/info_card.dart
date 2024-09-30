@@ -48,8 +48,8 @@ class InfoCard extends StatelessWidget {
               color: type == "PROMO" ? Colors.green : (type == "INFO" ? Colors.orange : AppColors.primaryColor),
               borderRadius: BorderRadius.circular(50),
             ),
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             child: Icon(icon, color: Colors.white, size: 40,)
           ),
           const SizedBox(width: 10,),
@@ -60,7 +60,7 @@ class InfoCard extends StatelessWidget {
               children: [
                 Text(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),
                   style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w700
                   ),
@@ -69,10 +69,10 @@ class InfoCard extends StatelessWidget {
                   height: 3,
                 ),
                 Flexible(child: Text(content,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textGrey,
-                    fontWeight: FontWeight.w500
+                  style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold
                   ),
                 ))
               ],

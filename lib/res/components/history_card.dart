@@ -24,6 +24,15 @@ class HistoryCard extends StatefulWidget {
 }
 
 class _HistoryCardState extends State<HistoryCard> {
+
+  String truncateWithEllipsis(String text, {int maxLength = 22}) {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return '${text.substring(0, maxLength - 3)}...';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     DemandeModel demande = widget.demande;
@@ -36,7 +45,7 @@ class _HistoryCardState extends State<HistoryCard> {
           isScrollControlled: true,
           builder: (context) {
             return Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,9 +55,8 @@ class _HistoryCardState extends State<HistoryCard> {
                   if (demande.probleme != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline, color: Colors.red, size: 30,),
-                        const SizedBox(width: 10,),
                         Expanded(
                           child: Text(demande.probleme.toString(), style: const TextStyle(
                             color: Colors.red,
@@ -63,8 +71,9 @@ class _HistoryCardState extends State<HistoryCard> {
                   if (demande.progression != null)
                   Text(demande.progression.toString(),
                       style: TextStyle(
-                      fontSize: 13,
-                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red),
                   ),),
                   const SizedBox(height: 5,),
                   const Divider(),
@@ -368,67 +377,77 @@ class _HistoryCardState extends State<HistoryCard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.black),
-              borderRadius: BorderRadius.circular(20)
+              // border: Border.all(width: 1, color: Colors.black),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              // border: Border.all(color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red), width: 1),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.1),
+                  blurRadius: 12,
+                  spreadRadius: 0,
+                  offset: Offset(0, 4),
+                ),
+              ]
             ),
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center ,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween ,
               children: [
-                Container(
-                  width: 40, height: 40,
-                  decoration: BoxDecoration(
-                    color: demande.facture != null ? Colors.green.withOpacity(.3): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
-                    borderRadius: BorderRadius.circular(50)
-                  ),
-                  child: Center(
-                    child: Icon(
-                      demande.facture != null ? CupertinoIcons.checkmark : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh): CupertinoIcons.xmark), size: 20,
-                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? (Colors.orange): Colors.red),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6 - 20 - 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(demande.beneficiaire.toString(), style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primaryColor,
-                        fontSize: 15,
-                      ),),
-                      const SizedBox(height: 1,),
-                      Text(demande.date.toString(), style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                      ),),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4 - 30,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16
-                      ),),
-                      const SizedBox(height: 5,),
-                      if (demande.progression != null)
-                      Text(demande.progression.toString(), style: TextStyle(
+                Row(
+                  children: [
+                    Container(
+                      width: 35, height: 35,
+                      decoration: BoxDecoration(
+                          color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
+                          borderRadius: BorderRadius.circular(50),
+                      ),
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Center(
+                        child: Icon(
+                          demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
                           color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 15,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(demande.beneficiaire.toString(), style: const TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 9
-                      ),)
-                    ],
-                  ),
+                          color: Colors.black,
+                          fontSize: 12,
+                        ),),
+                        const SizedBox(height: 2,),
+                        Text(demande.date.toString(), style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                          color: Colors.black54
+                        ),),
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 14
+                    ), textAlign: TextAlign.right,),
+                    const SizedBox(height: 2,),
+                    if (demande.progression != null)
+                    Text(truncateWithEllipsis(demande.progression.toString()), style: TextStyle(
+                        color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 10
+                    ), textAlign: TextAlign.right,)
+                  ],
                 ),
               ],
             ),
