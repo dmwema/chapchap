@@ -336,7 +336,7 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                             borderRadius: BorderRadius.circular(10)
                                           ),
                                           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                          child: Text(user!.pin == true ? "Defini" : "Non defini", style: TextStyle(
+                                          child: Text(user!.pin == true ? "Défini" : "Non défini", style: TextStyle(
                                             fontSize: 12,
                                             color: user!.pin == true ? Colors.green : Colors.red,
                                             fontWeight: FontWeight.bold

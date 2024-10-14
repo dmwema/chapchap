@@ -1287,7 +1287,7 @@ class _SendViewState extends State<SendView> {
                                                         .bold
                                                 ),
                                               ),
-                                              const Text("Les transactions par wallet sont protegées par Code PIN. Veuillez entrer votre Code PIN",
+                                              const Text("Les transactions par wallet sont protégées par Code PIN. Veuillez entrer votre Code PIN",
                                                 textAlign: TextAlign
                                                     .center,
                                                 style: TextStyle(

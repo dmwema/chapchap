@@ -102,6 +102,9 @@ class _CreatePinViewState extends State<CreatePinView> {
                     const Text("Définir un code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
                     const SizedBox(
                       height: 20,),
+                    const Text("Entrez le code PIN", style: TextStyle(fontSize: 13, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(
+                      height: 10,),
                     PinCodeTextField(
                       length: 5,
                       obscureText: true,
@@ -127,6 +130,9 @@ class _CreatePinViewState extends State<CreatePinView> {
                     ),
                     const SizedBox(
                       height: 20,),
+                    const Text("Confirmez le code PIN", style: TextStyle(fontSize: 13, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(
+                      height: 10,),
                     PinCodeTextField(
                       length: 5,
                       obscureText: true,

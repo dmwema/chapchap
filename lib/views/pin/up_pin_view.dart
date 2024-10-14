@@ -6,6 +6,7 @@ import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/pin_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
@@ -182,39 +183,37 @@ class _UpPinViewState extends State<UpPinView> {
                             title: "Enregistrer",
                             loading: pinViewModel.loading,
                             onPress: () async {
-                              print(currentPin);
-                              // return;
-                              // if (currentPin == null || currentPin!.length < 5) {
-                              //   Utils
-                              //       .flushBarErrorMessage(
-                              //       "Vous devez entrer le code PIN actuel",
-                              //       context);
-                              // } else
-                              // if (newPin == null || newPin!.length < 5) {
-                              //   Utils
-                              //       .flushBarErrorMessage(
-                              //       "Vous devez entrer le nouveau code PIN",
-                              //       context);
-                              // } else
-                              // if (confirmNewPin == null || confirmNewPin!.length < 5) {
-                              //   Utils
-                              //       .flushBarErrorMessage(
-                              //       "Vous devez confirmer le code PIN",
-                              //       context);
-                              // } else
-                              // if (newPin != confirmNewPin) {
-                              //   Utils
-                              //       .flushBarErrorMessage(
-                              //       "Les deux pins ne correspondent pas",
-                              //       context);
-                              // } else {
-                              //   Map data = {
-                              //     'code_pin': newPin,
-                              //     'code_pin_old': currentPin
-                              //   };
-                              //
-                              //   await pinViewModel.updatePin(data, context);
-                              // }
+                              if (currentPin == null || currentPin!.length < 5) {
+                                Utils
+                                    .flushBarErrorMessage(
+                                    "Vous devez entrer le code PIN actuel",
+                                    context);
+                              } else
+                              if (newPin == null || newPin!.length < 5) {
+                                Utils
+                                    .flushBarErrorMessage(
+                                    "Vous devez entrer le nouveau code PIN",
+                                    context);
+                              } else
+                              if (confirmNewPin == null || confirmNewPin!.length < 5) {
+                                Utils
+                                    .flushBarErrorMessage(
+                                    "Vous devez confirmer le code PIN",
+                                    context);
+                              } else
+                              if (newPin != confirmNewPin) {
+                                Utils
+                                    .flushBarErrorMessage(
+                                    "Les deux pins ne correspondent pas",
+                                    context);
+                              } else {
+                                Map data = {
+                                  'code_pin': newPin,
+                                  'code_pin_old': currentPin
+                                };
+
+                                await pinViewModel.updatePin(data, context);
+                              }
                             }
                         )
                       ],

@@ -88,7 +88,6 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       if (value != null && value['error'] != true && value['data'] != null && value['data'].length > 0) {
         value['data'].forEach((element) => {
           setState(() {
-            // msgList.add(InfoCard(type: element['type_msg_info'], content: element['msg']));
             msgList.add(element);
           })
         });
@@ -230,7 +229,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                               Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
-                              ),)
+                              ),),
                           ],
                         ),
                         Row(
@@ -312,6 +311,56 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                         )
                       ],
                     ),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    const SizedBox(height: 10,),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.historyWP);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(width: 1, color: Colors.red),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.warning_amber_rounded, size: 16, color: Colors.red,),
+                                const SizedBox(width: 5,),
+                                Text("Vous avez $nbProblemes Transfert${nbProblemes! > 1 ? 's': ''} échoué${nbProblemes! > 1 ? 's': ''}", style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600
+                                ),)
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: Colors.red
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.more_horiz, color: Colors.white,),
+                                  SizedBox(width: 2,),
+                                  Text("Tout voir", style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    color: Colors.white
+                                  ),)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    const SizedBox(height: 10,),
                   ],
                 ),
               ),
@@ -481,36 +530,36 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                         fontWeight: FontWeight.w700,
                         color: Colors.black
                     ),),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.historyWP);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.black
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text("Problemes", style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold
-                            ),),
-                            if (nbProblemes != null && nbProblemes! > 0)
-                            const SizedBox(width: 5,),
-                            if (nbProblemes != null && nbProblemes! > 0)
-                            Text(nbProblemes.toString(), style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800
-                            ),)
-                          ],
-                        ),
-                      ),
-                    )
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, RoutesName.historyWP);
+                    //   },
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       color: Colors.black
+                    //     ),
+                    //     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    //     child: Row(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         const Text("Problèmes", style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 11,
+                    //           fontWeight: FontWeight.bold
+                    //         ),),
+                    //         if (nbProblemes != null && nbProblemes! > 0)
+                    //         const SizedBox(width: 5,),
+                    //         if (nbProblemes != null && nbProblemes! > 0)
+                    //         Text(nbProblemes.toString(), style: TextStyle(
+                    //           color: AppColors.primaryColor,
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.w800
+                    //         ),)
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
