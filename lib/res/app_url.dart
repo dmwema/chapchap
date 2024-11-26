@@ -51,4 +51,5 @@ class AppUrl {
   static var getMyWallets = '$baseUrl/my_wallets';
   static var transactionsHistory = '$baseUrl/historique_transactions_wallets';
   static var rechargesHistory = '$baseUrl/historique_recharge_wallets';
+
 }

@@ -177,6 +177,15 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                           Navigator.pushNamed(context, RoutesName.profile);
                                         },
                                       ),
+                                      if (user != null && user!.codeInterac != null)
+                                      ProfileMenu(
+                                        title: "informations interac",
+                                        icon: Icons.payment,
+                                        noIcon: true,
+                                        onTap: () {
+                                          Navigator.pushNamed(context, RoutesName.interac);
+                                        },
+                                      ),
                                       ProfileMenu(
                                         title: "Pays de résidence",
                                         icon: CupertinoIcons.map,
