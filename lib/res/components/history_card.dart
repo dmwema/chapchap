@@ -391,19 +391,19 @@ class _HistoryCardState extends State<HistoryCard> {
               ]
             ),
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween ,
               children: [
                 Row(
                   children: [
                     Container(
-                      width: 40, height: 40,
+                      width: 35, height: 35,
                       decoration: BoxDecoration(
-                          color: demande.facture != null ? Colors.green.withOpacity(.3): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
+                          color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
                           borderRadius: BorderRadius.circular(50),
                       ),
-                      padding: const EdgeInsets.only(bottom: 2),
+                      padding: const EdgeInsets.only(bottom: 1),
                       child: Center(
                         child: Icon(
                           demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
@@ -412,24 +412,22 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ),
                     const SizedBox(width: 15,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6 - 20 - 60,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(demande.beneficiaire.toString(), style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),),
-                          const SizedBox(height: 2,),
-                          Text(demande.date.toString(), style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 13,
-                          ),),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(demande.beneficiaire.toString(), style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 12,
+                        ),),
+                        const SizedBox(height: 2,),
+                        Text(demande.date.toString(), style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                          color: Colors.black54
+                        ),),
+                      ],
                     ),
                   ],
                 ),
@@ -440,14 +438,14 @@ class _HistoryCardState extends State<HistoryCard> {
                     Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
-                        fontSize: 16
+                        fontSize: 14
                     ), textAlign: TextAlign.right,),
                     const SizedBox(height: 2,),
                     if (demande.progression != null)
                     Text(truncateWithEllipsis(demande.progression.toString()), style: TextStyle(
                         color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
                         fontWeight: FontWeight.w700,
-                        fontSize: 11
+                        fontSize: 10
                     ), textAlign: TextAlign.right,)
                   ],
                 ),

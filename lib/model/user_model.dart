@@ -24,6 +24,9 @@ class UserModel {
   String? codePays;
   String? paysMonnaie;
   String? paysNom;
+  String? codeInterac;
+  String? questionInterac;
+  String? reponseInterac;
 
   UserModel(
       {this.time,
@@ -42,6 +45,9 @@ class UserModel {
         this.confirmContact,
         this.password,
         this.emailClient,
+        this.codeInterac,
+        this.questionInterac,
+        this.reponseInterac,
         this.codeParrainage,
         this.validationCompte,
         this.commissionParrainage,
@@ -62,6 +68,9 @@ class UserModel {
     updatePhone = json['update_phone'];
     pin = json['pin'];
     soldeParrainage = json['solde_parrainage'];
+    codeInterac = json['code_interac'];
+    questionInterac = json['question_interac'];
+    reponseInterac = json['reponse_interac'];
     prenomClient = json['prenomClient'];
     telClient = json['telClient'];
     confirmContact = json['confirm_contact'];
@@ -96,6 +105,9 @@ class UserModel {
     data['telClient'] = this.telClient;
     data['username'] = this.username;
     data['idTypeClient'] = this.idTypeClient;
+    data['code_interac'] = codeInterac;
+    data['quesion_interac'] = questionInterac;
+    data['reponse_interac'] = reponseInterac;
     data['photoProfil'] = this.photoProfil;
     data['emailClient'] = this.emailClient;
     data['confirm_contact'] = confirmContact;

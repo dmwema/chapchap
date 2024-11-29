@@ -1,6 +1,6 @@
 class AppUrl {
-  // static var domainName = 'https://app.chapchap.ca';
-  static var domainName = 'https://sandbox-app.chapchap.ca';
+  static var domainName = 'https://app.chapchap.ca';
+  // static var domainName = 'https://sandbox-app.chapchap.ca';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';
@@ -51,4 +51,5 @@ class AppUrl {
   static var getMyWallets = '$baseUrl/my_wallets';
   static var transactionsHistory = '$baseUrl/historique_transactions_wallets';
   static var rechargesHistory = '$baseUrl/historique_recharge_wallets';
+
 }

@@ -9,6 +9,7 @@ class RoutesName {
   static const String updatePhone = 'update_phone_screen';
   static const String recipeintsArchive = 'recipeints_screen_archive';
   static const String profile = 'profile_screen';
+  static const String interac = 'interac_screen';
 
   static const String splash = 'splash_screen';
   static const String login = 'login_screen';

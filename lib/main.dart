@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          fontFamily: 'R0boto'
+          fontFamily: 'Roboto'
         ),
         debugShowCheckedModeBanner: false,
         title: "ChapChap Transfert",

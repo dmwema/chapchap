@@ -88,7 +88,6 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
       if (value != null && value['error'] != true && value['data'] != null && value['data'].length > 0) {
         value['data'].forEach((element) => {
           setState(() {
-            // msgList.add(InfoCard(type: element['type_msg_info'], content: element['msg']));
             msgList.add(element);
           })
         });
@@ -117,58 +116,58 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xffe86328), Color(0xffd34040)],
-                            stops: [0.25, 0.75],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("ChapChap Wallet", style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 18
-                              ),),
-                              Text("Simple et Rapide", style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white.withOpacity(.6),
-                                  fontWeight: FontWeight.w500
-                              ),)
-                            ],
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              SharedPreferences preferences = await SharedPreferences.getInstance();
-                              bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+                    InkWell(
+                      onTap: () async {
+                        SharedPreferences preferences = await SharedPreferences.getInstance();
+                        bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
 
-                              if (presentationWalletPassed != true || user!.pin != true) {
-                                await preferences.setBool('wallet_presentation_passed', true);
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RoutesName.walletPresentation,
-                                      (route) => false,
-                                );
-                              } else {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RoutesName.walletHome,
-                                      (route) => false,
-                                );
-                              }
-                            },
-                            child: ChangeNotifierProvider<WalletViewModel>(
+                        if (presentationWalletPassed != true || user!.pin != true) {
+                          await preferences.setBool('wallet_presentation_passed', true);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RoutesName.walletPresentation,
+                                (route) => false,
+                          );
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RoutesName.walletHome,
+                                (route) => false,
+                          );
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xffe86328), Color(0xffd34040)],
+                              stops: [0.25, 0.75],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Wallet", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16
+                                ),),
+                                Text("Simple et Rapide", style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white.withOpacity(.6),
+                                    fontWeight: FontWeight.w500
+                                ),)
+                              ],
+                            ),
+                            ChangeNotifierProvider<WalletViewModel>(
                                 create: (BuildContext context) => walletViewModel,
                                 child: Consumer<WalletViewModel>(
                                     builder: (context, value, _){
@@ -196,21 +195,21 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                             children: [
                                               const Text("SOLDE ACTUEL", style: TextStyle(
                                                   fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
+                                                  fontSize: 11,
                                                   color: Colors.white
                                               ),),
                                               Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.white,
-                                                  fontSize: 25
+                                                  fontSize: 16
                                               ),)
                                             ],
                                           );
                                       }
                                     })
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20,),
@@ -223,14 +222,14 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                           children: [
                             const Text("Salut!,", style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.black87
                             ),),
                             if (user != null)
                               Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
-                                fontSize: 22,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w800,
-                              ),)
+                              ),),
                           ],
                         ),
                         Row(
@@ -247,8 +246,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                       borderRadius: BorderRadius.circular(20),
                                       color: AppColors.lightGrey
                                   ),
-                                  padding: const EdgeInsets.only(left: 7, top: 7, bottom: 8, right: 7),
-                                  child: Icon(Icons.share_outlined, color: AppColors.primaryColor, size: 25,)
+                                  padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
+                                  child: Icon(Icons.share_outlined, color: AppColors.primaryColor, size: 17,)
                               ),
                             ),
                             const SizedBox(width: 10,),
@@ -265,8 +264,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                       borderRadius: BorderRadius.circular(20),
                                       color: AppColors.lightGrey
                                   ),
-                                  padding: const EdgeInsets.only(left: 7, top: 7, bottom: 8, right: 7),
-                                  child: Icon(CupertinoIcons.refresh, color: AppColors.primaryColor, size: 25,)
+                                  padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
+                                  child: Icon(CupertinoIcons.refresh, color: AppColors.primaryColor, size: 17,)
                               ),
                             ),
                             // const SizedBox(width: 5,),
@@ -312,6 +311,56 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                         )
                       ],
                     ),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    const SizedBox(height: 10,),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.historyWP);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(width: 1, color: Colors.red),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.warning_amber_rounded, size: 16, color: Colors.red,),
+                                const SizedBox(width: 5,),
+                                Text("Vous avez $nbProblemes Transfert${nbProblemes! > 1 ? 's': ''} échoué${nbProblemes! > 1 ? 's': ''}", style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600
+                                ),)
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: Colors.red
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.more_horiz, color: Colors.white,),
+                                  SizedBox(width: 2,),
+                                  Text("Tout voir", style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    color: Colors.white
+                                  ),)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (nbProblemes != null && nbProblemes! > 0)
+                    const SizedBox(height: 10,),
                   ],
                 ),
               ),
@@ -358,9 +407,9 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Text("Bienvenue chez ChapChap",
+                                            const Text("ChapChap",
                                               style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 14,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w700
                                               ),
@@ -368,21 +417,26 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                             const SizedBox(
                                               height: 3,
                                             ),
-                                            Flexible(child: Text("La meilleure application de transfert d’argent.",
+                                            const Flexible(child: Text("La meilleure application de transfert d’argent.",
                                               style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: AppColors.textGrey,
-                                                  fontWeight: FontWeight.w500
+                                                  fontSize: 11,
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.bold
                                               ),
                                             )),
                                             const SizedBox(
                                               height: 5,
                                             ),
-                                            Text("Commencer",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: AppColors.primaryColor,
-                                                  fontWeight: FontWeight.w700
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(context, RoutesName.send);
+                                              },
+                                              child: Text("Commencer",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: AppColors.primaryColor,
+                                                    fontWeight: FontWeight.w700
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -426,9 +480,9 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Bienvenue chez ChapChap",
+                                const Text("ChapChap",
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w700
                                   ),
@@ -436,11 +490,16 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Text("Commencer",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.w700
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, RoutesName.send);
+                                  },
+                                  child: Text("Commencer",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.w700
+                                    ),
                                   ),
                                 ),
                               ],
@@ -467,136 +526,91 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text("DERNIERES OPERATIONS", style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: Colors.black
                     ),),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.historyWP);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.black
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text("Problemes", style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold
-                            ),),
-                            if (nbProblemes != null && nbProblemes! > 0)
-                            const SizedBox(width: 5,),
-                            if (nbProblemes != null && nbProblemes! > 0)
-                            Text(nbProblemes.toString(), style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800
-                            ),)
-                          ],
-                        ),
-                      ),
-                    )
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, RoutesName.historyWP);
+                    //   },
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       color: Colors.black
+                    //     ),
+                    //     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    //     child: Row(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         const Text("Problèmes", style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 11,
+                    //           fontWeight: FontWeight.bold
+                    //         ),),
+                    //         if (nbProblemes != null && nbProblemes! > 0)
+                    //         const SizedBox(width: 5,),
+                    //         if (nbProblemes != null && nbProblemes! > 0)
+                    //         Text(nbProblemes.toString(), style: TextStyle(
+                    //           color: AppColors.primaryColor,
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.w800
+                    //         ),)
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  color: AppColors.lightGrey.withOpacity(.4),
-                  child: ChangeNotifierProvider<DemandesViewModel>(
-                      create: (BuildContext context) => demandesViewModel,
-                      child: Consumer<DemandesViewModel>(
-                          builder: (context, value, _){
-                            switch (value.demandeList.status) {
-                              case Status.LOADING:
-                                return const Expanded(child: Center(
-                                  child: CupertinoActivityIndicator(color: Colors.black),
-                                ));
-                              case Status.ERROR:
-                                return Center(
-                                  child: Text(value.demandeList.message.toString()),
-                                );
-                              default:
-                                demandes = value.demandeList.data!;
-                                if (demandes.isEmpty) {
-                                  return const Padding(padding: EdgeInsets.all(20),
-                                    child: Center(child: Text("Aucune opération récente.")),
-                                  );
-                                }
-                                return Expanded(child: ListView.builder(
-                                  itemCount: value.demandeList.data!.length,
-                                  itemBuilder: (context, index) {
-                                    DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
-                                    if (index == 0) {
-                                      return Column(
-                                        children: [
-                                          const SizedBox(height: 20,),
-                                          HistoryCard(
-                                            demande: current,
-                                          )
-                                        ],
-                                      );
-                                    }
-                                    return
-                                      HistoryCard(
-                                        demande: current,
-                                      )
-                                    ;
-                                  },
-                                ));
+              ChangeNotifierProvider<DemandesViewModel>(
+                  create: (BuildContext context) => demandesViewModel,
+                  child: Consumer<DemandesViewModel>(
+                      builder: (context, value, _){
+                        switch (value.demandeList.status) {
+                          case Status.LOADING:
+                            return const Expanded(child: Center(
+                              child: CupertinoActivityIndicator(color: Colors.black),
+                            ));
+                          case Status.ERROR:
+                            return Center(
+                              child: Text(value.demandeList.message.toString()),
+                            );
+                          default:
+                            demandes = value.demandeList.data!;
+                            if (demandes.isEmpty) {
+                              return const Padding(padding: EdgeInsets.all(20),
+                                child: Center(child: Text("Aucune opération récente.")),
+                              );
                             }
-                          })
-                  ),
-                ),
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: value.demandeList.data!.length,
+                                itemBuilder: (context, index) {
+                                  DemandeModel current = DemandeModel.fromJson(value.demandeList.data![index]);
+                                  if (index == 0) {
+                                    return Column(
+                                      children: [
+                                        const SizedBox(height: 20,),
+                                        HistoryCard(
+                                          demande: current,
+                                        )
+                                      ],
+                                    );
+                                  }
+                                  return
+                                    HistoryCard(
+                                      demande: current,
+                                    )
+                                  ;
+                                },
+                              ),
+                            );
+                        }
+                      })
               ),
             ],
           ),
-          // child: SuperScaffold(
-          //   // appBar: SuperAppBar(
-          //   //   border: const Border(bottom: BorderSide(color: Colors.black12, width: 1)),
-          //   //   backgroundColor: Colors.transparent,
-          //   //   // alwaysShowTitle: true,
-          //   //   largeTitle: SuperLargeTitle(
-          //   //     enabled: true,
-          //   //     largeTitle: " Salut!, Daniel Mwema",
-          //   //     textStyle: const TextStyle(
-          //   //       color: Colors.black,
-          //   //       fontSize: 20,
-          //   //       fontWeight: FontWeight.w800
-          //   //     )
-          //   //   ),
-          //   //   actions: Padding(
-          //   //     padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-          //   //     child:
-          //   //   ),
-          //   //   titleSpacing: 0,
-          //   //   searchBar: SuperSearchBar(
-          //   //     enabled: false,
-          //   //   ),
-          //   //   bottom: SuperAppBarBottom(
-          //   //     enabled: true,
-          //   //     height: 50,
-          //   //     child: Padding(
-          //   //       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          //   //       child: Row(
-          //   //         crossAxisAlignment: CrossAxisAlignment.center,
-          //   //         children: [
-          //   //           Text(user != null ? "${user!.prenomClient} ${user!.nomClient}": "", style: const TextStyle(
-          //   //               fontSize: 23,
-          //   //               fontWeight: FontWeight.w800,
-          //   //               color: Colors.black
-          //   //           ),),
-          //   //         ],
-          //   //       ),
-          //   //     ), // Any widget of yours
-          //   //   ),
-          //   // ),
-          //   body:
-          // ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:ScaleTransition(

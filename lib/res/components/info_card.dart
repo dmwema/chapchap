@@ -60,7 +60,7 @@ class InfoCard extends StatelessWidget {
               children: [
                 Text(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),
                   style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w700
                   ),
@@ -69,10 +69,10 @@ class InfoCard extends StatelessWidget {
                   height: 3,
                 ),
                 Flexible(child: Text(content,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textGrey,
-                    fontWeight: FontWeight.w500
+                  style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold
                   ),
                 ))
               ],

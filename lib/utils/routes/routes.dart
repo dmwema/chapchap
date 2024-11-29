@@ -17,6 +17,7 @@ import 'package:chapchap/views/exchange_view.dart';
 import 'package:chapchap/views/history_view.dart';
 import 'package:chapchap/views/history_w_problemes.dart';
 import 'package:chapchap/views/home_view.dart';
+import 'package:chapchap/views/interac_view.dart';
 import 'package:chapchap/views/invoice_detail_view.dart';
 import 'package:chapchap/views/invoices_view.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
@@ -103,6 +104,12 @@ class Routes {
       case RoutesName.profile:
         return PageTransition(
             child: ProfileView(),
+            type: PageTransitionType.bottomToTop,
+            settings: settings
+        );
+      case RoutesName.interac:
+        return PageTransition(
+            child: InteracView(),
             type: PageTransitionType.bottomToTop,
             settings: settings
         );

@@ -291,7 +291,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             fontWeight: FontWeight.w600,
                             color: Colors.black
                         ),),
-                        Text("Gerez de maniere efficace votre wallet", style: TextStyle(
+                        Text("Gérez votre Wallet de manière efficace", style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: Colors.black
@@ -306,110 +306,6 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                 child: Column(
                   children: [
                     const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.send);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.send_to_mobile, color: Colors.black, size: 15,),
-                            SizedBox(width: 8,),
-                            Text(
-                              "Nouveau transfert",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    // const SizedBox(height: 10,),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Navigator.pushNamed(context, RoutesName.transfertAccountWallet);
-                    //   },
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(5),
-                    //       color: Colors.white,
-                    //       boxShadow: [
-                    //         BoxShadow(
-                    //           color: Colors.black.withOpacity(0.2),
-                    //           spreadRadius: 2,
-                    //           blurRadius: 5,
-                    //           offset: const Offset(0, 3), // changes position of shadow
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                    //     child: const Row(
-                    //       children: [
-                    //         Icon(Icons.compare_arrows, color: Colors.black, size: 15,),
-                    //         SizedBox(width: 8,),
-                    //         Text(
-                    //           "Transfert entre comptes",
-                    //           style: TextStyle(
-                    //               fontWeight: FontWeight.w500,
-                    //               fontSize: 12
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 10,),
-                    // InkWell(
-                    //   onTap: () {
-                    //     if (wallets.isNotEmpty) {
-                    //
-                    //     }
-                    //   },
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(5),
-                    //       color: Colors.white,
-                    //       boxShadow: [
-                    //         BoxShadow(
-                    //           color: Colors.black.withOpacity(0.2),
-                    //           spreadRadius: 2,
-                    //           blurRadius: 5,
-                    //           offset: const Offset(0, 3), // changes position of shadow
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                    //     child: const Row(
-                    //       children: [
-                    //         Icon(Icons.compare_arrows_sharp, color: Colors.black, size: 15,),
-                    //         SizedBox(width: 8,),
-                    //         Text(
-                    //           "Transfert entre comptes",
-                    //           style: TextStyle(
-                    //               fontWeight: FontWeight.w500,
-                    //               fontSize: 12
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 10,),
                     InkWell(
                       onTap: () {
                         if (wallets.isNotEmpty) {
@@ -437,6 +333,40 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             Text(
                               "Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
                               style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.send);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.send_to_mobile, color: Colors.black, size: 15,),
+                            SizedBox(width: 8,),
+                            Text(
+                              "Faire un transfert d’argent",
+                              style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12
                               ),
@@ -480,7 +410,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             const Icon(Icons.history, color: Colors.black, size: 15,),
                             const SizedBox(width: 8,),
                             Text(
-                              "Historiques de recharges ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                              "Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12
@@ -516,7 +446,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             const Icon(Icons.history, color: Colors.black, size: 15,),
                             const SizedBox(width: 8,),
                             Text(
-                              "Historiques de transfers ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
+                              "Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12
