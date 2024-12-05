@@ -302,7 +302,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   children: [
                     const SizedBox(height: 10,),
@@ -366,6 +366,40 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             SizedBox(width: 8,),
                             Text(
                               "Faire un transfert d’argent",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.interac);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.payment, color: Colors.black, size: 15,),
+                            SizedBox(width: 8,),
+                            Text(
+                              "informations interac",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12
@@ -458,87 +492,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     ),
                   ],
                 ),
-              )
-              // Expanded(
-              //   child: PageView.builder(
-              //     controller: historyPageController,
-              //     itemCount: 2,
-              //     itemBuilder: (context, index) {
-              //       if (index == 0) {
-              //         return ChangeNotifierProvider<WalletViewModel>(
-              //             create: (BuildContext context) => walletViewModel,
-              //             child: Consumer<WalletViewModel>(
-              //                 builder: (context, value, _){
-              //                   switch (value.rechargesList.status) {
-              //                     case Status.LOADING:
-              //                       return const Expanded(child: Center(
-              //                         child: CupertinoActivityIndicator(color: Colors.black),
-              //                       ));
-              //                     case Status.ERROR:
-              //                       return Center(
-              //                         child: Text(index == 0 ? value.rechargesList.message.toString(): value.transfersList.message.toString()),
-              //                       );
-              //                     default:
-              //                       print(index);
-              //                       print("cccccc");
-              //                       recharges = value.rechargesList.data!;
-              //                       if (recharges.isEmpty) {
-              //                         return const Padding(padding: EdgeInsets.all(20),
-              //                           child: Center(child: Text("Aucune opération récente.")),
-              //                         );
-              //                       }
-              //                       return Container();
-              //                   // return Expanded(child: ListView.builder(
-              //                   //   itemCount: value.demandeList.data!.length,
-              //                   //   itemBuilder: (context, index) {
-              //                   //
-              //                   //   },
-              //                   // ));
-              //                   }
-              //                 })
-              //         );
-              //       } else if (index == 1) {
-              //         return ChangeNotifierProvider<WalletViewModel>(
-              //             create: (BuildContext context) => walletViewModel,
-              //             child: Consumer<WalletViewModel>(
-              //                 builder: (context, value, _){
-              //                   switch (value.transfersList.status) {
-              //                     case Status.LOADING:
-              //                       return const Expanded(child: Center(
-              //                         child: CupertinoActivityIndicator(color: Colors.black),
-              //                       ));
-              //                     case Status.ERROR:
-              //                       return Center(
-              //                         child: Text(index == 0 ? value.rechargesList.message.toString(): value.transfersList.message.toString()),
-              //                       );
-              //                     default:
-              //                       print("complete");
-              //                       transfers = value.transfersList.data!;
-              //                       if (transfers.isEmpty) {
-              //                         return const Padding(padding: EdgeInsets.all(20),
-              //                           child: Center(child: Text("Aucune opération récente.")),
-              //                         );
-              //                       }
-              //                       return Container();
-              //                   // return Expanded(child: ListView.builder(
-              //                   //   itemCount: value.demandeList.data!.length,
-              //                   //   itemBuilder: (context, index) {
-              //                   //
-              //                   //   },
-              //                   // ));
-              //                   }
-              //                 })
-              //         );
-              //       }
-              //       return Container();
-              //     }
-              //   ),
-              // ),
-              // if (wallets.isEmpty)
-              // const Padding(
-              //   padding: EdgeInsets.all(20.0),
-              //   child: Text("Vous n'avez encore aucun wallet"),
-              // )
+              ),
             ],
           ),
         ),
