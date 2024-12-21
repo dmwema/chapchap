@@ -9,6 +9,7 @@ import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/auth/reset_code_view.dart';
 import 'package:chapchap/views/auth/splash_view.dart';
 import 'package:chapchap/views/auth/update_phone_view.dart';
+import 'package:chapchap/views/auth/welcome_view.dart';
 import 'package:chapchap/views/confirm_cancel_view.dart';
 import 'package:chapchap/views/contact_view.dart';
 import 'package:chapchap/views/coupon_view.dart';
@@ -86,6 +87,12 @@ class Routes {
       case RoutesName.exchange:
         return PageTransition(
             child: ExchangeView(),
+            type: PageTransitionType.fade,
+            settings: settings
+        );
+      case RoutesName.welcomeView:
+        return PageTransition(
+            child: WelcomeView(),
             type: PageTransitionType.fade,
             settings: settings
         );

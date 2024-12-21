@@ -2,6 +2,7 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomFormField extends StatelessWidget {
   final String label;
@@ -56,8 +57,11 @@ class CustomFormField extends StatelessWidget {
       maxLines: maxLines,
       decoration: BoxDecoration(
         color: AppColors.formFieldColor,
-        border: Border.all(color: AppColors.formFieldBorderColor),
         borderRadius: BorderRadius.circular(6)
+      ),
+      style: GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w600
       ),
       onSubmitted: onFieldSubmitted,
       onChanged: onChanged,

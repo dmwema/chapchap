@@ -33,10 +33,10 @@ class _TransfersHistoryViewState extends State<TransfersHistoryView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-                context: context,
-                backArrow: true
-            ),
+            // commonAppBar(
+            //     context: context,
+            //     backArrow: true
+            // ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(

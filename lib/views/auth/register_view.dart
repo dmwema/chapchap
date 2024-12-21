@@ -3,6 +3,7 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,9 +95,9 @@ class _RegisterViewState extends State<RegisterView> {
                     selectedPays ??= PaysModel.fromJson(paysList[0]);
                     return Stack(
                       children: [
-                        commonAppBar(
-                          context: context,
-                        ),
+                        // commonAppBar(
+                        //   context: context,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -104,7 +105,7 @@ class _RegisterViewState extends State<RegisterView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 50,),
-                              const Text("Inscrivez-vous", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                              AppTexts.titleText("Inscrivez-vous"),
                               const SizedBox(height: 20,),
                               CustomFormField(
                                 label: "Nom *",
@@ -321,8 +322,8 @@ class _RegisterViewState extends State<RegisterView> {
                                         });
                                       },
                                     ),
-                                    const Flexible(
-                                      child: Text("J'accepte les politiques de chapchap. *"),
+                                    Flexible(
+                                      child: AppTexts.smallText("J'accepte les politiques de chapchap. *")
                                     )
                                   ],
                                 ),
@@ -349,8 +350,8 @@ class _RegisterViewState extends State<RegisterView> {
                                         });
                                       },
                                     ),
-                                    const Flexible(
-                                      child: Text("Je m'abonne à la newsletter pour recevoir des e-mails de notification."),
+                                    Flexible(
+                                      child: AppTexts.smallText("Je m'abonne à la newsletter pour recevoir des e-mails de notification.")
                                     )
                                   ],
                                 ),
@@ -404,15 +405,12 @@ class _RegisterViewState extends State<RegisterView> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Déjà inscit ?", style: TextStyle(fontWeight: FontWeight.w600),),
+                                  AppTexts.smallText("Déjà inscit ?"),
                                   const SizedBox(width: 5,),
                                   InkWell(
                                     onTap: () {
                                       Navigator.pushNamed(context, RoutesName.login);
-                                    }, child: Text("Connectez-vous", style: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.bold
-                                  ),),),
+                                    }, child: AppTexts.buttonText("Connectez-vous", color: AppColors.primaryColor),),
                                 ],
                               ),
                               const SizedBox(height: 10,),
@@ -448,15 +446,11 @@ class _RegisterViewState extends State<RegisterView> {
                                       ),
                                     if (loadingPdf1)
                                     const SizedBox(width: 5,),
-                                    const Text("Politique de confidentialité", style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600
-                                    ), textAlign: TextAlign.center,),
+                                    AppTexts.smallText("Politique de confidentialité")
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 10,),
+                              const SizedBox(height: 5,),
                               InkWell(
                                 onTap: () async {
                                   if (!loadingPdf2) {
@@ -486,11 +480,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       ),
                                     if (loadingPdf2)
                                     const SizedBox(width: 5,),
-                                    const Text("Conditions d'utilisation", style: TextStyle(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14
-                                    ),),
+                                    AppTexts.smallText("Conditions d'utilisation")
                                   ],
                                 ),
                               ),

@@ -6,6 +6,7 @@ import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -130,9 +131,9 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-              ),
+              // commonAppBar(
+              //   context: context,
+              // ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Mon compte", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
@@ -177,9 +178,59 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                           Navigator.pushNamed(context, RoutesName.profile);
                                         },
                                       ),
-                                      if (user != null && user!.codeInterac != null)
                                       ProfileMenu(
-                                        title: "informations interac",
+                                        title: "Wallet",
+                                        icon: Icons.wallet,
+                                        suffix: ChangeNotifierProvider<WalletViewModel>(
+                                            create: (BuildContext context) => walletViewModel,
+                                            child: Consumer<WalletViewModel>(
+                                                builder: (context, value, _){
+                                                  switch (value.balance.status) {
+                                                    case Status.LOADING:
+                                                      return const CupertinoActivityIndicator();
+                                                    case Status.ERROR:
+                                                      return Container();
+                                                    default:
+                                                      var balance = value.balance.data!;
+                                                      return Container(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              color: AppColors.primaryColor
+                                                          ),
+                                                          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                                          child: Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
+                                                              fontWeight: FontWeight.w800,
+                                                              color: Colors.white,
+                                                              fontSize: 12
+                                                          ),)
+                                                      );
+                                                  }
+                                                })
+                                        ),
+                                        noIcon: true,
+                                        onTap: () async {
+                                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                                          bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                                          if (presentationWalletPassed != true || user!.pin != true) {
+                                            await preferences.setBool('wallet_presentation_passed', true);
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              RoutesName.walletPresentation,
+                                                  (route) => false,
+                                            );
+                                          } else {
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              RoutesName.walletHome,
+                                                  (route) => false,
+                                            );
+                                          }
+                                        },
+                                      ),
+                                      if (user != null && user!.codeInterac != null && user!.codePays == "ca")
+                                      ProfileMenu(
+                                        title: "Rechargez votre portefeuille",
                                         icon: Icons.payment,
                                         noIcon: true,
                                         onTap: () {
@@ -284,56 +335,6 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                         noIcon: true,
                                         onTap: () {
                                           Navigator.pushNamed(context, RoutesName.contactView);
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "Wallet",
-                                        icon: Icons.wallet,
-                                        suffix: ChangeNotifierProvider<WalletViewModel>(
-                                            create: (BuildContext context) => walletViewModel,
-                                            child: Consumer<WalletViewModel>(
-                                                builder: (context, value, _){
-                                                  switch (value.balance.status) {
-                                                    case Status.LOADING:
-                                                      return const CupertinoActivityIndicator();
-                                                    case Status.ERROR:
-                                                      return Container();
-                                                    default:
-                                                      var balance = value.balance.data!;
-                                                      return Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          color: AppColors.primaryColor
-                                                        ),
-                                                        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                                        child: Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
-                                                              fontWeight: FontWeight.w800,
-                                                              color: Colors.white,
-                                                              fontSize: 12
-                                                          ),)
-                                                      );
-                                                  }
-                                                })
-                                        ),
-                                        noIcon: true,
-                                        onTap: () async {
-                                          SharedPreferences preferences = await SharedPreferences.getInstance();
-                                          bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
-
-                                          if (presentationWalletPassed != true || user!.pin != true) {
-                                            await preferences.setBool('wallet_presentation_passed', true);
-                                            Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              RoutesName.walletPresentation,
-                                                  (route) => false,
-                                            );
-                                          } else {
-                                            Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              RoutesName.walletHome,
-                                                  (route) => false,
-                                            );
-                                          }
                                         },
                                       ),
                                       ProfileMenu(
@@ -474,9 +475,9 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                                   mainAxisSize: MainAxisSize.max,
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    Platform.isAndroid ? const Icon(Icons.fingerprint, color: Colors.black87, size: 16,) : Image.asset("assets/faceid.png", width: 16,),
+                                                    Platform.isAndroid ? Icon(Icons.fingerprint, color: AppColors.primaryColor, size: 16,) : Image.asset("assets/faceid.png", width: 16,),
                                                     const SizedBox(width: 20,),
-                                                    Flexible(child: Text("Verrouillage biométrique".toString(), style: const TextStyle(color: Colors.black87, fontSize: 14),),),
+                                                    Flexible(child: AppTexts.smallText("Verrouillage biométrique")),
                                                   ],
                                                 ),
                                               ),

@@ -1,8 +1,10 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,174 +21,6 @@ var maskFormatterPhoneNumber = MaskTextInputFormatter(
     filter: { "#": RegExp(r'\d') },
     type: MaskAutoCompletionType.lazy
 );
-
-Widget commonAppBar({
-  BuildContext? context,
-  bool? backArrow = false,
-  bool showHelp = true,
-  bool? theme = false,
-  bool canClose = false,
-  Color? appBarColor,
-  Color? textColor,
-  GestureTapCallback? editClick,
-  GestureTapCallback? backClick,
-  GestureTapCallback? themeClick,
-}) {
-  return Container(
-    height: MediaQuery.of(context!).viewInsets.top + MediaQuery.of(context!).padding.top + 20,
-    width: double.infinity,
-    color: appBarColor ?? AppColors.formFieldColor,
-    padding: const EdgeInsets.only(
-      bottom: 10,
-      left: 20,
-      top: 10,
-      right: 20,
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(top: 0),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Visibility(
-            visible: backArrow!,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: backClick ?? () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: textColor ?? Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: showHelp,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(),
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Besoin d’aide ?", style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 22
-                                ),),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("tel://+15143701555");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Appelez-nous", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Envoyez-nous un e-mail", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("https://wa.me/+14384929679");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Image.asset("assets/wa.png", width: 30,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Message whatsapp", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                        );
-                      },
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: 55,
-                    padding: const EdgeInsets.all(2),
-                    child: Text("Aide ?", style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: textColor ?? Colors.black
-                    ), textAlign: TextAlign.end,),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: canClose,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 25,
-                    padding: const EdgeInsets.all(2),
-                    child: const Icon(CupertinoIcons.xmark, size: 20,),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 
 Widget commonBottomAppBar({
   required BuildContext context,
@@ -215,7 +49,7 @@ Widget commonBottomAppBar({
               children: [
                 Icon(active == 0 ? CupertinoIcons.square_grid_2x2_fill : CupertinoIcons.square_grid_2x2, color: active == 0 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5), // The dummy child
-                Text("Accueil", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 0 ? AppColors.primaryColor : null,),)
+                AppTexts.menuText("Accueil", color: active == 0 ? AppColors.primaryColor : Colors.black),
               ],
             ),
           ),
@@ -234,7 +68,7 @@ Widget commonBottomAppBar({
               children: [
                 Icon(active == 1 ? CupertinoIcons.person_2_fill : CupertinoIcons.person_2, color: active == 1 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5), // The dummy child
-                Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 1 ? AppColors.primaryColor : null,),)
+                AppTexts.menuText("Bénéficiaires", color: active == 1 ? AppColors.primaryColor : Colors.black),
               ],
             ),
           ),
@@ -254,7 +88,7 @@ Widget commonBottomAppBar({
               children: [
                 Icon(active == 2 ? CupertinoIcons.arrow_right_arrow_left_circle_fill : CupertinoIcons.arrow_right_arrow_left_circle, color: active == 2 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5), // The dummy child
-                Text("Change", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 2 ? AppColors.primaryColor : null,),)
+                AppTexts.menuText("Change", color: active == 2 ? AppColors.primaryColor : Colors.black),
               ],
             ),
           ),
@@ -273,7 +107,7 @@ Widget commonBottomAppBar({
               children: [
                 Icon(active == 3 ? CupertinoIcons.person_fill : CupertinoIcons.person, color: active == 3 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5),
-                Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 3 ? AppColors.primaryColor : null,),)
+                AppTexts.menuText("Mon compte", color: active == 3 ? AppColors.primaryColor : Colors.black),
               ],
             ),
           ),
@@ -281,4 +115,141 @@ Widget commonBottomAppBar({
       ),
     )
   );
+}
+
+Widget commonDivider() {
+  return Divider(
+    color: AppColors.bgColor,
+    height: 4,
+    thickness: 4,
+  );
+}
+
+Widget commonRoundedContainer({
+  required Widget child,
+  bool removePaddingH = false
+}) {
+  return Container(
+    decoration: BoxDecoration(
+        boxShadow: [Utils.customShadow()],
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white
+    ),
+    padding: removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : const EdgeInsets.all(20),
+    child: child,
+  );
+}
+
+class CommonAppBar extends StatelessWidget implements PreferredSize {
+  final BuildContext context;
+  bool backArrow;
+  bool showHelp;
+  bool? color;
+  GestureTapCallback? backClick;
+
+  CommonAppBar({
+    super.key,
+    required this.context,
+    this.backArrow = false,
+    this.showHelp = true,
+    this.color,
+    this.backClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
+      leading: backArrow == true ? InkWell(
+          onTap: () {
+            backClick ?? Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back, color: AppColors.textGrey, size: 25,)
+      ): Container(),
+      actions: [
+        if (showHelp)
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTexts.titleText("Besoin d’aide ?"),
+                          const SizedBox(height: 20,),
+                          GestureDetector(
+                            onTap: () {
+                              _openUrl("tel://+15143701555");
+                            },
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
+                                const SizedBox(width: 10,),
+                                AppTexts.descriptionText("Appelez-nous")
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20,),
+                          GestureDetector(
+                            onTap: () {
+                              _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
+                            },
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
+                                const SizedBox(width: 10,),
+                                AppTexts.descriptionText("Envoyez-nous un e-mail")
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20,),
+                          GestureDetector(
+                            onTap: () {
+                              _openUrl("https://wa.me/+14384929679");
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset("assets/wa.png", width: 30,),
+                                const SizedBox(width: 10,),
+                                AppTexts.descriptionText("Message whatsapp")
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                  );
+                },
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: AppTexts.smallText("Aide ?"),
+            ),
+          )
+      ],
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
+        systemNavigationBarColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
+        systemNavigationBarIconBrightness: color == true ? Brightness.light : Brightness.dark,
+        statusBarIconBrightness: color == true ? Brightness.light : Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: color == true ? Brightness.light : Brightness.dark, // For iOS (dark icons)
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget get child => throw UnimplementedError();
 }

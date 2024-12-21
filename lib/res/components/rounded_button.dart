@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,14 @@ class RoundedButton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPress;
   bool? wallet;
+  IconData? icon;
 
   RoundedButton({
     Key? key,
     required this.title,
     this.loading = false,
     this.wallet,
+    this.icon,
     this.color,
     this.textColor = Colors.white,
     required this.onPress
@@ -29,14 +32,6 @@ class RoundedButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.5),
-          //     spreadRadius: 5,
-          //     blurRadius: 7,
-          //     offset: const Offset(0, 3), // changes position of shadow
-          //   ),
-          // ],
         ),
         child: Center(
           child: loading ? const SizedBox(
@@ -50,7 +45,12 @@ class RoundedButton extends StatelessWidget {
              const Icon(Icons.wallet_outlined, size: 20,),
              if (wallet == true)
                const SizedBox(width: 5,),
-             Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),),
+
+             if (icon != null)
+               Icon(icon, size: 20, color: textColor,),
+             if (icon != null)
+               const SizedBox(width: 5,),
+             AppTexts.buttonText(title, color: textColor)
            ],
          ),
         ),

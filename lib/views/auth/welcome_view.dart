@@ -1,4 +1,6 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -8,8 +10,10 @@ import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
+import 'package:chapchap/views/exchange_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeView extends StatefulWidget {
@@ -43,9 +47,14 @@ class _WelcomeViewState extends State<WelcomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CommonAppBar(
+        context: context,
+        showHelp: true,
+        backArrow: false,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 70, left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Stack(
             children: [
               SizedBox(
@@ -53,55 +62,161 @@ class _WelcomeViewState extends State<WelcomeView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset("assets/logo_black.png", width: 70,),
+                    commonRoundedContainer(child:  Row(
+                      children: [
+                        Image.asset("assets/logo_red.png", width: 40,),
+                        const SizedBox(width: 20,),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppTexts.bodyText("TRANSFERT CHAPCHAP", bold: true, color: AppColors.primaryColor),
+                              AppTexts.cardDescription("La meilleur Application de transfert d'argent")
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
                     const SizedBox(height: 20,),
-                    const Text("Bienvenue !", style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 25,
-                    ),),
-                    const SizedBox(height: 20,),
-                    const SizedBox(
-                      width: 250,
-                      child: Text("Envoyez de l’argent en toute sécurité et rapidité avec ChapChap !", style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black45
-                      ), textAlign: TextAlign.center,),
-                    ),
-                    const SizedBox(height: 20,),
-                    Image.asset("assets/welcome.png", width: 300,),
+                    commonRoundedContainer(
+                      removePaddingH: true,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50, height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.primaryColor
+                                  ),
+                                  child: const Center(
+                                      child: Icon(Icons.wallet, color: Colors.white, size: 30,)
+                                  ),
+                                ), const SizedBox(width: 10,),
+                                Flexible(child: AppTexts.cardDescription("Un système de recompense basé sur les points qui se gagne lors de chaque transfert d’argent"))
+                              ],
+                            ),
+                          ),
+                          commonDivider(),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50, height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.primaryColor
+                                  ),
+                                  child: const Center(
+                                      child: Icon(Icons.card_giftcard_rounded, color: Colors.white, size: 30,)
+                                  ),
+                                ), const SizedBox(width: 10,),
+                                Flexible(child: AppTexts.cardDescription("Un système de recompense basé sur les points qui se gagne lors de chaque transfert d’argent"))
+                              ],
+                            ),
+                          ),
+                          commonDivider(),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50, height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.primaryColor
+                                  ),
+                                  child: Center(
+                                      child: Image.asset("assets/icons/globe.png", width: 30,)
+                                  ),
+                                ), const SizedBox(width: 10,),
+                                Flexible(child: AppTexts.cardDescription("+10 Pays vers lesquels vous pouvez transferer de l’argent facilement et rapidement"))
+                              ],
+                            ),
+                          ),
+                          commonDivider(),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 50, height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.primaryColor
+                                  ),
+                                  child: const Center(
+                                      child: Icon(Icons.currency_exchange, color: Colors.white, size: 30,)
+                                  ),
+                                ), const SizedBox(width: 10,),
+                                Flexible(child: AppTexts.cardDescription("Les meilleurs taux de change du secteur. Utilisez notre estimateur de taux pour vérifier nos taux de change"))
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    )
                   ],
                 ),
               ),
               Positioned(
-                bottom: 20,
+                bottom: 0,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width - 40,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       RoundedButton(
-                          title: "Se connecter à son compte",
+                          title: "Taux de change",
+                          icon: Icons.currency_exchange,
+                          color: Colors.black,
                           onPress: () {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => LoginView(),
+                                builder: (context) => ExchangeView(public: true,),
                               ),
                             );
                           }
                       ),
                       const SizedBox(height: 10,),
-                      RoundedButton(
-                        title: "Créer un compte ChapChap",
-                        onPress: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => RegisterView(),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: (MediaQuery.of(context).size.width - 40 - 10) / 2,
+                            child: RoundedButton(
+                                title: "Connexion",
+                                onPress: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => LoginView(),
+                                    ),
+                                  );
+                                }
                             ),
-                          );
-                        }
-                      ),
+                          ), const SizedBox(width: 10,),
+                          SizedBox(
+                            width: (MediaQuery.of(context).size.width - 40 - 10) / 2,
+                            child: RoundedButton(
+                                title: "Inscription",
+                                onPress: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => RegisterView(),
+                                    ),
+                                  );
+                                }
+                            ),
+                          )
+                        ],
+                      )
+
                     ],
                   ),
                 ),

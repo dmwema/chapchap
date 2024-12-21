@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -14,6 +15,7 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -77,23 +79,48 @@ class _LoginViewState extends State<LoginView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.bgColor,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, RoutesName.welcomeView);
+          },
+          child: Icon(Icons.arrow_back, color: AppColors.textGrey, size: 25,)
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: AppTexts.smallText("Aide ?"),
+          )
+        ],
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: AppColors.bgColor,
+          systemNavigationBarColor: AppColors.bgColor,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+          statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-            ),
+            // commonAppBar(
+            //   context: context,
+            //   backArrow: true
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Connectez-vous", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                  const SizedBox(height: 20,),
+                  AppTexts.titleText("Connectez-vous"),
                   const SizedBox(height: 10,),
-                  const Text("Connectez-vous avec votre adresse électronique et votre mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black45), textAlign: TextAlign.left,),
+                  AppTexts.bodyText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
                   const SizedBox(height: 20,),
                   CustomFormField(
                     label: "Adresse électronique",
@@ -122,9 +149,8 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   TextButton(onPressed: () {
                     Navigator.pushNamed(context, RoutesName.passwordReset);
-                  }, child: const Text("Mot de passe oublié ?", style: TextStyle(
-                    color: Colors.black
-                  ),)),
+                  }, child: AppTexts.buttonText("Mot de passe oublié ?")
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -148,6 +174,7 @@ class _LoginViewState extends State<LoginView> {
                                       token = value;
                                     });
                                   } catch (e) {
+                                    print("-------------Error----------------");
                                     print(e.toString());
                                   }
                                 }
@@ -230,9 +257,9 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("Vous êtes nouveau ?", style: TextStyle(color: Colors.black),),
+                    AppTexts.smallText("Vous êtes nouveau ?"),
                     const SizedBox(height: 3,),
-                    Text("Inscrivez-vous", style: TextStyle(color: AppColors.primaryColor),),
+                    AppTexts.buttonText("Inscrivez-vous", color: AppColors.primaryColor)
                   ],
                 ),
               ),

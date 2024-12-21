@@ -55,10 +55,10 @@ class _RecomenseViewState extends State<RecomenseView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true
-              ),
+              //commonAppBar(
+               //   context: context,
+               //   backArrow: true
+              //),
               const SizedBox(height: 10,),
               const Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),

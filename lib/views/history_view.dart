@@ -36,10 +36,10 @@ class _HistoryViewState extends State<HistoryView> {
             crossAxisAlignment:
             CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: true
+              // ),
               const SizedBox(height: 10,),
               Container(
                 width: MediaQuery.of(context).size.width,

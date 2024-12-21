@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:flutter/material.dart';
 
 class ProfileMenu extends StatelessWidget {
@@ -44,9 +45,9 @@ class ProfileMenu extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(icon, color: color ?? Colors.black87, size: 16,),
+                  Icon(icon, color: color ?? AppColors.primaryColor, size: 16,),
                   const SizedBox(width: 20,),
-                  Flexible(child: Text(title.toString(), style: const TextStyle(color: Colors.black87, fontSize: 14),),),
+                  Flexible(child: AppTexts.smallText(title.toString())),
                   noIcon != null && noIcon! == true ? Container(): download! ? const Icon(Icons.download_outlined, color: Colors.black45,)
                     : (count == null ? const Icon(Icons.chevron_right_outlined, color: Colors.black45,)
                     : Text(count.toString())),

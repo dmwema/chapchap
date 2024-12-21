@@ -1,9 +1,9 @@
 name: chapchap
 description: money transfert app
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-version: 3.1.26+93
+version: 3.1.32+100
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -16,6 +16,7 @@ dependencies:
   open_filex: ^4.3.2
   flutter_native_splash: ^2.2.18
   shared_preferences: ^2.0.18
+  icon_forest: ^1.1.8
   carousel_slider: ^5.0.0
   fluttertoast: ^8.2.1
   http: ^0.13.5
@@ -92,10 +93,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -106,6 +103,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -129,3 +127,4 @@ flutter:
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

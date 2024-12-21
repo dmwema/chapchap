@@ -39,10 +39,10 @@ class _RechargeViewState extends State<RechargeView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: true
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Recharger le wallet ${widget.wallet['currency']}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),

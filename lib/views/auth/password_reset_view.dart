@@ -27,10 +27,10 @@ class _PasswordResetViewState extends State<PasswordResetView> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonAppBar(
-                  context: context,
-                  backArrow: true
-                ),
+                // commonAppBar(
+                //   context: context,
+                //   backArrow: true
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Column(

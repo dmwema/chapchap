@@ -3,6 +3,7 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
@@ -17,6 +18,7 @@ import 'package:chapchap/views/wallet/transfers_history_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -95,19 +97,19 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true,
-                   textColor: Colors.white,
-                  appBarColor: AppColors.primaryColor,
-                  backClick: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      RoutesName.home,
-                          (route) => false,
-                    );
-                  }
-              ),
+              // commonAppBar(
+              //     context: context,
+              //     backArrow: true,
+              //      textColor: Colors.white,
+              //     appBarColor: AppColors.primaryColor,
+              //     backClick: () {
+              //       Navigator.pushNamedAndRemoveUntil(
+              //         context,
+              //         RoutesName.home,
+              //             (route) => false,
+              //       );
+              //     }
+              // ),
               Container(
                 color: AppColors.primaryColor,
                 width: double.infinity,
@@ -328,15 +330,9 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                         child: Row(
                           children: [
-                            const Icon(Icons.wallet, color: Colors.black, size: 15,),
+                            Icon(Icons.wallet, color: AppColors.primaryColor, size: 15,),
                             const SizedBox(width: 8,),
-                            Text(
-                              "Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
+                            AppTexts.smallText("Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}")
                           ],
                         ),
                       ),
@@ -360,22 +356,18 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                           ],
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Icon(Icons.send_to_mobile, color: Colors.black, size: 15,),
-                            SizedBox(width: 8,),
-                            Text(
-                              "Faire un transfert d’argent",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
+                            Icon(Icons.send_to_mobile, color: AppColors.primaryColor, size: 15,),
+                            const SizedBox(width: 8,),
+                            AppTexts.smallText("Nouveau transfert")
                           ],
                         ),
                       ),
                     ),
+                    if (user != null && user!.codePays == "ca")
                     const SizedBox(height: 10,),
+                    if (user != null && user!.codePays == "ca")
                     InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RoutesName.interac);
@@ -394,28 +386,21 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                           ],
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Icon(Icons.payment, color: Colors.black, size: 15,),
-                            SizedBox(width: 8,),
-                            Text(
-                              "informations interac",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
+                            Icon(Icons.payment, color: AppColors.primaryColor, size: 15,),
+                            const SizedBox(width: 8,),
+                            AppTexts.smallText("informations de recharge du portefeuille")
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 10,),
                     const Divider(),
-                    const Text(
+                    Text(
                       "Historiques",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 11
+                      style: GoogleFonts.poppins(
+                        fontSize: 11, fontWeight: FontWeight.w500
                       ),
                     ),
                     const SizedBox(height: 10,),
@@ -441,15 +426,9 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                         child: Row(
                           children: [
-                            const Icon(Icons.history, color: Colors.black, size: 15,),
+                            Icon(Icons.history, color: AppColors.primaryColor, size: 15,),
                             const SizedBox(width: 8,),
-                            Text(
-                              "Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
+                            AppTexts.smallText("Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}")
                           ],
                         ),
                       ),
@@ -477,15 +456,10 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                         child: Row(
                           children: [
-                            const Icon(Icons.history, color: Colors.black, size: 15,),
+                            Icon(Icons.history, color: AppColors.primaryColor, size: 15,),
                             const SizedBox(width: 8,),
-                            Text(
-                              "Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
+                            AppTexts.smallText("Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }")
+
                           ],
                         ),
                       ),

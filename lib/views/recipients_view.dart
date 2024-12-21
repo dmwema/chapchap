@@ -56,9 +56,9 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
              children: [
-              commonAppBar(
-                context: context,
-              ),
+              // commonAppBar(
+              //   context: context,
+              // ),
               const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

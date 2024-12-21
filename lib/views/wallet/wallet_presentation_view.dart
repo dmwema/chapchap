@@ -39,17 +39,17 @@ class _ContactViewState extends State<WalletPresentationView> {
           Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-                context: context,
-                backArrow: true,
-                backClick: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.home,
-                        (route) => false,
-                  );
-                }
-            ),
+            // commonAppBar(
+            //     context: context,
+            //     backArrow: true,
+            //     backClick: () {
+            //       Navigator.pushNamedAndRemoveUntil(
+            //         context,
+            //         RoutesName.home,
+            //             (route) => false,
+            //       );
+            //     }
+            // ),
             const SizedBox(height: 10,),
             Expanded(
               child: SingleChildScrollView(

@@ -5,6 +5,7 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/res/components/info_card.dart';
@@ -113,105 +114,124 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                padding: const EdgeInsets.only(bottom: 0, top: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (msgList.isNotEmpty)
+                        CarouselSlider(
+                          options: CarouselOptions(height: 120.0),
+                          items: [1, ...msgList].map((element) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                if (element is int) {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.lightGrey,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            decoration: BoxDecoration(
+                                                color: AppColors.primaryColor,
+                                                borderRadius: BorderRadius.circular(50)
+                                            ),
+                                            width: 60,
+                                            height: 60,
+                                            child: Center(child: Image.asset("assets/logo.png", width: 40,))
+                                        ),
+                                        const SizedBox(width: 15,),
+                                        Flexible(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              AppTexts.cardTitle("ChapChap"),
+                                              const SizedBox(
+                                                height: 3,
+                                              ),
+                                              AppTexts.cardDescription("La meilleure application de transfert d’argent."),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(context, RoutesName.send);
+                                                  },
+                                                  child: AppTexts.buttonText("Commencer", color: AppColors.primaryColor)
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                } else if (element is Map) {
+                                  return InfoCard(type: element['type_msg_info'], content: element['msg']);
+                                }
+                                return Container();
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      if (msgList.isEmpty)
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                          decoration: BoxDecoration(
+                            color: AppColors.lightGrey,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(50)
+                                  ),
+                                  width: 60,
+                                  height: 60,
+                                  child: Center(child: Image.asset("assets/logo.png", width: 40,))
+                              ),
+                              const SizedBox(width: 15,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppTexts.cardTitle("ChapChap"),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, RoutesName.send);
+                                      },
+                                      child: AppTexts.buttonText("Commencer", color: AppColors.primaryColor)
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 5,),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
-                    InkWell(
-                      onTap: () async {
-                        SharedPreferences preferences = await SharedPreferences.getInstance();
-                        bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
-
-                        if (presentationWalletPassed != true || user!.pin != true) {
-                          await preferences.setBool('wallet_presentation_passed', true);
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RoutesName.walletPresentation,
-                                (route) => false,
-                          );
-                        } else {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RoutesName.walletHome,
-                                (route) => false,
-                          );
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xffe86328), Color(0xffd34040)],
-                              stops: [0.25, 0.75],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Wallet", style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16
-                                ),),
-                                Text("Simple et Rapide", style: TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.white.withOpacity(.6),
-                                    fontWeight: FontWeight.w500
-                                ),)
-                              ],
-                            ),
-                            ChangeNotifierProvider<WalletViewModel>(
-                                create: (BuildContext context) => walletViewModel,
-                                child: Consumer<WalletViewModel>(
-                                    builder: (context, value, _){
-                                      switch (value.balance.status) {
-                                        case Status.LOADING:
-                                          return const Row(
-                                            children: [
-                                              Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
-                                              SizedBox(width: 5,),
-                                              Text("Wallet", style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 12
-                                              ),)
-                                            ],
-                                          );
-                                        case Status.ERROR:
-                                          return Center(
-                                            child: Text(value.balance.message.toString()),
-                                          );
-                                        default:
-                                          var balance = value.balance.data!;
-                                          return Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              const Text("SOLDE ACTUEL", style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 11,
-                                                  color: Colors.white
-                                              ),),
-                                              Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
-                                                  fontWeight: FontWeight.w800,
-                                                  color: Colors.white,
-                                                  fontSize: 16
-                                              ),)
-                                            ],
-                                          );
-                                      }
-                                    })
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,16 +240,9 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Salut!,", style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.black87
-                            ),),
+                            AppTexts.smallText("Salut"),
                             if (user != null)
-                              Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800,
-                              ),),
+                              AppTexts.titleText("${user!.prenomClient} ${user!.nomClient}",)
                           ],
                         ),
                         Row(
@@ -331,10 +344,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                               children: [
                                 const Icon(Icons.warning_amber_rounded, size: 16, color: Colors.red,),
                                 const SizedBox(width: 5,),
-                                Text("Vous avez $nbProblemes Transfert${nbProblemes! > 1 ? 's': ''} échoué${nbProblemes! > 1 ? 's': ''}", style: const TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600
-                                ),)
+                                AppTexts.smallText("$nbProblemes Transfert${nbProblemes! > 1 ? 's': ''} échoué${nbProblemes! > 1 ? 's': ''}"),
                               ],
                             ),
                             Container(
@@ -343,15 +353,11 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                 color: Colors.red
                               ),
                               padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(Icons.more_horiz, color: Colors.white,),
-                                  SizedBox(width: 2,),
-                                  Text("Tout voir", style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w600,
-                                    color: Colors.white
-                                  ),)
+                                  const Icon(Icons.more_horiz, color: Colors.white,),
+                                  const SizedBox(width: 2,),
+                                  AppTexts.buttonText("Tout voir", color: Colors.white),
                                 ],
                               ),
                             )
@@ -368,147 +374,81 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                 color: AppColors.lightGrey,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (msgList.isNotEmpty)
-                      CarouselSlider(
-                        options: CarouselOptions(height: 120.0),
-                        items: [1, ...msgList].map((element) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              if (element is int) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.lightGrey,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.primaryColor,
-                                              borderRadius: BorderRadius.circular(50)
-                                          ),
-                                          width: 60,
-                                          height: 60,
-                                          child: Center(child: Image.asset("assets/logo.png", width: 40,))
-                                      ),
-                                      const SizedBox(width: 15,),
-                                      Flexible(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("ChapChap",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 3,
-                                            ),
-                                            const Flexible(child: Text("La meilleure application de transfert d’argent.",
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            )),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.pushNamed(context, RoutesName.send);
-                                              },
-                                              child: Text("Commencer",
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: AppColors.primaryColor,
-                                                    fontWeight: FontWeight.w700
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              } else if (element is Map) {
-                                return InfoCard(type: element['type_msg_info'], content: element['msg']);
-                              }
-                              return Container();
-                            },
-                          );
-                        }).toList(),
-                      ),
-                      if (!msgList.isNotEmpty)
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 30.0),
-                        decoration: BoxDecoration(
-                          color: AppColors.lightGrey,
-                          borderRadius: BorderRadius.circular(15),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: InkWell(
+                  onTap: () async {
+                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                    if (presentationWalletPassed != true || user!.pin != true) {
+                      await preferences.setBool('wallet_presentation_passed', true);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        RoutesName.walletPresentation,
+                            (route) => false,
+                      );
+                    } else {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        RoutesName.walletHome,
+                            (route) => false,
+                      );
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xffe86328), Color(0xffd34040)],
+                          stops: [0.25, 0.75],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.circular(50)
-                                ),
-                                width: 60,
-                                height: 60,
-                                child: Center(child: Image.asset("assets/logo.png", width: 40,))
-                            ),
-                            const SizedBox(width: 15,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("ChapChap",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w700
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, RoutesName.send);
-                                  },
-                                  child: Text("Commencer",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+                            AppTexts.titleText("Wallet", color: Colors.white),
+                            AppTexts.descriptionText("Simple et Rapide", color: Colors.white)
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 5,),
-                    ],
+                        ChangeNotifierProvider<WalletViewModel>(
+                            create: (BuildContext context) => walletViewModel,
+                            child: Consumer<WalletViewModel>(
+                                builder: (context, value, _){
+                                  switch (value.balance.status) {
+                                    case Status.LOADING:
+                                      return Row(
+                                        children: [
+                                          const Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
+                                          const SizedBox(width: 5,),
+                                          AppTexts.buttonText("Wallet", color: Colors.white),
+                                        ],
+                                      );
+                                    case Status.ERROR:
+                                      return Center(
+                                        child: Text(value.balance.message.toString()),
+                                      );
+                                    default:
+                                      var balance = value.balance.data!;
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          AppTexts.smallText("SOLDE ACTUEL", color: Colors.white ),
+                                          AppTexts.titleText("${balance["balance"]} ${balance["currency"]}", color: Colors.white),
+                                        ],
+                                      );
+                                  }
+                                })
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -525,41 +465,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("DERNIERES OPERATIONS", style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black
-                    ),),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Navigator.pushNamed(context, RoutesName.historyWP);
-                    //   },
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(5),
-                    //       color: Colors.black
-                    //     ),
-                    //     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                    //     child: Row(
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         const Text("Problèmes", style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 11,
-                    //           fontWeight: FontWeight.bold
-                    //         ),),
-                    //         if (nbProblemes != null && nbProblemes! > 0)
-                    //         const SizedBox(width: 5,),
-                    //         if (nbProblemes != null && nbProblemes! > 0)
-                    //         Text(nbProblemes.toString(), style: TextStyle(
-                    //           color: AppColors.primaryColor,
-                    //           fontSize: 12,
-                    //           fontWeight: FontWeight.w800
-                    //         ),)
-                    //       ],
-                    //     ),
-                    //   ),
-                    // )
+                    AppTexts.cardTitle("DERNIERES OPERATIONS")
                   ],
                 ),
               ),
@@ -579,8 +485,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                           default:
                             demandes = value.demandeList.data!;
                             if (demandes.isEmpty) {
-                              return const Padding(padding: EdgeInsets.all(20),
-                                child: Center(child: Text("Aucune opération récente.")),
+                              return Padding(padding: const EdgeInsets.all(20),
+                                child: Center(child: AppTexts.descriptionText("Aucune opération récente.")),
                               );
                             }
                             return Expanded(

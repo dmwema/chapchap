@@ -73,16 +73,16 @@ class _UpPinViewState extends State<UpPinView> {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                child: commonAppBar(
-                    context: context,
-                    backArrow: true,
-                    backClick: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.accountView,
-                      );
-                    }
-                ),
+                // child: commonAppBar(
+                //     context: context,
+                //     backArrow: true,
+                //     backClick: () {
+                //       Navigator.pushNamed(
+                //         context,
+                //         RoutesName.accountView,
+                //       );
+                //     }
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),

@@ -19,6 +19,7 @@ class RoutesName {
   static const String recompenseView = 'recompenses_view';
   static const String resetCodeSend = 'reset_code_sent_screen';
   static const String newPasswords = 'new_password_screen';
+  static const String welcomeView = 'welcomde_view';
 
   static const String drcPayment = 'drc_payment';
 

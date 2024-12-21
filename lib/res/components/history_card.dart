@@ -1,6 +1,7 @@
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/confirm_cancel.dart';
 import 'package:chapchap/res/components/modal/change_beneficiaire_modal.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -416,17 +417,9 @@ class _HistoryCardState extends State<HistoryCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(demande.beneficiaire.toString(), style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 12,
-                        ),),
+                        AppTexts.cardTitle(demande.beneficiaire.toString()),
                         const SizedBox(height: 2,),
-                        Text(demande.date.toString(), style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: Colors.black54
-                        ),),
+                        AppTexts.cardDescription(demande.date.toString()),
                       ],
                     ),
                   ],
@@ -435,18 +428,11 @@ class _HistoryCardState extends State<HistoryCard> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14
-                    ), textAlign: TextAlign.right,),
+                    AppTexts.buttonText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}"),
                     const SizedBox(height: 2,),
                     if (demande.progression != null)
-                    Text(truncateWithEllipsis(demande.progression.toString()), style: TextStyle(
-                        color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10
-                    ), textAlign: TextAlign.right,)
+                      AppTexts.smallText(
+                        truncateWithEllipsis(demande.progression.toString()), color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red))
                   ],
                 ),
               ],

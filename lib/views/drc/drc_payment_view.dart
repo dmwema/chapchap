@@ -54,39 +54,39 @@ class _DRCPaymentViewSatet extends State<DRCPaymentView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-              backArrow: true,
-              backClick: () {
-                showCupertinoDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: const Text('Confirmer'),
-                      content: const Text('Êtes-vous sûr de vouloir quitter cette page ?'),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: const Text('Annuler', style: TextStyle(
-                              color: Colors.black
-                          ),),
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Fermer le dialogue
-                          },
-                        ),
-                        CupertinoDialogAction(
-                          child: Text('Confirmer', style: TextStyle(
-                              color: AppColors.primaryColor
-                          ),),
-                          onPressed: () async {
-                            Navigator.pushNamed(context, RoutesName.home);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            ),
+            // commonAppBar(
+            //   context: context,
+            //   backArrow: true,
+            //   backClick: () {
+            //     showCupertinoDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return CupertinoAlertDialog(
+            //           title: const Text('Confirmer'),
+            //           content: const Text('Êtes-vous sûr de vouloir quitter cette page ?'),
+            //           actions: [
+            //             CupertinoDialogAction(
+            //               child: const Text('Annuler', style: TextStyle(
+            //                   color: Colors.black
+            //               ),),
+            //               onPressed: () {
+            //                 Navigator.of(context).pop(); // Fermer le dialogue
+            //               },
+            //             ),
+            //             CupertinoDialogAction(
+            //               child: Text('Confirmer', style: TextStyle(
+            //                   color: AppColors.primaryColor
+            //               ),),
+            //               onPressed: () async {
+            //                 Navigator.pushNamed(context, RoutesName.home);
+            //               },
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //     );
+            //   }
+            // ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(

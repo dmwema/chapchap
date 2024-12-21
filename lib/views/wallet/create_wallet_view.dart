@@ -39,10 +39,10 @@ class _CreateWalletViewState extends State<CreateWalletView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: true
+              // ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Créer un wallet", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),

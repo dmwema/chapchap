@@ -48,10 +48,10 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true
-              ),
+              //commonAppBar(
+               //   context: context,
+               //   backArrow: true
+              //),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(20),

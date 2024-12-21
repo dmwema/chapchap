@@ -37,10 +37,10 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: true
+              // ),
               const SizedBox(height: 20,),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),

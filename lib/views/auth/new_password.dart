@@ -37,13 +37,13 @@ class _NewPasswordState extends State<NewPassword> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonAppBar(
-                      context: context,
-                      backArrow: true,
-                    backClick: () {
-                        Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
-                    }
-                  ),
+                  // commonAppBar(
+                  //     context: context,
+                  //     backArrow: true,
+                  //   backClick: () {
+                  //       Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+                  //   }
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Column(

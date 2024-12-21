@@ -75,19 +75,19 @@ class _ResetPinViewState extends State<ResetPinView> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                child: commonAppBar(
-                    context: context,
-                    backArrow: true,
-                    backClick: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.accountView,
-                      );
-                    }
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+              //   child: commonAppBar(
+              //       context: context,
+              //       backArrow: true,
+              //       backClick: () {
+              //         Navigator.pushNamed(
+              //           context,
+              //           RoutesName.accountView,
+              //         );
+              //       }
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(

@@ -87,10 +87,10 @@ class _ProfileViewState extends State<ProfileView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: true
+              // ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Informations personnelles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), textAlign: TextAlign.left,),

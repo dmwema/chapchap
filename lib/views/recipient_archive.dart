@@ -34,13 +34,13 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-              backArrow: true,
-              backClick: () {
-                Navigator.pushNamed(context, RoutesName.recipeints);
-              }
-            ),
+            // commonAppBar(
+            //   context: context,
+            //   backArrow: true,
+            //   backClick: () {
+            //     Navigator.pushNamed(context, RoutesName.recipeints);
+            //   }
+            // ),
             const SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

@@ -2,9 +2,8 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
-import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -12,10 +11,10 @@ import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/pin_view_model.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/views/new_beneficiaire.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
@@ -183,11 +182,7 @@ class _SendViewState extends State<SendView> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Destination", style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500
-                              ),),
+                              AppTexts.smallText("Destination"),
                               const SizedBox(height: 5,),
                               InkWell(
                                 onTap: () {
@@ -199,9 +194,7 @@ class _SendViewState extends State<SendView> {
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              const Text("Séléctionnez le pays de destination", style: TextStyle(
-                                                  fontWeight: FontWeight.w600
-                                              ),),
+                                              AppTexts.smallText("Séléctionnez le pays de destination"),
                                               const SizedBox(height: 20,),
                                               Expanded(child: ListView.builder(
                                                 itemCount: paysDestinationModel!.destination!.length,
@@ -260,17 +253,14 @@ class _SendViewState extends State<SendView> {
                                       borderRadius: BorderRadius.circular(5),
                                       border: Border.all(width: 1, color: AppColors.formFieldBorderColor)
                                   ),
-                                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                   child: Row(
                                     children: [
                                       if (selectedDesinaion != null)
-                                        Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 15, height: 15, fit: BoxFit.contain),
+                                        Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 30, height: 15, fit: BoxFit.contain),
                                       if (selectedDesinaion != null)
                                         const SizedBox(width: 10,),
-                                      Text(selectedDesinaion == null ? "Séléctionner le pays de destination" :selectedDesinaion!.paysDest.toString(), style: const TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500
-                                      ),),
+                                      AppTexts.smallText(selectedDesinaion == null ? "Séléctionner le pays de destination" :selectedDesinaion!.paysDest.toString()),
                                       const SizedBox(width: 10,),
                                       const Expanded(child: Align(
                                         alignment: Alignment.centerRight,
@@ -281,11 +271,7 @@ class _SendViewState extends State<SendView> {
                                 ),
                               ),
                               const SizedBox(height: 10,),
-                              const Text("Vous envoyez", style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500
-                              ),),
+                              AppTexts.smallText("Vous envoyez"),
                               const SizedBox(height: 5,),
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -327,8 +313,8 @@ class _SendViewState extends State<SendView> {
                                             hintText: "0.00",
                                             contentPadding: EdgeInsets.zero,
                                           ),
-                                          style: const TextStyle(
-                                              fontSize: 18
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 18, fontWeight: FontWeight.bold
                                           ),
                                         )
                                     ),
@@ -342,11 +328,7 @@ class _SendViewState extends State<SendView> {
                                 ),
                               ),
                               const SizedBox(height: 10,),
-                              const Text("Votre bénéficiaire réçoit", style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500
-                              ),),
+                              AppTexts.smallText("Votre bénéficiaire réçoit"),
                               const SizedBox(height: 5,),
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -389,8 +371,8 @@ class _SendViewState extends State<SendView> {
                                               hintText: "0.00",
                                               contentPadding: EdgeInsets.zero
                                           ),
-                                          style: const TextStyle(
-                                              fontSize: 18
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18, fontWeight: FontWeight.bold
                                           ),
                                         )
                                     ),
@@ -405,22 +387,15 @@ class _SendViewState extends State<SendView> {
                               ),
                               const SizedBox(height: 10,),
                               if (selectedDesinaion != null && paysDestinationModel != null)
-                                Text("1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}", style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500
-                                ),),
+                                AppTexts.smallText("1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}"),
                               if (selectedDesinaion != null && paysDestinationModel != null)
                               const SizedBox(height: 5,),
-                              const Row(
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
-                                  SizedBox(width: 5,),
-                                  Text("ChapChap utilise son propre taux de change!", style: TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600
-                                  ),),
+                                  const Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
+                                  const SizedBox(width: 5,),
+                                  Flexible(child: AppTexts.smallText("ChapChap utilise son propre taux de change!")),
                                 ],
                               ),
                               const SizedBox(height: 15,),
@@ -439,36 +414,24 @@ class _SendViewState extends State<SendView> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text("Vous envoyez", style: TextStyle(
-                                            fontSize: 12
-                                        ),),
-                                        Text("${_fromController.text == "" ? "-" : _fromController.text } ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}", style: const TextStyle(
-                                            fontWeight: FontWeight.w600
-                                        ),),
+                                        AppTexts.smallText("Vous envoyez"),
+                                        AppTexts.buttonText("${_fromController.text == "" ? "-" : _fromController.text } ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}")
                                       ],
                                     ),
                                     const Divider(),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text("Votre bénéficiaire réçoit", style: TextStyle(
-                                            fontSize: 12
-                                        ),),
-                                        Text("${_toController.text == "" ? "-" : _toController.text } ${selectedDesinaion == null ? "-" : selectedDesinaion!.paysCodeMonnaieDest.toString()}", style: const TextStyle(
-                                            fontWeight: FontWeight.w600
-                                        ),),
+                                        AppTexts.smallText("Votre bénéficiaire réçoit"),
+                                        AppTexts.buttonText("${_toController.text == "" ? "-" : _toController.text } ${selectedDesinaion == null ? "-" : selectedDesinaion!.paysCodeMonnaieDest.toString()}")
                                       ],
                                     ),
                                     const Divider(),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text("Frais de transfert", style: TextStyle(
-                                            fontSize: 12
-                                        ),),
-                                        Text(("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}"), style: const TextStyle(
-                                            fontWeight: FontWeight.w600
-                                        ),),
+                                        AppTexts.smallText("Frais de transfert"),
+                                        AppTexts.buttonText("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}")
                                       ],
                                     ),
                                     // if (promoRabais > 0)
@@ -510,17 +473,9 @@ class _SendViewState extends State<SendView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Mode de reception", style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500
-              ),),
+              AppTexts.buttonText("Mode de reception"),
               const SizedBox(height: 5,),
-              const Text("Séléctionnez le mode de reception de votre bénéficiaire", style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400
-              ),),
+              AppTexts.descriptionText("Séléctionnez le mode de reception de votre bénéficiaire"),
               const SizedBox(height: 20,),
               if (selectedDesinaion != null)
                 ListView.builder(
@@ -582,15 +537,12 @@ class _SendViewState extends State<SendView> {
                                 ),
                               ),
                               const SizedBox(width: 20,),
-                              Text(selectedDesinaion!.modeRetrait![index].modeRetrait.toString(), style: TextStyle(
-                                  fontSize: 12,
-                                  color: (
+                              AppTexts.cardTitle(selectedDesinaion!.modeRetrait![index].modeRetrait.toString()
+                              , color: (
                                       selectedModeRetrait != null
                                           && selectedModeRetrait!.idModeRetrait
                                           == selectedDesinaion!.modeRetrait![index].idModeRetrait
-                                  ) ? Colors.white : Colors.black,
-                                  fontWeight: FontWeight.bold
-                              ),textAlign: TextAlign.center,)
+                                  ) ? Colors.white : Colors.black)
                             ],
                           ),
                         )
@@ -615,17 +567,7 @@ class _SendViewState extends State<SendView> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Bénéficiaire", style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500
-                ),),
-                const SizedBox(height: 5,),
-                const Text("Séléctionnez votre bénéficiaire", style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400
-                ),),
+                AppTexts.descriptionText("Séléctionnez votre bénéficiaire"),
                 const SizedBox(height: 20,),
                 InkWell(
                     onTap: () {
@@ -643,21 +585,17 @@ class _SendViewState extends State<SendView> {
                           color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(5)
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(bottom: 3),
                             child: Icon(CupertinoIcons.add, color: Colors.white, size: 17,),
                           ),
                           SizedBox(width: 10,),
-                          Text("Nouveau bénéficiaire", style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),textAlign: TextAlign.center,)
+                          AppTexts.buttonText("Nouveau bénéficiaire", color: Colors.white),
                         ],
                       ),
                     )
@@ -750,17 +688,13 @@ class _SendViewState extends State<SendView> {
                 bottom: 10,
                 top: 0,
             ),
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Vérifiez que les informations si dessous sont correctes puis confirmez", style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400
-                  ),),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: AppTexts.descriptionText("Vérifiez que les informations si dessous sont correctes puis confirmez")
                 ),
               ],
             ),
@@ -778,14 +712,8 @@ class _SendViewState extends State<SendView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Source", style: TextStyle(
-                      color: Colors.black.withOpacity(.8),
-                      fontSize: 12
-                    ),),
-                    Text("${paysDestinationModel!.paysSrce}", style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600
-                    ),)
+                    AppTexts.smallText("Source"),
+                    AppTexts.cardTitle("${paysDestinationModel!.paysSrce}")
                   ],
                 ),
               ),
@@ -798,14 +726,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Destination", style: TextStyle(
-                          color: Colors.black.withOpacity(.8),
-                          fontSize: 12
-                      ),),
-                      Text("${selectedDesinaion!.paysDest}", style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
-                      ),)
+                      AppTexts.smallText("Destination"),
+                      AppTexts.cardTitle("${selectedDesinaion!.paysDest}")
                     ],
                   )
               ),
@@ -822,11 +744,7 @@ class _SendViewState extends State<SendView> {
                         width: (MediaQuery.of(context).size.width) * 0.7,
                         child: TextFormField(
                           decoration: InputDecoration(
-                              label: const Text("Entrez un code promo", style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                fontWeight: FontWeight.normal
-                              ),),
+                              label: AppTexts.smallText("Entrez un code promo"),
                               fillColor: Colors.white,
                               focusedBorder: InputBorder.none,
                               focusColor: AppColors.primaryColor,
@@ -891,10 +809,7 @@ class _SendViewState extends State<SendView> {
                                 : loadingPromoSucces
                                 ?
                             const Icon(Icons.check, color: Colors.white, size: 18,) :
-                            const Text("Appliquer", style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white
-                            ),),
+                                AppTexts.buttonText("Appliquer", color: Colors.white),
                           )
                       ),
                     )
@@ -910,16 +825,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Montant à envoyer", style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12
-                      ),),
-                      Text("${_fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                      ),)
+                      AppTexts.cardTitle("Montant à envoyer"),
+                      AppTexts.cardTitle("${_fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}"),
                     ],
                   )
               ),
@@ -932,16 +839,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Montant à recevoir", style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12
-                      ),),
-                      Text("${_toController.text} ${selectedDesinaion!.paysCodeMonnaieDest}", style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                      ),)
+                      AppTexts.cardTitle("Montant à recevoir"),
+                      AppTexts.cardTitle("${_toController.text} ${selectedDesinaion!.paysCodeMonnaieDest}"),
                     ],
                   )
               ),
@@ -954,16 +853,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Frais de transfert", style: TextStyle(
-                          fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),),
-                      Text("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
-                          fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),)
+                      AppTexts.cardTitle("Frais de transfert"),
+                      AppTexts.cardTitle("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}"),
                     ],
                   )
               ),
@@ -977,16 +868,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Rabais promo", style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                      ),),
-                      Text("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce}", style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                      ),)
+                      AppTexts.cardTitle("Rabais promo"),
+                      AppTexts.cardTitle("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce}"),
                     ],
                   )
               ),
@@ -1000,16 +883,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Total à payer", style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais + tauxTransfert).toString() : tauxTransfert + double.parse(_fromController.text)} ${paysDestinationModel!.paysCodeMonnaieSrce}", style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.bold
-                      ),)
+                      AppTexts.cardTitle("Total à payer", color: AppColors.primaryColor),
+                      AppTexts.cardTitle("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais + tauxTransfert).toString() : tauxTransfert + double.parse(_fromController.text)} ${paysDestinationModel!.paysCodeMonnaieSrce}", color: AppColors.primaryColor),
                     ],
                   )
               ),
@@ -1023,14 +898,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Mode de retrait", style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
-                        fontSize: 12,
-                      ),),
-                      Text("${selectedModeRetrait!.modeRetrait}", style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
-                      ),)
+                      AppTexts.smallText("Mode de retrait"),
+                      AppTexts.cardTitle("${selectedModeRetrait!.modeRetrait}"),
                     ],
                   )
               ),
@@ -1044,14 +913,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Bénéficiaire", style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
-                        fontSize: 12,
-                      ),),
-                      Text("${selectedBeneficiaire!.nomBeneficiaire}", style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
-                      ),)
+                      AppTexts.smallText("Bénéficiaire"),
+                      AppTexts.cardTitle("${selectedBeneficiaire!.nomBeneficiaire}"),
                     ],
                   )
               ),
@@ -1065,14 +928,8 @@ class _SendViewState extends State<SendView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Téléphone", style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
-                        fontSize: 12,
-                      ),),
-                      Text("${selectedBeneficiaire!.telBeneficiaire}", style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
-                      ),)
+                      AppTexts.smallText("Téléphone"),
+                      AppTexts.cardTitle("${selectedBeneficiaire!.telBeneficiaire}"),
                     ],
                   )
               ),
@@ -1090,23 +947,23 @@ class _SendViewState extends State<SendView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: step > 0,
-                showHelp: false,
-                canClose: true,
-                appBarColor: Colors.white,
-                backClick: () {
-                  if (step > 0) {
-                    _controller.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear
-                    );
-                  } else {
-                    Navigator.pop(context);
-                  }
-                }
-              ),
+              // commonAppBar(
+              //   context: context,
+              //   backArrow: step > 0,
+              //   showHelp: false,
+              //   canClose: true,
+              //   appBarColor: Colors.white,
+              //   backClick: () {
+              //     if (step > 0) {
+              //       _controller.previousPage(
+              //           duration: const Duration(milliseconds: 300),
+              //           curve: Curves.linear
+              //       );
+              //     } else {
+              //       Navigator.pop(context);
+              //     }
+              //   }
+              // ),
               Center(child: Image.asset("assets/logo_black.png", width: 30,)),
               Container(
                 decoration: BoxDecoration(
@@ -1129,12 +986,8 @@ class _SendViewState extends State<SendView> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                child: Text(step == 0 ? "Montant et pays" : (
-                  step == 1 ? "Mode de reception" : ( step == 2 ? "Bénéficiaire" : "Terminer")
-                ), style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700
-                ),),
+                child: AppTexts.buttonText(step == 0 ? "Montant et pays" : (
+                step == 1 ? "Mode de reception" : ( step == 2 ? "Bénéficiaire" : "Terminer")),)
               ),
               Expanded(
                 child: Stack(
@@ -1157,7 +1010,8 @@ class _SendViewState extends State<SendView> {
                         padding: const EdgeInsets.all(20),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width - 40,
-                          child: Column(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               RoundedButton(
                                 onPress: () {
@@ -1241,11 +1095,11 @@ class _SendViewState extends State<SendView> {
                                     }
                                   }
                                 },
-                                title: step < 3 ? "Continuer": "Confirmer et payer",
+                                title: step < 3 ? "Continuer": "Confirmer & Payer",
                                 loading: loading,
                               ),
                               if (step == 3)
-                              const SizedBox(height: 10,),
+                              const SizedBox(width: 5,),
                               if (step == 3)
                               RoundedButton(
                                 color: Colors.black,
@@ -1427,7 +1281,7 @@ class _SendViewState extends State<SendView> {
                                     },
                                   );
                                 },
-                                title: "Payer avec wallet",
+                                title: "Avec wallet",
                                 loading: loading,
                               ),
                             ],

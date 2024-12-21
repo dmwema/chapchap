@@ -35,10 +35,10 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonAppBar(
-                  context: context,
-                  backArrow: true,
-                ),
+                // commonAppBar(
+                //   context: context,
+                //   backArrow: true,
+                // ),
                 const SizedBox(height: 20,),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),

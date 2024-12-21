@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -38,15 +39,10 @@ class RecipientCard2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(name, style: const TextStyle(
-                  fontWeight: FontWeight.w600
-              ),),
-              const SizedBox(width: 5,),
+              AppTexts.cardTitle(name),
               const SizedBox(height: 5,),
-              if (address != "null")
-              Text(phone, style: const TextStyle(
-                fontSize: 11,fontWeight: FontWeight.w500
-              ),),
+              if (phone != "null")
+              AppTexts.cardDescription(phone)
             ],
           ),
           Expanded(

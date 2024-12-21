@@ -1,3 +1,4 @@
+import 'package:chapchap/res/app_texts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -58,23 +59,11 @@ class InfoCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),
-                  style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700
-                  ),
-                ),
+                AppTexts.cardTitle(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),),
                 const SizedBox(
                   height: 3,
                 ),
-                Flexible(child: Text(content,
-                  style: const TextStyle(
-                      fontSize: 11,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold
-                  ),
-                ))
+                Flexible(child: AppTexts.cardDescription(content))
               ],
             ),
           )

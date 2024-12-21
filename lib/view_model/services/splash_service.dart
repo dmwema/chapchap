@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -15,7 +17,7 @@ class SplashService {
       if (value.token == 'null' || value.token == '' || value.token == null || value.idClient == null || value.idClient == 'null' || value.idClient == '') {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RoutesName.login,
+          RoutesName.welcomeView,
               (route) => false,
         );
       } else {

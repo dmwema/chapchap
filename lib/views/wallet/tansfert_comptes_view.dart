@@ -40,10 +40,10 @@ class _TransferCompteWalletViewState extends State<TransferCompteWalletView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true
-              ),
+              //commonAppBar(
+               //   context: context,
+               //   backArrow: true
+              //),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Transferer l'argent entre comptes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
