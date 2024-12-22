@@ -5,6 +5,7 @@ import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
@@ -91,29 +92,25 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
     final box = context.findRenderObject() as RenderBox?;
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
+        appBar: CommonAppBar(
+          context: context,
+          navWhite: true,
+          backArrow: true,
+          color: true,
+          backClick: () {
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+          },
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // commonAppBar(
-              //     context: context,
-              //     backArrow: true,
-              //      textColor: Colors.white,
-              //     appBarColor: AppColors.primaryColor,
-              //     backClick: () {
-              //       Navigator.pushNamedAndRemoveUntil(
-              //         context,
-              //         RoutesName.home,
-              //             (route) => false,
-              //       );
-              //     }
-              // ),
               Container(
                 color: AppColors.primaryColor,
                 width: double.infinity,
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,11 +118,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Portefeuilles", style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),),
+                        AppTexts.titleText("Portefeuilles", color: Colors.white),
                         Row(
                           children: [
                             IconButton(onPressed: () {
@@ -145,19 +138,15 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.black26
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                         child: ChangeNotifierProvider<WalletViewModel>(
                             create: (BuildContext context) => walletViewModel,
                             child: Consumer<WalletViewModel>(
                                 builder: (context, value, _){
                                   switch (value.walletsList.status) {
                                     case Status.LOADING:
-                                      return const Center(
-                                        child: Text("-", style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 12
-                                        ),),
+                                      return Center(
+                                        child: AppTexts.titleText("-", color: Colors.white)
                                       );
                                     case Status.ERROR:
                                       return Center(
@@ -169,35 +158,18 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                         currentWallet = wallets[0];
                                         WalletViewModel viewModel = WalletViewModel();
                                       }
-                                      if (wallets.isEmpty && user != null) {
-                                        return InkWell(
-                                          onTap: () async {
+                                      if (user != null && wallets.isEmpty) {
+                                        return RoundedButton(
+                                          title: "Creer un wallet",
+                                          loading: walletViewModel.loading,
+                                          onPress: () async {
                                             await walletViewModel.createWallet({
                                               "currency": Utils.countryMoneyCode[user!.codePays]
                                             }, context);
                                           },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: Colors.white
-                                            ),
-                                            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                if (!walletViewModel.loading)
-                                                Icon(Icons.add, color: AppColors.primaryColor,),
-                                                if (walletViewModel.loading)
-                                                  CupertinoActivityIndicator(color: AppColors.primaryColor, radius: 8,),
-                                                const SizedBox(width: 10,),
-                                                Text("Creer un wallet", style: TextStyle(
-                                                  color: AppColors.primaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold
-                                                ),)
-                                              ],
-                                            ),
-                                          ),
+                                          color: Colors.white,
+                                          textColor: AppColors.buttonBlackColor,
+                                          icon: Icons.add,
                                         );
                                       }
                                       return Stack(
@@ -217,11 +189,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                                 itemBuilder: (BuildContext context, int index) {
                                                   var wallet = wallets[index];
                                                   return Center(
-                                                    child: Text(wallet['balance'] + " " + wallet['currency'], style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.w900,
-                                                        color: Colors.white
-                                                    ),),
+                                                    child: AppTexts.titleText("${wallet['balance']} ${wallet['currency']}", color: Colors.white)
                                                   );
                                                 },
                                               ),
@@ -275,194 +243,87 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor)
-                    )
-                ),
-                child: const Row(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Operations", style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black
-                        ),),
-                        Text("Gérez votre Wallet de manière efficace", style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black
-                        ),),
+                        AppTexts.bodyText("Operations", bold: true),
+                        const SizedBox(height: 5,),
+                        AppTexts.descriptionText("Gérez votre Wallet de manière efficace")
                       ],
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
                   children: [
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
+                    RoundedButton(
+                        title: "Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                        icon: Icons.wallet,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
+                          }
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            Icon(Icons.wallet, color: AppColors.primaryColor, size: 15,),
-                            const SizedBox(width: 8,),
-                            AppTexts.smallText("Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}")
-                          ],
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.send);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            Icon(Icons.send_to_mobile, color: AppColors.primaryColor, size: 15,),
-                            const SizedBox(width: 8,),
-                            AppTexts.smallText("Nouveau transfert")
-                          ],
-                        ),
-                      ),
-                    ),
-                    if (user != null && user!.codePays == "ca")
-                    const SizedBox(height: 10,),
-                    if (user != null && user!.codePays == "ca")
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.interac);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            Icon(Icons.payment, color: AppColors.primaryColor, size: 15,),
-                            const SizedBox(width: 8,),
-                            AppTexts.smallText("informations de recharge du portefeuille")
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    const Divider(),
-                    Text(
-                      "Historiques",
-                      style: GoogleFonts.poppins(
-                        fontSize: 11, fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
+                    RoundedButton(
+                        title: "Nouveau transfert",
+                        icon: CupertinoIcons.arrow_up_right,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          Navigator.pushNamed(context, RoutesName.send);
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            Icon(Icons.history, color: AppColors.primaryColor, size: 15,),
-                            const SizedBox(width: 8,),
-                            AppTexts.smallText("Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}")
-                          ],
-                        ),
-                      ),
                     ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            Icon(Icons.history, color: AppColors.primaryColor, size: 15,),
-                            const SizedBox(width: 8,),
-                            AppTexts.smallText("Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }")
 
-                          ],
-                        ),
+                    // if (user != null && user!.codePays == "ca")
+                      const SizedBox(height: 10,),
+                    // if (user != null && user!.codePays == "ca")
+                      RoundedButton(
+                          title: "informations de recharge du portefeuille",
+                          icon: Icons.payment,
+                          color: AppColors.buttonBlackColor,
+                          textColor: Colors.white,
+                          onPress: () {
+                            Navigator.pushNamed(context, RoutesName.interac);
+                          }
                       ),
+                    const SizedBox(height: 20,),
+                    Divider(color: AppColors.formFieldColor,),
+                    const SizedBox(height: 10,),
+                    AppTexts.cardTitle("Historiques"),
+                    const SizedBox(height: 20,),
+                    RoundedButton(
+                        title: "Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                        icon: Icons.history,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
+                          }
+                        }
+                    ),
+                    const SizedBox(height: 10,),
+                    RoundedButton(
+                        title: "Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
+                        icon: Icons.history,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
+                          }
+                        }
                     ),
                   ],
                 ),

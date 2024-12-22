@@ -2,6 +2,7 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
+import 'package:chapchap/views/exchange_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,10 +78,11 @@ Widget commonBottomAppBar({
           GestureDetector(
             onTap: () {
               if (active != 2) {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.push(
                   context,
-                  RoutesName.exchange,
-                      (route) => false,
+                  CupertinoPageRoute(
+                    builder: (context) => ExchangeView(public: false,)
+                  )
                 );
               }
             },
@@ -154,6 +156,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
   bool backArrow;
   bool showHelp;
   bool? color;
+  bool? navWhite;
   GestureTapCallback? backClick;
 
   CommonAppBar({
@@ -162,6 +165,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
     this.backArrow = false,
     this.showHelp = true,
     this.color,
+    this.navWhite,
     this.backClick,
   });
 
@@ -174,7 +178,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
           onTap: backClick ?? () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back, color: AppColors.textGrey, size: 25,)
+          child: Icon(Icons.arrow_back, color: color == true ? Colors.white : AppColors.textGrey, size: 25,)
       ): Container(),
       actions: [
         if (showHelp)
@@ -185,6 +189,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
                 builder: (context) {
                   return Container(
                       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      color: AppColors.bgColor,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,16 +247,17 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
-              child: AppTexts.smallText("Aide ?"),
+              child: AppTexts.smallText("Aide ?", color: color == true ? Colors.white : AppColors.textGrey),
             ),
           )
       ],
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
-        systemNavigationBarColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
-        systemNavigationBarIconBrightness: color == true ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor,
+        systemNavigationBarIconBrightness: navWhite == true || color != true ? Brightness.dark : Brightness.light,
         statusBarIconBrightness: color == true ? Brightness.light : Brightness.dark, // For Android (dark icons)
         statusBarBrightness: color == true ? Brightness.light : Brightness.dark, // For iOS (dark icons)
+        systemNavigationBarDividerColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor
       ),
     );
   }

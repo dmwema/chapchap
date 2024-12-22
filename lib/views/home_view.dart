@@ -1,6 +1,5 @@
 
 import 'package:chapchap/common/common_widgets.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -8,26 +7,22 @@ import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/res/components/info_card.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
-import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/notifications_view.dart';
+import 'package:chapchap/views/wallet/wallet_home_view.dart';
+import 'package:chapchap/views/wallet/wallet_presentation_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_cupernino_bottom_sheet/flutter_cupernino_bottom_sheet.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -53,18 +48,6 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   late AnimationController _controller;
   late Animation<double> _animation;
-
-  Future<void> _openUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-      setState(() {
-        loadEmail = false;
-        loadSMS = false;
-      });
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   void initState() {
@@ -162,12 +145,16 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) => NotificationsView(notifications: msgList,),
-                                          ),
-                                        );
+                                        if (msgList.isEmpty) {
+                                          Utils.toastMessage("Vous n'avez aucune notification");
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) => NotificationsView(notifications: msgList,),
+                                            ),
+                                          );
+                                        }
                                       },
                                       child: Stack(
                                         children: [
@@ -306,16 +293,16 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
                                                   if (presentationWalletPassed != true || user!.pin != true) {
                                                     await preferences.setBool('wallet_presentation_passed', true);
-                                                    Navigator.pushNamedAndRemoveUntil(
+                                                    Navigator.push(
                                                       context,
-                                                      RoutesName.walletPresentation,
-                                                          (route) => false,
+                                                      CupertinoPageRoute(
+                                                        builder: (context) => const WalletPresentationView()
+                                                      )
                                                     );
                                                   } else {
-                                                    Navigator.pushNamedAndRemoveUntil(
+                                                    Navigator.push(
                                                       context,
-                                                      RoutesName.walletHome,
-                                                          (route) => false,
+                                                      CupertinoPageRoute(builder: (context) => WalletHomeView())
                                                     );
                                                   }
                                                 },
