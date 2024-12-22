@@ -1,5 +1,6 @@
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -62,10 +63,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
         child: Column(
           children: [
             if(widget.hideTitle != true)
-              const Text("Ajouter un bénéficiaire", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17
-              ),),
+              AppTexts.titleText("Ajouter un bénéficiaire"),
             if(widget.hideTitle != true)
               const SizedBox(height: 20,),
             InkWell(
@@ -73,16 +71,15 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 if (canEditDestination) {
                   showModalBottomSheet(
                     context: context,
+                    backgroundColor: AppColors.bgColor,
                     builder: (context) {
                       return Container(
                           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text("Séléctionnez le pays du bénéficiaire", style: TextStyle(
-                                  fontWeight: FontWeight.w600
-                              ),),
-                              const SizedBox(height: 20,),
+                              AppTexts.titleText("Séléctionnez le pays du bénéficiaire"),
+                              const SizedBox(height: 10,),
                               Expanded(child: ListView.builder(
                                 itemCount: widget.destinations.length,
                                 itemBuilder: (context, index) {
@@ -104,17 +101,11 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                        ),
                                         child: Row(
                                           children: [
                                             Image.asset("packages/country_icons/icons/flags/png/${widget.destinations[index].codePaysDest}.png", width: 20, height: 20, fit: BoxFit.contain,),
                                             const SizedBox(width: 20,),
-                                            Text(widget.destinations[index].paysDest.toString(), style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold
-                                            ),)
+                                            AppTexts.smallText(widget.destinations[index].paysDest.toString())
                                           ],
                                         ),
                                       )
@@ -127,7 +118,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                     },
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
+                        top: Radius.circular(0),
                       ),
                     ),
                   );
@@ -144,11 +135,11 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    selectedDesinaion == null ? const Text("Pays du bénéficiaire *", style: TextStyle(color: Colors.black54),): Row(
+                    selectedDesinaion == null ? AppTexts.descriptionText("Pays du bénéficiaire *"): Row(
                       children: [
                         Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 30, height: 15, fit: BoxFit.contain),
                         const SizedBox(width: 10,),
-                        Text(selectedDesinaion!.paysDest.toString())
+                        AppTexts.smallText(selectedDesinaion!.paysDest.toString())
                       ],
                     ),
                     if (canEditDestination)
@@ -171,93 +162,25 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
               type: TextInputType.emailAddress,
             ),
             const SizedBox(height: 10,),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  color: AppColors.formFieldColor,
-                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1)
-              ),
-              child: Row(
-                children: [
-                  SizedBox(child: Padding(padding: const EdgeInsets.only(bottom: 3), child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
-                        style: const TextStyle(
-                            fontSize: 14
-                        ),
-                      ),
-                    ),
-                  ),),),
-                  Expanded(child: TextFormField(
-                    controller: _telController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.formFieldColor,
-                      hintText: "Téléphone *",
-                      hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(.25)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.formFieldColor),// Changer la couleur de la bordure
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.formFieldColor),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 6),
-                    ),
-                    onTap: () {
-
-                    },
-                  ),)
-                ],
+            CustomFormField(
+              label: "Téléphone *",
+              hint: "Téléphone *",
+              controller: _telController,
+              type: TextInputType.phone,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: AppTexts.smallText(selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString()),
               ),
             ),
             const SizedBox(height: 10,),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  color: AppColors.formFieldColor,
-                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1)
-              ),
-              child: Row(
-                children: [
-                  SizedBox(child: Padding(padding: const EdgeInsets.only(bottom: 3), child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString(),
-                        style: const TextStyle(
-                            fontSize: 14
-                        ),
-                      ),
-                    ),
-                  ),),),
-                  Expanded(child: TextFormField(
-                    controller: _telConfirmController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.formFieldColor,
-                      hintText: "Confirmer le téléphone *",
-                      hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(.25)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.formFieldColor),// Changer la couleur de la bordure
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.formFieldColor),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 6),
-                    ),
-                    onTap: () {
-
-                    },
-                  ),)
-                ],
+            CustomFormField(
+              label: "Confirmer le téléphone *",
+              hint: "Confirmer le téléphone *",
+              controller: _telConfirmController,
+              type: TextInputType.phone,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: AppTexts.smallText(selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString()),
               ),
             ),
             const SizedBox(height: 10,),
@@ -268,6 +191,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 });
               },
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Checkbox(
                     activeColor: AppColors.primaryColor,
@@ -279,8 +204,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                       });
                     },
                   ),
-                  const Flexible(
-                    child: Text("Je confirme que le numéro entré est correct. En cas d'erreur, ChapChap n'est pas responsable et aucun remboursement ne pourra être généré.."),
+                  Flexible(
+                    child: AppTexts.smallText("Je confirme que le numéro entré est correct. En cas d'erreur, ChapChap n'est pas responsable et aucun remboursement ne pourra être généré.."),
                   )
                 ],
               ),
@@ -333,11 +258,6 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                         "id_compte":""
                       };
                       demandesViewModel.newBeneficiaire(data, widget.parentCotext, redirect: canEditDestination).then((value) async {
-                        print("********************************");
-                        print("********************************");
-                        print("********************************");
-                        print("********************************");
-                        print(value);
                         if (value != null){
                           if (value['error'] != true) {
                             Utils.toastMessage("Bénéficiaire enrégistré avec succès");
@@ -350,7 +270,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                                 Navigator.pop(widget.parentCotext);
                               });
                             } else {
-                              Navigator.pushNamed(context, RoutesName.recipeints);
+                              Navigator.pushReplacementNamed(context, RoutesName.recipeints);
                             }
                           } else {
                             Utils.flushBarErrorMessage(value['message'], context);

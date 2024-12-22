@@ -2,7 +2,9 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -28,23 +30,16 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
       resizeToAvoidBottomInset: false,
+      appBar: CommonAppBar(context: context, backArrow: true,),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // commonAppBar(
-            //   context: context,
-            //   backArrow: true,
-            //   backClick: () {
-            //     Navigator.pushNamed(context, RoutesName.recipeints);
-            //   }
-            // ),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text("Bénéficiaires archivés", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: AppTexts.titleText("Bénéficiaires archivés")
             ),
             const SizedBox(height: 10,),
             Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
@@ -66,12 +61,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                         default:
                           if (value.beneficiairesList.data!.length == 0) {
                             return Center(
-                              child: Text(
-                                "Aucun bénéficiaire archivé",
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(.2),
-                                ),
-                              ),
+                              child: AppTexts.descriptionText("Aucun bénéficiaire archivé"),
                             );
                           }
                           return ListView.builder(
@@ -82,6 +72,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                   onTap: (){
                                     showModalBottomSheet(
                                       context: context,
+                                      backgroundColor: AppColors.bgColor,
                                       isScrollControlled: true,
                                       builder: (context) {
                                         return Container(
@@ -105,35 +96,22 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                 showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
                                               ),
                                               const SizedBox(height: 10,),
-                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 18
-                                              ),),
-                                              const SizedBox(height: 5,),
-                                              Text(beneficiaire.telBeneficiaire.toString(), style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.black.withOpacity(.5)
-                                              ),),
-                                              const SizedBox(height: 10,),
-                                              const Divider(),
-                                              const SizedBox(height: 5,),
+                                              AppTexts.titleText(beneficiaire.nomBeneficiaire.toString()),
+                                              AppTexts.descriptionText(beneficiaire.telBeneficiaire.toString()),
+                                              const SizedBox(height: 20,),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  const Text("Pays", style: TextStyle(
-                                                      fontWeight: FontWeight.bold
-                                                  ),),
+                                                  AppTexts.smallText("Pays"),
                                                   Row(
                                                     children: [
                                                       Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                      const SizedBox(width: 10,),
-                                                      Text("(${beneficiaire.paysMonnaie})"),
+                                                      // const SizedBox(width: 5,),
+                                                      // AppTexts.smallText("(${beneficiaire.paysMonnaie})"),
                                                     ],
                                                   )
                                                 ],
                                               ),
-                                              const SizedBox(height: 5,),
-                                              const Divider(),
                                               const SizedBox(height: 20,),
                                               Wrap(
                                                 spacing: 5,
@@ -141,8 +119,9 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                 crossAxisAlignment: WrapCrossAlignment.center,
                                                 alignment: WrapAlignment.spaceBetween,
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {
+                                                  RoundedButton(
+                                                    title: "Desarchiver",
+                                                    onPress: () {
                                                       DemandesViewModel demandesViewModel3 = DemandesViewModel();
                                                       showCupertinoDialog(
                                                         context: context,
@@ -178,24 +157,13 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                         },
                                                       );
                                                     },
-                                                    child: Container(
-                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.black,
-                                                            borderRadius: BorderRadius.circular(5)
-                                                        ),
-                                                        child: const Row(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
-                                                            SizedBox(width: 3,),
-                                                            Text("Desarchiver", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                          ],
-                                                        )
-                                                    ),
+                                                    icon: Icons.unarchive_outlined,
+                                                    color: AppColors.buttonBlackColor,
+                                                    textColor: Colors.white,
                                                   ),
-                                                  InkWell(
-                                                    onTap: () {
+                                                  RoundedButton(
+                                                    title: "Supprimer",
+                                                    onPress: () {
                                                       showCupertinoDialog(
                                                         context: context,
                                                         builder: (BuildContext context) {
@@ -230,21 +198,9 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                                         },
                                                       );
                                                     },
-                                                    child: Container(
-                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.red,
-                                                            borderRadius: BorderRadius.circular(5)
-                                                        ),
-                                                        child: const Row(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            Icon(CupertinoIcons.delete, size: 15, color: Colors.white,),
-                                                            SizedBox(width: 3,),
-                                                            Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                          ],
-                                                        )
-                                                    ),
+                                                    icon: CupertinoIcons.delete_solid,
+                                                    color: AppColors.buttonBlackColor,
+                                                    textColor: Colors.white,
                                                   ),
                                                 ],
                                               )
@@ -254,7 +210,7 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
                                       },
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
+                                          top: Radius.circular(0),
                                         ),
                                       ),
                                     );

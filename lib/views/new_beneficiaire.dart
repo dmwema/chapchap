@@ -1,6 +1,8 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/NewBeneficiaireForm.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -31,20 +33,16 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // commonAppBar(
-              //   context: context,
-              //   backArrow: true
-              // ),
-              const SizedBox(height: 20,),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Nouveau bénéficiaire", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                child: AppTexts.titleText("Nouveau bénéficiaire"),
               ),
               const SizedBox(height: 10,),
               Expanded(

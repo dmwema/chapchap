@@ -1,3 +1,4 @@
+import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -13,45 +14,47 @@ class RecipientCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-          )
-      ),
-      child: Row(
-        children: [
-          CircularProfileAvatar(
-            "",
-            radius: 20, // sets radius, default 50.0
-            backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
-            initialsText: Text(
-              getInitials(name),
-              style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-            ),  // sets initials text, set your own style, default Text('')
-            elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-            foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-            cacheImage: true, // allow widget to cache image against provided url
-            showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-          ),
-          const SizedBox(width: 10,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(bottom: 10),
+      child: commonRoundedContainer(
+        removePaddingV: true,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
             children: [
-              AppTexts.cardTitle(name),
-              const SizedBox(height: 5,),
-              if (phone != "null")
-              AppTexts.cardDescription(phone)
+              CircularProfileAvatar(
+                "",
+                radius: 18, // sets radius, default 50.0
+                backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
+                initialsText: Text(
+                  getInitials(name),
+                  style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                ),  // sets initials text, set your own style, default Text('')
+                elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
+                foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+                cacheImage: true, // allow widget to cache image against provided url
+                showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+              ),
+              const SizedBox(width: 10,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppTexts.cardTitle(name),
+                  const SizedBox(height: 2,),
+                  if (phone != "null")
+                  AppTexts.cardDescription(phone)
+                ],
+              ),
+              Expanded(
+                child: Align(
+                alignment: Alignment.centerRight,
+                child: Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 20, fit: BoxFit.contain),
+                )
+              )
             ],
           ),
-          Expanded(
-            child: Align(
-            alignment: Alignment.centerRight,
-            child: Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 13, fit: BoxFit.contain),
-            )
-          )
-        ],
+        ),
       ),
     );
   }

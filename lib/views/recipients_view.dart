@@ -3,14 +3,17 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/confirm_delete.dart';
 import 'package:chapchap/res/components/recipient_card2.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class RecipientsView extends StatefulWidget {
@@ -50,29 +53,40 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
       resizeToAvoidBottomInset: false,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(0.0),
+        child: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: AppColors.bgColor,
+            systemNavigationBarColor: Colors.white,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+            statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+            systemNavigationBarDividerColor: Colors.white,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
              children: [
-              // commonAppBar(
-              //   context: context,
-              // ),
               const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.titleText("Bénéficiaires"),
                     const SizedBox(width: 10,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, RoutesName.newBeneficiaire);
                       },
                       child: Container(
-                        width: 25, height: 25,
+                        width: 20, height: 20,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: AppColors.primaryColor
@@ -91,26 +105,23 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                   Navigator.pushNamed(context, RoutesName.recipeintsArchive);
                 },
                 child: Container(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1),
-                        top: BorderSide(color: AppColors.formFieldBorderColor, width: 1),
+                        bottom: BorderSide(color: AppColors.formFieldColor, width: 1),
+                        top: BorderSide(color: AppColors.formFieldColor, width: 1),
                       )
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(CupertinoIcons.archivebox_fill, size: 18,),
-                            SizedBox(width: 10,),
-                            Text("Bénéficiaires archivés", style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700
-                            ),)
+                            const Icon(CupertinoIcons.archivebox_fill, size: 20,),
+                            const SizedBox(width: 10,),
+                            AppTexts.smallText("Bénéficiaires archivés")
                           ],
                         ),
                         // Text("(3)", style: TextStyle(
@@ -120,6 +131,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                     )
                 ),
               ),
+              const SizedBox(height: 20,),
               Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
                   create: (BuildContext context) => demandesViewModel,
                   child: Consumer<DemandesViewModel>(
@@ -139,12 +151,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                           default:
                             if (value.beneficiairesList.data!.length == 0) {
                               return Center(
-                                child: Text(
-                                  "Aucun bénéficiaire enrégistré",
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(.2),
-                                  ),
-                                ),
+                                child: AppTexts.descriptionText("Aucun bénéficiaire enrégistré"),
                               );
                             }
                             return ListView.builder(
@@ -158,6 +165,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                       showModalBottomSheet(
                                         context: context,
                                         isScrollControlled: true,
+                                        backgroundColor: AppColors.bgColor,
                                         builder: (context) {
                                           return ChangeNotifierProvider<DemandesViewModel>(
                                               create: (BuildContext context) => demandesViewModel2,
@@ -198,55 +206,37 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                 showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
                                                               ),
                                                               const SizedBox(height: 10,),
-                                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                                                fontWeight: FontWeight.w600,
-                                                                fontSize: 18
-                                                              ),),
-                                                              const SizedBox(height: 5,),
-                                                              Text(beneficiaire.telBeneficiaire.toString(), style: TextStyle(
-                                                                  fontSize: 13,
-                                                                  color: Colors.black.withOpacity(.5)
-                                                              ),),
-                                                              const SizedBox(height: 10,),
-                                                              const Divider(),
-                                                              const SizedBox(height: 5,),
+                                                              AppTexts.titleText(beneficiaire.nomBeneficiaire.toString()),
+                                                              AppTexts.descriptionText(beneficiaire.telBeneficiaire.toString()),
+                                                              const SizedBox(height: 20,),
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
-                                                                  const Text("Pays", style: TextStyle(
-                                                                      fontWeight: FontWeight.bold
-                                                                  ),),
+                                                                  AppTexts.smallText("Pays"),
                                                                   Row(
                                                                     children: [
                                                                       Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                                      const SizedBox(width: 10,),
-                                                                      Text("(${beneficiaire.paysMonnaie})"),
+                                                                      const SizedBox(width: 5,),
+                                                                      AppTexts.smallText("(${beneficiaire.paysMonnaie})"),
                                                                     ],
                                                                   )
                                                                 ],
                                                               ),
                                                               const SizedBox(height: 5,),
-                                                              const Divider(),
-                                                              const SizedBox(height: 5,),
+                                                              Divider(color: AppColors.formFieldColor,),
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
-                                                                  const Text("E-mail", style: TextStyle(
-                                                                      fontWeight: FontWeight.bold
-                                                                  ),),
-                                                                  Text(beneficiaire.emailBeneficiaire.toString()),
+                                                                  AppTexts.smallText("E-mail"),
+                                                                  AppTexts.smallText(beneficiaire.emailBeneficiaire.toString()),
                                                                 ],
                                                               ),
-                                                              const SizedBox(height: 5,),
-                                                              const Divider(),
-                                                              const SizedBox(height: 5,),
+                                                              Divider(color: AppColors.formFieldColor,),
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
-                                                                  const Text("Téléphone", style: TextStyle(
-                                                                      fontWeight: FontWeight.bold
-                                                                  ),),
-                                                                  Text(beneficiaire.telBeneficiaire.toString()),
+                                                                  AppTexts.smallText("Téléphone"),
+                                                                  AppTexts.smallText(beneficiaire.telBeneficiaire.toString()),
                                                                 ],
                                                               ),
                                                               const SizedBox(height: 20,),
@@ -256,8 +246,9 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                 crossAxisAlignment: WrapCrossAlignment.center,
                                                                 alignment: WrapAlignment.spaceBetween,
                                                                 children: [
-                                                                  InkWell(
-                                                                    onTap: () {
+                                                                  RoundedButton(
+                                                                    title: "Nouveau Transfert",
+                                                                    onPress: () {
                                                                       Navigator.push(
                                                                         context,
                                                                         MaterialPageRoute(builder: (context) => SendView(
@@ -266,26 +257,13 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                         )),
                                                                       );
                                                                     },
-                                                                    child: Container(
-                                                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                                      decoration: BoxDecoration(
-                                                                          color: Colors.green,
-                                                                          borderRadius: BorderRadius.circular(5)
-                                                                      ),
-                                                                      width: MediaQuery.of(context).size.width,
-                                                                      child: const Row(
-                                                                        mainAxisSize: MainAxisSize.max,
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Icon(CupertinoIcons.arrow_up_right, size: 15, color: Colors.white,),
-                                                                          SizedBox(width: 3,),
-                                                                          Text("Nouveau Transfert", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                                        ],
-                                                                      )
-                                                                    ),
+                                                                    icon: CupertinoIcons.arrow_up_right,
+                                                                    color: AppColors.buttonBlackColor,
+                                                                    textColor: Colors.white,
                                                                   ),
-                                                                  InkWell(
-                                                                    onTap: () {
+                                                                  RoundedButton(
+                                                                    title: "Archiver",
+                                                                    onPress: () {
                                                                       DemandesViewModel demandesViewModel3 = DemandesViewModel();
                                                                       showCupertinoDialog(
                                                                         context: context,
@@ -296,7 +274,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                             actions: [
                                                                               CupertinoDialogAction(
                                                                                 child: const Text('Annuler', style: TextStyle(
-                                                                                  color: Colors.black
+                                                                                    color: Colors.black
                                                                                 ),),
                                                                                 onPressed: () {
                                                                                   Navigator.of(context).pop(); // Fermer le dialogue
@@ -304,7 +282,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                               ),
                                                                               CupertinoDialogAction(
                                                                                 child: Text('Confirmer', style: TextStyle(
-                                                                                  color: AppColors.primaryColor
+                                                                                    color: AppColors.primaryColor
                                                                                 ),),
                                                                                 onPressed: () async {
                                                                                   Navigator.of(context).pop();
@@ -321,26 +299,13 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                         },
                                                                       );
                                                                     },
-                                                                    child: Container(
-                                                                        width: MediaQuery.of(context).size.width - 5,
-                                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                                        decoration: BoxDecoration(
-                                                                            color: Colors.black,
-                                                                            borderRadius: BorderRadius.circular(5)
-                                                                        ),
-                                                                        child: const Row(
-                                                                          mainAxisSize: MainAxisSize.max,
-                                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Icon(CupertinoIcons.archivebox, size: 15, color: Colors.white,),
-                                                                            SizedBox(width: 3,),
-                                                                            Text("Archiver", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                                          ],
-                                                                        )
-                                                                    ),
+                                                                    icon: CupertinoIcons.archivebox,
+                                                                    color: AppColors.buttonBlackColor,
+                                                                    textColor: Colors.white,
                                                                   ),
-                                                                  InkWell(
-                                                                    onTap: () {
+                                                                  RoundedButton(
+                                                                    title: "Supprimer",
+                                                                    onPress: () {
                                                                       showCupertinoDialog(
                                                                         context: context,
                                                                         builder: (BuildContext context) {
@@ -380,23 +345,9 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                         },
                                                                       );
                                                                     },
-                                                                    child: Container(
-                                                                        width: MediaQuery.of(context).size.width,
-                                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                                        decoration: BoxDecoration(
-                                                                            color: Colors.red,
-                                                                            borderRadius: BorderRadius.circular(5)
-                                                                        ),
-                                                                        child: const Row(
-                                                                          mainAxisSize: MainAxisSize.max,
-                                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Icon(CupertinoIcons.delete, size: 15, color: Colors.white,),
-                                                                            SizedBox(width: 3,),
-                                                                            Text("Supprimer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),),
-                                                                          ],
-                                                                        )
-                                                                    ),
+                                                                    icon: CupertinoIcons.delete,
+                                                                    color: AppColors.buttonBlackColor,
+                                                                    textColor: Colors.white,
                                                                   ),
                                                                 ],
                                                               )
@@ -409,7 +360,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                         },
                                         shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(20),
+                                            top: Radius.circular(0),
                                           ),
                                         ),
                                       );
