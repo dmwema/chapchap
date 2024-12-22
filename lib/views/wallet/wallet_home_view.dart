@@ -122,7 +122,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         Row(
                           children: [
                             IconButton(onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateWalletView()));
+                              Navigator.of(context).push(CupertinoPageRoute(builder: (context) => CreateWalletView()));
                             }, icon: const Icon(CupertinoIcons.add_circled_solid, color: Colors.white, size: 20,)),
                           ],
                         )
@@ -270,7 +270,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         textColor: Colors.white,
                         onPress: () {
                           if (wallets.isNotEmpty) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
                           }
                         }
                     ),
@@ -309,7 +309,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         textColor: Colors.white,
                         onPress: () {
                           if (wallets.isNotEmpty) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
                           }
                         }
                     ),
@@ -321,7 +321,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         textColor: Colors.white,
                         onPress: () {
                           if (wallets.isNotEmpty) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
                           }
                         }
                     ),

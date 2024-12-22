@@ -40,20 +40,20 @@ class _InteracViewState extends State<InteracView> {
       });
     });
     return Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(
+          context: context,
+          backArrow: true,
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // commonAppBar(
-              //   context: context,
-              //   backArrow: true
-              // ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Informations interac", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), textAlign: TextAlign.left,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AppTexts.titleText("Informations interac"),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 5,),
               if (user != null && user!.codeInterac != null)
               Expanded(
                 child: SingleChildScrollView(
@@ -62,19 +62,17 @@ class _InteracViewState extends State<InteracView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Pour approvisionner votre Wallet : ", style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w600
-                        ),),
+                        AppTexts.descriptionText("Pour approvisionner votre Wallet : "),
                         const SizedBox(height: 20,),
                         AppTexts.smallText("Nom "),
                         AppTexts.titleText("Chapchap"),
-                        const SizedBox(height: 10,),
+                        Divider(color: AppColors.formFieldColor,),
                         AppTexts.smallText("Adresse courriel "),
                         AppTexts.titleText("paiement@chapchap.ca"),
-                        const SizedBox(height: 10,),
+                        Divider(color: AppColors.formFieldColor,),
                         AppTexts.smallText("Question "),
                         AppTexts.titleText(user!.questionInterac.toString()),
-                        const SizedBox(height: 10,),
+                        Divider(color: AppColors.formFieldColor,),
                         AppTexts.smallText("Reponse "),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,6 +108,7 @@ class _InteracViewState extends State<InteracView> {
                           ],
                         ),
                         const SizedBox(height: 10,),
+                        Divider(color: AppColors.formFieldColor,),
                         AppTexts.smallText("Code à écrire dans le champ message/raison (obligatoire)"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,6 +1,7 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -32,28 +33,28 @@ class _RechargeViewState extends State<RechargeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      appBar: CommonAppBar(
+        context: context,
+        backArrow: true,
+      ),
+      backgroundColor: AppColors.bgColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: HideKeyBordContainer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // commonAppBar(
-              //   context: context,
-              //   backArrow: true
-              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Recharger le wallet ${widget.wallet['currency']}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                child: AppTexts.titleText("Recharger le wallet ${widget.wallet['currency']}"),
               ),
               const SizedBox(height: 10,),
               Container(
-                  padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+                  padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                   decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1),
-                        top: BorderSide(color: AppColors.formFieldBorderColor, width: 1),
+                        bottom: BorderSide(color: AppColors.formFieldColor, width: 1),
+                        top: BorderSide(color: AppColors.formFieldColor, width: 1),
                       )
                   ),
                   child: Row(
@@ -63,34 +64,29 @@ class _RechargeViewState extends State<RechargeView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Icon(Icons.wallet, size: 15,),
-                          const SizedBox(width: 10,),
-                          Text(widget.wallet['balance'] + " " + widget.wallet['currency'], style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500
-                          ),)
+                          const Icon(Icons.wallet, size: 23,),
+                          const SizedBox(width: 5,),
+                          AppTexts.cardTitle("${widget.wallet['balance']} ${widget.wallet['currency']}")
                         ],
                       ),
-                      // Text("(3)", style: TextStyle(
-                      //     fontWeight: FontWeight.bold
-                      // ),)
                     ],
                   )
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20,),
-                    const Text("Combien voulez-vous recharger ?", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black45), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    AppTexts.descriptionText("Combien voulez-vous recharger ?"),
                     const SizedBox(height: 20,),
                     CustomFormField(
                       label: "Montant",
-                      hint: "Combien voulez-vous recharger ?",
+                      hint: "Montant",
                       controller: _amountController,
                       suffixIcon: Padding(
                         padding: const EdgeInsets.only(right: 15),
-                        child: Text(widget.wallet['currency']),
+                        child: AppTexts.cardTitle(widget.wallet['currency']),
                       ),
                       maxLines: 1,
                       type: TextInputType.number,

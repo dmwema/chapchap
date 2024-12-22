@@ -1,6 +1,7 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
@@ -32,7 +33,11 @@ class _CreateWalletViewState extends State<CreateWalletView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(
+        context: context,
+        backArrow: true,
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: HideKeyBordContainer(
@@ -43,16 +48,16 @@ class _CreateWalletViewState extends State<CreateWalletView> {
               //   context: context,
               //   backArrow: true
               // ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Créer un wallet", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AppTexts.titleText("Créer un wallet"),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   children: [
                     const SizedBox(height: 20,),
-                    const Text("Pour quelle devise voulez-vous créer le wallet ?", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black45), textAlign: TextAlign.left,),
+                    AppTexts.descriptionText("Pour quelle devise voulez-vous créer le wallet ?"),
                     const SizedBox(height: 20,),
                     InkWell(
                       onTap: () {
@@ -64,9 +69,7 @@ class _CreateWalletViewState extends State<CreateWalletView> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text("Séléctionnez la devise", style: TextStyle(
-                                        fontWeight: FontWeight.w600
-                                    ),),
+                                    AppTexts.buttonText("Séléctionnez la devise"),
                                     const SizedBox(height: 20,),
                                     if (walletViewModel.currencies.data == null)
                                       const Row(
@@ -115,19 +118,16 @@ class _CreateWalletViewState extends State<CreateWalletView> {
                         );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: AppColors.formFieldColor,
                           borderRadius: BorderRadius.circular(5)
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(selectedCurrency.isEmpty ? "Choisir la dévise" : "${selectedCurrency['currency_label']} (${selectedCurrency['currency']})", style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12
-                            ),),
+                            AppTexts.buttonText(selectedCurrency.isEmpty ? "Choisir la dévise" : "${selectedCurrency['currency_label']} (${selectedCurrency['currency']})"),
                             const Icon(Icons.wallet, size: 20,)
                           ],
                         ),
