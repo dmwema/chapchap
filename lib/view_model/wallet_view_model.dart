@@ -52,6 +52,7 @@ class WalletViewModel with ChangeNotifier{
     setLoading(true);
     int? returnValue;
     await _repository.getBalance(context: context, code: code).then((value) {
+      print(value);
       if (value!=null){
         setLoading(false);
         if (value['error'] != true) {

@@ -171,17 +171,17 @@ class _WelcomeViewState extends State<WelcomeView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       RoundedButton(
-                          title: "Taux de change",
-                          icon: Icons.currency_exchange,
-                          color: Colors.black,
-                          onPress: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => ExchangeView(public: true,),
-                              ),
-                            );
-                          }
+                        title: "Taux de change",
+                        icon: Icons.currency_exchange,
+                        color: AppColors.buttonBlackColor,
+                        onPress: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ExchangeView(public: true,),
+                            ),
+                          );
+                        }
                       ),
                       const SizedBox(height: 10,),
                       Row(

@@ -424,17 +424,14 @@ class _HistoryCardState extends State<HistoryCard> {
                     ),
                   ],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    AppTexts.buttonText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}"),
-                    const SizedBox(height: 2,),
-                    if (demande.progression != null)
-                      AppTexts.smallText(
-                        truncateWithEllipsis(demande.progression.toString()), color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red))
-                  ],
-                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.formFieldColor
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: AppTexts.bodyText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
+                )
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_texts.dart';
+import 'package:chapchap/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +32,14 @@ class InfoCard extends StatelessWidget {
       icon = CupertinoIcons.exclamationmark_circle;
     }
 
+    
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightGrey,
+        color: Colors.white,
+        boxShadow: [Utils.customShadow()],
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 1, color: type == "PROMO" ? Colors.green : (type == "INFO" ? Colors.orange : AppColors.primaryColor))
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +55,7 @@ class InfoCard extends StatelessWidget {
             height: 60,
             child: Icon(icon, color: Colors.white, size: 40,)
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(width: 5,),
           Flexible(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,9 +63,9 @@ class InfoCard extends StatelessWidget {
               children: [
                 AppTexts.cardTitle(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),),
                 const SizedBox(
-                  height: 3,
+                  height: 2,
                 ),
-                Flexible(child: AppTexts.cardDescription(content))
+                AppTexts.cardDescription(content)
               ],
             ),
           )

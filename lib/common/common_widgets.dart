@@ -27,7 +27,8 @@ Widget commonBottomAppBar({
   required int active
 }) {
   return BottomAppBar(
-    elevation: 0,
+    elevation: 1,
+    color: Colors.white,
     shape: const CircularNotchedRectangle(),
     child:  SizedBox(
       height: 66,
@@ -66,7 +67,7 @@ Widget commonBottomAppBar({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(active == 1 ? CupertinoIcons.person_2_fill : CupertinoIcons.person_2, color: active == 1 ? AppColors.primaryColor : null,),
+                Icon(active == 1 ? Icons.contacts : Icons.contacts_outlined, color: active == 1 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5), // The dummy child
                 AppTexts.menuText("Bénéficiaires", color: active == 1 ? AppColors.primaryColor : Colors.black),
               ],
@@ -86,7 +87,7 @@ Widget commonBottomAppBar({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(active == 2 ? CupertinoIcons.arrow_right_arrow_left_circle_fill : CupertinoIcons.arrow_right_arrow_left_circle, color: active == 2 ? AppColors.primaryColor : null,),
+                Icon(active == 2 ? Icons.currency_exchange_rounded : Icons.currency_exchange_rounded, color: active == 2 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5), // The dummy child
                 AppTexts.menuText("Change", color: active == 2 ? AppColors.primaryColor : Colors.black),
               ],
@@ -105,9 +106,9 @@ Widget commonBottomAppBar({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(active == 3 ? CupertinoIcons.person_fill : CupertinoIcons.person, color: active == 3 ? AppColors.primaryColor : null,),
+                Icon(active == 3 ? CupertinoIcons.person_alt_circle_fill : CupertinoIcons.person_alt_circle, color: active == 3 ? AppColors.primaryColor : null,),
                 const SizedBox(height: 5),
-                AppTexts.menuText("Mon compte", color: active == 3 ? AppColors.primaryColor : Colors.black),
+                AppTexts.menuText("Compte", color: active == 3 ? AppColors.primaryColor : Colors.black),
               ],
             ),
           ),
@@ -127,15 +128,23 @@ Widget commonDivider() {
 
 Widget commonRoundedContainer({
   required Widget child,
-  bool removePaddingH = false
+  bool removePaddingH = false,
+  bool removePaddingV = false,
+  bool gradient = false,
 }) {
   return Container(
     decoration: BoxDecoration(
-        boxShadow: [Utils.customShadow()],
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
+      gradient: gradient ? LinearGradient(
+        colors: [AppColors.primaryColor, const Color(0xFF6D2121)],
+        stops: const [0, 1],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      ) : null,
+      boxShadow: [Utils.customShadow()],
     ),
-    padding: removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : const EdgeInsets.all(20),
+    padding: removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : (removePaddingV ? const EdgeInsets.symmetric(horizontal: 20) : const EdgeInsets.all(20)),
     child: child,
   );
 }

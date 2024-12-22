@@ -15,9 +15,14 @@ import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
+import 'package:chapchap/views/auth/login_view.dart';
+import 'package:chapchap/views/notifications_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_cupernino_bottom_sheet/flutter_cupernino_bottom_sheet.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -107,132 +112,256 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
     final box = context.findRenderObject() as RenderBox?;
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(0.0),
+          child: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: AppColors.bgColor,
+              systemNavigationBarColor: Colors.white,
+              systemNavigationBarIconBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+              statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+              systemNavigationBarDividerColor: Colors.white,
+            ),
+          ),
+        ),
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 0, top: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (msgList.isNotEmpty)
-                        CarouselSlider(
-                          options: CarouselOptions(height: 120.0),
-                          items: [1, ...msgList].map((element) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                if (element is int) {
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.lightGrey,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                            decoration: BoxDecoration(
-                                                color: AppColors.primaryColor,
-                                                borderRadius: BorderRadius.circular(50)
-                                            ),
-                                            width: 60,
-                                            height: 60,
-                                            child: Center(child: Image.asset("assets/logo.png", width: 40,))
-                                        ),
-                                        const SizedBox(width: 15,),
-                                        Flexible(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              AppTexts.cardTitle("ChapChap"),
-                                              const SizedBox(
-                                                height: 3,
-                                              ),
-                                              AppTexts.cardDescription("La meilleure application de transfert d’argent."),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              InkWell(
-                                                  onTap: () {
-                                                    Navigator.pushNamed(context, RoutesName.send);
-                                                  },
-                                                  child: AppTexts.buttonText("Commencer", color: AppColors.primaryColor)
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                } else if (element is Map) {
-                                  return InfoCard(type: element['type_msg_info'], content: element['msg']);
-                                }
-                                return Container();
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      if (msgList.isEmpty)
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 30.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.lightGrey,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(50)
-                                  ),
-                                  width: 60,
-                                  height: 60,
-                                  child: Center(child: Image.asset("assets/logo.png", width: 40,))
-                              ),
-                              const SizedBox(width: 15,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppTexts.cardTitle("ChapChap"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  InkWell(
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
+                      child: commonRoundedContainer(
+                          removePaddingV: true,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset("assets/icons/coins.png", width: 35,),
+                                    const SizedBox(width: 5,),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: AppColors.formFieldColor,
+                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                      child: AppTexts.bodyText("500", bold: true, color: Colors.orange),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    InkWell(
                                       onTap: () {
-                                        Navigator.pushNamed(context, RoutesName.send);
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => NotificationsView(notifications: msgList,),
+                                          ),
+                                        );
                                       },
-                                      child: AppTexts.buttonText("Commencer", color: AppColors.primaryColor)
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      const SizedBox(height: 5,),
-                    ],
-                  ),
+                                      child: Stack(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(3),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(30),
+                                                color: AppColors.formFieldColor,
+                                              ),
+                                              padding: const EdgeInsets.all(7),
+                                              child: SvgPicture.asset("assets/icons/bell.svg", width: 25,),
+                                            ),
+                                          ),
+                                          if (msgList.isNotEmpty)
+                                            Positioned(
+                                              top: 0, left: 0,
+                                              child: Container(
+                                                width: 17, height: 17,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(30),
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                                child: Center(child: AppTexts.menuText(msgList.length.toString(), color: Colors.white),),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 7,),
+                                    InkWell(
+                                      onTap: () {
+                                        Share.share(
+                                          "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                                          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(30),
+                                          color: AppColors.formFieldColor,
+                                        ),
+                                        padding: const EdgeInsets.all(7),
+                                        child: SvgPicture.asset("assets/icons/share.svg", width: 25,),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10,),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, RoutesName.home);
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(30),
+                                          color: AppColors.formFieldColor,
+                                        ),
+                                        padding: const EdgeInsets.all(7),
+                                        child: const Icon(Icons.refresh, weight: 25,),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                      child: commonRoundedContainer(
+                        gradient: true,
+                        removePaddingV: true,
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset("assets/icons/wallet.svg", color: Colors.white, width: 40,),
+                                    const SizedBox(width: 10,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppTexts.bodyText("Portefeuille", bold: true, color: Colors.white),
+                                        AppTexts.cardDescription("Simple et Rapide", color: Colors.white)
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                ChangeNotifierProvider<WalletViewModel>(
+                                    create: (BuildContext context) => walletViewModel,
+                                    child: Consumer<WalletViewModel>(
+                                        builder: (context, value, _){
+                                          switch (value.balance.status) {
+                                            case Status.LOADING:
+                                              return InkWell(
+                                                onTap: () async {
+                                                  SharedPreferences preferences = await SharedPreferences.getInstance();
+                                                  bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                                                  if (presentationWalletPassed != true || user!.pin != true) {
+                                                    await preferences.setBool('wallet_presentation_passed', true);
+                                                    Navigator.pushNamedAndRemoveUntil(
+                                                      context,
+                                                      RoutesName.walletPresentation,
+                                                          (route) => false,
+                                                    );
+                                                  } else {
+                                                    Navigator.pushNamedAndRemoveUntil(
+                                                      context,
+                                                      RoutesName.walletHome,
+                                                          (route) => false,
+                                                    );
+                                                  }
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(30),
+                                                    color: Colors.white,
+                                                  ),
+                                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                  child: AppTexts.smallText("Commencer", color: AppColors.buttonBlackColor),
+                                                ),
+                                              );
+                                            case Status.ERROR:
+                                              return Center(
+                                                child: Text(value.balance.message.toString()),
+                                              );
+                                            default:
+                                              var balance = value.balance.data!;
+                                              return InkWell(
+                                                onTap: () async {
+                                                  SharedPreferences preferences = await SharedPreferences.getInstance();
+                                                  bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
+
+                                                  if (presentationWalletPassed != true || user!.pin != true) {
+                                                    await preferences.setBool('wallet_presentation_passed', true);
+                                                    Navigator.pushNamedAndRemoveUntil(
+                                                      context,
+                                                      RoutesName.walletPresentation,
+                                                          (route) => false,
+                                                    );
+                                                  } else {
+                                                    Navigator.pushNamedAndRemoveUntil(
+                                                      context,
+                                                      RoutesName.walletHome,
+                                                          (route) => false,
+                                                    );
+                                                  }
+                                                },
+                                                child: Stack(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(7),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(30),
+                                                          color: Colors.black12,
+                                                        ),
+                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                                        child: AppTexts.titleText("${balance["balance"]}", color: Colors.white),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 5,),
+                                                    Positioned(
+                                                      right: 0, bottom: 0,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          color: AppColors.buttonBlackColor,
+                                                        ),
+                                                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                                                        child: AppTexts.smallText("${balance["currency"]}", color: Colors.white),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                          }
+                                        })
+                                )
+                              ],
+                            ),
+                          )
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -240,87 +369,21 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppTexts.smallText("Salut"),
+                            AppTexts.descriptionText("Salut"),
                             if (user != null)
                               AppTexts.titleText("${user!.prenomClient} ${user!.nomClient}",)
                           ],
                         ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Share.share(
-                                  "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
-                                  sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                                );
-                              },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.lightGrey
-                                  ),
-                                  padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                                  child: Icon(Icons.share_outlined, color: AppColors.primaryColor, size: 17,)
-                              ),
-                            ),
-                            const SizedBox(width: 10,),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RoutesName.home,
-                                      (route) => false,
-                                );
-                              },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.lightGrey
-                                  ),
-                                  padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                                  child: Icon(CupertinoIcons.refresh, color: AppColors.primaryColor, size: 17,)
-                              ),
-                            ),
-                            // const SizedBox(width: 5,),
-                            // InkWell(
-                            //   onTap: () {
-                            //     Navigator.pushNamed(context, RoutesName.historyWP);
-                            //   },
-                            //   child: Stack(
-                            //     children: [
-                            //       Container(
-                            //           decoration: BoxDecoration(
-                            //               borderRadius: BorderRadius.circular(5),
-                            //               color: Colors.black54
-                            //           ),
-                            //           padding: const EdgeInsets.only(left: 5, top: 5, bottom: 6, right: 5),
-                            //           child: const Icon(CupertinoIcons.exclamationmark_triangle, color: Colors.white, size: 16,)
-                            //       ),
-                            //       if (nbProblemes != null && nbProblemes! > 0)
-                            //         Positioned(
-                            //           top: 0,
-                            //           right: 0,
-                            //           child: Container(
-                            //             width: 14,
-                            //             height: 14,
-                            //             padding: const EdgeInsets.only(bottom: 4),
-                            //             decoration: BoxDecoration(
-                            //               color: Colors.red,
-                            //               borderRadius: BorderRadius.circular(10),
-                            //             ),
-                            //             child: Center(
-                            //               child: Text(nbProblemes.toString(), style: const TextStyle(
-                            //                   color: Colors.white,
-                            //                   fontWeight: FonnbProblemes.toString()tWeight.bold,
-                            //                   fontSize: 12
-                            //               ),),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //     ],
-                            //   ),
-                            // ),
-                          ],
+                        if (user != null)
+                        Container(
+                          width: 40, height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            image: DecorationImage(
+                              image: AssetImage("packages/country_icons/icons/flags/png/${user!.codePays}.png"),
+                              fit: BoxFit.cover
+                            )
+                          ),
                         )
                       ],
                     ),
@@ -349,14 +412,12 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(3),
+                                borderRadius: BorderRadius.circular(10),
                                 color: Colors.red
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.more_horiz, color: Colors.white,),
-                                  const SizedBox(width: 2,),
                                   AppTexts.buttonText("Tout voir", color: Colors.white),
                                 ],
                               ),
@@ -365,113 +426,26 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                         ),
                       ),
                     ),
-                    if (nbProblemes != null && nbProblemes! > 0)
-                    const SizedBox(height: 10,),
                   ],
                 ),
               ),
               Divider(
-                color: AppColors.lightGrey,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: InkWell(
-                  onTap: () async {
-                    SharedPreferences preferences = await SharedPreferences.getInstance();
-                    bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
-
-                    if (presentationWalletPassed != true || user!.pin != true) {
-                      await preferences.setBool('wallet_presentation_passed', true);
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        RoutesName.walletPresentation,
-                            (route) => false,
-                      );
-                    } else {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        RoutesName.walletHome,
-                            (route) => false,
-                      );
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xffe86328), Color(0xffd34040)],
-                          stops: [0.25, 0.75],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTexts.titleText("Wallet", color: Colors.white),
-                            AppTexts.descriptionText("Simple et Rapide", color: Colors.white)
-                          ],
-                        ),
-                        ChangeNotifierProvider<WalletViewModel>(
-                            create: (BuildContext context) => walletViewModel,
-                            child: Consumer<WalletViewModel>(
-                                builder: (context, value, _){
-                                  switch (value.balance.status) {
-                                    case Status.LOADING:
-                                      return Row(
-                                        children: [
-                                          const Icon(Icons.wallet_rounded, color: Colors.white, size: 15,),
-                                          const SizedBox(width: 5,),
-                                          AppTexts.buttonText("Wallet", color: Colors.white),
-                                        ],
-                                      );
-                                    case Status.ERROR:
-                                      return Center(
-                                        child: Text(value.balance.message.toString()),
-                                      );
-                                    default:
-                                      var balance = value.balance.data!;
-                                      return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          AppTexts.smallText("SOLDE ACTUEL", color: Colors.white ),
-                                          AppTexts.titleText("${balance["balance"]} ${balance["currency"]}", color: Colors.white),
-                                        ],
-                                      );
-                                  }
-                                })
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Divider(
-                color: AppColors.lightGrey,
+                color: AppColors.formFieldBorderColor,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.black.withOpacity(.3), width: 1))
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    AppTexts.cardTitle("DERNIERES OPERATIONS")
+                    AppTexts.cardTitle("Dernières Opérations")
                   ],
                 ),
               ),
               ChangeNotifierProvider<DemandesViewModel>(
-                  create: (BuildContext context) => demandesViewModel,
-                  child: Consumer<DemandesViewModel>(
+                create: (BuildContext context) => demandesViewModel,
+                child: Consumer<DemandesViewModel>(
                       builder: (context, value, _){
                         switch (value.demandeList.status) {
                           case Status.LOADING:

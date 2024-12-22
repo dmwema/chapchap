@@ -437,7 +437,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 });
                               }
                             },
-                            color: Colors.black,
+                            color: AppColors.buttonBlackColor,
                             loading: loadingPdf1,
                           ),
                           const SizedBox(height: 10,),
@@ -460,7 +460,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 });
                               }
                             },
-                            color: Colors.black,
+                            color: AppColors.buttonBlackColor,
                             loading: loadingPdf2,
                           ),
                           const SizedBox(height: 20,)

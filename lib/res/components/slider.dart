@@ -8,7 +8,7 @@ class SliderPage extends StatelessWidget {
   final String image;
   Color text_color;
 
-  SliderPage({super.key, required this.title, required this.description, required this.image, Color this.text_color  = Colors.black});
+    SliderPage({super.key, required this.title, required this.description, required this.image, Color this.text_color  = Colors.black});
 
   @override
   Widget build(BuildContext context) {

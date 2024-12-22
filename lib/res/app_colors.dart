@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AppColors {
   static Color get primaryColor => const Color(0xFFEE2829);
 
+  static Color get buttonBlackColor => const Color(0xFF2C2C2C);
+
   static Color get bgColor => const Color(0xFFF9F9F9);
 
   static Color get darkRed => const Color(0xFF9E2525);

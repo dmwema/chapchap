@@ -28,7 +28,7 @@ class AppTexts {
 
   static Text smallText (String value, {Color color = Colors.black}) {
     return Text(value, style: GoogleFonts.poppins(
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: FontWeight.w600,
         color: color
     ));
@@ -36,8 +36,8 @@ class AppTexts {
 
   static Text menuText (String value, {Color color = Colors.black}) {
     return Text(value, style: GoogleFonts.poppins(
-        fontSize: 11,
-        fontWeight: FontWeight.w700,
+        fontSize: 10,
+        fontWeight: FontWeight.w600,
         color: color
     ));
   }
@@ -69,7 +69,7 @@ class AppTexts {
   static Text cardDescription (String value, {Color color = Colors.black}) {
     return Text(value, style: GoogleFonts.poppins(
         fontSize: 11,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         color: color
     ));
   }
