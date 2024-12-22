@@ -112,7 +112,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                                       color: AppColors.primaryColor
                                   ),
                                   child: const Center(
-                                      child: Icon(Icons.card_giftcard_rounded, color: Colors.white, size: 30,)
+                                      child: Icon(Icons.card_giftcard_outlined, color: Colors.white, size: 30,)
                                   ),
                                 ), const SizedBox(width: 10,),
                                 Flexible(child: AppTexts.cardDescription("Un système de recompense basé sur les points qui se gagne lors de chaque transfert d’argent"))

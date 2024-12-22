@@ -80,37 +80,11 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColors.bgColor,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, RoutesName.welcomeView);
-          },
-          child: Icon(Icons.arrow_back, color: AppColors.textGrey, size: 25,)
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: AppTexts.smallText("Aide ?"),
-          )
-        ],
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.bgColor,
-          systemNavigationBarColor: AppColors.bgColor,
-          systemNavigationBarIconBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-          statusBarBrightness: Brightness.dark, // For iOS (dark icons)
-        ),
-      ),
+      appBar: CommonAppBar(context: context, backArrow: true,),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // commonAppBar(
-            //   context: context,
-            //   backArrow: true
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Column(
@@ -118,9 +92,8 @@ class _LoginViewState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20,),
-                  AppTexts.titleText("Connectez-vous"),
-                  const SizedBox(height: 10,),
-                  AppTexts.bodyText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
+                  AppTexts.titleText("Identifiez-vous"),
+                  // AppTexts.descriptionText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
                   const SizedBox(height: 20,),
                   CustomFormField(
                     label: "Adresse électronique",
@@ -151,6 +124,7 @@ class _LoginViewState extends State<LoginView> {
                     Navigator.pushNamed(context, RoutesName.passwordReset);
                   }, child: AppTexts.buttonText("Mot de passe oublié ?")
                   ),
+                  const SizedBox(height: 10,),
                   Row(
                     children: [
                       Expanded(
@@ -246,24 +220,6 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
-            const SizedBox(height: 20,),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.register);
-              },
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AppTexts.smallText("Vous êtes nouveau ?"),
-                    const SizedBox(height: 3,),
-                    AppTexts.buttonText("Inscrivez-vous", color: AppColors.primaryColor)
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

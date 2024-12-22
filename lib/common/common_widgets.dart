@@ -162,8 +162,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
       elevation: 0,
       backgroundColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
       leading: backArrow == true ? InkWell(
-          onTap: () {
-            backClick ?? Navigator.pop(context);
+          onTap: backClick ?? () {
+            Navigator.pop(context);
           },
           child: Icon(Icons.arrow_back, color: AppColors.textGrey, size: 25,)
       ): Container(),

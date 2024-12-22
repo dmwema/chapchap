@@ -60,12 +60,18 @@ class CustomFormField extends StatelessWidget {
         borderRadius: BorderRadius.circular(6)
       ),
       style: GoogleFonts.poppins(
-        fontSize: 16,
-        fontWeight: FontWeight.w600
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: Colors.black
       ),
       onSubmitted: onFieldSubmitted,
       onChanged: onChanged,
       placeholder: hint,
+      placeholderStyle: GoogleFonts.poppins(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textGrey.withOpacity(.9)
+      ),
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       inputFormatters: inputFormatters,
       onTap: onPressed,

@@ -18,6 +18,7 @@ import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
 import 'package:chapchap/views/auth/login_view.dart';
+import 'package:chapchap/views/auth/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -557,8 +558,8 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                                         if (value) {
                                                           Navigator.pushAndRemoveUntil(
                                                             context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) => LoginView(),
+                                                            CupertinoPageRoute(
+                                                              builder: (context) => const WelcomeView(),
                                                             ),
                                                                 (route) => false,
                                                           );

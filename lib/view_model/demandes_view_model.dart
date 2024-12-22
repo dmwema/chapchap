@@ -204,9 +204,13 @@ class DemandesViewModel with ChangeNotifier{
   }
 
   Future<void> paysActifs(dynamic data, BuildContext context) async {
+    print("111111111111111111111111111111111111");
     setLoading(true);
     await _repository.paysActif(data, context: context).then((value) {
+      print("222222222222222222222222222222");
       if (value!=null){
+        print("333333333333333333333333333333333333");
+        print(value);
         setLoading(false);
         if (value['error'] != true) {
           setPaysActif(ApiResponse.completed(value["data"]));

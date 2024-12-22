@@ -390,7 +390,7 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
                                                   if (selectedTo != null)
                                                     Image.asset("packages/country_icons/icons/flags/png/${selectedTo!.codePaysDest}.png", width: 30, height: 20, fit: BoxFit.contain),
                                                   if (selectedTo == null)
-                                                    AppTexts.cardTitle("___"),
+                                                    AppTexts.cardTitle("_"),
                                                   const SizedBox(width: 10,),
                                                   const Expanded(child: Align(
                                                     alignment: Alignment.centerRight,

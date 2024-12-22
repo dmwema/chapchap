@@ -179,9 +179,9 @@ class NetworkApiService extends BaseApiServices {
       case 404:
         throw UnauthorisedException(response.body.toString());
       case 401:
-        if (ModalRoute.of(context)?.settings.name != RoutesName.login) {
+        if (ModalRoute.of(context)?.settings.name != RoutesName.welcomeView && ModalRoute.of(context)?.settings.name != RoutesName.login) {
           Utils.flushBarErrorMessage("Vous devez vous connecter", context);
-          Navigator.pushNamed(context, RoutesName.login);
+          Navigator.pushNamed(context, RoutesName.welcomeView);
         }
         throw UnauthorisedException("Non autorisé");
       default:
