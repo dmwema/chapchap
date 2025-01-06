@@ -80,7 +80,9 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      appBar: CommonAppBar(context: context, backArrow: true,),
+      appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+        Navigator.pushNamedAndRemoveUntil(context, RoutesName.welcomeView, (route) => false);
+      },),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

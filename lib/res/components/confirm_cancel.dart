@@ -1,4 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/utils.dart';
@@ -28,33 +29,20 @@ class _ConfirmCancelState extends State<ConfirmCancel> {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: EdgeInsets.only(left: 30, right: 30, top: 30, bottom: MediaQuery.of(context).viewInsets.bottom + 30),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: MediaQuery.of(context).viewInsets.bottom + 30),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.error,
-            color: Colors.black54,
-            size: 50,
-          ),
           const SizedBox(height: 10,),
-          const Column(
+          Column(
             children: [
-              Text("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Divider(),
-              Text("Des frais d'annulation pourraient s'appliquer.",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 13,
-                ),
-                textAlign: TextAlign.center,
+              AppTexts.titleText("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?"),
+              Divider(color: AppColors.formFieldBorderColor,),
+              Row(
+                children: [
+                  const Icon(Icons.info_outline_rounded, size: 18,), const SizedBox(width: 5,),
+                  AppTexts.smallText("Des frais d'annulation pourraient s'appliquer."),
+                ],
               ),
             ],
           ),
@@ -68,43 +56,28 @@ class _ConfirmCancelState extends State<ConfirmCancel> {
             maxLines: 2,
           ),
           const SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RoundedButton(
-                onPress: () {
-                  if (_motifController.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
-                  } else {
-                    Map data = {
-                      "idDemande" : widget.demandeId,
-                      "motif": _motifController.text
-                    };
-                    widget.demandesViewModel.cancelSend(context, data);
-                  }
-                },
-                title: "Confirmer",
-              ),
-              const SizedBox(width: 10,),
-              InkWell(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(color: AppColors.primaryColor, width: 2)
-                  ),
-                  child: Text("Annuler", style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor
-                  ),),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )
+          RoundedButton(
+            onPress: () {
+              if (_motifController.text.isEmpty) {
+                Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
+              } else {
+                Map data = {
+                  "idDemande" : widget.demandeId,
+                  "motif": _motifController.text
+                };
+                widget.demandesViewModel.cancelSend(context, data);
+              }
+            },
+            title: "Confirmer",
+          ),
+          const SizedBox(height: 10,),
+          RoundedButton(
+            onPress: () {
+              Navigator.pop(context);
+            },
+            color: AppColors.buttonBlackColor,
+            title: "Annuler",
+          ),
         ],
       ),
     );

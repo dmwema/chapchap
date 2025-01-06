@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/services/local_auth_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,17 +30,15 @@ class _LocalAuthViewState extends State<LocalAuthView> {
             children: [
               Image.asset(Platform.isAndroid ? "assets/fingerprint.png" : "assets/faceid.png", width: 60),
               const SizedBox(height: 20,),
-              Text("Verification ${Platform.isAndroid ? 'de l\'empreinte digitale' : 'du FaceID'}", style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700
-              ),),
+              AppTexts.titleText("Verification ${Platform.isAndroid ? 'de l\'empreinte digitale' : 'du FaceID'}"),
               const SizedBox(height: 10,),
-              Text("Vous devez vérifier votre ${Platform.isAndroid ? 'empreinte digitale' : 'FaceID'} pour déverouiller l'application", style: const TextStyle(
-                  fontSize: 12,
-              ), textAlign: TextAlign.center,),
-              const SizedBox(height: 10,),
-              ElevatedButton(
-                onPressed: () async {
+              AppTexts.descriptionText("Vous devez vérifier votre ${Platform.isAndroid ? 'empreinte digitale' : 'FaceID'} pour déverouiller l'application"),
+              const SizedBox(height: 20,),
+              RoundedButton(
+                title: "Vérifier ${Platform.isAndroid ? 'l\'empreinte digitale' : 'le FaceID'}",
+                color: AppColors.buttonBlackColor,
+                textColor: Colors.white,
+                onPress: () async {
                   if (!loadingBio) {
                     setState(() {
                       loadingBio = true;
@@ -51,9 +52,8 @@ class _LocalAuthViewState extends State<LocalAuthView> {
                       });
                     });
                   }
-                },
-                child: Text('Vérifier ${Platform.isAndroid ? 'l\'empreinte digitale' : 'le FaceID'}')
-              ),
+                }
+              )
             ],
           )
         ),

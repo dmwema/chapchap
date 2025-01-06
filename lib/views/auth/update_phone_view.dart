@@ -5,6 +5,7 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/pays_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/auth_container.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/custom_field.dart';
@@ -48,18 +49,14 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+        Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+      },),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // commonAppBar(
-            //   context: context,
-            //   backArrow: true,
-            //   backClick: () {
-            //     Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
-            //   }
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: ChangeNotifierProvider<DemandesViewModel>(
@@ -88,11 +85,11 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 20,),
-                            const Text("Veuillez fournir votre numéro de téléphone", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                            AppTexts.titleText("Veuillez fournir votre numéro de téléphone"),
                             const SizedBox(height: 10,),
-                            const Text("Vous devez fournir votre numéro de téléphone pour continuer", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black45), textAlign: TextAlign.left,),
+                            AppTexts.descriptionText("Vous devez fournir votre numéro de téléphone pour continuer"),
                             const SizedBox(height: 20,),
-                            const Text("Numéro de téléphone", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black), textAlign: TextAlign.left,),
+                            AppTexts.smallText("Numéro de téléphone"),
                             const SizedBox(height: 10,),
                             InkWell(
                               onTap: () {
@@ -104,9 +101,7 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Text("Séléctionnez votre pays", style: TextStyle(
-                                                fontWeight: FontWeight.w600
-                                            ),),
+                                            AppTexts.titleText("Séléctionnez votre pays"),
                                             const SizedBox(height: 20,),
                                             Expanded(child: ListView.builder(
                                               itemCount: paysList.length,
@@ -121,17 +116,11 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                                                     },
                                                     child: Container(
                                                       padding: const EdgeInsets.all(10),
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                                      ),
                                                       child: Row(
                                                         children: [
                                                           Image.asset("packages/country_icons/icons/flags/png/${current.codePays}.png", width: 20, height: 20, fit: BoxFit.contain,),
                                                           const SizedBox(width: 20,),
-                                                          Text("${current.paysNom} (${current.paysIndictel})", style: const TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight.bold
-                                                          ),)
+                                                          AppTexts.smallText("${current.paysNom} (${current.paysIndictel})")
                                                         ],
                                                       ),
                                                     )
@@ -180,35 +169,15 @@ class _UpdatePhoneViewState extends State<UpdatePhoneView> {
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(selectedPays!.paysIndictel.toString(), style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16
-                                          ),),
+                                          AppTexts.smallText(selectedPays!.paysIndictel.toString()),
                                         ],
                                       ),
                                     ),
-                                    Flexible(child: TextFormField(
+                                    CustomFormField(
+                                      label: "Téléphone *", hint: "Téléphone *",
                                       controller: _phoneNumberController,
-                                      keyboardType: TextInputType.phone,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: AppColors.formFieldColor,
-                                        hintText: "Téléphone *",
-                                        hintStyle: TextStyle(
-                                            color: Colors.black.withOpacity(.25)
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: AppColors.formFieldColor),// Changer la couleur de la bordure
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: AppColors.formFieldColor),
-                                        ),
-                                        contentPadding: const EdgeInsets.only(left: 6),
-                                      ),
-                                      onTap: () {
-
-                                      },
-                                    ))
+                                      type: TextInputType.phone,
+                                    )
                                   ],
                                 ),
                               ),

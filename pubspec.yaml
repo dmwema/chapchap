@@ -3,7 +3,7 @@ description: money transfert app
 
 publish_to: 'none'
 
-version: 3.1.32+100
+version: 4.0.0+106
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

@@ -600,12 +600,13 @@ class _RegisterViewState extends State<RegisterView> {
                     } else if (currentPage == 3) {
                       if (!confirmPolicy) {
                         Utils.flushBarErrorMessage("Vous devez accepter nos politiques avant de continuer", context);
+                      } else {
+                        setState(() {
+                          data["code_parrainage"] = _codeController.text;
+                          currentPage++;
+                        });
+                        scrollController.nextPage(duration: const Duration(microseconds: 500), curve: const ElasticInOutCurve());
                       }
-                      setState(() {
-                        data["code_parrainage"] = _codeController.text;
-                        currentPage++;
-                      });
-                      scrollController.nextPage(duration: const Duration(microseconds: 500), curve: const ElasticInOutCurve());
                     } else {
                       authViewModel.registerApi(data, context);
                     }

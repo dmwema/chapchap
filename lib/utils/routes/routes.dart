@@ -168,12 +168,12 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
-      case RoutesName.pay:
-        return PageTransition(
-            child: PayView(),
-            type: PageTransitionType.rightToLeft,
-            settings: settings
-        );
+      // case RoutesName.pay:
+      //   return PageTransition(
+      //       child: PayView(),
+      //       type: PageTransitionType.rightToLeft,
+      //       settings: settings
+      //   );
       case RoutesName.drcPayment:
         return PageTransition(
             child: DRCPaymentView(data: settings.arguments as Map,),
@@ -260,7 +260,7 @@ class Routes {
       case RoutesName.walletHome:
         return PageTransition(
             child: const WalletHomeView(),
-            type: PageTransitionType.bottomToTop,
+            type: PageTransitionType.rightToLeft,
             settings: settings
         );
 

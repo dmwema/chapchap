@@ -3,6 +3,7 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,22 +51,18 @@ class _RecomenseViewState extends State<RecomenseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //commonAppBar(
-               //   context: context,
-               //   backArrow: true
-              //),
-              const SizedBox(height: 10,),
-              const Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Recompenses", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.titleText("Recompenses"),
                   ],
                 ),
               ),
@@ -85,25 +82,15 @@ class _RecomenseViewState extends State<RecomenseView> {
                       children: [
                         Icon(CupertinoIcons.gift_fill, color: AppColors.primaryColor, size: 60,),
                         const SizedBox(height: 10),
-                        Text(
+                        AppTexts.descriptionText(
                           "${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22,
-                          ),
                         ),
                         const SizedBox(height: 5.0),
                         SizedBox(
                           width: 230,
                           child: Flexible(
-                            child: Text(
-                              "Vous avez ${user!.soldeParrainage} ${user!.paysMonnaie ?? ''} comme solde de parrainage.",
-                              style: const TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: AppTexts.smallText(
+                              "Vous avez ${user!.soldeParrainage} ${user!.paysMonnaie ?? ''} comme solde de parrainage."
                             ),
                           ),
                         ),

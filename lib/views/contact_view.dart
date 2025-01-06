@@ -2,6 +2,7 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:chapchap/res/components/custom_appbar.dart';
 import 'package:chapchap/res/components/profile_menu.dart';
@@ -42,22 +43,19 @@ class _ContactViewState extends State<ContactView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //commonAppBar(
-               //   context: context,
-               //   backArrow: true
-              //),
               const SizedBox(height: 10,),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Nous joindre", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.titleText("Nous joindre")
                   ],
                 ),
               ),

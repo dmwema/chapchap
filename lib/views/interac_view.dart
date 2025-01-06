@@ -51,9 +51,9 @@ class _InteracViewState extends State<InteracView> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: AppTexts.titleText("Informations interac"),
+                child: AppTexts.bigTitleText("Informations interac"),
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(height: 20,),
               if (user != null && user!.codeInterac != null)
               Expanded(
                 child: SingleChildScrollView(

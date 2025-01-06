@@ -1,23 +1,19 @@
+import 'dart:io';
+
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
-import 'package:chapchap/res/components/auth_container.dart';
-import 'package:chapchap/res/components/custom_field.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
 import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
 import 'package:chapchap/views/exchange_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class WelcomeView extends StatefulWidget {
-  const WelcomeView({Key? key}) : super(key: key);
+  final String? message;
+  const WelcomeView({Key? key, this.message}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _WelcomeViewState();
@@ -44,6 +40,13 @@ class _WelcomeViewState extends State<WelcomeView> {
     passwordFocusNode.dispose();
   }
 
+  bool showMessage = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,14 +67,21 @@ class _WelcomeViewState extends State<WelcomeView> {
                   children: [
                     commonRoundedContainer(child:  Row(
                       children: [
+                        if (widget.message == null)
                         Image.asset("assets/logo_red.png", width: 40,),
-                        const SizedBox(width: 20,),
+                        if (widget.message != null)
+                          Icon(Icons.error_outline, size: 40, color: AppColors.primaryColor,),
+                        const SizedBox(width: 10,),
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppTexts.bodyText("TRANSFERT CHAPCHAP", bold: true, color: AppColors.primaryColor),
-                              AppTexts.cardDescription("La meilleur Application de transfert d'argent")
+                              if (widget.message == null)
+                                AppTexts.bodyText("TRANSFERT CHAPCHAP", bold: true, color: AppColors.primaryColor),
+                              if (widget.message == null)
+                                AppTexts.cardDescription("La meilleur Application de transfert d'argent"),
+                              if (widget.message != null)
+                                AppTexts.bodyText(widget.message!)
                             ],
                           ),
                         )

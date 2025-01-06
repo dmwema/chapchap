@@ -21,7 +21,7 @@ class ProfileMenu extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        margin: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
@@ -47,7 +47,7 @@ class ProfileMenu extends StatelessWidget {
                 children: [
                   Icon(icon, color: color ?? AppColors.primaryColor, size: 16,),
                   const SizedBox(width: 20,),
-                  Flexible(child: AppTexts.smallText(title.toString())),
+                  Flexible(child: AppTexts.cardTitle(title.toString())),
                   noIcon != null && noIcon! == true ? Container(): download! ? const Icon(Icons.download_outlined, color: Colors.black45,)
                     : (count == null ? const Icon(Icons.chevron_right_outlined, color: Colors.black45,)
                     : Text(count.toString())),

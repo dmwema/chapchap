@@ -10,6 +10,14 @@ class AppTexts {
     ));
   }
 
+  static Text bigTitleText (String value, {Color color = Colors.black}) {
+    return Text(value, style: GoogleFonts.poppins(
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
+        color: color
+    ));
+  }
+
   static Text bodyText (String value, {Color color = Colors.black, bool bold = false}) {
     return Text(value, style: GoogleFonts.poppins(
         fontSize: 15,

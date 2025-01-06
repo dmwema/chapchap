@@ -2,6 +2,8 @@ import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
+import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -37,16 +39,9 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(demande.date.toString(), style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),),
+                    AppTexts.smallText(demande.date.toString()),
                     const SizedBox(height: 5,),
-                    Text("#${demande.idDemande}", style: TextStyle(
-                        color: Colors.black.withOpacity(.7),
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold
-                    ),),
+                    AppTexts.smallText("#${demande.idDemande}"),
                   ],
                 ),
               ),
@@ -56,48 +51,37 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16
-                    ),),
+                    AppTexts.bodyText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
                     const SizedBox(height: 5,),
                     if (demande.progression != null)
-                      Text(demande.progression.toString(), style: TextStyle(
-                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null ? Colors.orange: Colors.red),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 11
-                      ),)
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.formFieldBorderColor,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 7),
+                        child: AppTexts.smallText(demande.progression.toString(), color: AppColors.primaryColor)
+                      )
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
-          Divider(),
-          const SizedBox(height: 10,),
-          const Text(
-            "Si vous ne trouvez pas le bénéficiaire, vous pouvez l'ajouter en faisant :",
-            style: TextStyle(
-              fontWeight: FontWeight.w500
-            ),
-          ),
           const SizedBox(height: 5,),
-          const Wrap(
+          Divider(color: AppColors.formFieldBorderColor,),
+          const SizedBox(height: 5,),
+          AppTexts.descriptionText(
+            "Si vous ne trouvez pas le bénéficiaire, vous pouvez l'ajouter en faisant :"),
+          const SizedBox(height: 20,),
+          Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text("Accueil ", style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
-              Icon(Icons.chevron_right_rounded, color: Colors.green,),
-              Text(" Bénéficiaires ", style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
-              Icon(Icons.chevron_right_rounded, color: Colors.green,),
-              Text(" Ajouter un bénéficiaire ", style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
+              AppTexts.smallText("Accueil "),
+              const Icon(Icons.chevron_right_rounded, color: Colors.green,),
+              AppTexts.smallText(" Bénéficiaires "),
+              const Icon(Icons.chevron_right_rounded, color: Colors.green,),
+              AppTexts.smallText(" Ajouter un bénéficiaire "),
             ],
           ),
           const SizedBox(height: 15,),
@@ -108,6 +92,7 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                 demandesViewModel2.beneficiaires([], context);
                 showModalBottomSheet(
                   context: context,
+                  backgroundColor: AppColors.bgColor,
                   builder: (context) {
                     return ChangeNotifierProvider<DemandesViewModel>(
                         create: (BuildContext context) => demandesViewModel2,
@@ -136,17 +121,15 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                                     return Center(
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 20),
-                                        child: const Text("Aucune bénéficiaire trouvée"),
+                                        child: AppTexts.descriptionText("Aucune bénéficiaire trouvée"),
                                       ),
                                     );
                                   }
                                   return Container(
-                                    padding: const EdgeInsets.all(20),
+                                    padding: const EdgeInsets.symmetric(vertical: 20),
                                     child: Column(
                                       children: [
-                                        const Text("Séléctionnez un bénéficiaire", style: TextStyle(
-                                            fontWeight: FontWeight.w600
-                                        ),),
+                                        AppTexts.titleText("Séléctionnez un bénéficiaire"),
                                         const SizedBox(height: 20,),
                                         Expanded(
                                           child: ListView.builder(
@@ -163,35 +146,11 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                                                         });
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Container(
-                                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                                        margin: const EdgeInsets.only(bottom: 10),
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
-                                                            borderRadius: BorderRadius.circular(5)
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
-                                                                  Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                                                      fontWeight: FontWeight.w600,
-                                                                      fontSize: 12
-                                                                  ),),
-                                                                  const SizedBox(height: 5,),
-                                                                  Text(beneficiaire.telBeneficiaire.toString(), style: const TextStyle(
-                                                                    fontSize: 10
-                                                                  ),),
-                                                                ],
-                                                              ),
-                                                              Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                            ]
-                                                        ),
-                                                      ),
+                                                      child: RecipientCard2(
+                                                        name: "${beneficiaire.nomBeneficiaire}",
+                                                        address: beneficiaire.codePays.toString(),
+                                                        phone: beneficiaire.telBeneficiaire.toString(),
+                                                      )
                                                     );
                                                   }
                                               );
@@ -207,29 +166,28 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                   },
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+                      top: Radius.circular(0),
                     ),
                   ),
                 );
               } else {
                 showModalBottomSheet(
                   context: context,
+                  backgroundColor: AppColors.bgColor,
                   builder: (context) {
                     if (beneficiaires!.isEmpty) {
                       return Center(
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: const Text("Aucun bénéficiaire trouvée"),
+                          child: AppTexts.descriptionText("Aucune bénéficiaire trouvée"),
                         ),
                       );
                     }
                     return Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Column(
                         children: [
-                          const Text("Séléctionnez un bénéficiaire", style: TextStyle(
-                              fontWeight: FontWeight.w600
-                          ),),
+                          AppTexts.titleText("Séléctionnez un bénéficiaire"),
                           const SizedBox(height: 20,),
                           Expanded(
                             child: ListView.builder(
@@ -237,41 +195,17 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                               itemBuilder: (context, index) {
                                 BeneficiaireModel beneficiaire = BeneficiaireModel.fromJson(beneficiaires![index]);
                                 return InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedBeneficiaire = beneficiaire;
-                                    });
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(width: 1, color: Colors.black.withOpacity(.2)),
-                                        borderRadius: BorderRadius.circular(5)
-                                    ),
-                                    child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Text(beneficiaire.nomBeneficiaire.toString(), style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12
-                                              ),),
-                                              const SizedBox(height: 5,),
-                                              Text(beneficiaire.telBeneficiaire.toString(), style: const TextStyle(
-                                                  fontSize: 10
-                                              ),),
-                                            ],
-                                          ),
-                                          Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                        ]
-                                    ),
-                                  ),
+                                    onTap: () {
+                                      setState(() {
+                                        selectedBeneficiaire = beneficiaire;
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    child: RecipientCard2(
+                                      name: "${beneficiaire.nomBeneficiaire}",
+                                      address: beneficiaire.codePays.toString(),
+                                      phone: beneficiaire.telBeneficiaire.toString(),
+                                    )
                                 );
                               },
                             ),
@@ -282,7 +216,7 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                   },
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+                      top: Radius.circular(0),
                     ),
                   ),
                 );
@@ -292,19 +226,16 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black.withOpacity(.3), width: 1.5),
+                  border: Border.all(color: AppColors.formFieldBorderColor, width: 1.5),
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Choisissez un bénéficiaire", style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13,
-                  ),),
-                  SizedBox(width: 10,),
-                  Expanded(child: Align(
+                  AppTexts.smallText("Choisissez un bénéficiaire"),
+                  const SizedBox(width: 10,),
+                  const Expanded(child: Align(
                     alignment: Alignment.centerRight,
                     child: Icon(Icons.arrow_drop_down, size: 30,),
                   ))
@@ -319,18 +250,12 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Nom", style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black.withOpacity(.5)
-                    ),),
+                    AppTexts.smallText("Nom"),
                     Row(
                       children: [
                         Image.asset("packages/country_icons/icons/flags/png/${selectedBeneficiaire!.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
                         const SizedBox(width: 10,),
-                        Text(selectedBeneficiaire!.nomBeneficiaire.toString(), style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600
-                        ),),
+                        AppTexts.bodyText(selectedBeneficiaire!.nomBeneficiaire.toString(), bold: true),
                       ],
                     )
                   ],
@@ -339,22 +264,17 @@ class _ChangeBeneficiaireModalState extends State<ChangeBeneficiaireModal> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Téléphone", style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black.withOpacity(.5)
-                    ),),
-                    Text(selectedBeneficiaire!.telBeneficiaire.toString(), style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600
-                    ),),
+                    AppTexts.smallText("Téléphone"),
+                    AppTexts.bodyText(selectedBeneficiaire!.telBeneficiaire.toString(), bold: true),
                   ],
                 ),
               ],
             ),
           if (selectedBeneficiaire != null)
-            const SizedBox(height: 15,),
+            const SizedBox(height: 20,),
           RoundedButton(
             title: "Enrégistrer",
+            color: AppColors.buttonBlackColor,
             onPress: () {
               if (selectedBeneficiaire == null) {
                 Utils.flushBarErrorMessage("Vous devez séléctionner un bénéficiaire.", context);

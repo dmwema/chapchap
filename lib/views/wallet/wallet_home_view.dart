@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/user_model.dart';
@@ -38,7 +40,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
   List recharges = [];
   List transfers = [];
 
-  DemandesViewModel  demandesViewModel = DemandesViewModel();
+  DemandesViewModel demandesViewModel = DemandesViewModel();
   WalletViewModel walletViewModel = WalletViewModel();
 
   AuthViewModel authViewModel = AuthViewModel();
@@ -48,6 +50,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
   int currentWalletPage = 0;
 
   var currentWallet;
+  bool _isHidden = true;
 
   int historyPage = 1;
 
@@ -55,6 +58,12 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
 
   bool loadEmail = false;
   bool loadSMS = false;
+
+  void _toggleVisibility() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
 
   void getHistory (int type, String currency, WalletViewModel viewModel) {
     if (type == 1) {
@@ -189,7 +198,33 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                                 itemBuilder: (BuildContext context, int index) {
                                                   var wallet = wallets[index];
                                                   return Center(
-                                                    child: AppTexts.titleText("${wallet['balance']} ${wallet['currency']}", color: Colors.white)
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: _toggleVisibility,
+                                                          child: AnimatedContainer(
+                                                            duration: const Duration(milliseconds: 300),
+                                                            margin: const EdgeInsets.only(right: 3),
+                                                            padding: const EdgeInsets.all(5),
+                                                            child: Center(
+                                                              child: Icon(
+                                                                _isHidden
+                                                                    ? CupertinoIcons.eye_fill
+                                                                    : CupertinoIcons.eye_slash_fill,
+                                                                color: Colors.white,
+                                                                size: 20,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ImageFiltered(
+                                                            imageFilter: ImageFilter.blur(sigmaX: _isHidden ? 5 : 0, sigmaY: _isHidden ? 5 : 0),
+                                                            child: AppTexts.titleText("${wallet['balance']} ${wallet['currency']}", color: Colors.white),
+                                                        ),
+
+                                                      ],
+                                                    )
                                                   );
                                                 },
                                               ),
@@ -285,11 +320,11 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                         }
                     ),
 
-                    // if (user != null && user!.codePays == "ca")
+                    if (user != null && user!.codePays == "ca")
                       const SizedBox(height: 10,),
-                    // if (user != null && user!.codePays == "ca")
+                    if (user != null && user!.codePays == "ca")
                       RoundedButton(
-                          title: "informations de recharge du portefeuille",
+                          title: "informations de recharge",
                           icon: Icons.payment,
                           color: AppColors.buttonBlackColor,
                           textColor: Colors.white,
@@ -303,7 +338,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     AppTexts.cardTitle("Historiques"),
                     const SizedBox(height: 20,),
                     RoundedButton(
-                        title: "Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                        title: "Mes rechargements ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
                         icon: Icons.history,
                         color: AppColors.buttonBlackColor,
                         textColor: Colors.white,
@@ -315,7 +350,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     ),
                     const SizedBox(height: 10,),
                     RoundedButton(
-                        title: "Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
+                        title: "Mes transferts ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
                         icon: Icons.history,
                         color: AppColors.buttonBlackColor,
                         textColor: Colors.white,

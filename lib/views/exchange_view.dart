@@ -12,6 +12,7 @@ import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ExchangeView extends StatefulWidget {
@@ -85,9 +86,21 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-        appBar: CommonAppBar(
+        appBar: widget.public == true ? CommonAppBar(
           context: context,
           backArrow: true,
+        ) : PreferredSize(
+          preferredSize: const Size.fromHeight(0.0),
+          child: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: AppColors.bgColor,
+              systemNavigationBarColor: Colors.white,
+              systemNavigationBarIconBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+              statusBarBrightness: Brightness.light, // For iOS (dark icons)
+              systemNavigationBarDividerColor: Colors.white,
+            ),
+          ),
         ),
         backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
@@ -95,6 +108,8 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (widget.public != true)
+              const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: AppTexts.titleText("Taux de change")

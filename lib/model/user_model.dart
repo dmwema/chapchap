@@ -20,6 +20,7 @@ class UserModel {
   String? codeParrainage;
   String? validationCompte;
   int? commissionParrainage;
+  int? pointsBalance;
   int? idPays;
   String? codePays;
   String? paysMonnaie;
@@ -27,6 +28,9 @@ class UserModel {
   String? codeInterac;
   String? questionInterac;
   String? reponseInterac;
+  bool? emailNotification;
+  bool? smsNotification;
+  bool? pushNotification;
 
   UserModel(
       {this.time,
@@ -34,6 +38,9 @@ class UserModel {
         this.client,
         this.soldeParrainage,
         this.profession,
+        this.emailNotification,
+        this.pushNotification,
+        this.smsNotification,
         this.nomClient,
         this.prenomClient,
         this.updatePhone,
@@ -46,6 +53,7 @@ class UserModel {
         this.password,
         this.emailClient,
         this.codeInterac,
+        this.pointsBalance,
         this.questionInterac,
         this.reponseInterac,
         this.codeParrainage,
@@ -66,7 +74,11 @@ class UserModel {
     client = json['client'];
     nomClient = json['nomClient'];
     updatePhone = json['update_phone'];
+    emailNotification = json['email_notification'];
+    pushNotification = json['push_notification'];
+    smsNotification = json['sms_notification'];
     pin = json['pin'];
+    pointsBalance = json['points_balance'];
     soldeParrainage = json['solde_parrainage'];
     codeInterac = json['code_interac'];
     questionInterac = json['question_interac'];
@@ -98,6 +110,7 @@ class UserModel {
     data['update_phone'] = updatePhone;
     data['client'] = this.client;
     data['solde_parrainage'] = soldeParrainage;
+    data['points_balance'] = pointsBalance;
     data['token'] = this.token;
     data['pin'] = pin;
     data['nomClient'] = this.nomClient;
@@ -119,6 +132,9 @@ class UserModel {
     data['code_pays'] = this.codePays;
     data['pays_monnaie'] = this.paysMonnaie;
     data['pays_nom'] = this.paysNom;
+    data['email_notification'] = emailNotification;
+    data['sms_notification'] = smsNotification;
+    data['push_notification'] = pushNotification;
     return data;
   }
 }

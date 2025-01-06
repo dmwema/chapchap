@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/user_model.dart';
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
@@ -66,32 +68,25 @@ class _UpPinViewState extends State<UpPinView> {
     return HideKeyBordContainer(
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.bgColor,
+          appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.accountView, (route) => false);
+          },),
           resizeToAvoidBottomInset: false,
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                // child: commonAppBar(
-                //     context: context,
-                //     backArrow: true,
-                //     backClick: () {
-                //       Navigator.pushNamed(
-                //         context,
-                //         RoutesName.accountView,
-                //       );
-                //     }
-                // ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Modifier le code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.titleText("Modifier le code PIN"),
                     const SizedBox(height: 20,),
-                    const Text("Code PIN actuel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.smallText("Code PIN actuel"),
                     const SizedBox(height: 10,),
                     PinCodeTextField(
                       length: 5,
@@ -109,6 +104,9 @@ class _UpPinViewState extends State<UpPinView> {
                         fieldHeight: 50,
                         fieldWidth: 50,
                         errorBorderColor: Colors.black45,
+                        inactiveColor: AppColors.formFieldBorderColor,
+                        activeColor: AppColors.textGrey,
+                        selectedColor: AppColors.textGrey
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -118,9 +116,7 @@ class _UpPinViewState extends State<UpPinView> {
                       appContext: context,
                     ),
                     const SizedBox(height: 10,),
-                    const Divider(),
-                    const SizedBox(height: 10,),
-                    const Text("Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    AppTexts.smallText("Nouveau code PIN"),
                     const SizedBox(height: 10,),
                     PinCodeTextField(
                       length: 5,
@@ -133,11 +129,14 @@ class _UpPinViewState extends State<UpPinView> {
                       cursorColor: Colors.black,
                       showCursor: true,
                       pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(10),
-                        fieldHeight: 50,
-                        fieldWidth: 50,
-                        errorBorderColor: Colors.black45,
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: 50,
+                          fieldWidth: 50,
+                          errorBorderColor: Colors.black45,
+                          inactiveColor: AppColors.formFieldBorderColor,
+                          activeColor: AppColors.textGrey,
+                          selectedColor: AppColors.textGrey
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -146,8 +145,8 @@ class _UpPinViewState extends State<UpPinView> {
                       },
                       appContext: context,
                     ),
-                    const SizedBox(height: 20,),
-                    const Text("Confirmer le Nouveau code PIN", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black), textAlign: TextAlign.left,),
+                    const SizedBox(height: 10,),
+                    AppTexts.smallText("Confirmer le Nouveau code PIN"),
                     const SizedBox(height: 10,),
                     PinCodeTextField(
                       length: 5,
@@ -160,11 +159,14 @@ class _UpPinViewState extends State<UpPinView> {
                       cursorColor: Colors.black,
                       showCursor: true,
                       pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(10),
-                        fieldHeight: 50,
-                        fieldWidth: 50,
-                        errorBorderColor: Colors.black45,
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: 50,
+                          fieldWidth: 50,
+                          errorBorderColor: Colors.black45,
+                          inactiveColor: AppColors.formFieldBorderColor,
+                          activeColor: AppColors.textGrey,
+                          selectedColor: AppColors.textGrey
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -174,49 +176,43 @@ class _UpPinViewState extends State<UpPinView> {
                       appContext: context,
                     ),
                     const SizedBox(
-                      height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment
-                          .center,
-                      children: [
-                        RoundedButton(
-                            title: "Enregistrer",
-                            loading: pinViewModel.loading,
-                            onPress: () async {
-                              if (currentPin == null || currentPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez entrer le code PIN actuel",
-                                    context);
-                              } else
-                              if (newPin == null || newPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez entrer le nouveau code PIN",
-                                    context);
-                              } else
-                              if (confirmNewPin == null || confirmNewPin!.length < 5) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Vous devez confirmer le code PIN",
-                                    context);
-                              } else
-                              if (newPin != confirmNewPin) {
-                                Utils
-                                    .flushBarErrorMessage(
-                                    "Les deux pins ne correspondent pas",
-                                    context);
-                              } else {
-                                Map data = {
-                                  'code_pin': newPin,
-                                  'code_pin_old': currentPin
-                                };
+                      height: 10,),
+                    RoundedButton(
+                        title: "Enregistrer",
+                        loading: pinViewModel.loading,
+                        onPress: () async {
+                          if (currentPin == null || currentPin!.length < 5) {
+                            Utils
+                                .flushBarErrorMessage(
+                                "Vous devez entrer le code PIN actuel",
+                                context);
+                          } else
+                          if (newPin == null || newPin!.length < 5) {
+                            Utils
+                                .flushBarErrorMessage(
+                                "Vous devez entrer le nouveau code PIN",
+                                context);
+                          } else
+                          if (confirmNewPin == null || confirmNewPin!.length < 5) {
+                            Utils
+                                .flushBarErrorMessage(
+                                "Vous devez confirmer le code PIN",
+                                context);
+                          } else
+                          if (newPin != confirmNewPin) {
+                            Utils
+                                .flushBarErrorMessage(
+                                "Les deux pins ne correspondent pas",
+                                context);
+                          } else {
+                            Map data = {
+                              'code_pin': newPin,
+                              'code_pin_old': currentPin
+                            };
 
-                                await pinViewModel.updatePin(data, context);
-                              }
-                            }
-                        )
-                      ],
+                            await pinViewModel.updatePin(data, context);
+                          }
+                        }
                     ),
                   ],
                 ),

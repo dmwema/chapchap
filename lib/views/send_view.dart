@@ -171,22 +171,27 @@ class _SendViewState extends State<SendView> {
                         }
 
                         return Container(
-                          color: AppColors.formFieldColor,
                           padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-                              top: 20,
-                              left: 20,
-                              right: 20
+                            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                            left: 20,
+                            right: 20,
+                            top: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(color: AppColors.formFieldColor, width: 1)
+                            )
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppTexts.smallText("Destination"),
+                              AppTexts.descriptionText("Destination"),
                               const SizedBox(height: 5,),
                               InkWell(
                                 onTap: () {
                                   showModalBottomSheet(
+                                    backgroundColor: AppColors.bgColor,
                                     context: context,
                                     builder: (context) {
                                       return Container(
@@ -194,7 +199,7 @@ class _SendViewState extends State<SendView> {
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              AppTexts.smallText("Séléctionnez le pays de destination"),
+                                              AppTexts.titleText("Séléctionnez le pays de destination"),
                                               const SizedBox(height: 20,),
                                               Expanded(child: ListView.builder(
                                                 itemCount: paysDestinationModel!.destination!.length,
@@ -219,17 +224,11 @@ class _SendViewState extends State<SendView> {
                                                       },
                                                       child: Container(
                                                         padding: const EdgeInsets.all(10),
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                                        ),
                                                         child: Row(
                                                           children: [
                                                             Image.asset("packages/country_icons/icons/flags/png/${paysDestinationModel!.destination![index].codePaysDest}.png", width: 20, height: 20, fit: BoxFit.contain,),
                                                             const SizedBox(width: 20,),
-                                                            Text(paysDestinationModel!.destination![index].paysDest.toString(), style: const TextStyle(
-                                                                fontSize: 14,
-                                                                fontWeight: FontWeight.bold
-                                                            ),)
+                                                            AppTexts.bodyText(paysDestinationModel!.destination![index].paysDest.toString(), bold: true)
                                                           ],
                                                         ),
                                                       )
@@ -242,7 +241,7 @@ class _SendViewState extends State<SendView> {
                                     },
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20),
+                                        top: Radius.circular(0),
                                       ),
                                     ),
                                   );
@@ -271,7 +270,7 @@ class _SendViewState extends State<SendView> {
                                 ),
                               ),
                               const SizedBox(height: 10,),
-                              AppTexts.smallText("Vous envoyez"),
+                              AppTexts.descriptionText("Vous envoyez"),
                               const SizedBox(height: 5,),
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -328,7 +327,7 @@ class _SendViewState extends State<SendView> {
                                 ),
                               ),
                               const SizedBox(height: 10,),
-                              AppTexts.smallText("Votre bénéficiaire réçoit"),
+                              AppTexts.descriptionText("Votre bénéficiaire réçoit"),
                               const SizedBox(height: 5,),
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -387,52 +386,57 @@ class _SendViewState extends State<SendView> {
                               ),
                               const SizedBox(height: 10,),
                               if (selectedDesinaion != null && paysDestinationModel != null)
-                                AppTexts.smallText("1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}"),
+                                AppTexts.bodyText("1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}", bold: true),
                               if (selectedDesinaion != null && paysDestinationModel != null)
                               const SizedBox(height: 5,),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Icon(Icons.info_outline_rounded, size: 12, color: Colors.red,),
+                                  const Icon(Icons.info_outline_rounded, size: 15, color: Colors.red,),
                                   const SizedBox(width: 5,),
                                   Flexible(child: AppTexts.smallText("ChapChap utilise son propre taux de change!")),
                                 ],
                               ),
                               const SizedBox(height: 15,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.only(bottom: 60),
-                                color: Colors.white,
-                                padding: const EdgeInsets.only(
-                                    bottom: 20,
-                                    top: 20,
-                                    left: 20,
-                                    right: 20
-                                ),
+                              commonRoundedContainer(
+                                removePaddingH: true,
                                 child: Column(
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        AppTexts.smallText("Vous envoyez"),
-                                        AppTexts.buttonText("${_fromController.text == "" ? "-" : _fromController.text } ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}")
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTexts.smallText("Vous envoyez"),
+                                          AppTexts.buttonText("${_fromController.text == "" ? "-" : _fromController.text } ${paysDestinationModel!.paysCodeMonnaieSrce.toString()}")
+                                        ],
+                                      ),
                                     ),
-                                    const Divider(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        AppTexts.smallText("Votre bénéficiaire réçoit"),
-                                        AppTexts.buttonText("${_toController.text == "" ? "-" : _toController.text } ${selectedDesinaion == null ? "-" : selectedDesinaion!.paysCodeMonnaieDest.toString()}")
-                                      ],
+                                    const SizedBox(height: 10,),
+                                    commonDivider(),
+                                    const SizedBox(height: 10,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTexts.smallText("Votre bénéficiaire réçoit"),
+                                          AppTexts.buttonText("${_toController.text == "" ? "-" : _toController.text } ${selectedDesinaion == null ? "-" : selectedDesinaion!.paysCodeMonnaieDest.toString()}")
+                                        ],
+                                      ),
                                     ),
-                                    const Divider(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        AppTexts.smallText("Frais de transfert"),
-                                        AppTexts.buttonText("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}")
-                                      ],
+                                    const SizedBox(height: 10,),
+                                    commonDivider(),
+                                    const SizedBox(height: 10,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTexts.smallText("Frais de transfert"),
+                                          AppTexts.buttonText("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}")
+                                        ],
+                                      ),
                                     ),
                                     // if (promoRabais > 0)
                                     // Row(
@@ -462,7 +466,7 @@ class _SendViewState extends State<SendView> {
       ),
       SingleChildScrollView(
         child: Container(
-          color: AppColors.formFieldColor,
+
           padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom + 20,
               top: 20,
@@ -473,8 +477,6 @@ class _SendViewState extends State<SendView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppTexts.buttonText("Mode de reception"),
-              const SizedBox(height: 5,),
               AppTexts.descriptionText("Séléctionnez le mode de reception de votre bénéficiaire"),
               const SizedBox(height: 20,),
               if (selectedDesinaion != null)
@@ -556,7 +558,7 @@ class _SendViewState extends State<SendView> {
       Column(
         children: [
           Container(
-            color: AppColors.formFieldColor,
+
             padding: const EdgeInsets.only(
                 bottom: 20,
                 top: 20,
@@ -569,37 +571,20 @@ class _SendViewState extends State<SendView> {
               children: [
                 AppTexts.descriptionText("Séléctionnez votre bénéficiaire"),
                 const SizedBox(height: 20,),
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewBeneficiaireView(destination: selectedDesinaion, parentDemandViewModel: demandesViewModel),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(5)
+                RoundedButton(
+                  title: "Nouveau bénéficiaire",
+                  icon: CupertinoIcons.add,
+                  color: AppColors.buttonBlackColor,
+                  textColor: Colors.white,
+                  onPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewBeneficiaireView(destination: selectedDesinaion, parentDemandViewModel: demandesViewModel),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 3),
-                            child: Icon(CupertinoIcons.add, color: Colors.white, size: 17,),
-                          ),
-                          SizedBox(width: 10,),
-                          AppTexts.buttonText("Nouveau bénéficiaire", color: Colors.white),
-                        ],
-                      ),
-                    )
-                )
+                    );
+                  }
+                ),
               ],
             ),
           ),
@@ -657,13 +642,10 @@ class _SendViewState extends State<SendView> {
                                       },
                                       child: Column(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                                            child: RecipientCard2(
-                                              name: "${current.nomBeneficiaire}",
-                                              address: current.codePays.toString(),
-                                              phone: current.telBeneficiaire.toString(),
-                                            ),
+                                          RecipientCard2(
+                                            name: "${current.nomBeneficiaire}",
+                                            address: current.codePays.toString(),
+                                            phone: current.telBeneficiaire.toString(),
                                           ),
                                         ],
                                       )
@@ -682,258 +664,223 @@ class _SendViewState extends State<SendView> {
       if (paysDestinationModel != null)
       Column(
         children: [
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.only(
-                bottom: 10,
-                top: 0,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AppTexts.descriptionText("Vérifiez que les informations si dessous sont correctes puis confirmez")
-                ),
-              ],
-            ),
-          ),
           if (selectedDesinaion != null)
-          Column(
-            children: [
-              const SizedBox(height: 5,),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                    color: AppColors.formFieldColor,
-                    border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppTexts.smallText("Source"),
-                    AppTexts.cardTitle("${paysDestinationModel!.paysSrce}")
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: commonRoundedContainer(
+              removePaddingAll: true,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppTexts.smallText("Source"),
+                        AppTexts.bodyText("${paysDestinationModel!.paysSrce}", bold: true)
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.smallText("Destination"),
-                      AppTexts.cardTitle("${selectedDesinaion!.paysDest}")
-                    ],
-                  )
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.black)
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      color: Colors.black.withOpacity(.02),
-                      child: SizedBox(
-                        width: (MediaQuery.of(context).size.width) * 0.7,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              label: AppTexts.smallText("Entrez un code promo"),
-                              fillColor: Colors.white,
-                              focusedBorder: InputBorder.none,
-                              focusColor: AppColors.primaryColor,
-                              enabledBorder: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(vertical: 10)
-                          ),
-                          controller: _promoContoller,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
+                  commonDivider(),
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Destination"),
+                          AppTexts.bodyText("${selectedDesinaion!.paysDest}", bold: true)
+                        ],
+                      )
+                  ),
+                  commonDivider(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          color: Colors.black.withOpacity(.02),
+                          child: SizedBox(
+                            width: (MediaQuery.of(context).size.width - 55) * 0.7,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                label: AppTexts.descriptionText("Code promo"),
+                                fillColor: AppColors.formFieldColor,
+                                border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: AppColors.formFieldBorderColor)),
+                                enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: AppColors.formFieldBorderColor)),
+                                disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: AppColors.formFieldBorderColor)),
+                                errorBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: AppColors.formFieldBorderColor)),
+                                focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: AppColors.formFieldBorderColor)),
+                                focusedBorder: InputBorder.none,
+                                focusColor: AppColors.primaryColor,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              controller: _promoContoller,
+                              style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (_promoContoller.text.isEmpty) {
-                          Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
-                        } else if (_fromController.text == "") {
-                          Utils.flushBarErrorMessage("Vous devez entrer les montants", context);
-                        } else {
-                          double montantSrc = promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais) : double.parse(_fromController.text);
-                          setState(() {
-                            loadingPromo = true;
-                            loadingPromoSucces = false;
-                            promoCode = _promoContoller.text;
-                          });
-                          DemandesViewModel demandeVM = DemandesViewModel();
-                          Map data = {
-                            "codePromo": _promoContoller.text,
-                            "code_pays_srce": paysDestinationModel!.codePaysSrce.toString(),
-                            "montant": montantSrc
-                          };
-                          demandeVM.applyPromo(context, data).then((value) {
-                            setState(() {
-                              loadingPromo = false;
-                            });
-                            if (demandeVM.applyDetail.status == Status.COMPLETED) {
-                              _promoContoller.clear();
+                        const SizedBox(width: 5,),
+                        InkWell(
+                          onTap: () {
+                            if (_promoContoller.text.isEmpty) {
+                              Utils.flushBarErrorMessage("Vous n'avez pas saisi un code promo", context);
+                            } else if (_fromController.text == "") {
+                              Utils.flushBarErrorMessage("Vous devez entrer les montants", context);
+                            } else {
+                              double montantSrc = promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais) : double.parse(_fromController.text);
                               setState(() {
-                                promo = true;
-                                promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
-                                loadingPromoSucces = true;
+                                loadingPromo = true;
+                                loadingPromoSucces = false;
+                                promoCode = _promoContoller.text;
+                              });
+                              DemandesViewModel demandeVM = DemandesViewModel();
+                              Map data = {
+                                "codePromo": _promoContoller.text,
+                                "code_pays_srce": paysDestinationModel!.codePaysSrce.toString(),
+                                "montant": montantSrc
+                              };
+                              demandeVM.applyPromo(context, data).then((value) {
+                                setState(() {
+                                  loadingPromo = false;
+                                });
+                                if (demandeVM.applyDetail.status == Status.COMPLETED) {
+                                  _promoContoller.clear();
+                                  setState(() {
+                                    promo = true;
+                                    promoRabais = double.parse(demandeVM.applyDetail.data["reductionPromo"].toString());
+                                    loadingPromoSucces = true;
+                                  });
+                                }
                               });
                             }
-                          });
-                        }
-                      },
-                      child: Container(
-                          width: (MediaQuery.of(context).size.width -60) * 0.3,
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
+                          },
+                          child: Container(
+                              width: (MediaQuery.of(context).size.width - 55) * 0.3 - 20,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 14,),
+                              child: Center(
+                                child:
+                                loadingPromo
+                                    ? const SizedBox(
+                                  width: 17, height: 17,
+                                  child: CupertinoActivityIndicator(color: Colors.white, radius: 10,),
+                                )
+                                    : loadingPromoSucces
+                                    ?
+                                const Icon(Icons.check, color: Colors.white, size: 18,) :
+                                    AppTexts.smallText("Appliquer", color: Colors.white),
+                              )
                           ),
-                          padding: const EdgeInsets.only(top: 17, bottom: 17),
-                          child: Center(
-                            child:
-                            loadingPromo
-                                ? const SizedBox(
-                              width: 17, height: 17,
-                              child: CupertinoActivityIndicator(color: Colors.white, radius: 10,),
-                            )
-                                : loadingPromoSucces
-                                ?
-                            const Icon(Icons.check, color: Colors.white, size: 18,) :
-                                AppTexts.buttonText("Appliquer", color: Colors.white),
-                          )
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(.1),
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                        )
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.cardTitle("Montant à envoyer"),
-                      AppTexts.cardTitle("${_fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}"),
-                    ],
-                  )
-              ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(.1),
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  commonDivider(),
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Montant à envoyer"),
+                          AppTexts.bodyText("${_fromController.text} ${paysDestinationModel!.paysCodeMonnaieSrce}", bold: true),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.cardTitle("Montant à recevoir"),
-                      AppTexts.cardTitle("${_toController.text} ${selectedDesinaion!.paysCodeMonnaieDest}"),
-                    ],
-                  )
-              ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  commonDivider(),
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Montant à recevoir"),
+                          AppTexts.bodyText("${_toController.text} ${selectedDesinaion!.paysCodeMonnaieDest}", bold: true),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.cardTitle("Frais de transfert"),
-                      AppTexts.cardTitle("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}"),
-                    ],
-                  )
-              ),
-              if (promoRabais > 0)
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  commonDivider(),
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Frais de transfert"),
+                          AppTexts.bodyText("$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}", bold: true),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.cardTitle("Rabais promo"),
-                      AppTexts.cardTitle("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce}"),
-                    ],
-                  )
-              ),
-              if (_fromController.text != "" && isDouble(_fromController.text))
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldBorderColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  commonDivider(),
+                  if (promoRabais > 0)
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.cardTitle("Rabais promo"),
+                          AppTexts.cardTitle("- $promoRabais ${paysDestinationModel!.paysCodeMonnaieSrce}"),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.cardTitle("Total à payer", color: AppColors.primaryColor),
-                      AppTexts.cardTitle("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais + tauxTransfert).toString() : tauxTransfert + double.parse(_fromController.text)} ${paysDestinationModel!.paysCodeMonnaieSrce}", color: AppColors.primaryColor),
-                    ],
-                  )
-              ),
-              if (selectedModeRetrait != null)
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  if (promoRabais > 0)
+                    commonDivider(),
+                  if (_fromController.text != "" && isDouble(_fromController.text))
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Total à payer", color: AppColors.primaryColor),
+                          AppTexts.titleText("${promoRabais > 0 ? (double.parse(_fromController.text) - promoRabais + tauxTransfert).toString() : tauxTransfert + double.parse(_fromController.text)} ${paysDestinationModel!.paysCodeMonnaieSrce}", color: AppColors.primaryColor),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.smallText("Mode de retrait"),
-                      AppTexts.cardTitle("${selectedModeRetrait!.modeRetrait}"),
-                    ],
-                  )
-              ),
-              if (selectedBeneficiaire != null)
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  commonDivider(),
+                  if (selectedModeRetrait != null)
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Mode de retrait"),
+                          AppTexts.cardTitle("${selectedModeRetrait!.modeRetrait}"),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.smallText("Bénéficiaire"),
-                      AppTexts.cardTitle("${selectedBeneficiaire!.nomBeneficiaire}"),
-                    ],
-                  )
-              ),
-              if (selectedBeneficiaire != null)
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      border: Border(bottom: BorderSide(width: 1, color: AppColors.formFieldBorderColor))
+                  if (selectedModeRetrait != null)
+                    commonDivider(),
+                  if (selectedBeneficiaire != null)
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Bénéficiaire"),
+                          AppTexts.cardTitle("${selectedBeneficiaire!.nomBeneficiaire}"),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppTexts.smallText("Téléphone"),
-                      AppTexts.cardTitle("${selectedBeneficiaire!.telBeneficiaire}"),
-                    ],
-                  )
+                  if (selectedBeneficiaire != null)
+                    commonDivider(),
+                  if (selectedBeneficiaire != null)
+                  Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText("Téléphone"),
+                          AppTexts.cardTitle("${selectedBeneficiaire!.telBeneficiaire}"),
+                        ],
+                      )
+                  ),
+                ],
               ),
-            ],
+            ),
           )
         ],
       ),
@@ -941,34 +888,27 @@ class _SendViewState extends State<SendView> {
 
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+          if (step > 0) {
+            _controller.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.linear
+            );
+          } else {
+            Navigator.pop(context);
+          }
+        },),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // commonAppBar(
-              //   context: context,
-              //   backArrow: step > 0,
-              //   showHelp: false,
-              //   canClose: true,
-              //   appBarColor: Colors.white,
-              //   backClick: () {
-              //     if (step > 0) {
-              //       _controller.previousPage(
-              //           duration: const Duration(milliseconds: 300),
-              //           curve: Curves.linear
-              //       );
-              //     } else {
-              //       Navigator.pop(context);
-              //     }
-              //   }
-              // ),
-              Center(child: Image.asset("assets/logo_black.png", width: 30,)),
+              Center(child: Image.asset("assets/logo_black.png", width: 25,)),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.formFieldBorderColor,
-                  borderRadius: BorderRadius.circular(2)
+                  borderRadius: BorderRadius.circular(5)
                 ),
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
                 width: MediaQuery.of(context).size.width,
@@ -1006,8 +946,8 @@ class _SendViewState extends State<SendView> {
                     Positioned(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                       child: Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(20),
+                        color: AppColors.bgColor,
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width - 40,
                           child: Row(
@@ -1102,15 +1042,16 @@ class _SendViewState extends State<SendView> {
                               const SizedBox(width: 5,),
                               if (step == 3)
                               RoundedButton(
-                                color: Colors.black,
-                                wallet: true,
+                                color: AppColors.buttonBlackColor,
+                                textColor: Colors.white,
+                                icon: Icons.wallet_outlined,
                                 onPress: () {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
                                       String? pin;
-
                                       return Dialog(
+                                        backgroundColor: AppColors.bgColor,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius
                                                 .circular(
@@ -1125,30 +1066,13 @@ class _SendViewState extends State<SendView> {
                                             mainAxisSize: MainAxisSize
                                                 .min,
                                             children: [
-                                              const Icon(
-                                                Icons.warning_amber_rounded,
-                                                color: Colors.red,
+                                              Icon(
+                                                Icons.info_outline_rounded,
+                                                color: AppColors.buttonBlackColor,
                                                 size: 60,
                                               ),
-                                              const SizedBox(height: 10,),
-                                              const Text("Code PIN",
-                                                textAlign: TextAlign
-                                                    .center,
-                                                style: TextStyle(
-                                                    color: Colors
-                                                        .black,
-                                                    fontWeight: FontWeight
-                                                        .bold
-                                                ),
-                                              ),
-                                              const Text("Les transactions par wallet sont protégées par Code PIN. Veuillez entrer votre Code PIN",
-                                                textAlign: TextAlign
-                                                    .center,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12
-                                                ),
-                                              ),
+                                              AppTexts.titleText("Code PIN"),
+                                              AppTexts.descriptionText("Les transactions par wallet sont protégées par Code PIN. Veuillez entrer votre Code PIN"),
                                               const SizedBox(height: 10,),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -1157,15 +1081,7 @@ class _SendViewState extends State<SendView> {
                                                     onTap: () {
                                                       pinViewModel.resetPin(context);
                                                     },
-                                                    child: Text("Code PIN oublié ?",
-                                                      textAlign: TextAlign
-                                                          .right,
-                                                      style: TextStyle(
-                                                          color: AppColors.primaryColor,
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 12
-                                                      ),
-                                                    ),
+                                                    child: AppTexts.bodyText("Code PIN oublié ?", bold: true),
                                                   ),
                                                 ],
                                               ),
@@ -1180,11 +1096,14 @@ class _SendViewState extends State<SendView> {
                                                 cursorColor: Colors.black,
                                                 showCursor: true,
                                                 pinTheme: PinTheme(
-                                                  shape: PinCodeFieldShape.box,
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  fieldHeight: 50,
-                                                  fieldWidth: 50,
-                                                  errorBorderColor: Colors.black45,
+                                                    shape: PinCodeFieldShape.box,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    fieldHeight: 50,
+                                                    fieldWidth: 50,
+                                                    errorBorderColor: Colors.black45,
+                                                    inactiveColor: AppColors.formFieldBorderColor,
+                                                    activeColor: AppColors.textGrey,
+                                                    selectedColor: AppColors.textGrey
                                                 ),
                                                 onChanged: (value) {
                                                   setState(() {
@@ -1193,87 +1112,64 @@ class _SendViewState extends State<SendView> {
                                                 },
                                                 appContext: context,
                                               ),
-                                              const SizedBox(
-                                                height: 20,),
                                               if (!loading)
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment
-                                                    .center,
-                                                children: [
-                                                  InkWell(
-                                                    child: Container(
-                                                      padding: const EdgeInsets.symmetric(
-                                                          vertical: 15,
-                                                          horizontal: 20),
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                          borderRadius: BorderRadius
-                                                              .circular(
-                                                              30)
-                                                      ),
-                                                      child: const Text(
-                                                        "Valider",
-                                                        style: TextStyle(
-                                                            color: Colors.white),),
-                                                    ),
-                                                    onTap: () async {
-                                                      if (pin =="") {
-                                                        Utils
-                                                            .flushBarErrorMessage(
-                                                            "Vous devez entrer le code PIN",
-                                                            context);
+                                                RoundedButton(
+                                                  loading: loading,
+                                                  title: "Valider", onPress: () async {
+                                                  if (pin =="") {
+                                                    Utils
+                                                        .flushBarErrorMessage(
+                                                        "Vous devez entrer le code PIN",
+                                                        context);
+                                                  } else {
+                                                    DemandesViewModel demandesViewModel3 = DemandesViewModel();
+                                                    if (!loading) {
+                                                      setState(() {
+                                                        loading = true;
+                                                      });
+
+                                                      double fromAmount = 0;
+                                                      double toAmount = 0;
+
+                                                      if (fromToToSens) {
+                                                        fromAmount = double.parse(_fromController.text);
+                                                        toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
                                                       } else {
-                                                        DemandesViewModel demandesViewModel3 = DemandesViewModel();
-                                                        if (!loading) {
-                                                          setState(() {
-                                                            loading = true;
-                                                          });
+                                                        toAmount = double.parse(_toController.text);
+                                                        fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
+                                                      }
+                                                      fromAmount += tauxTransfert;
 
-                                                          double fromAmount = 0;
-                                                          double toAmount = 0;
+                                                      if (promoRabais > 0) {
+                                                        fromAmount -= promoRabais;
+                                                      }
 
-                                                          if (fromToToSens) {
-                                                            fromAmount = double.parse(_fromController.text);
-                                                            toAmount = fromAmount * double.parse(selectedDesinaion!.rate.toString());
-                                                          } else {
-                                                            toAmount = double.parse(_toController.text);
-                                                            fromAmount = toAmount / double.parse(selectedDesinaion!.rate.toString());
-                                                          }
-                                                          fromAmount += tauxTransfert;
-
-                                                          if (promoRabais > 0) {
-                                                            fromAmount -= promoRabais;
-                                                          }
-
-                                                          Map data2 = {
-                                                            "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
-                                                            "codePromo": promoCode,
-                                                            "code_pays_srce": paysDestinationModel!.codePaysSrce,
-                                                            "montant_srce": fromAmount,
-                                                            "montant_dest": toAmount,
-                                                            'code_pin': pin,
-                                                            "code_pays_dest": selectedDesinaion!.codePaysDest,
-                                                            "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
-                                                          };
-                                                          demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd", wallet: true).then((value) {
-                                                            setState(() {
-                                                              loading = false;
-                                                            });
-                                                            if (paysDestinationModel!.codePaysSrce == "cd") {
-                                                              Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
-                                                                'idDemande': value['data']['id_demande'],
-                                                                'nomBeneficiaire': value['data']['beneficiaire'],
-                                                                'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
-                                                              });
-                                                            }
+                                                      Map data2 = {
+                                                        "idBeneficiaire": selectedBeneficiaire!.idBeneficiaire,
+                                                        "codePromo": promoCode,
+                                                        "code_pays_srce": paysDestinationModel!.codePaysSrce,
+                                                        "montant_srce": fromAmount,
+                                                        "montant_dest": toAmount,
+                                                        'code_pin': pin,
+                                                        "code_pays_dest": selectedDesinaion!.codePaysDest,
+                                                        "id_mode_retrait": selectedModeRetrait!.idModeRetrait,
+                                                      };
+                                                      demandesViewModel3.transfert(data2, context, transfer: paysDestinationModel!.codePaysSrce != "cd", wallet: true).then((value) {
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
+                                                        if (paysDestinationModel!.codePaysSrce == "cd") {
+                                                          Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                                            'idDemande': value['data']['id_demande'],
+                                                            'nomBeneficiaire': value['data']['beneficiaire'],
+                                                            'montant': "$fromAmount ${paysDestinationModel!.paysCodeMonnaieSrce}",
                                                           });
                                                         }
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
-                                              )
+                                                      });
+                                                    }
+                                                  }
+                                                },
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -1281,7 +1177,7 @@ class _SendViewState extends State<SendView> {
                                     },
                                   );
                                 },
-                                title: "Avec wallet",
+                                title: "Avec Portefeuille",
                                 loading: loading,
                               ),
                             ],

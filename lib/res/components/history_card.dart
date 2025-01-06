@@ -81,7 +81,7 @@ class _HistoryCardState extends State<HistoryCard> {
                         color: AppColors.formFieldColor
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: AppTexts.cardDescription(demande.progression.toString(), color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red)),
+                    child: AppTexts.smallText(demande.progression.toString(), color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red)),
                   ),
                   const SizedBox(height: 20,),
                   Row(
@@ -127,7 +127,7 @@ class _HistoryCardState extends State<HistoryCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AppTexts.smallText("Sens du transfert"),
+                      AppTexts.smallText("Sens"),
                       AppTexts.bodyText("${demande.paysSrce} vers ${demande.paysDest}", bold: true),
                     ],
                   ),
@@ -222,12 +222,13 @@ class _HistoryCardState extends State<HistoryCard> {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
+                                  backgroundColor: AppColors.bgColor,
                                   builder: (context) {
                                     return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
                                   },
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
+                                      top: Radius.circular(0),
                                     ),
                                   ),
                                 );
@@ -243,9 +244,10 @@ class _HistoryCardState extends State<HistoryCard> {
                               DemandesViewModel demandeViewModel = DemandesViewModel();
                               showModalBottomSheet(
                                   context: context,
+                                  backgroundColor: AppColors.bgColor,
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
+                                      top: Radius.circular(0),
                                     ),
                                   ),
                                   builder: (context) {
@@ -274,10 +276,8 @@ class _HistoryCardState extends State<HistoryCard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              // border: Border.all(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
-              // border: Border.all(color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red), width: 1),
               boxShadow: const [
                 BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.1),
@@ -292,33 +292,35 @@ class _HistoryCardState extends State<HistoryCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween ,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 35, height: 35,
-                      decoration: BoxDecoration(
-                          color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
-                          borderRadius: BorderRadius.circular(50),
-                      ),
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: Center(
-                        child: Icon(
-                          demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
-                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                Flexible(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 35, height: 35,
+                        decoration: BoxDecoration(
+                            color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
+                            borderRadius: BorderRadius.circular(50),
+                        ),
+                        padding: const EdgeInsets.only(bottom: 1),
+                        child: Center(
+                          child: Icon(
+                            demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
+                            color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 15,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AppTexts.cardTitle(demande.beneficiaire.toString()),
-                        const SizedBox(height: 2,),
-                        AppTexts.cardDescription(demande.date.toString()),
-                      ],
-                    ),
-                  ],
+                      const SizedBox(width: 15,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          AppTexts.cardTitle(demande.beneficiaire.toString()),
+                          const SizedBox(height: 2,),
+                          AppTexts.cardDescription(demande.date.toString()),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(

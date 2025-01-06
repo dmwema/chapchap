@@ -63,7 +63,7 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
             systemNavigationBarColor: Colors.white,
             systemNavigationBarIconBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-            statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+            statusBarBrightness: Brightness.light, // For iOS (dark icons)
             systemNavigationBarDividerColor: Colors.white,
           ),
         ),

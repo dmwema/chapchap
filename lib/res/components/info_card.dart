@@ -39,7 +39,7 @@ class InfoCard extends StatelessWidget {
         boxShadow: [Utils.customShadow()],
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

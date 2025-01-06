@@ -1,6 +1,8 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/demande_model.dart';
+import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/hide_keyboard_container.dart';
 import 'package:chapchap/res/components/history_card.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
@@ -28,21 +30,17 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.bgColor,
           resizeToAvoidBottomInset: false,
+          appBar: CommonAppBar(context: context, backArrow: true,),
           body: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // commonAppBar(
-                //   context: context,
-                //   backArrow: true,
-                // ),
-                const SizedBox(height: 20,),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Demandes avec problèmes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                  child: AppTexts.titleText("Demandes avec problèmes"),
                 ),
                 const SizedBox(height: 10,),
                 ChangeNotifierProvider<DemandesViewModel>(
@@ -71,17 +69,8 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Image.asset("assets/empty.png", width: 180,),
-                                        const SizedBox(height: 20,),
-                                        SizedBox(
-                                          width: 230,
-                                          child: Text(
-                                            "Aucune demande avec problème signalée.",
-                                            style: TextStyle(
-                                              color: Colors.black.withOpacity(.4),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                        AppTexts.descriptionText(
+                                          "Aucune demande avec problème signalée."
                                         ),
                                         const SizedBox(height: 40,),
                                       ],

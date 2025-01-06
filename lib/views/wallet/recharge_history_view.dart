@@ -2,6 +2,7 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
@@ -69,105 +70,156 @@ class _RechargeHistoryViewState extends State<RechargeHistoryView> {
                 )
             ),
             const SizedBox(height: 20,),
-            Expanded(child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: ChangeNotifierProvider<WalletViewModel>(
-                  create: (BuildContext context) => walletViewModel,
-                  child: Consumer<WalletViewModel>(
-                      builder: (context, value, _){
-                        switch (value.rechargesList.status) {
-                          case Status.LOADING:
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height - 200,
-                              child: const Center(
-                                child: CupertinoActivityIndicator(color: Colors.black,),
-                              ),
-                            );
-                          case Status.ERROR:
+            Expanded(child: ChangeNotifierProvider<WalletViewModel>(
+                create: (BuildContext context) => walletViewModel,
+                child: Consumer<WalletViewModel>(
+                    builder: (context, value, _){
+                      switch (value.rechargesList.status) {
+                        case Status.LOADING:
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height - 200,
+                            child: const Center(
+                              child: CupertinoActivityIndicator(color: Colors.black,),
+                            ),
+                          );
+                        case Status.ERROR:
+                          return Center(
+                            child: Text(value.rechargesList.message.toString()),
+                          );
+                        default:
+                          if (value.rechargesList.data!.length == 0) {
                             return Center(
-                              child: Text(value.rechargesList.message.toString()),
+                              child: AppTexts.descriptionText("Empty"),
                             );
-                          default:
-                            if (value.rechargesList.data!.length == 0) {
-                              return Center(
-                                child: AppTexts.descriptionText("Empty"),
-                              );
-                            }
+                          }
 
-                            List recharges = value.rechargesList.data!;
-                            return ListView.builder(
-                              itemCount: value.rechargesList.data!.length,
-                              itemBuilder: (context, index) {
-                                Map recharge = recharges[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 10.0),
+                          List recharges = value.rechargesList.data!;
+                          return ListView.builder(
+                            itemCount: value.rechargesList.data!.length,
+                            itemBuilder: (context, index) {
+                              Map recharge = recharges[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0, left: 20, right: 20),
+                                child: InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return Container(
+                                          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+                                          color: AppColors.bgColor,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children:  [
+                                              const SizedBox(height: 20,),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    color: AppColors.formFieldColor
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                child: AppTexts.smallText(recharge['status_description'].toString(), color: recharge['status_description'].toString().contains("En cours") || recharge['status_description'].toString().contains("En attente") ? Colors.orange: (recharge['status_description'].toString().contains("Echoué") ? Colors.red : Colors.green)),
+                                              ),
+                                              const SizedBox(height: 20,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  AppTexts.smallText("Montant"),
+                                                  AppTexts.bodyText("${recharge['amount']} ${recharge['currency']}", bold: true),
+                                                ],
+                                              ),
+                                              Divider(color: AppColors.formFieldColor,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  AppTexts.smallText("Date"),
+                                                  AppTexts.bodyText(recharge['date'], bold: true),
+                                                ],
+                                              ),
+                                              Divider(color: AppColors.formFieldColor,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  AppTexts.smallText("Devise"),
+                                                  AppTexts.bodyText(recharge['currency_label'], bold: true),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 20,),
+                                              if (recharge['lien_paiement'] != null)
+                                              RoundedButton(
+                                                  onPress: () async {
+                                                    String url = recharge['lien_paiement'];
+                                                    var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                                                    if(urllaunchable){
+                                                      await launch(url); //launch is from url_launcher package to launch URL
+                                                      Navigator.pushNamed(context,RoutesName.walletHome);
+                                                    }else{
+                                                      Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                                                    }
+                                                  },
+                                                  color: AppColors.buttonBlackColor,
+                                                  title: "Recharger",
+                                                  icon: CupertinoIcons.arrow_down_left
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   child: commonRoundedContainer(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children:  [
-                                        AppTexts.smallText(recharge['date']),
-                                        const SizedBox(height: 10,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            AppTexts.smallText("Devise"),
-                                            AppTexts.bodyText(recharge['currency_label'], bold: true),
-                                          ],
-                                        ),
-                                        Divider(color: AppColors.bgColor,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            AppTexts.smallText("Montant"),
-                                            AppTexts.bodyText("${recharge['amount']} ${recharge['currency']}", bold: true),
-                                          ],
-                                        ),
-                                        Divider(color: AppColors.bgColor,),
-                                        Row(
+                                    removePaddingAll: true,
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                                        child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.history, color: recharge['status_description'].toString().contains("En cours") || recharge['status_description'].toString().contains("En attente") ? Colors.orange: (recharge['status_description'].toString().contains("Echoué") ? Colors.red : Colors.green), size: 20,),
-                                                const SizedBox(width: 5,),
-                                                AppTexts.smallText(recharge['status_description'], color: recharge['status_description'].toString().contains("En cours") || recharge['status_description'].toString().contains("En attente") ? Colors.orange: (recharge['status_description'].toString().contains("Echoué") ? Colors.red : Colors.green))
+                                                const Icon(CupertinoIcons.arrow_down_left, color: Colors.green, size: 25,),
+                                                const SizedBox(width: 10,),
+                                                Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children:  [
+                                                    Row(
+                                                      children: [
+                                                        AppTexts.bodyText("${recharge['amount']} ${recharge['currency']}", color: AppColors.buttonBlackColor, bold: true),
+                                                      ],
+                                                    ),
+                                                    AppTexts.smallText(recharge['date'], color: AppColors.buttonBlackColor.withOpacity(.5)),
+                                                  ],
+                                                ),
                                               ],
                                             ),
-                                            // if (recharge['lien_paiement'] != null)
-                                              InkWell(
-                                                onTap: () async {
-                                                  String url = recharge['lien_paiement'];
-                                                  var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                                                  if(urllaunchable){
-                                                    await launch(url); //launch is from url_launcher package to launch URL
-                                                    Navigator.pushNamed(context,RoutesName.walletHome);
-                                                  }else{
-                                                    Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.primaryColor,
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                                  child: AppTexts.buttonText("Recharger", color: Colors.white),
-                                                ),
-                                              )
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(20),
+                                                color: recharge['status_description'].toString().contains("En cours") || recharge['status_description'].toString().contains("En attente") ? Colors.orange.withOpacity(.1): (recharge['status_description'].toString().contains("Echoué") ? Colors.red.withOpacity(.1) : Colors.green.withOpacity(.1))
+                                              ),
+                                              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                              child: AppTexts.smallText(recharge['status_description'], color: recharge['status_description'].toString().contains("En cours") || recharge['status_description'].toString().contains("En attente") ? Colors.orange: (recharge['status_description'].toString().contains("Echoué") ? Colors.red : Colors.green)),
+                                            )
                                           ],
                                         ),
-                                      ],
-                                    )
+                                      )
                                   ),
-                                );
-                              },
-                            );
-                        }
-                      })
-              ),
+                                ),
+                              );
+                            },
+                          );
+                      }
+                    })
             ))
           ],
         ),

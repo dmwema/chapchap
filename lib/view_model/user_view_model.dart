@@ -32,11 +32,17 @@ class UserViewModel with ChangeNotifier {
       sp.setString('question_interac', user.questionInterac.toString());
       sp.setString('reponse_interac', user.reponseInterac.toString());
       sp.setBool('pin', user.pin == true);
+      sp.setBool('email_notification', user.emailNotification == true);
+      sp.setBool('sms_notification', user.smsNotification == true);
+      sp.setBool('push_notification', user.pushNotification == true);
       sp.setString('nomClient', user.nomClient.toString());
       if (user.soldeParrainage != null) {
         sp.setInt('soldeParrainage', user.soldeParrainage!);
       }
       sp.setString('prenomClient', user.prenomClient.toString());
+      if (user.pointsBalance! != null) {
+        sp.setInt('points_balance', user.pointsBalance!);
+      }
       sp.setString('telClient', user.telClient.toString());
       sp.setString('username', user.username.toString());
       if (user.idTypeClient != null) {
@@ -68,9 +74,13 @@ class UserViewModel with ChangeNotifier {
     String? password = sp.getString('password');
     String? codeInterac = sp.getString('code_interac');
     String? questionInterac = sp.getString('question_interac');
+    int? pointsBalance = sp.getInt('points_balance');
     String? reponseInterac = sp.getString('reponse_interac');
     String? client = sp.getString('client');
     bool? pin = sp.getBool('pin');
+    bool? emailNotification = sp.getBool('email_notification');
+    bool? smsNotification = sp.getBool('sms_notification');
+    bool? pushNotification = sp.getBool('push_notification');
     int? soldeParrainage = sp.getInt('soldeParrainage');
     String? nomClient = sp.getString('nomClient');
     String? prenomClient = sp.getString('prenomClient');
@@ -92,6 +102,9 @@ class UserViewModel with ChangeNotifier {
       codeParrainage: codeParrainage,
       commissionParrainage: commissionParrainage,
       emailClient: emailClient,
+      emailNotification: emailNotification,
+      smsNotification: smsNotification,
+      pushNotification: pushNotification,
       idTypeClient: idTypeClient,
       pin: pin,
       codeInterac: codeInterac,
@@ -103,6 +116,7 @@ class UserViewModel with ChangeNotifier {
       photoProfil: photoProfil,
       prenomClient: prenomClient,
       telClient: telClient,
+      pointsBalance: pointsBalance,
       token: token,
       username: username,
       idPays: idPays,

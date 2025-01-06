@@ -78,11 +78,10 @@ Widget commonBottomAppBar({
           GestureDetector(
             onTap: () {
               if (active != 2) {
-                Navigator.push(
+                Navigator.pushNamedAndRemoveUntil(
                   context,
-                  CupertinoPageRoute(
-                    builder: (context) => ExchangeView(public: false,)
-                  )
+                  RoutesName.exchange,
+                      (route) => false,
                 );
               }
             },
@@ -132,6 +131,7 @@ Widget commonRoundedContainer({
   required Widget child,
   bool removePaddingH = false,
   bool removePaddingV = false,
+  bool removePaddingAll = false,
   bool gradient = false,
 }) {
   return Container(
@@ -146,7 +146,7 @@ Widget commonRoundedContainer({
       ) : null,
       boxShadow: [Utils.customShadow()],
     ),
-    padding: removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : (removePaddingV ? const EdgeInsets.symmetric(horizontal: 20) : const EdgeInsets.all(20)),
+    padding: removePaddingAll ? null : (removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : (removePaddingV ? const EdgeInsets.symmetric(horizontal: 20) : const EdgeInsets.all(20))),
     child: child,
   );
 }
@@ -173,6 +173,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
+      surfaceTintColor: Colors.transparent,
       backgroundColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
       leading: backArrow == true ? InkWell(
           onTap: backClick ?? () {
@@ -256,7 +257,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
         systemNavigationBarColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor,
         systemNavigationBarIconBrightness: navWhite == true || color != true ? Brightness.dark : Brightness.light,
         statusBarIconBrightness: color == true ? Brightness.light : Brightness.dark, // For Android (dark icons)
-        statusBarBrightness: color == true ? Brightness.light : Brightness.dark, // For iOS (dark icons)
+        statusBarBrightness: color == true ? Brightness.dark : Brightness.light, // For iOS (dark icons)
         systemNavigationBarDividerColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor
       ),
     );

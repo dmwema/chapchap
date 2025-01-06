@@ -8,8 +8,9 @@ class RoundedButton extends StatelessWidget {
   final bool loading;
   Color? color;
   final Color textColor;
-  final VoidCallback onPress;
+  final void Function()? onPress;
   bool? wallet;
+  bool? select;
   IconData? icon;
 
   RoundedButton({
@@ -17,6 +18,7 @@ class RoundedButton extends StatelessWidget {
     required this.title,
     this.loading = false,
     this.wallet,
+    this.select,
     this.icon,
     this.color,
     this.textColor = Colors.white,
@@ -39,7 +41,7 @@ class RoundedButton extends StatelessWidget {
             height: 20,
             child: CupertinoActivityIndicator(color: Colors.white)
          ) :Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: select == true ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
            children: [
              if (wallet == true)
              const Icon(Icons.wallet_outlined, size: 20,),
@@ -50,7 +52,9 @@ class RoundedButton extends StatelessWidget {
                Icon(icon, size: 20, color: textColor,),
              if (icon != null)
                const SizedBox(width: 5,),
-             AppTexts.buttonText(title, color: textColor)
+             AppTexts.buttonText(title, color: textColor),
+             if (select == true)
+               Icon(Icons.arrow_drop_down)
            ],
          ),
         ),
