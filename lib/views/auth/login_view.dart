@@ -15,7 +15,6 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -80,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+      appBar: CommonAppBar(context: context, title: "Connexion", backArrow: true, backClick: () {
         Navigator.pushNamedAndRemoveUntil(context, RoutesName.welcomeView, (route) => false);
       },),
       body: SafeArea(
@@ -94,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20,),
-                  AppTexts.titleText("Identifiez-vous"),
+                  pageTitleStyle(title: "Connectez-vous à votre compte !", context: context),
                   // AppTexts.descriptionText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
                   const SizedBox(height: 20,),
                   CustomFormField(

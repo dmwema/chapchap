@@ -9,11 +9,13 @@ import 'package:chapchap/res/components/recipient_card2.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:chapchap/views/account_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class RecipientsView extends StatefulWidget {
@@ -53,21 +55,33 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgColor,
-      resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0.0),
-        child: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: AppColors.bgColor,
-            systemNavigationBarColor: Colors.white,
-            systemNavigationBarIconBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-            statusBarBrightness: Brightness.light, // For iOS (dark icons)
-            systemNavigationBarDividerColor: Colors.white,
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: AppColors.primaryColor,
+          statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(context, CupertinoPageRoute(builder: (route) {
+              return AccountView();
+            }));
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
+            child: Image.asset("assets/icons/user.png"),
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20, top: 10, bottom: 10),
+            child: Image.asset("assets/icons/notification.png"),
+          ),
+        ],
+        backgroundColor: AppColors.primaryColor,
       ),
+      backgroundColor: AppColors.bgColor,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,22 +91,20 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AppTexts.titleText("Bénéficiaires"),
-                    const SizedBox(width: 10,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, RoutesName.newBeneficiaire);
                       },
                       child: Container(
-                        width: 20, height: 20,
+                        width: 40, height: 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: AppColors.primaryColor
+                          color: AppColors.accentColor
                         ),
                         child: const Center(
-                          child: Icon(CupertinoIcons.add, size: 15, color: Colors.white,),
+                          child: Icon(CupertinoIcons.add, size: 25, color: Colors.white,),
                         ),
                       ),
                     )
@@ -106,12 +118,6 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                 },
                 child: Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldColor, width: 1),
-                        top: BorderSide(color: AppColors.formFieldColor, width: 1),
-                      )
-                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -124,14 +130,11 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                             AppTexts.smallText("Bénéficiaires archivés")
                           ],
                         ),
-                        // Text("(3)", style: TextStyle(
-                        //     fontWeight: FontWeight.bold
-                        // ),)
                       ],
                     )
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 10,),
               Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
                   create: (BuildContext context) => demandesViewModel,
                   child: Consumer<DemandesViewModel>(
@@ -195,10 +198,10 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                               CircularProfileAvatar(
                                                                 "",
                                                                 radius: 25, // sets radius, default 50.0
-                                                                backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
+                                                                backgroundColor: AppColors.buttonBlackColor, // sets background color, default Colors.white// sets border, default 0.0
                                                                 initialsText: Text(
                                                                   beneficiaire.nomBeneficiaire!.split(" ").length == 2 ? beneficiaire.nomBeneficiaire!.split(" ")[0][0] + beneficiaire.nomBeneficiaire!.split(" ")[1][0] : beneficiaire.nomBeneficiaire!.split(" ")[0][0],
-                                                                  style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                                                                  style: GoogleFonts.poppins(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                                                                 ),  // sets initials text, set your own style, default Text('')
                                                                 elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
                                                                 foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
@@ -215,15 +218,12 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                   AppTexts.smallText("Pays"),
                                                                   Row(
                                                                     children: [
-                                                                      Image.asset("packages/country_icons/icons/flags/png/${beneficiaire.codePays}.png", width: 30, height: 15, fit: BoxFit.contain),
-                                                                      const SizedBox(width: 5,),
-                                                                      AppTexts.smallText("(${beneficiaire.paysMonnaie})"),
+                                                                      AppTexts.smallText("${beneficiaire.codePays} (${beneficiaire.paysMonnaie})"),
                                                                     ],
                                                                   )
                                                                 ],
                                                               ),
                                                               const SizedBox(height: 5,),
-                                                              Divider(color: AppColors.formFieldColor,),
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
@@ -231,7 +231,8 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
                                                                   AppTexts.smallText(beneficiaire.emailBeneficiaire.toString()),
                                                                 ],
                                                               ),
-                                                              Divider(color: AppColors.formFieldColor,),
+                                                              const SizedBox(height: 5,),
+
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
@@ -382,20 +383,6 @@ class _RecipientsViewState extends State<RecipientsView> with SingleTickerProvid
               ))
             ],
           ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:ScaleTransition(
-        scale: _animation,
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primaryColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30)
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, RoutesName.send);
-          },
-          child: const Icon(CupertinoIcons.arrow_up_right_circle, color: Colors.white, size: 35,),
-        ),
       ),
       bottomNavigationBar: commonBottomAppBar(context: context, active: 1),
     );

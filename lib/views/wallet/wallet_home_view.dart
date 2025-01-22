@@ -107,7 +107,6 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
           context: context,
           navWhite: true,
           backArrow: true,
-          color: true,
           backClick: () {
             Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
           },

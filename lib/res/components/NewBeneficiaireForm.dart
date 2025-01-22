@@ -27,14 +27,12 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nomController = TextEditingController();
   final TextEditingController _telController = TextEditingController();
-  final TextEditingController _telConfirmController = TextEditingController();
   final TextEditingController _adresseController = TextEditingController();
   DemandesViewModel demandesViewModel = DemandesViewModel();
 
   bool emailRequired = false;
   bool loadDest = false;
   bool loading = false;
-  bool confirmNumber = false;
   bool canEditDestination = true;
 
   Destination? selectedDesinaion;
@@ -135,7 +133,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    selectedDesinaion == null ? AppTexts.descriptionText("Pays du bénéficiaire *"): Row(
+                    selectedDesinaion == null ? AppTexts.cardTitle("Pays du bénéficiaire *"): Row(
                       children: [
                         Image.asset("packages/country_icons/icons/flags/png/${selectedDesinaion!.codePaysDest}.png", width: 30, height: 15, fit: BoxFit.contain),
                         const SizedBox(width: 10,),
@@ -151,13 +149,13 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
             const SizedBox(height: 10,),
             CustomFormField(
               label: "Nom du bénéficiaire *",
-              hint: "Entrez le nom du bénéficiaire *",
+              hint: "Nom *",
               controller: _nomController,
             ),
             const SizedBox(height: 10,),
             CustomFormField(
-              label: "Email du bénéficiaire ${emailRequired ? '*': ''}",
-              hint: "Entrez l'adresse e-mail du bénéficiaire ${emailRequired ? '*': ''}",
+              label: "Email ${emailRequired ? '*': ''}",
+              hint: "Adresse E-mail ${emailRequired ? '*': ''}",
               controller: _emailController,
               type: TextInputType.emailAddress,
             ),
@@ -172,48 +170,10 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                 child: AppTexts.smallText(selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString()),
               ),
             ),
-            const SizedBox(height: 10,),
-            CustomFormField(
-              label: "Confirmer le téléphone *",
-              hint: "Confirmer le téléphone *",
-              controller: _telConfirmController,
-              type: TextInputType.phone,
-              prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: AppTexts.smallText(selectedDesinaion == null ? '-' : selectedDesinaion!.paysIndictelDest.toString()),
-              ),
-            ),
-            const SizedBox(height: 10,),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  confirmNumber = !confirmNumber;
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Checkbox(
-                    activeColor: AppColors.primaryColor,
-                    checkColor: Colors.white,
-                    value: confirmNumber,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        confirmNumber = !confirmNumber;
-                      });
-                    },
-                  ),
-                  Flexible(
-                    child: AppTexts.smallText("Je confirme que le numéro entré est correct. En cas d'erreur, ChapChap n'est pas responsable et aucun remboursement ne pourra être généré.."),
-                  )
-                ],
-              ),
-            ),
             const SizedBox(height: 20,),
             CustomFormField(
-              label: "Adresse du bénéficiaire *",
-              hint: "Entrez l'adresse du bénéficiaire *",
+              label: "Adresse *",
+              hint: "Adresse *",
               controller: _adresseController,
             ),
             const SizedBox(height: 20,),
@@ -229,16 +189,8 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                       Utils.flushBarErrorMessage("Le nom du bénéficiaire est obligatoire est obligatoire", context);
                     }  else if (_telController.text.isEmpty) {
                       Utils.flushBarErrorMessage("Le numéro de téléphone est obligatoire", context);
-                    } else if (_telConfirmController.text.isEmpty) {
-                      Utils.flushBarErrorMessage("Vous devez confirmer le numéro de téléphone", context);
-                    } else if (_adresseController.text.isEmpty) {
-                      Utils.flushBarErrorMessage("Saisissez le champs de confirmation du numéro de téléphone", context);
-                    }  else if (_telController.text != _telConfirmController.text) {
-                      Utils.flushBarErrorMessage("Les deux numéros ne correspondent pas", context);
                     } else if (selectedDesinaion!.codePaysDest == "ca" && _emailController.text.isEmpty) {
                       Utils.flushBarErrorMessage("L'adresse email est obligatoire", context);
-                    } else if (!confirmNumber) {
-                      Utils.flushBarErrorMessage("Vous devez cocher la case de la confirmation du numéro de téléphone", context);
                     } else {
                       setState(() {
                         loading = true;
@@ -248,7 +200,7 @@ class _NewBeneficiaireFormState extends State<NewBeneficiaireForm> {
                         "emailBeneficiaire": _emailController.text,
                         "nomBeneficiaire": _nomController.text,
                         "telBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telController.text,
-                        "telConfirmBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telConfirmController.text,
+                        "telConfirmBeneficiaire": selectedDesinaion!.paysIndictelDest.toString() + _telController.text,
                         "adresseBeneficiaire": _adresseController.text,
                         "banque":"",
                         "swift":"",

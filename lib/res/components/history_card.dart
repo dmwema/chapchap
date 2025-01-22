@@ -298,14 +298,14 @@ class _HistoryCardState extends State<HistoryCard> {
                       Container(
                         width: 35, height: 35,
                         decoration: BoxDecoration(
-                            color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
+                            color: AppColors.lightGrey,
                             borderRadius: BorderRadius.circular(50),
                         ),
                         padding: const EdgeInsets.only(bottom: 1),
                         child: Center(
                           child: Icon(
                             demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
-                            color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                            color: AppColors.textGrey,
                           ),
                         ),
                       ),
@@ -316,7 +316,7 @@ class _HistoryCardState extends State<HistoryCard> {
                         children: [
                           AppTexts.cardTitle(demande.beneficiaire.toString()),
                           const SizedBox(height: 2,),
-                          AppTexts.cardDescription(demande.date.toString()),
+                          AppTexts.cardDescription(demande.date.toString(), color: AppColors.textGrey),
                         ],
                       ),
                     ],
@@ -328,7 +328,7 @@ class _HistoryCardState extends State<HistoryCard> {
                     color: AppColors.formFieldColor
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: AppTexts.bodyText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
+                  child: AppTexts.cardDescription("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
                 )
               ],
             ),

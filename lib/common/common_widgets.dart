@@ -28,94 +28,89 @@ Widget commonBottomAppBar({
   required int active
 }) {
   return BottomAppBar(
-    elevation: 1,
-    color: Colors.white,
-    shape: const CircularNotchedRectangle(),
-    child:  SizedBox(
-      height: 66,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              if (active != 0) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.home,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 0 ? CupertinoIcons.square_grid_2x2_fill : CupertinoIcons.square_grid_2x2, color: active == 0 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                AppTexts.menuText("Accueil", color: active == 0 ? AppColors.primaryColor : Colors.black),
-              ],
+      elevation: 2,
+      height: 70,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      color: AppColors.bgColor,
+      child:  Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30)
+        ),
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (active != 0) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.home,
+                        (route) => false,
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    border: active == 0 ? Border(top: BorderSide(color: AppColors.accentColor, width: 4)) : null
+                ),
+                width: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(active == 0 ? "assets/icons/home_color.png" : "assets/icons/home.png"),
+                    const SizedBox(height: 5), // The dummy child
+                    Text("Accueil", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 0 ? AppColors.accentColor : AppColors.textGrey,),)
+                  ],
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (active != 1) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.recipeints,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 1 ? Icons.contacts : Icons.contacts_outlined, color: active == 1 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                AppTexts.menuText("Bénéficiaires", color: active == 1 ? AppColors.primaryColor : Colors.black),
-              ],
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.send);
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(100)
+                  ),
+                  height: 70.0,
+                  width: 70.0,
+                  child: Center(child: Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: Image.asset("assets/icons/send.png", width: 35,),
+                  ))
+              ),
             ),
-          ),
-          const SizedBox(width: 40),
-          GestureDetector(
-            onTap: () {
-              if (active != 2) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.exchange,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 2 ? Icons.currency_exchange_rounded : Icons.currency_exchange_rounded, color: active == 2 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                AppTexts.menuText("Change", color: active == 2 ? AppColors.primaryColor : Colors.black),
-              ],
+            GestureDetector(
+              onTap: () {
+                if (active != 1) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.recipeints,
+                        (route) => false,
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    border: active == 1 ? Border(top: BorderSide(color: AppColors.accentColor, width: 4)) : null
+                ),
+                width: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(active == 1 ? "assets/icons/recipient_color.png" : "assets/icons/recipient.png",),
+                    const SizedBox(height: 5), // The dummy child
+                    Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 1 ? AppColors.accentColor : AppColors.textGrey,),)
+                  ],
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (active != 3) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.accountView,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 3 ? CupertinoIcons.person_alt_circle_fill : CupertinoIcons.person_alt_circle, color: active == 3 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5),
-                AppTexts.menuText("Compte", color: active == 3 ? AppColors.primaryColor : Colors.black),
-              ],
-            ),
-          ),
-        ],
-      ),
-    )
+          ],
+        ),
+      )
   );
 }
 
@@ -151,20 +146,33 @@ Widget commonRoundedContainer({
   );
 }
 
+Widget pageTitleStyle ({required String title, required BuildContext context}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * 0.75,
+    child: Flexible(
+      child: Text(title, style: TextStyle(
+          fontSize: 23,
+          color: AppColors.accentColor,
+          fontWeight: FontWeight.w500
+      ),),
+    ),
+  );
+}
+
 class CommonAppBar extends StatelessWidget implements PreferredSize {
   final BuildContext context;
   bool backArrow;
-  bool showHelp;
-  bool? color;
+  bool empty;
   bool? navWhite;
+  String? title;
   GestureTapCallback? backClick;
 
   CommonAppBar({
     super.key,
     required this.context,
     this.backArrow = false,
-    this.showHelp = true,
-    this.color,
+    this.empty = false,
+    this.title,
     this.navWhite,
     this.backClick,
   });
@@ -174,95 +182,99 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
     return AppBar(
       elevation: 0,
       surfaceTintColor: Colors.transparent,
-      backgroundColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
-      leading: backArrow == true ? InkWell(
-          onTap: backClick ?? () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back, color: color == true ? Colors.white : AppColors.textGrey, size: 25,)
-      ): Container(),
-      actions: [
-        if (showHelp)
-          InkWell(
+      backgroundColor: empty ? AppColors.bgColor : AppColors.primaryColor,
+      title: empty ? Image.asset("assets/logo.png", width: 120,) : (title == null ? null : AppTexts.titleText(title!, color: Colors.white, thin: true)),
+      centerTitle: empty,
+      leading: backArrow == true ? Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: InkWell(
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return Container(
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                      color: AppColors.bgColor,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppTexts.titleText("Besoin d’aide ?"),
-                          const SizedBox(height: 20,),
-                          GestureDetector(
-                            onTap: () {
-                              _openUrl("tel://+15143701555");
-                            },
-                            child: Row(
-                              children: [
-                                Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
-                                const SizedBox(width: 10,),
-                                AppTexts.descriptionText("Appelez-nous")
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20,),
-                          GestureDetector(
-                            onTap: () {
-                              _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
-                            },
-                            child: Row(
-                              children: [
-                                Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
-                                const SizedBox(width: 10,),
-                                AppTexts.descriptionText("Envoyez-nous un e-mail")
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20,),
-                          GestureDetector(
-                            onTap: () {
-                              _openUrl("https://wa.me/+14384929679");
-                            },
-                            child: Row(
-                              children: [
-                                Image.asset("assets/wa.png", width: 30,),
-                                const SizedBox(width: 10,),
-                                AppTexts.descriptionText("Message whatsapp")
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                  );
-                },
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20),
-                  ),
-                ),
-              );
+              Navigator.pop(context);
             },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: AppTexts.smallText("Aide ?", color: color == true ? Colors.white : AppColors.textGrey),
-            ),
-          )
-      ],
+            child: Image.asset("assets/back-icon.png")
+        ),
+      ): Container(),
+      // actions: [
+      //   if (showHelp)
+      //     InkWell(
+      //       onTap: () {
+      //         showModalBottomSheet(
+      //           context: context,
+      //           builder: (context) {
+      //             return Container(
+      //                 padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      //                 color: AppColors.bgColor,
+      //                 child: Column(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   children: [
+      //                     AppTexts.titleText("Besoin d’aide ?"),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("tel://+15143701555");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Appelez-nous")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Envoyez-nous un e-mail")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("https://wa.me/+14384929679");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Image.asset("assets/wa.png", width: 30,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Message whatsapp")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 )
+      //             );
+      //           },
+      //           shape: const RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.vertical(
+      //               top: Radius.circular(20),
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //       child: Padding(
+      //         padding: const EdgeInsets.only(right: 20),
+      //         child: AppTexts.smallText("Aide ?", color: color == true ? Colors.white : AppColors.textGrey),
+      //       ),
+      //     )
+      // ],
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: color == true ? AppColors.primaryColor : AppColors.bgColor,
-        systemNavigationBarColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor,
-        systemNavigationBarIconBrightness: navWhite == true || color != true ? Brightness.dark : Brightness.light,
-        statusBarIconBrightness: color == true ? Brightness.light : Brightness.dark, // For Android (dark icons)
-        statusBarBrightness: color == true ? Brightness.dark : Brightness.light, // For iOS (dark icons)
-        systemNavigationBarDividerColor: navWhite == true || color != true ? AppColors.bgColor : AppColors.primaryColor
+        statusBarColor: AppColors.primaryColor,
+        systemNavigationBarColor: AppColors.bgColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+        statusBarBrightness:Brightness.dark, // For iOS (dark icons)
+        systemNavigationBarDividerColor: AppColors.bgColor
       ),
     );
   }
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 

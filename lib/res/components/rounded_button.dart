@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
   final String title;
   final bool loading;
+  final bool outlined;
   Color? color;
   final Color textColor;
   final void Function()? onPress;
@@ -18,6 +19,7 @@ class RoundedButton extends StatelessWidget {
     required this.title,
     this.loading = false,
     this.wallet,
+    this.outlined = false,
     this.select,
     this.icon,
     this.color,
@@ -29,12 +31,17 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPress,
-      color: color ?? AppColors.primaryColor,
+      color: outlined ? null : color ?? AppColors.primaryColor,
+      borderRadius: BorderRadius.circular(30),
+      sizeStyle: CupertinoButtonSize.small,
+      padding: EdgeInsets.all(0),
       pressedOpacity: .7,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
+          border: outlined ? Border.all(width: 1, color: AppColors.accentColor) : null
         ),
+        padding: const EdgeInsets.symmetric(vertical: 12.5),
         child: Center(
           child: loading ? const SizedBox(
             width: 20,
@@ -52,9 +59,9 @@ class RoundedButton extends StatelessWidget {
                Icon(icon, size: 20, color: textColor,),
              if (icon != null)
                const SizedBox(width: 5,),
-             AppTexts.buttonText(title, color: textColor),
+             AppTexts.buttonText(title, color: outlined ? AppColors.accentColor : textColor),
              if (select == true)
-               Icon(Icons.arrow_drop_down)
+               const Icon(Icons.arrow_drop_down)
            ],
          ),
         ),

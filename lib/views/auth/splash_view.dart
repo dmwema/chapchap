@@ -28,8 +28,6 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
       appBar: CommonAppBar(
         context: context,
-        color: true,
-        showHelp: false,
       ),
       body: Container(
         color: AppColors.primaryColor,

@@ -2,7 +2,9 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipientCard2 extends StatelessWidget {
   final String name;
@@ -24,14 +26,14 @@ class RecipientCard2 extends StatelessWidget {
             children: [
               CircularProfileAvatar(
                 "",
-                radius: 18, // sets radius, default 50.0
-                backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
+                radius: 20, // sets radius, default 50.0
+                backgroundColor: AppColors.buttonBlackColor, // sets background color, default Colors.white// sets border, default 0.0
                 initialsText: Text(
                   getInitials(name),
-                  style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                 ),  // sets initials text, set your own style, default Text('')
-                elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+                elevation: 0, // sets elevation (shadow of the profile picture), default value is 0.0
+                foregroundColor: Colors.white, //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
                 cacheImage: true, // allow widget to cache image against provided url
                 showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
               ),
@@ -43,13 +45,13 @@ class RecipientCard2 extends StatelessWidget {
                   AppTexts.cardTitle(name),
                   const SizedBox(height: 2,),
                   if (phone != "null")
-                  AppTexts.cardDescription(phone)
+                  AppTexts.cardDescription(phone, color: AppColors.textGrey)
                 ],
               ),
-              Expanded(
+              const Expanded(
                 child: Align(
                 alignment: Alignment.centerRight,
-                child: Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 20, fit: BoxFit.contain),
+                child: Icon(Icons.more_horiz),
                 )
               )
             ],

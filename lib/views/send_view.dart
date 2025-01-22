@@ -898,36 +898,15 @@ class _SendViewState extends State<SendView> {
           } else {
             Navigator.pop(context);
           }
-        },),
+        }, title: "Faire un transfert",),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Image.asset("assets/logo_black.png", width: 25,)),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.formFieldBorderColor,
-                  borderRadius: BorderRadius.circular(5)
-                ),
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
-                width: MediaQuery.of(context).size.width,
-                height: 5,
-                child: FractionallySizedBox(
-                  alignment: Alignment.centerLeft,
-                  widthFactor: (1 / steps) * (step + 1),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(2)
-                    ),
-                  ),
-                ),
-              ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                child: AppTexts.buttonText(step == 0 ? "Montant et pays" : (
-                step == 1 ? "Mode de reception" : ( step == 2 ? "Bénéficiaire" : "Terminer")),)
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 20),
+                child: pageTitleStyle(title: "Un transfert chap et instantané !", context: context),
               ),
               Expanded(
                 child: Stack(

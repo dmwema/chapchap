@@ -71,6 +71,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
+                    const SizedBox(height: 20,),
                     AppTexts.titleText("Entrez le code de vérification!"),
                     const SizedBox(height: 20,),
                     PinCodeTextField(

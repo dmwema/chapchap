@@ -28,9 +28,6 @@ class UserViewModel with ChangeNotifier {
       sp.setString('client', user.client.toString());
       sp.setString('password', user.password.toString());
       sp.setString('adresse', user.adresse.toString());
-      sp.setString('code_interac', user.codeInterac.toString());
-      sp.setString('question_interac', user.questionInterac.toString());
-      sp.setString('reponse_interac', user.reponseInterac.toString());
       sp.setBool('pin', user.pin == true);
       sp.setBool('email_notification', user.emailNotification == true);
       sp.setBool('sms_notification', user.smsNotification == true);
@@ -40,9 +37,7 @@ class UserViewModel with ChangeNotifier {
         sp.setInt('soldeParrainage', user.soldeParrainage!);
       }
       sp.setString('prenomClient', user.prenomClient.toString());
-      if (user.pointsBalance! != null) {
-        sp.setInt('points_balance', user.pointsBalance!);
-      }
+
       sp.setString('telClient', user.telClient.toString());
       sp.setString('username', user.username.toString());
       if (user.idTypeClient != null) {

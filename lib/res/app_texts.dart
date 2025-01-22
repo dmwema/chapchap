@@ -2,10 +2,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppTexts {
-  static Text titleText (String value, {Color color = Colors.black}) {
+  static Text titleText (String value, {Color color = Colors.black, bool thin = false}) {
     return Text(value, style: GoogleFonts.poppins(
         fontSize: 20,
-        fontWeight: FontWeight.w700,
+        fontWeight: thin ? FontWeight.w500 :FontWeight.w700,
         color: color
     ));
   }
@@ -69,15 +69,15 @@ class AppTexts {
   static Text cardTitle (String value, {Color color = Colors.black}) {
     return Text(value, style: GoogleFonts.poppins(
         fontSize: 13,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w500,
         color: color
     ));
   }
 
-  static Text cardDescription (String value, {Color color = Colors.black}) {
+  static Text cardDescription (String value, {Color color = Colors.black, bool bold = false}) {
     return Text(value, style: GoogleFonts.poppins(
         fontSize: 11,
-        fontWeight: FontWeight.w500,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.w500,
         color: color
     ));
   }

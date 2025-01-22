@@ -1,6 +1,5 @@
 import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/app_texts.dart';
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 
 class SliderPage extends StatelessWidget {
   final String title;
@@ -8,28 +7,45 @@ class SliderPage extends StatelessWidget {
   final String image;
   Color text_color;
 
-    SliderPage({super.key, required this.title, required this.description, required this.image, Color this.text_color  = Colors.black});
+  SliderPage({super.key, required this.title, required this.description, required this.image, Color this.text_color  = Colors.black});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, width: width * 0.6,),
-        const SizedBox(height: 60,),
-        SizedBox(
-          width: 200,
-          child: AppTexts.titleText(title)
+        Container(
+          width: width - 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), // Ajustez la valeur pour le radius
+            border: Border.all(
+              color: AppColors.borderGreyColor, // Couleur de la bordure
+              width: 3, // Épaisseur de la bordure
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15), // Assurez-vous que l'image a le même radius
+            child: Image.asset(
+              image,
+              width: width - 40,
+              fit: BoxFit.cover, // Ajustez l'image pour couvrir l'espace
+            ),
+          ),
         ),
+        const SizedBox(height: 10,),
+        Text(title, style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: Colors.black
+        ), textAlign: TextAlign.left,),
         /*Text(title, style: TextStyle(
           fontSize: 20, fontWeight: FontWeight.bold, color: is_last ? Colors.white: Colors.black
         ),),*/
-        const SizedBox(height: 20,),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: AppTexts.bodyText(description)
-        ),
+        const SizedBox(height: 10,),
+        Text(description, style: TextStyle(
+            fontSize: 13, fontWeight: FontWeight.normal,
+            color: AppColors.textGrey
+        ), textAlign: TextAlign.left),
         const SizedBox(height: 60,)
       ],
     );

@@ -35,14 +35,15 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
-        appBar: CommonAppBar(context: context, backArrow: true,),
+        appBar: CommonAppBar(context: context, backArrow: true, title: "Nouveau bénéficiaire",),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20,),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: AppTexts.titleText("Nouveau bénéficiaire"),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: pageTitleStyle(title: "ça ne vous prendra que 30 secondes ;)", context: context),
               ),
               const SizedBox(height: 10,),
               Expanded(

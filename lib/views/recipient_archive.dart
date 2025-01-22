@@ -32,16 +32,12 @@ class _RecipientsArchiveViewState extends State<RecipientsArchiveView> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppBar(context: context, backArrow: true,),
+      appBar: CommonAppBar(context: context, backArrow: true, title: "Bénéficiaires archivés",),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: AppTexts.titleText("Bénéficiaires archivés")
-            ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 20,),
             Expanded(child: ChangeNotifierProvider<DemandesViewModel>(
                 create: (BuildContext context) => demandesViewModel,
                 child: Consumer<DemandesViewModel>(

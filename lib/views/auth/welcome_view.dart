@@ -4,6 +4,7 @@ import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
+import 'package:chapchap/res/components/slider.dart';
 import 'package:chapchap/view_model/services/notifications_service.dart';
 import 'package:chapchap/views/auth/login_view.dart';
 import 'package:chapchap/views/auth/register_view.dart';
@@ -20,27 +21,29 @@ class WelcomeView extends StatefulWidget {
 }
 
 class _WelcomeViewState extends State<WelcomeView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  NotificationsService notificationsService = NotificationsService();
+  int _currentPage = 0;
+  bool is_last = false;
 
-  ValueNotifier<bool> obscurePassword = ValueNotifier<bool>(true);
+  Color dots_color = AppColors.primaryColor;
 
-  FocusNode emailFocusNode = FocusNode();
-  FocusNode passwordFocusNode = FocusNode();
+  PageController _controller = PageController();
 
-  String? deviceToken;
+  final List<Widget> _pages = [
+    SliderPage(title: "Envoyez de l’argent vers plus de 15 destinations !", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue feugiat erat in porttitor. In gravida justo non est elementum, ac malesuada nisi iaculis.", image: "assets/1.png"),
+    SliderPage(title: "Gagnez 5\$ de rabais avec le Black Friday !", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue feugiat erat in porttitor. In gravida justo non est elementum, ac malesuada nisi iaculis.", image: "assets/2.png"),
+    SliderPage(title: "Vos transferts du Tchad vers le Canada !", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue feugiat erat in porttitor. In gravida justo non est elementum, ac malesuada nisi iaculis.", image: "assets/3.png", text_color: Colors.white,),
+  ];
 
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
+  _onChanged(int index) {
+    setState(() {
+      _currentPage = index;
+      if (index == _pages.length - 1) {
+        is_last = true;
+      } else {
+        is_last = false;
+      }
+    });
   }
-
-  bool showMessage = false;
 
   @override
   void initState() {
@@ -52,9 +55,10 @@ class _WelcomeViewState extends State<WelcomeView> {
     return Scaffold(
       appBar: CommonAppBar(
         context: context,
-        showHelp: true,
         backArrow: false,
+        empty: true,
       ),
+      backgroundColor: AppColors.bgColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -63,115 +67,37 @@ class _WelcomeViewState extends State<WelcomeView> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    commonRoundedContainer(child:  Row(
-                      children: [
-                        if (widget.message == null)
-                        Image.asset("assets/logo_red.png", width: 40,),
-                        if (widget.message != null)
-                          Icon(Icons.error_outline, size: 40, color: AppColors.primaryColor,),
-                        const SizedBox(width: 10,),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (widget.message == null)
-                                AppTexts.bodyText("TRANSFERT CHAPCHAP", bold: true, color: AppColors.primaryColor),
-                              if (widget.message == null)
-                                AppTexts.cardDescription("La meilleur Application de transfert d'argent"),
-                              if (widget.message != null)
-                                AppTexts.bodyText(widget.message!)
-                            ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List<Widget>.generate(_pages.length, (int index) {
+                        return Container(
+                          height: 10,
+                          width: (index == _currentPage) ? 80: 10,
+                          margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: (index == _currentPage) ? dots_color: AppColors.accentColor
                           ),
-                        )
-                      ],
-                    )),
-                    const SizedBox(height: 20,),
-                    commonRoundedContainer(
-                      removePaddingH: true,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50, height: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColors.primaryColor
-                                  ),
-                                  child: const Center(
-                                      child: Icon(Icons.wallet, color: Colors.white, size: 30,)
-                                  ),
-                                ), const SizedBox(width: 10,),
-                                Flexible(child: AppTexts.cardDescription("Un système de recompense basé sur les points qui se gagne lors de chaque transfert d’argent"))
-                              ],
-                            ),
-                          ),
-                          commonDivider(),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50, height: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColors.primaryColor
-                                  ),
-                                  child: const Center(
-                                      child: Icon(Icons.card_giftcard_outlined, color: Colors.white, size: 30,)
-                                  ),
-                                ), const SizedBox(width: 10,),
-                                Flexible(child: AppTexts.cardDescription("Un système de recompense basé sur les points qui se gagne lors de chaque transfert d’argent"))
-                              ],
-                            ),
-                          ),
-                          commonDivider(),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50, height: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColors.primaryColor
-                                  ),
-                                  child: Center(
-                                      child: Image.asset("assets/icons/globe.png", width: 30,)
-                                  ),
-                                ), const SizedBox(width: 10,),
-                                Flexible(child: AppTexts.cardDescription("+10 Pays vers lesquels vous pouvez transferer de l’argent facilement et rapidement"))
-                              ],
-                            ),
-                          ),
-                          commonDivider(),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50, height: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColors.primaryColor
-                                  ),
-                                  child: const Center(
-                                      child: Icon(Icons.currency_exchange, color: Colors.white, size: 30,)
-                                  ),
-                                ), const SizedBox(width: 10,),
-                                Flexible(child: AppTexts.cardDescription("Les meilleurs taux de change du secteur. Utilisez notre estimateur de taux pour vérifier nos taux de change"))
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    )
+                        );
+                      }
+                      ),
+                    ),
+                    Expanded(
+                      child: PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _controller,
+                        itemCount: _pages.length,
+                        onPageChanged:_onChanged,
+                        itemBuilder: (context, int index) {
+                          return _pages[index];
+                        },
+                      ),
+                    ),
                   ],
-                ),
+                )
               ),
               Positioned(
                 bottom: 0,
@@ -181,16 +107,14 @@ class _WelcomeViewState extends State<WelcomeView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       RoundedButton(
-                        title: "Taux de change",
-                        icon: Icons.currency_exchange,
-                        color: AppColors.buttonBlackColor,
+                        title: "Faire une estimation",
                         onPress: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => ExchangeView(public: true,),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //     builder: (context) => ExchangeView(public: true,),
+                          //   ),
+                          // );
                         }
                       ),
                       const SizedBox(height: 10,),
@@ -200,6 +124,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                             width: (MediaQuery.of(context).size.width - 40 - 10) / 2,
                             child: RoundedButton(
                                 title: "Connexion",
+                                outlined: true,
                                 onPress: () {
                                   Navigator.push(
                                     context,
@@ -214,6 +139,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                             width: (MediaQuery.of(context).size.width - 40 - 10) / 2,
                             child: RoundedButton(
                                 title: "Inscription",
+                                outlined: true,
                                 onPress: () {
                                   Navigator.push(
                                     context,
