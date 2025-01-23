@@ -25,6 +25,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mardona/views/send_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -201,6 +202,27 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                     builder: (context, value, _){
                                       switch (value.demandeList.status) {
                                         case Status.LOADING:
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                            child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: List.generate(2, (index) {
+                                                  return Shimmer.fromColors(
+                                                    baseColor: Colors.white.withOpacity(.3),
+                                                    highlightColor: Colors.white,
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      height: 70,
+                                                      margin: EdgeInsets.only(bottom: index == 0 ? 10 : 0),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          color: AppColors.formFieldColor
+                                                      ),
+                                                    ),
+                                                  );
+                                                })
+                                            ),
+                                          );
                                           return const Expanded(child: Center(
                                             child: CupertinoActivityIndicator(color: Colors.black),
                                           ));
@@ -267,8 +289,40 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                   builder: (context, value, _){
                                     switch (value.beneficiairesList.status) {
                                       case Status.LOADING:
-                                        return const Center(
-                                          child: CupertinoActivityIndicator(color: Colors.black,),
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                          child: ListView.builder(
+                                            itemCount: 5,
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (context, index) {
+                                              return Shimmer.fromColors(
+                                                baseColor: Colors.white.withOpacity(.3),
+                                                highlightColor: Colors.white,
+                                                child: Container(
+                                                  width: 60,
+                                                  margin: EdgeInsets.only(
+                                                    left: index == 0 ? 20 : 0,
+                                                    right: index == 4 ? 20 : 10,
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        width: 60,
+                                                        height: 60,
+                                                        decoration: BoxDecoration(
+                                                          color: AppColors.buttonBlackColor,
+                                                          borderRadius: BorderRadius.circular(40),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 8,),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         );
                                       case Status.ERROR:
                                         return Center(

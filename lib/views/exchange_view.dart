@@ -1,3 +1,4 @@
+import 'package:country_icons/country_icons.dart';
 import 'package:mardona/common/common_widgets.dart';
 import 'package:mardona/data/response/status.dart';
 import 'package:mardona/model/pays_destination_model.dart';
@@ -88,6 +89,7 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
       child: Scaffold(
         appBar: widget.public == true ? CommonAppBar(
           context: context,
+          title: "Estimation",
           backArrow: true,
         ) : PreferredSize(
           preferredSize: const Size.fromHeight(0.0),
@@ -108,11 +110,10 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.public != true)
               const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: AppTexts.titleText("Taux de change")
+                child: pageTitleStyle(context: context, title: 'Constatez vous-même le taux de change très bas :)')
               ),
               Expanded(
                 child: ChangeNotifierProvider<DemandesViewModel>(
@@ -142,342 +143,313 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    AppTexts.bodyText("Source"),
+                                    AppTexts.cardDescription("Source"),
                                     const SizedBox(height: 5,),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 80,
-                                          child: InkWell(
-                                            onTap: () {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Container(
-                                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          AppTexts.smallText("Séléctionnez le pays d'expédition"),
-                                                          const SizedBox(height: 20,),
-                                                          Expanded(child: ListView.builder(
-                                                            itemCount: paysActifsList.length,
-                                                            itemBuilder: (context, index) {
-                                                              PaysModel current = PaysModel.fromJson(paysActifsList[index]);
-                                                              return InkWell(
-                                                                  onTap: () {
-                                                                    setState(() {
-                                                                      selectedFrom = current;
-                                                                      selectedTo = null;
-                                                                      changed = true;
-                                                                      _amountController.clear();
-                                                                    });
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  child: Container(
-                                                                    padding: const EdgeInsets.all(10),
-                                                                    decoration: BoxDecoration(
-                                                                        border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                                                    ),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Image.asset("packages/country_icons/icons/flags/png/${current.codePays}.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                                        const SizedBox(width: 20,),
-                                                                        Text(current.paysNom.toString(), style: const TextStyle(
-                                                                            fontSize: 14,
-                                                                            fontWeight: FontWeight.bold
-                                                                        ),)
-                                                                      ],
-                                                                    ),
-                                                                  )
-                                                              );
+                                    InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    AppTexts.titleText("Séléctionnez le pays d'expédition"),
+                                                    const SizedBox(height: 20,),
+                                                    Expanded(child: ListView.builder(
+                                                      itemCount: paysActifsList.length,
+                                                      itemBuilder: (context, index) {
+                                                        PaysModel current = PaysModel.fromJson(paysActifsList[index]);
+                                                        return InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                selectedFrom = current;
+                                                                selectedTo = null;
+                                                                changed = true;
+                                                                _amountController.clear();
+                                                              });
+                                                              Navigator.pop(context);
                                                             },
-                                                          ))
-                                                        ],
-                                                      )
-                                                  );
-                                                },
-                                                shape: const RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.vertical(
-                                                    top: Radius.circular(20),
-                                                  ),
-                                                ),
+                                                            child: Container(
+                                                              padding: const EdgeInsets.all(10),
+                                                              decoration: BoxDecoration(
+                                                                  border: Border(bottom: BorderSide(width: 1, color: AppColors.borderGreyColor))
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Image.asset("assets/flag.png"),
+                                                                  const SizedBox(width: 20,),
+                                                                  AppTexts.bodyText(current.paysNom.toString(), color: AppColors.textGrey)
+                                                                ],
+                                                              ),
+                                                            )
+                                                        );
+                                                      },
+                                                    ))
+                                                  ],
+                                                )
+                                            );
+                                          },
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Image.asset("assets/flag.png"),
+                                            const SizedBox(width: 10,),
+                                            if (selectedFrom.idPays != null)
+                                            AppTexts.bodyText(selectedFrom.paysNom!),
+                                            const Expanded(child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Icon(CupertinoIcons.chevron_down, size: 20,),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15,),
+                                    AppTexts.cardDescription("Destination"),
+                                    const SizedBox(height: 5,),
+                                    InkWell(
+                                      onTap: () {
+                                        DemandesViewModel newDemandeViewModel = DemandesViewModel();
+                                        if (paysDestinationModel == null || changed) {
+                                          newDemandeViewModel.allPaysDestinations(
+                                              {"id": selectedFrom.idPays.toString()}, context);
+                                        }
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            if (paysDestinationModel == null || changed) {
+                                              changed = false;
+                                              return ChangeNotifierProvider<DemandesViewModel>(
+                                                  create: (BuildContext context) => newDemandeViewModel,
+                                                  child: Consumer<DemandesViewModel>(
+                                                      builder: (context, value, _){
+                                                        switch (value.allPaysDestination.status) {
+                                                          case Status.LOADING:
+                                                            return Container(
+                                                              height: MediaQuery.of(context).size.height - 200,
+                                                              child: const Center(
+                                                                child: CupertinoActivityIndicator(color: Colors.black,),
+                                                              ),
+                                                            );
+                                                          case Status.ERROR:
+                                                            return Center(
+                                                              child: Text(value.allPaysDestination.message.toString()),
+                                                            );
+                                                          default:
+                                                            paysDestinationModel = value.allPaysDestination.data!;
+                                                            return Container(
+                                                                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    AppTexts.titleText("Séléctionnez le pays de destination"),
+                                                                    const SizedBox(height: 20,),
+                                                                    Expanded(child: ListView.builder(
+                                                                      itemCount: paysDestinationModel!.destination!.length,
+                                                                      itemBuilder: (context, index) {
+                                                                        return InkWell(
+                                                                            onTap: () {
+                                                                              Navigator.pop(context);
+                                                                              setState(() {
+                                                                                selectedTo = paysDestinationModel!.destination![index];
+                                                                                _amountController.clear();
+                                                                              });
+                                                                            },
+                                                                            child: Container(
+                                                                              padding: const EdgeInsets.all(10),
+                                                                              decoration: BoxDecoration(
+                                                                                border: Border(bottom: BorderSide(width: 1, color: AppColors.borderGreyColor))
+                                                                              ),
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  Image.asset("assets/flag.png"),
+                                                                                  const SizedBox(width: 20,),
+                                                                                  AppTexts.bodyText(paysDestinationModel!.destination![index].paysDest.toString(), color: AppColors.textGrey)
+                                                                                ],
+                                                                              ),
+                                                                            )
+                                                                        );
+                                                                      },
+                                                                    ))
+                                                                  ],
+                                                                )
+                                                            );
+                                                        }
+                                                      })
                                               );
-                                            },
-                                            child: Container(
-                                              width: double.infinity, height: 50,
-                                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.formFieldColor,
-                                                  borderRadius: BorderRadius.circular(5)
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Image.asset("packages/country_icons/icons/flags/png/${selectedFrom.codePays}.png", width: 30, height: 20, fit: BoxFit.contain),
-                                                  const SizedBox(width: 10,),
-                                                  const Expanded(child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Icon(CupertinoIcons.chevron_down, size: 20,),
-                                                  ))
-                                                ],
-                                              ),
+                                            }
+                                            return Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    AppTexts.titleText("Séléctionnez le pays de destination"),
+                                                    const SizedBox(height: 20,),
+                                                    Expanded(child: ListView.builder(
+                                                      itemCount: paysDestinationModel!.destination!.length,
+                                                      itemBuilder: (context, index) {
+                                                        return InkWell(
+                                                            onTap: () {
+                                                              Navigator.pop(context);
+                                                              setState(() {
+                                                                selectedTo = paysDestinationModel!.destination![index];
+                                                                _amountController.clear();
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              padding: const EdgeInsets.all(10),
+                                                              decoration: BoxDecoration(
+                                                                  border: Border(bottom: BorderSide(width: 1, color: AppColors.borderGreyColor))
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Image.asset("assets/flag.png"),
+                                                                  const SizedBox(width: 20,),
+                                                                  AppTexts.bodyText(paysDestinationModel!.destination![index].paysDest.toString(), color: AppColors.textGrey)
+                                                                ],
+                                                              ),
+                                                            )
+                                                        );
+                                                      },
+                                                    ))
+                                                  ],
+                                                )
+                                            );
+                                          },
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20),
                                             ),
                                           ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
-                                        const SizedBox(width: 10,),
-                                        SizedBox(
-                                          width: (MediaQuery.of(context).size.width - 40 - 10 - 80),
-                                          child: CustomFormField(
-                                            label: "0.00",
-                                            hint: "0.00",
-                                            controller: _amountController,
-                                            suffixIcon: Padding(
-                                              padding: const EdgeInsets.only(right: 20),
-                                              child: AppTexts.bodyText(selectedFrom.paysCodemonnaie.toString(), bold: true),
-                                            ),
-                                            type: TextInputType.number,
-                                            onChanged: (value) {
-                                              if (selectedTo != null) {
-                                                if (value != "") {
-                                                  insert(double.parse(value) * double.parse(selectedTo!.rate.toString()), _toController);
-                                                  if (selectedTo != null) {
-                                                    if (value != "" && selectedTo!.taux_transfert != null) {
-                                                      setState(() {
-                                                        tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
-                                                      });
-                                                    }
-                                                  }
-                                                } else {
-                                                  insert("", _toController);
-                                                }
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Image.asset("assets/flag.png"),
+                                            const SizedBox(width: 10,),
+                                            if (selectedTo != null)
+                                              AppTexts.bodyText(selectedTo!.paysDest!),
+                                            const Expanded(child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Icon(CupertinoIcons.chevron_down, size: 20,),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                      ),
+                                    const SizedBox(height: 15,),
+                                    AppTexts.cardDescription("Vous envoyez :", color: Colors.black, bold: true),
+                                    const SizedBox(height: 5,),
+                                    CustomFormField(
+                                      label: "0.00",
+                                      hint: "0.00",
+                                      controller: _amountController,
+                                      suffixIcon: Padding(
+                                        padding: const EdgeInsets.only(right: 20),
+                                        child: AppTexts.bodyText(selectedFrom.paysCodemonnaie.toString(), bold: true),
+                                      ),
+                                      type: TextInputType.number,
+                                      onChanged: (value) {
+                                        if (selectedTo != null) {
+                                          if (value != "") {
+                                            insert(double.parse(value) * double.parse(selectedTo!.rate.toString()), _toController);
+                                            if (selectedTo != null) {
+                                              if (value != "" && selectedTo!.taux_transfert != null) {
+                                                setState(() {
+                                                  tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
+                                                });
                                               }
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                            }
+                                          } else {
+                                            insert("", _toController);
+                                          }
+                                        }
+                                      },
                                     ),
                                     const SizedBox(height: 10,),
-                                    AppTexts.bodyText("Destination"),
+                                    AppTexts.cardDescription("Elle réçoit :", color: Colors.black, bold: true),
                                     const SizedBox(height: 5,),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 80,
-                                          child: InkWell(
-                                            onTap: () {
-                                              DemandesViewModel newDemandeViewModel = DemandesViewModel();
-                                              if (paysDestinationModel == null || changed) {
-                                                newDemandeViewModel.allPaysDestinations(
-                                                    {"id": selectedFrom.idPays.toString()}, context);
-                                              }
-                                              showModalBottomSheet(
-                                                context: context,
-                                                builder: (context) {
-                                                  if (paysDestinationModel == null || changed) {
-                                                    changed = false;
-                                                    return ChangeNotifierProvider<DemandesViewModel>(
-                                                        create: (BuildContext context) => newDemandeViewModel,
-                                                        child: Consumer<DemandesViewModel>(
-                                                            builder: (context, value, _){
-                                                              switch (value.allPaysDestination.status) {
-                                                                case Status.LOADING:
-                                                                  return Container(
-                                                                    height: MediaQuery.of(context).size.height - 200,
-                                                                    child: const Center(
-                                                                      child: CupertinoActivityIndicator(color: Colors.black,),
-                                                                    ),
-                                                                  );
-                                                                case Status.ERROR:
-                                                                  return Center(
-                                                                    child: Text(value.allPaysDestination.message.toString()),
-                                                                  );
-                                                                default:
-                                                                  paysDestinationModel = value.allPaysDestination.data!;
-                                                                  return Container(
-                                                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                                                                      child: Column(
-                                                                        mainAxisSize: MainAxisSize.min,
-                                                                        children: [
-                                                                          const Text("Séléctionnez le pays de destination", style: TextStyle(
-                                                                              fontWeight: FontWeight.w600
-                                                                          ),),
-                                                                          const SizedBox(height: 20,),
-                                                                          Expanded(child: ListView.builder(
-                                                                            itemCount: paysDestinationModel!.destination!.length,
-                                                                            itemBuilder: (context, index) {
-                                                                              return InkWell(
-                                                                                  onTap: () {
-                                                                                    Navigator.pop(context);
-                                                                                    setState(() {
-                                                                                      selectedTo = paysDestinationModel!.destination![index];
-                                                                                      _amountController.clear();
-                                                                                    });
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    padding: const EdgeInsets.all(10),
-                                                                                    decoration: BoxDecoration(
-                                                                                        border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                                                                    ),
-                                                                                    child: Row(
-                                                                                      children: [
-                                                                                        Image.asset("packages/country_icons/icons/flags/png/${paysDestinationModel!.destination![index].codePaysDest}.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                                                        const SizedBox(width: 20,),
-                                                                                        Text(paysDestinationModel!.destination![index].paysDest.toString(), style: const TextStyle(
-                                                                                            fontSize: 14,
-                                                                                            fontWeight: FontWeight.bold
-                                                                                        ),)
-                                                                                      ],
-                                                                                    ),
-                                                                                  )
-                                                                              );
-                                                                            },
-                                                                          ))
-                                                                        ],
-                                                                      )
-                                                                  );
-                                                              }
-                                                            })
-                                                    );
-                                                  }
-                                                  return Container(
-                                                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          const Text("Séléctionnez le pays de destination", style: TextStyle(
-                                                              fontWeight: FontWeight.w600
-                                                          ),),
-                                                          const SizedBox(height: 20,),
-                                                          Expanded(child: ListView.builder(
-                                                            itemCount: paysDestinationModel!.destination!.length,
-                                                            itemBuilder: (context, index) {
-                                                              return InkWell(
-                                                                  onTap: () {
-                                                                    setState(() {
-                                                                      selectedTo = paysDestinationModel!.destination![index];
-                                                                      _amountController.clear();
-                                                                    });
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  child: Container(
-                                                                    padding: const EdgeInsets.all(10),
-                                                                    decoration: BoxDecoration(
-                                                                        border: Border.all(width: 1, color: Colors.black.withOpacity(.1))
-                                                                    ),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Image.asset("packages/country_icons/icons/flags/png/${paysDestinationModel!.destination![index].codePaysDest}.png", width: 20, height: 20, fit: BoxFit.contain,),
-                                                                        const SizedBox(width: 20,),
-                                                                        Text(paysDestinationModel!.destination![index].paysDest.toString(), style: const TextStyle(
-                                                                            fontSize: 14,
-                                                                            fontWeight: FontWeight.bold
-                                                                        ),)
-                                                                      ],
-                                                                    ),
-                                                                  )
-                                                              );
-                                                            },
-                                                          ))
-                                                        ],
-                                                      )
-                                                  );
-                                                },
-                                                shape: const RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.vertical(
-                                                    top: Radius.circular(20),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Container(
-                                              width: double.infinity, height: 50,
-                                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.formFieldColor,
-                                                  borderRadius: BorderRadius.circular(5)
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: selectedTo == null ? MainAxisAlignment.center : MainAxisAlignment.start,
-                                                children: [
-                                                  if (selectedTo != null)
-                                                    Image.asset("packages/country_icons/icons/flags/png/${selectedTo!.codePaysDest}.png", width: 30, height: 20, fit: BoxFit.contain),
-                                                  if (selectedTo == null)
-                                                    AppTexts.cardTitle("_"),
-                                                  const SizedBox(width: 10,),
-                                                  const Expanded(child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Icon(CupertinoIcons.chevron_down, size: 20,),
-                                                  ))
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ),
-                                        const SizedBox(width: 10,),
-                                        SizedBox(
-                                          width: (MediaQuery.of(context).size.width - 40 - 10 - 80),
-                                          child: CustomFormField(
-                                            label: "0.00",
-                                            hint: "0.00",
-                                            controller: _toController,
-                                            type: TextInputType.number,
-                                            suffixIcon: Padding(
-                                              padding: const EdgeInsets.only(right: 20),
-                                              child: AppTexts.bodyText(selectedFrom.paysCodemonnaie.toString(), bold: true),
-                                            ),
-                                            onChanged: (value) {
-                                              if (selectedTo != null) {
-                                                if (value != "") {
-                                                  insert(double.parse(value) /
-                                                      double.parse(selectedTo!.rate.toString()), _amountController);
-                                                  setState(() {
-                                                    tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
-                                                  });
-                                                } else {
-                                                  insert("", _amountController);
-                                                }
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                    CustomFormField(
+                                      label: "0.00",
+                                      hint: "0.00",
+                                      controller: _toController,
+                                      type: TextInputType.number,
+                                      suffixIcon: Padding(
+                                        padding: const EdgeInsets.only(right: 20),
+                                        child: AppTexts.bodyText(selectedFrom.paysCodemonnaie.toString(), bold: true),
+                                      ),
+                                      onChanged: (value) {
+                                        if (selectedTo != null) {
+                                          if (value != "") {
+                                            insert(double.parse(value) /
+                                                double.parse(selectedTo!.rate.toString()), _amountController);
+                                            setState(() {
+                                              tauxTransfert = double.parse(_amountController.text) * (selectedTo!.taux_transfert! / 100);
+                                            });
+                                          } else {
+                                            insert("", _amountController);
+                                          }
+                                        }
+                                      },
                                     ),
                                     const SizedBox(height: 20,),
                                     if (selectedFrom.idPays != null && selectedTo != null)
                                     commonRoundedContainer(
+                                      removePaddingAll: true,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                                            child: AppTexts.titleText("1 ${selectedFrom.paysCodemonnaie} = ${selectedTo!.rate} ${selectedTo!.paysCodeMonnaieDest}"),
-                                          ),
-                                          commonDivider(),
-                                          Padding(
                                             padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                AppTexts.smallText("Frais de transfert"),
-                                                AppTexts.titleText(paysDestinationModel == null ? "0.0" : "$tauxTransfert ${paysDestinationModel!.paysCodeMonnaieSrce}"),
+                                                AppTexts.cardTitle("Frais de transfert"),
+                                                AppTexts.cardTitle(paysDestinationModel == null ? "0.0" : "${tauxTransfert.toStringAsFixed(2)} ${paysDestinationModel!.paysCodeMonnaieSrce}"),
                                               ],
                                             ),
-                                          )
+                                          ),
+                                          const SizedBox(height: 10,),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                                            child: AppTexts.titleText("1 ${selectedFrom.paysCodemonnaie} = ${selectedTo!.rate} ${selectedTo!.paysCodeMonnaieDest}", color: AppColors.accentColor),
+                                          ),
                                         ],
                                       ),
                                       removePaddingH: true
                                     ),
                                     const SizedBox(height: 20,),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.info_outline_rounded, color: AppColors.primaryColor, size: 20,),
-                                        const SizedBox(width: 10,),
-                                        Flexible(child: AppTexts.descriptionText("Tansfert ChapChap utilise son propre taux de change")),
-                                      ],
-                                    )
+                                    // Row(
+                                    //   children: [
+                                    //     Icon(Icons.info_outline_rounded, color: AppColors.primaryColor, size: 20,),
+                                    //     const SizedBox(width: 10,),
+                                    //     Flexible(child: AppTexts.descriptionText("  utilise son propre taux de change")),
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                               ),

@@ -11,6 +11,7 @@ class AppUrl {
   static var phoneVerificationEndPoint = '$baseUrl/confirm_number_phone';
   static var confirmContact = '$baseUrl/confirm_contact';
   static var myDemandesEndPoint = '$baseUrl/my_demandes';
+  static var motifsEndPoint = '$baseUrl/motif_transfert';
   static var myDemandesWPEndPoint = '$baseUrl/demande_with_problem';
   static var myDestinationsEndPoint = '$baseUrl/my_destinations';
   static var allPaysDestinationsEndPoint = '$baseUrl/pays_destination';

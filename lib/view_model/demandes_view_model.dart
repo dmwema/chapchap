@@ -18,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DemandesViewModel with ChangeNotifier{
   final _repository = DemandesRepository();
   ApiResponse<dynamic> demandeList = ApiResponse.loading();
+  ApiResponse<dynamic> motifsList = ApiResponse.loading();
   ApiResponse<dynamic> promoList = ApiResponse.loading();
   ApiResponse<dynamic> beneficiairesList = ApiResponse.loading();
   ApiResponse<dynamic> paysActifList = ApiResponse.loading();
@@ -38,6 +39,11 @@ class DemandesViewModel with ChangeNotifier{
 
   setDemandeList (ApiResponse<dynamic> response) {
     demandeList = response;
+    notifyListeners();
+  }
+
+  setMotifsList (ApiResponse<dynamic> response) {
+    motifsList = response;
     notifyListeners();
   }
 
@@ -90,6 +96,25 @@ class DemandesViewModel with ChangeNotifier{
         if (value['error'] != true) {
           returnValue = value['nombre_probleme'] ?? int.parse(value['nombre_probleme'].toString());
           setDemandeList(ApiResponse.completed(value["data"]));
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+        }
+      }
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return returnValue;
+  }
+
+  Future<int?> motifs(BuildContext context) async {
+    setLoading(true);
+    int? returnValue;
+    await _repository.motifs(context: context).then((value) {
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          setMotifsList(ApiResponse.completed(value["data"]));
         } else {
           Utils.flushBarErrorMessage(value['message'], context);
         }
@@ -308,8 +333,9 @@ class DemandesViewModel with ChangeNotifier{
   Future<dynamic> transfert(dynamic data, BuildContext context, {bool transfer = true, bool wallet = false}) async {
     dynamic returnValue;
     setLoading(true);
-    await _repository.transfert(data, context: context, wallet: wallet).then((value) async {
+      await _repository.transfert(data, context: context, wallet: wallet).then((value) async {
       if (value!=null){
+        print(value);
         setLoading(false);
         if (value['error'] != true) {
           final SharedPreferences sp = await SharedPreferences.getInstance();

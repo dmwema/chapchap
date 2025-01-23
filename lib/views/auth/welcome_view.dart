@@ -109,12 +109,12 @@ class _WelcomeViewState extends State<WelcomeView> {
                       RoundedButton(
                         title: "Faire une estimation",
                         onPress: () {
-                          // Navigator.push(
-                          //   context,
-                          //   CupertinoPageRoute(
-                          //     builder: (context) => ExchangeView(public: true,),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ExchangeView(public: true,),
+                            ),
+                          );
                         }
                       ),
                       const SizedBox(height: 10,),

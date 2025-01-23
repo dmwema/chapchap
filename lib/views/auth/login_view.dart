@@ -82,147 +82,145 @@ class _LoginViewState extends State<LoginView> {
       appBar: CommonAppBar(context: context, title: "Connexion", backArrow: true, backClick: () {
         Navigator.pushNamedAndRemoveUntil(context, RoutesName.welcomeView, (route) => false);
       },),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20,),
-                  pageTitleStyle(title: "Connectez-vous à votre compte !", context: context),
-                  // AppTexts.descriptionText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
-                  const SizedBox(height: 20,),
-                  CustomFormField(
-                    label: "Adresse électronique",
-                    hint: "Adresse électronique",
-                    controller: _emailController,
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 10,),
-                  CustomFormField(
-                    label: "Mot de passe",
-                    hint: "Mot de passe",
-                    controller: _passwordController,
-                    maxLines: 1,
-                    obscurePassword: obscurePassword.value,
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          obscurePassword.value = !obscurePassword.value;
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: obscurePassword.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
-                      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20,),
+                pageTitleStyle(title: "Connectez-vous à votre compte !", context: context),
+                // AppTexts.descriptionText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
+                const SizedBox(height: 20,),
+                CustomFormField(
+                  label: "Adresse électronique",
+                  hint: "Adresse électronique",
+                  controller: _emailController,
+                  maxLines: 1,
+                ),
+                const SizedBox(height: 10,),
+                CustomFormField(
+                  label: "Mot de passe",
+                  hint: "Mot de passe",
+                  controller: _passwordController,
+                  maxLines: 1,
+                  obscurePassword: obscurePassword.value,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        obscurePassword.value = !obscurePassword.value;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: obscurePassword.value ? const Icon(Icons.visibility_off, size: 20,) : const Icon(Icons.visibility, size: 20,),
                     ),
                   ),
-                  TextButton(onPressed: () {
-                    Navigator.pushNamed(context, RoutesName.passwordReset);
-                  }, child: AppTexts.buttonText("Mot de passe oublié ?")
-                  ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RoundedButton(
-                          title: "Se connecter",
-                          loading: authViewModel.loading,
-                          onPress: () async {
-                            if (!authViewModel.loading) {
-                              if (_emailController.text.isEmpty) {
-                                Utils.flushBarErrorMessage("Vous devez entrer l'adresse mail", context);
-                              } else if (_passwordController.text.isEmpty) {
-                                Utils.flushBarErrorMessage("Vous devez entrer le mot de passe", context);
-                              } else if (_passwordController.text.length < 6) {
-                                Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
-                              } else {
-                                String? token;
-                                if (notificationsService != null) {
-                                  try {
-                                    notificationsService!.isTokenRefresh();
-                                    await notificationsService!.getDeviceToken().then((value) {
-                                      token = value;
-                                    });
-                                  } catch (e) {
-                                    print("-------------Error----------------");
-                                    print(e.toString());
-                                  }
+                ),
+                TextButton(onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.passwordReset);
+                }, child: AppTexts.buttonText("Mot de passe oublié ?")
+                ),
+                const SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RoundedButton(
+                        title: "Se connecter",
+                        loading: authViewModel.loading,
+                        onPress: () async {
+                          if (!authViewModel.loading) {
+                            if (_emailController.text.isEmpty) {
+                              Utils.flushBarErrorMessage("Vous devez entrer l'adresse mail", context);
+                            } else if (_passwordController.text.isEmpty) {
+                              Utils.flushBarErrorMessage("Vous devez entrer le mot de passe", context);
+                            } else if (_passwordController.text.length < 6) {
+                              Utils.flushBarErrorMessage("Le mot de passe ne doit pas avoir moins de 6 carractères", context);
+                            } else {
+                              String? token;
+                              if (notificationsService != null) {
+                                try {
+                                  notificationsService!.isTokenRefresh();
+                                  await notificationsService!.getDeviceToken().then((value) {
+                                    token = value;
+                                  });
+                                } catch (e) {
+                                  print("-------------Error----------------");
+                                  print(e.toString());
                                 }
-
-                                Map data = {
-                                  'username': _emailController.text.toString(),
-                                  'password': _passwordController.text.toString(),
-                                  'phoneId': token
-                                };
-                                authViewModel.loginApi(data, context, false);
                               }
+
+                              Map data = {
+                                'username': _emailController.text.toString(),
+                                'password': _passwordController.text.toString(),
+                                'phoneId': token
+                              };
+                              authViewModel.loginApi(data, context, false);
                             }
                           }
-                        ),
+                        }
                       ),
-                      if (user != null && user!.emailClient != null && user!.emailClient != "null" && user!.emailClient != "" && user!.password != null && user!.password != "null" && user!.password != "" && localAuthEnabled)
-                      InkWell(
-                        onTap: () async {
-                          await LocalAuthService.canAuthenticate().then((value2) async {
-                            if (value2) {
-                              if (!loadingBio) {
-                                setState(() {
-                                  loadingBio = true;
-                                });
-                                await LocalAuthService.authenticate().then((value3) async {
-                                  if (value3) {
-                                    String? token;
-                                    if (notificationsService != null) {
-                                      try {
-                                        notificationsService!.isTokenRefresh();
-                                        await notificationsService!.getDeviceToken().then((value) {
-                                          token = value;
-                                        });
-                                      } catch (e) {
-                                        print(e.toString());
-                                      }
+                    ),
+                    if (user != null && user!.emailClient != null && user!.emailClient != "null" && user!.emailClient != "" && user!.password != null && user!.password != "null" && user!.password != "" && localAuthEnabled)
+                    InkWell(
+                      onTap: () async {
+                        await LocalAuthService.canAuthenticate().then((value2) async {
+                          if (value2) {
+                            if (!loadingBio) {
+                              setState(() {
+                                loadingBio = true;
+                              });
+                              await LocalAuthService.authenticate().then((value3) async {
+                                if (value3) {
+                                  String? token;
+                                  if (notificationsService != null) {
+                                    try {
+                                      notificationsService!.isTokenRefresh();
+                                      await notificationsService!.getDeviceToken().then((value) {
+                                        token = value;
+                                      });
+                                    } catch (e) {
+                                      print(e.toString());
                                     }
-                                    Map dataAuth = {
-                                      'username': user!.emailClient.toString(),
-                                      'password': user!.password.toString(),
-                                      'phoneId': token
-                                    };
-
-                                    await authViewModel.loginApi(dataAuth, context, true);
-                                    setState(() {
-                                      loadingBio = false;
-                                    });
                                   }
-                                });
-                              }
+                                  Map dataAuth = {
+                                    'username': user!.emailClient.toString(),
+                                    'password': user!.password.toString(),
+                                    'phoneId': token
+                                  };
+
+                                  await authViewModel.loginApi(dataAuth, context, true);
+                                  setState(() {
+                                    loadingBio = false;
+                                  });
+                                }
+                              });
                             }
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: AppColors.primaryColor
-                          ),
-                          margin: const EdgeInsets.only(left: 10),
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                          child: Platform.isAndroid ?
-                            const Icon(Icons.fingerprint_rounded, size: 30, color: Colors.white,) :
-                            Image.asset('assets/fid.png', width: 30,)
-                          ,
+                          }
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: AppColors.primaryColor
                         ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                        margin: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        child: Platform.isAndroid ?
+                          const Icon(Icons.fingerprint_rounded, size: 30, color: Colors.white,) :
+                          Image.asset('assets/fid.png', width: 30,)
+                        ,
+                      ),
+                    )
+                  ],
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

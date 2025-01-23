@@ -16,6 +16,15 @@ class DemandesRepository {
     }
   }
 
+  Future<dynamic> motifs ({required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.motifsEndPoint , {}, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> myDemandesWP (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.myDemandesWPEndPoint , data, context: context, auth: true);
