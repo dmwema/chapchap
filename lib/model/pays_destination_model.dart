@@ -68,7 +68,7 @@ class Destination {
 
   Destination.fromJson(Map<String, dynamic> json) {
     idSens = json['id_sens'];
-    rate = json['rate'];
+    rate = json['rate'] == null ? null : double.parse(json['rate'].toString());
     taux_transfert = json['taux_transfert'] == null ? null : double.parse(json['taux_transfert'].toString());
     idPaysDest = json['id_pays_dest'];
     codePaysDest = json['code_pays_dest'];
