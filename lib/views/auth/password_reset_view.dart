@@ -1,8 +1,11 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
 
 class PasswordResetView extends StatefulWidget {
@@ -20,26 +23,25 @@ class _PasswordResetViewState extends State<PasswordResetView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+        Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+      },),
       body: SafeArea(
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonAppBar(
-                  context: context,
-                  backArrow: true
-                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Réinitialiser le mot de passe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                      AppTexts.titleText("Réinitialiser le mot de passe"),
                       const SizedBox(height: 10,),
-                      const Text("Veuillez saisir l’adresse e-mail associé à votre profil. Nous enverrons un message contenant un code de réinitialisation du mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black45), textAlign: TextAlign.left,),
+                      AppTexts.smallText("Veuillez saisir l’adresse e-mail associé à votre profil. Nous enverrons un message contenant un code de réinitialisation du mot de passe"),
                       const SizedBox(height: 20,),
                       CustomFormField(
                         label: "Adresse électronique",

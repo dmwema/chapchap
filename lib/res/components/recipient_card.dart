@@ -1,4 +1,4 @@
-import 'package:chapchap/res/app_colors.dart';
+import 'package:mardona/res/app_colors.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 

@@ -1,16 +1,17 @@
 import 'dart:io';
 
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/services/local_auth_service.dart';
-import 'package:chapchap/view_model/services/notifications_service.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
+import 'package:mardona/view_model/services/local_auth_service.dart';
+import 'package:mardona/view_model/services/notifications_service.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,23 +78,23 @@ class _LoginViewState extends State<LoginView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(context: context, title: "Connexion", backArrow: true, backClick: () {
+        Navigator.pushNamedAndRemoveUntil(context, RoutesName.welcomeView, (route) => false);
+      },),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Connectez-vous", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
-                  const SizedBox(height: 10,),
-                  const Text("Connectez-vous avec votre adresse électronique et votre mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black45), textAlign: TextAlign.left,),
+                  const SizedBox(height: 20,),
+                  pageTitleStyle(title: "Connectez-vous à votre compte !", context: context),
+                  // AppTexts.descriptionText("Connectez-vous avec votre adresse électronique et votre mot de passe"),
                   const SizedBox(height: 20,),
                   CustomFormField(
                     label: "Adresse électronique",
@@ -122,9 +123,9 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   TextButton(onPressed: () {
                     Navigator.pushNamed(context, RoutesName.passwordReset);
-                  }, child: const Text("Mot de passe oublié ?", style: TextStyle(
-                    color: Colors.black
-                  ),)),
+                  }, child: AppTexts.buttonText("Mot de passe oublié ?")
+                  ),
+                  const SizedBox(height: 10,),
                   Row(
                     children: [
                       Expanded(
@@ -148,6 +149,7 @@ class _LoginViewState extends State<LoginView> {
                                       token = value;
                                     });
                                   } catch (e) {
+                                    print("-------------Error----------------");
                                     print(e.toString());
                                   }
                                 }
@@ -219,24 +221,6 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
-            const SizedBox(height: 20,),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.register);
-              },
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text("Vous êtes nouveau ?", style: TextStyle(color: Colors.black),),
-                    const SizedBox(height: 3,),
-                    Text("Inscrivez-vous", style: TextStyle(color: AppColors.primaryColor),),
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

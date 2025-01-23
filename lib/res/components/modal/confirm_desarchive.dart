@@ -1,8 +1,8 @@
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/model/user_model.dart';
+import 'package:mardona/model/user_model.dart';
 
 class ConfirmDesrchive extends StatelessWidget {
   final int recipientId;

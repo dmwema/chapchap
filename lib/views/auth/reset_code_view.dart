@@ -1,6 +1,6 @@
-import 'package:chapchap/res/components/auth_container.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:mardona/res/components/auth_container.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

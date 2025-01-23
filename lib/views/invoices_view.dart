@@ -1,10 +1,11 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/invoice_card.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/demande_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/custom_appbar.dart';
+import 'package:mardona/res/components/invoice_card.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,22 +28,18 @@ class _InvoicesViewState extends State<InvoicesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(context: context, backArrow: true,),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-              backArrow: true
-            ),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Mes factures", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                  AppTexts.titleText("Mes factures"),
                 ],
               ),
             ),
@@ -75,25 +72,8 @@ class _InvoicesViewState extends State<InvoicesView> {
                               return SizedBox(
                                 height: MediaQuery.of(context).size.width,
                                 child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Image.asset("assets/empty.png", width: 180,),
-                                      const SizedBox(height: 20,),
-                                      SizedBox(
-                                        width: 230,
-                                        child: Text(
-                                          "Aucune facture trouvée",
-                                          style: TextStyle(
-                                            color: Colors.black.withOpacity(.4),
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 40,),
-                                    ],
+                                  child: AppTexts.descriptionText(
+                                    "Aucune facture trouvée"
                                   ),
                                 ),
                               );

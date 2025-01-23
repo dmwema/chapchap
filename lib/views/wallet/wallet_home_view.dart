@@ -1,22 +1,27 @@
 
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
-import 'package:chapchap/view_model/wallet_view_model.dart';
-import 'package:chapchap/views/wallet/create_wallet_view.dart';
-import 'package:chapchap/views/wallet/recharge_history_view.dart';
-import 'package:chapchap/views/wallet/recharge_view.dart';
-import 'package:chapchap/views/wallet/transfers_history_view.dart';
+import 'dart:ui';
+
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/hide_keyboard_container.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
+import 'package:mardona/view_model/user_view_model.dart';
+import 'package:mardona/view_model/wallet_view_model.dart';
+import 'package:mardona/views/wallet/create_wallet_view.dart';
+import 'package:mardona/views/wallet/recharge_history_view.dart';
+import 'package:mardona/views/wallet/recharge_view.dart';
+import 'package:mardona/views/wallet/transfers_history_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +40,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
   List recharges = [];
   List transfers = [];
 
-  DemandesViewModel  demandesViewModel = DemandesViewModel();
+  DemandesViewModel demandesViewModel = DemandesViewModel();
   WalletViewModel walletViewModel = WalletViewModel();
 
   AuthViewModel authViewModel = AuthViewModel();
@@ -45,6 +50,7 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
   int currentWalletPage = 0;
 
   var currentWallet;
+  bool _isHidden = true;
 
   int historyPage = 1;
 
@@ -52,6 +58,12 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
 
   bool loadEmail = false;
   bool loadSMS = false;
+
+  void _toggleVisibility() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
 
   void getHistory (int type, String currency, WalletViewModel viewModel) {
     if (type == 1) {
@@ -89,29 +101,24 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
     final box = context.findRenderObject() as RenderBox?;
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
+        appBar: CommonAppBar(
+          context: context,
+          navWhite: true,
+          backArrow: true,
+          backClick: () {
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+          },
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true,
-                   textColor: Colors.white,
-                  appBarColor: AppColors.primaryColor,
-                  backClick: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      RoutesName.home,
-                          (route) => false,
-                    );
-                  }
-              ),
               Container(
                 color: AppColors.primaryColor,
                 width: double.infinity,
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,15 +126,11 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Portefeuilles", style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),),
+                        AppTexts.titleText("Portefeuilles", color: Colors.white),
                         Row(
                           children: [
                             IconButton(onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateWalletView()));
+                              Navigator.of(context).push(CupertinoPageRoute(builder: (context) => CreateWalletView()));
                             }, icon: const Icon(CupertinoIcons.add_circled_solid, color: Colors.white, size: 20,)),
                           ],
                         )
@@ -143,19 +146,15 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.black26
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                         child: ChangeNotifierProvider<WalletViewModel>(
                             create: (BuildContext context) => walletViewModel,
                             child: Consumer<WalletViewModel>(
                                 builder: (context, value, _){
                                   switch (value.walletsList.status) {
                                     case Status.LOADING:
-                                      return const Center(
-                                        child: Text("-", style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 12
-                                        ),),
+                                      return Center(
+                                        child: AppTexts.titleText("-", color: Colors.white)
                                       );
                                     case Status.ERROR:
                                       return Center(
@@ -167,35 +166,18 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                         currentWallet = wallets[0];
                                         WalletViewModel viewModel = WalletViewModel();
                                       }
-                                      if (wallets.isEmpty && user != null) {
-                                        return InkWell(
-                                          onTap: () async {
+                                      if (user != null && wallets.isEmpty) {
+                                        return RoundedButton(
+                                          title: "Creer un wallet",
+                                          loading: walletViewModel.loading,
+                                          onPress: () async {
                                             await walletViewModel.createWallet({
                                               "currency": Utils.countryMoneyCode[user!.codePays]
                                             }, context);
                                           },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: Colors.white
-                                            ),
-                                            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                if (!walletViewModel.loading)
-                                                Icon(Icons.add, color: AppColors.primaryColor,),
-                                                if (walletViewModel.loading)
-                                                  CupertinoActivityIndicator(color: AppColors.primaryColor, radius: 8,),
-                                                const SizedBox(width: 10,),
-                                                Text("Creer un wallet", style: TextStyle(
-                                                  color: AppColors.primaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold
-                                                ),)
-                                              ],
-                                            ),
-                                          ),
+                                          color: Colors.white,
+                                          textColor: AppColors.buttonBlackColor,
+                                          icon: Icons.add,
                                         );
                                       }
                                       return Stack(
@@ -215,11 +197,33 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
                                                 itemBuilder: (BuildContext context, int index) {
                                                   var wallet = wallets[index];
                                                   return Center(
-                                                    child: Text(wallet['balance'] + " " + wallet['currency'], style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.w900,
-                                                        color: Colors.white
-                                                    ),),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: _toggleVisibility,
+                                                          child: AnimatedContainer(
+                                                            duration: const Duration(milliseconds: 300),
+                                                            margin: const EdgeInsets.only(right: 3),
+                                                            padding: const EdgeInsets.all(5),
+                                                            child: Center(
+                                                              child: Icon(
+                                                                _isHidden
+                                                                    ? CupertinoIcons.eye_fill
+                                                                    : CupertinoIcons.eye_slash_fill,
+                                                                color: Colors.white,
+                                                                size: 20,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ImageFiltered(
+                                                            imageFilter: ImageFilter.blur(sigmaX: _isHidden ? 5 : 0, sigmaY: _isHidden ? 5 : 0),
+                                                            child: AppTexts.titleText("${wallet['balance']} ${wallet['currency']}", color: Colors.white),
+                                                        ),
+
+                                                      ],
+                                                    )
                                                   );
                                                 },
                                               ),
@@ -273,272 +277,91 @@ class _WalletHomeViewSatet extends State<WalletHomeView> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor)
-                    )
-                ),
-                child: const Row(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Operations", style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black
-                        ),),
-                        Text("Gérez votre Wallet de manière efficace", style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black
-                        ),),
+                        AppTexts.bodyText("Operations", bold: true),
+                        const SizedBox(height: 5,),
+                        AppTexts.descriptionText("Gérez votre Wallet de manière efficace")
                       ],
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
                   children: [
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
+                    RoundedButton(
+                        title: "Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                        icon: Icons.wallet,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => RechargeView(wallet: wallets[currentWalletPage])));
+                          }
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.wallet, color: Colors.black, size: 15,),
-                            const SizedBox(width: 8,),
-                            Text(
-                              "Recharger le compte ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.send);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.send_to_mobile, color: Colors.black, size: 15,),
-                            SizedBox(width: 8,),
-                            Text(
-                              "Faire un transfert d’argent",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    const Divider(),
-                    const Text(
-                      "Historiques",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 11
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
+                    RoundedButton(
+                        title: "Nouveau transfert",
+                        icon: CupertinoIcons.arrow_up_right,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          Navigator.pushNamed(context, RoutesName.send);
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.history, color: Colors.black, size: 15,),
-                            const SizedBox(width: 8,),
-                            Text(
-                              "Historique de rechargement ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
+                    ),
+
+                    if (user != null && user!.codePays == "ca")
+                      const SizedBox(height: 10,),
+                    if (user != null && user!.codePays == "ca")
+                      RoundedButton(
+                          title: "informations de recharge",
+                          icon: Icons.payment,
+                          color: AppColors.buttonBlackColor,
+                          textColor: Colors.white,
+                          onPress: () {
+                            Navigator.pushNamed(context, RoutesName.interac);
+                          }
                       ),
+                    const SizedBox(height: 20,),
+                    Divider(color: AppColors.formFieldColor,),
+                    const SizedBox(height: 10,),
+                    AppTexts.cardTitle("Historiques"),
+                    const SizedBox(height: 20,),
+                    RoundedButton(
+                        title: "Mes rechargements ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : ''}",
+                        icon: Icons.history,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => RechargeHistoryView(wallet: wallets[currentWalletPage])));
+                          }
+                        }
                     ),
                     const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        if (wallets.isNotEmpty) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
+                    RoundedButton(
+                        title: "Mes transferts ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
+                        icon: Icons.history,
+                        color: AppColors.buttonBlackColor,
+                        textColor: Colors.white,
+                        onPress: () {
+                          if (wallets.isNotEmpty) {
+                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TransfersHistoryView(  wallet: wallets[currentWalletPage])));
+                          }
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.history, color: Colors.black, size: 15,),
-                            const SizedBox(width: 8,),
-                            Text(
-                              "Historique de transfert ${wallets.isNotEmpty ? wallets[currentWalletPage]['currency'] : '' }",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
                     ),
                   ],
                 ),
-              )
-              // Expanded(
-              //   child: PageView.builder(
-              //     controller: historyPageController,
-              //     itemCount: 2,
-              //     itemBuilder: (context, index) {
-              //       if (index == 0) {
-              //         return ChangeNotifierProvider<WalletViewModel>(
-              //             create: (BuildContext context) => walletViewModel,
-              //             child: Consumer<WalletViewModel>(
-              //                 builder: (context, value, _){
-              //                   switch (value.rechargesList.status) {
-              //                     case Status.LOADING:
-              //                       return const Expanded(child: Center(
-              //                         child: CupertinoActivityIndicator(color: Colors.black),
-              //                       ));
-              //                     case Status.ERROR:
-              //                       return Center(
-              //                         child: Text(index == 0 ? value.rechargesList.message.toString(): value.transfersList.message.toString()),
-              //                       );
-              //                     default:
-              //                       print(index);
-              //                       print("cccccc");
-              //                       recharges = value.rechargesList.data!;
-              //                       if (recharges.isEmpty) {
-              //                         return const Padding(padding: EdgeInsets.all(20),
-              //                           child: Center(child: Text("Aucune opération récente.")),
-              //                         );
-              //                       }
-              //                       return Container();
-              //                   // return Expanded(child: ListView.builder(
-              //                   //   itemCount: value.demandeList.data!.length,
-              //                   //   itemBuilder: (context, index) {
-              //                   //
-              //                   //   },
-              //                   // ));
-              //                   }
-              //                 })
-              //         );
-              //       } else if (index == 1) {
-              //         return ChangeNotifierProvider<WalletViewModel>(
-              //             create: (BuildContext context) => walletViewModel,
-              //             child: Consumer<WalletViewModel>(
-              //                 builder: (context, value, _){
-              //                   switch (value.transfersList.status) {
-              //                     case Status.LOADING:
-              //                       return const Expanded(child: Center(
-              //                         child: CupertinoActivityIndicator(color: Colors.black),
-              //                       ));
-              //                     case Status.ERROR:
-              //                       return Center(
-              //                         child: Text(index == 0 ? value.rechargesList.message.toString(): value.transfersList.message.toString()),
-              //                       );
-              //                     default:
-              //                       print("complete");
-              //                       transfers = value.transfersList.data!;
-              //                       if (transfers.isEmpty) {
-              //                         return const Padding(padding: EdgeInsets.all(20),
-              //                           child: Center(child: Text("Aucune opération récente.")),
-              //                         );
-              //                       }
-              //                       return Container();
-              //                   // return Expanded(child: ListView.builder(
-              //                   //   itemCount: value.demandeList.data!.length,
-              //                   //   itemBuilder: (context, index) {
-              //                   //
-              //                   //   },
-              //                   // ));
-              //                   }
-              //                 })
-              //         );
-              //       }
-              //       return Container();
-              //     }
-              //   ),
-              // ),
-              // if (wallets.isEmpty)
-              // const Padding(
-              //   padding: EdgeInsets.all(20.0),
-              //   child: Text("Vous n'avez encore aucun wallet"),
-              // )
+              ),
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 
-import 'package:chapchap/data/response/status.dart';
+import 'package:mardona/data/response/status.dart';
 
 class ApiResponse<T> {
   Status? status;

@@ -1,42 +1,43 @@
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/views/account_view.dart';
-import 'package:chapchap/views/auth/local_auth_view.dart';
-import 'package:chapchap/views/auth/login_view.dart';
-import 'package:chapchap/views/auth/new_password.dart';
-import 'package:chapchap/views/auth/password_reset_view.dart';
-import 'package:chapchap/views/auth/phone_verification_view.dart';
-import 'package:chapchap/views/auth/register_view.dart';
-import 'package:chapchap/views/auth/reset_code_view.dart';
-import 'package:chapchap/views/auth/splash_view.dart';
-import 'package:chapchap/views/auth/update_phone_view.dart';
-import 'package:chapchap/views/confirm_cancel_view.dart';
-import 'package:chapchap/views/contact_view.dart';
-import 'package:chapchap/views/coupon_view.dart';
-import 'package:chapchap/views/drc/drc_payment_view.dart';
-import 'package:chapchap/views/exchange_view.dart';
-import 'package:chapchap/views/history_view.dart';
-import 'package:chapchap/views/history_w_problemes.dart';
-import 'package:chapchap/views/home_view.dart';
-import 'package:chapchap/views/interac_view.dart';
-import 'package:chapchap/views/invoice_detail_view.dart';
-import 'package:chapchap/views/invoices_view.dart';
-import 'package:chapchap/views/new_beneficiaire.dart';
-import 'package:chapchap/views/auth/on_boarding_view.dart';
-import 'package:chapchap/views/pay_view.dart';
-import 'package:chapchap/views/pin/create_pin_view.dart';
-import 'package:chapchap/views/pin/reset_pin_view.dart';
-import 'package:chapchap/views/pin/up_pin_view.dart';
-import 'package:chapchap/views/profile_view.dart';
-import 'package:chapchap/views/recipient_archive.dart';
-import 'package:chapchap/views/recipients_view.dart';
-import 'package:chapchap/views/recompense_view.dart';
-import 'package:chapchap/views/send_success_view.dart';
-import 'package:chapchap/views/send_view.dart';
-import 'package:chapchap/views/wallet/recharge_history_view.dart';
-import 'package:chapchap/views/wallet/recharge_view.dart';
-import 'package:chapchap/views/wallet/tansfert_comptes_view.dart';
-import 'package:chapchap/views/wallet/wallet_home_view.dart';
-import 'package:chapchap/views/wallet/wallet_presentation_view.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/views/account_view.dart';
+import 'package:mardona/views/auth/local_auth_view.dart';
+import 'package:mardona/views/auth/login_view.dart';
+import 'package:mardona/views/auth/new_password.dart';
+import 'package:mardona/views/auth/password_reset_view.dart';
+import 'package:mardona/views/auth/phone_verification_view.dart';
+import 'package:mardona/views/auth/register_view.dart';
+import 'package:mardona/views/auth/reset_code_view.dart';
+import 'package:mardona/views/auth/splash_view.dart';
+import 'package:mardona/views/auth/update_phone_view.dart';
+import 'package:mardona/views/auth/welcome_view.dart';
+import 'package:mardona/views/confirm_cancel_view.dart';
+import 'package:mardona/views/contact_view.dart';
+import 'package:mardona/views/coupon_view.dart';
+import 'package:mardona/views/drc/drc_payment_view.dart';
+import 'package:mardona/views/exchange_view.dart';
+import 'package:mardona/views/history_view.dart';
+import 'package:mardona/views/history_w_problemes.dart';
+import 'package:mardona/views/home_view.dart';
+import 'package:mardona/views/interac_view.dart';
+import 'package:mardona/views/invoice_detail_view.dart';
+import 'package:mardona/views/invoices_view.dart';
+import 'package:mardona/views/new_beneficiaire.dart';
+import 'package:mardona/views/auth/on_boarding_view.dart';
+import 'package:mardona/views/pay_view.dart';
+import 'package:mardona/views/pin/create_pin_view.dart';
+import 'package:mardona/views/pin/reset_pin_view.dart';
+import 'package:mardona/views/pin/up_pin_view.dart';
+import 'package:mardona/views/profile_view.dart';
+import 'package:mardona/views/recipient_archive.dart';
+import 'package:mardona/views/recipients_view.dart';
+import 'package:mardona/views/recompense_view.dart';
+import 'package:mardona/views/send_success_view.dart';
+import 'package:mardona/views/send_view.dart';
+import 'package:mardona/views/wallet/recharge_history_view.dart';
+import 'package:mardona/views/wallet/recharge_view.dart';
+import 'package:mardona/views/wallet/tansfert_comptes_view.dart';
+import 'package:mardona/views/wallet/wallet_home_view.dart';
+import 'package:mardona/views/wallet/wallet_presentation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -86,6 +87,12 @@ class Routes {
       case RoutesName.exchange:
         return PageTransition(
             child: ExchangeView(),
+            type: PageTransitionType.fade,
+            settings: settings
+        );
+      case RoutesName.welcomeView:
+        return PageTransition(
+            child: WelcomeView(),
             type: PageTransitionType.fade,
             settings: settings
         );
@@ -161,12 +168,12 @@ class Routes {
             type: PageTransitionType.rightToLeft,
             settings: settings
         );
-      case RoutesName.pay:
-        return PageTransition(
-            child: PayView(),
-            type: PageTransitionType.rightToLeft,
-            settings: settings
-        );
+      // case RoutesName.pay:
+      //   return PageTransition(
+      //       child: PayView(),
+      //       type: PageTransitionType.rightToLeft,
+      //       settings: settings
+      //   );
       case RoutesName.drcPayment:
         return PageTransition(
             child: DRCPaymentView(data: settings.arguments as Map,),
@@ -253,7 +260,7 @@ class Routes {
       case RoutesName.walletHome:
         return PageTransition(
             child: const WalletHomeView(),
-            type: PageTransitionType.bottomToTop,
+            type: PageTransitionType.rightToLeft,
             settings: settings
         );
 

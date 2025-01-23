@@ -1,8 +1,7 @@
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/slider.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/views/auth/login_view.dart';
-import 'package:chapchap/views/auth/welcome_view.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/slider.dart';
+import 'package:mardona/views/auth/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
   int _currentPage = 0;
   bool is_last = false;
 
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
 
   final List<Widget> _pages = [
     SliderPage(title: "Envoyez de l'argent en un clin d'œil", description: "Avec Chapchap, vous pouvez transférer de l'argent à vos proches en quelques clics. Plus besoin de faire la queue dans une agence bancaire ou de passer par des intermédiaires coûteux.", image: "assets/1.gif"),
@@ -95,10 +94,7 @@ class OnBoardingViewState extends State<OnBoardingView> {
                                     (route) => false,
                               );
                             },
-                            child: const Text("Sauter", style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600
-                            ),)
+                            child: AppTexts.buttonText("Sauter")
                         ),
                         InkWell(
                           onTap: () {
@@ -120,21 +116,15 @@ class OnBoardingViewState extends State<OnBoardingView> {
                           },
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
-                            height: 50,
+                            height: 45,
                             alignment: Alignment.center,
-                            width: _currentPage != (_pages.length - 1) ? 50 : 160,
+                            width: _currentPage != (_pages.length - 1) ? 50 : 140,
                             decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: (_currentPage == (_pages.length - 1)?
-                            const Text(
-                              "Commencer", style:
-                            TextStyle(
-                                color: Colors.white,
-                                fontSize: 20
-                            ),
-                            ):
+                            AppTexts.buttonText("Commencer", color: Colors.white):
                             const Icon(Icons.chevron_right_rounded, size: 30, color: Colors.white,)
                             )
                             ,),

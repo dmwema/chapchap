@@ -1,4 +1,4 @@
-import 'package:chapchap/res/app_colors.dart';
+import 'package:mardona/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {

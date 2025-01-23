@@ -1,11 +1,12 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/auth_container.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/auth_container.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,29 +31,25 @@ class _NewPasswordState extends State<NewPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+          Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+        },),
         body: SafeArea(
           child: Stack(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonAppBar(
-                      context: context,
-                      backArrow: true,
-                    backClick: () {
-                        Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
-                    }
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Réinitialiser le mot de passe", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+                        AppTexts.titleText("Réinitialiser le mot de passe"),
                         const SizedBox(height: 10,),
-                        const Text("Veuillez saisir le code réçu et créez un nouveau mot de passe", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black45), textAlign: TextAlign.left,),
+                        AppTexts.smallText("Veuillez saisir le code réçu et créez un nouveau mot de passe"),
                         const SizedBox(height: 10,),
                         InkWell(
                           onTap: () async {
@@ -77,7 +74,7 @@ class _NewPasswordState extends State<NewPassword> {
                               const CupertinoActivityIndicator(radius: 8,),
                               if (resending)
                               const SizedBox(width: 7,),
-                              Text("Renvoyer le code ?", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColors.primaryColor), textAlign: TextAlign.left,),
+                              AppTexts.bodyText("Renvoyer le code ?", bold: true),
                             ],
                           )
                         ),
@@ -88,6 +85,8 @@ class _NewPasswordState extends State<NewPassword> {
                           controller: _codeController,
                           maxLines: 1,
                         ),
+                        const SizedBox(height: 20,),
+                        AppTexts.smallText("Créez un nouveau mot de passe"),
                         const SizedBox(height: 10,),
                         CustomFormField(
                           label: "Mot de passe",

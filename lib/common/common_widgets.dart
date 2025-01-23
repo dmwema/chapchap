@@ -1,8 +1,10 @@
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,265 +22,261 @@ var maskFormatterPhoneNumber = MaskTextInputFormatter(
     type: MaskAutoCompletionType.lazy
 );
 
-Widget commonAppBar({
-  BuildContext? context,
-  bool? backArrow = false,
-  bool showHelp = true,
-  bool? theme = false,
-  bool canClose = false,
-  Color? appBarColor,
-  Color? textColor,
-  GestureTapCallback? editClick,
-  GestureTapCallback? backClick,
-  GestureTapCallback? themeClick,
-}) {
-  return Container(
-    height: MediaQuery.of(context!).viewInsets.top + MediaQuery.of(context!).padding.top + 20,
-    width: double.infinity,
-    color: appBarColor ?? AppColors.formFieldColor,
-    padding: const EdgeInsets.only(
-      bottom: 10,
-      left: 20,
-      top: 10,
-      right: 20,
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(top: 0),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Visibility(
-            visible: backArrow!,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: backClick ?? () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: textColor ?? Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: showHelp,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(),
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Besoin d’aide ?", style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 22
-                                ),),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("tel://+15143701555");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Appelez-nous", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Envoyez-nous un e-mail", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                                GestureDetector(
-                                  onTap: () {
-                                    _openUrl("https://wa.me/+14384929679");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Image.asset("assets/wa.png", width: 30,),
-                                      const SizedBox(width: 10,),
-                                      const Text("Message whatsapp", style: TextStyle(
-                                          fontSize: 17
-                                      ),)
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                        );
-                      },
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: 55,
-                    padding: const EdgeInsets.all(2),
-                    child: Text("Aide ?", style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: textColor ?? Colors.black
-                    ), textAlign: TextAlign.end,),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: canClose,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 25,
-                    padding: const EdgeInsets.all(2),
-                    child: const Icon(CupertinoIcons.xmark, size: 20,),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 Widget commonBottomAppBar({
   required BuildContext context,
   required int active
 }) {
   return BottomAppBar(
-    elevation: 0,
-    shape: const CircularNotchedRectangle(),
-    child:  SizedBox(
-      height: 66,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              if (active != 0) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.home,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 0 ? CupertinoIcons.square_grid_2x2_fill : CupertinoIcons.square_grid_2x2, color: active == 0 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                Text("Accueil", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 0 ? AppColors.primaryColor : null,),)
-              ],
+      elevation: 2,
+      height: 70,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      color: AppColors.bgColor,
+      child:  Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30)
+        ),
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (active != 0) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.home,
+                        (route) => false,
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    border: active == 0 ? Border(top: BorderSide(color: AppColors.accentColor, width: 4)) : null
+                ),
+                width: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(active == 0 ? "assets/icons/home_color.png" : "assets/icons/home.png"),
+                    const SizedBox(height: 5), // The dummy child
+                    Text("Accueil", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 0 ? AppColors.accentColor : AppColors.textGrey,),)
+                  ],
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (active != 1) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.recipeints,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 1 ? CupertinoIcons.person_2_fill : CupertinoIcons.person_2, color: active == 1 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 1 ? AppColors.primaryColor : null,),)
-              ],
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.send);
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(100)
+                  ),
+                  height: 70.0,
+                  width: 70.0,
+                  child: Center(child: Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: Image.asset("assets/icons/send.png", width: 35,),
+                  ))
+              ),
             ),
-          ),
-          const SizedBox(width: 40),
-          GestureDetector(
-            onTap: () {
-              if (active != 2) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.exchange,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 2 ? CupertinoIcons.arrow_right_arrow_left_circle_fill : CupertinoIcons.arrow_right_arrow_left_circle, color: active == 2 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5), // The dummy child
-                Text("Change", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 2 ? AppColors.primaryColor : null,),)
-              ],
+            GestureDetector(
+              onTap: () {
+                if (active != 1) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutesName.recipeints,
+                        (route) => false,
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    border: active == 1 ? Border(top: BorderSide(color: AppColors.accentColor, width: 4)) : null
+                ),
+                width: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(active == 1 ? "assets/icons/recipient_color.png" : "assets/icons/recipient.png",),
+                    const SizedBox(height: 5), // The dummy child
+                    Text("Bénéficiaires", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 1 ? AppColors.accentColor : AppColors.textGrey,),)
+                  ],
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (active != 3) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RoutesName.accountView,
-                      (route) => false,
-                );
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(active == 3 ? CupertinoIcons.person_fill : CupertinoIcons.person, color: active == 3 ? AppColors.primaryColor : null,),
-                const SizedBox(height: 5),
-                Text("Mon compte", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 10, color: active == 3 ? AppColors.primaryColor : null,),)
-              ],
-            ),
-          ),
-        ],
-      ),
-    )
+          ],
+        ),
+      )
   );
+}
+
+Widget commonDivider() {
+  return Divider(
+    color: AppColors.bgColor,
+    height: 4,
+    thickness: 4,
+  );
+}
+
+Widget commonRoundedContainer({
+  required Widget child,
+  bool removePaddingH = false,
+  bool removePaddingV = false,
+  bool removePaddingAll = false,
+  bool gradient = false,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
+      gradient: gradient ? LinearGradient(
+        colors: [AppColors.primaryColor, const Color(0xFF6D2121)],
+        stops: const [0, 1],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      ) : null,
+      boxShadow: [Utils.customShadow()],
+    ),
+    padding: removePaddingAll ? null : (removePaddingH ? const EdgeInsets.symmetric(vertical: 20) : (removePaddingV ? const EdgeInsets.symmetric(horizontal: 20) : const EdgeInsets.all(20))),
+    child: child,
+  );
+}
+
+Widget pageTitleStyle ({required String title, required BuildContext context}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * 0.75,
+    child: Flexible(
+      child: Text(title, style: TextStyle(
+          fontSize: 23,
+          color: AppColors.accentColor,
+          fontWeight: FontWeight.w500
+      ),),
+    ),
+  );
+}
+
+class CommonAppBar extends StatelessWidget implements PreferredSize {
+  final BuildContext context;
+  bool backArrow;
+  bool empty;
+  bool? navWhite;
+  String? title;
+  GestureTapCallback? backClick;
+
+  CommonAppBar({
+    super.key,
+    required this.context,
+    this.backArrow = false,
+    this.empty = false,
+    this.title,
+    this.navWhite,
+    this.backClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: empty ? AppColors.bgColor : AppColors.primaryColor,
+      title: empty ? Image.asset("assets/logo.png", width: 120,) : (title == null ? null : AppTexts.titleText(title!, color: Colors.white, thin: true)),
+      centerTitle: empty,
+      leading: backArrow == true ? Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Image.asset("assets/back-icon.png")
+        ),
+      ): Container(),
+      // actions: [
+      //   if (showHelp)
+      //     InkWell(
+      //       onTap: () {
+      //         showModalBottomSheet(
+      //           context: context,
+      //           builder: (context) {
+      //             return Container(
+      //                 padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      //                 color: AppColors.bgColor,
+      //                 child: Column(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   children: [
+      //                     AppTexts.titleText("Besoin d’aide ?"),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("tel://+15143701555");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Icon(CupertinoIcons.phone_fill, color: AppColors.primaryColor, size: 30,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Appelez-nous")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("mailto:support@chapchap.ca?subject=Contact&body=");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Icon(CupertinoIcons.mail_solid, color: AppColors.primaryColor, size: 25,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Envoyez-nous un e-mail")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                     const SizedBox(height: 20,),
+      //                     GestureDetector(
+      //                       onTap: () {
+      //                         _openUrl("https://wa.me/+14384929679");
+      //                       },
+      //                       child: Row(
+      //                         children: [
+      //                           Image.asset("assets/wa.png", width: 30,),
+      //                           const SizedBox(width: 10,),
+      //                           AppTexts.descriptionText("Message whatsapp")
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 )
+      //             );
+      //           },
+      //           shape: const RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.vertical(
+      //               top: Radius.circular(20),
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //       child: Padding(
+      //         padding: const EdgeInsets.only(right: 20),
+      //         child: AppTexts.smallText("Aide ?", color: color == true ? Colors.white : AppColors.textGrey),
+      //       ),
+      //     )
+      // ],
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryColor,
+        systemNavigationBarColor: AppColors.bgColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+        statusBarBrightness:Brightness.dark, // For iOS (dark icons)
+        systemNavigationBarDividerColor: AppColors.bgColor
+      ),
+    );
+  }
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget get child => throw UnimplementedError();
 }

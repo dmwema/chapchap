@@ -1,15 +1,16 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/pays_model.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/view_model/services/image_picker_service.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/pays_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
+import 'package:mardona/view_model/services/image_picker_service.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -82,18 +83,15 @@ class _ProfileViewState extends State<ProfileView> {
       });
     });
     return Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Informations personnelles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), textAlign: TextAlign.left,),
+                child: AppTexts.titleText("Informations personnelles"),
               ),
               const SizedBox(height: 20,),
               Expanded(
@@ -133,36 +131,20 @@ class _ProfileViewState extends State<ProfileView> {
                                                 onTap: () {
                                                   showModalBottomSheet(
                                                       isScrollControlled: true,
+                                                      backgroundColor: AppColors.bgColor,
                                                       context: context,
                                                       builder: (context) =>  Container(
-                                                        padding: const EdgeInsets.all(30),
+                                                        padding: const EdgeInsets.all(20),
                                                         child: Column(
                                                           mainAxisSize: MainAxisSize.min,
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
-                                                            const SizedBox(height: 20,),
-                                                            InkWell(
-                                                              child: Container(
-                                                                width: MediaQuery.of(context).size.width,
-                                                                padding: const EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 10),
-                                                                decoration: BoxDecoration(
-                                                                  color: Colors.black,
-                                                                  borderRadius: BorderRadius.circular(5),
-                                                                ),
-                                                                child:  const Row(
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  children: [
-                                                                    Icon(CupertinoIcons.photo_on_rectangle, color: Colors.white,),
-                                                                    SizedBox(width: 10,),
-                                                                    Text("Importer de la gallerie", style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontSize: 14
-                                                                    ),)
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              onTap: () {
+                                                            RoundedButton(
+                                                              title: "Importer de la gallerie",
+                                                              icon: CupertinoIcons.photo_on_rectangle,
+                                                              color: AppColors.buttonBlackColor,
+                                                              textColor: Colors.white,
+                                                              onPress: () {
                                                                 ImagePickerService(
                                                                     source: ImageSource.gallery
                                                                 ).piclImage().then((value) {
@@ -173,29 +155,13 @@ class _ProfileViewState extends State<ProfileView> {
                                                                 });
                                                               },
                                                             ),
-                                                            const SizedBox(height: 10,),
-                                                            InkWell(
-                                                              child: Container(
-                                                                width: MediaQuery.of(context).size.width,
-                                                                padding: const EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 10),
-                                                                decoration: BoxDecoration(
-                                                                  color: Colors.black,
-                                                                  borderRadius: BorderRadius.circular(5),
-                                                                ),
-                                                                child: const Row(
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  children: [
-                                                                    Icon(Icons.camera_alt, color: Colors.white,),
-                                                                    SizedBox(width: 10,),
-                                                                    Text("Prendre une photo", style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontSize: 14
-                                                                    ),)
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              onTap: () async {
+                                                            const SizedBox(height: 5,),
+                                                            RoundedButton(
+                                                              title: "Prendre une photo",
+                                                              icon: Icons.camera_alt,
+                                                              color: AppColors.buttonBlackColor,
+                                                              textColor: Colors.white,
+                                                              onPress: () async {
                                                                 await ImagePickerService(source: ImageSource.camera).piclImage().then((value) {
                                                                   if (value != null) {
                                                                     authViewModel.userImage({"img": value}, context: context);
@@ -209,7 +175,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                       ),
                                                       shape: const RoundedRectangleBorder(
                                                           borderRadius: BorderRadius.vertical(
-                                                            top: Radius.circular(30),
+                                                            top: Radius.circular(0),
                                                           )
                                                       )
                                                   );
@@ -248,10 +214,7 @@ class _ProfileViewState extends State<ProfileView> {
                                               ),
                                             const SizedBox(height: 10,),
                                             if (user != null)
-                                              Text("${user!.prenomClient} ${user!.nomClient}", style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 18
-                                              ),),
+                                              AppTexts.bodyText("${user!.prenomClient} ${user!.nomClient}", bold: true),
                                             const SizedBox(height: 10,),
                                             Container(
                                               decoration: BoxDecoration(
@@ -259,16 +222,12 @@ class _ProfileViewState extends State<ProfileView> {
                                                 borderRadius: BorderRadius.circular(20),
                                               ),
                                               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                              child: const Row(
+                                              child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Icon(CupertinoIcons.check_mark_circled, color: Colors.white, size: 16,),
-                                                  SizedBox(width: 5,),
-                                                  Text("Compte actif", style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 12
-                                                  ),)
+                                                  const Icon(CupertinoIcons.check_mark_circled, color: Colors.white, size: 16,),
+                                                  const SizedBox(width: 5,),
+                                                  AppTexts.smallText("Compte actif", color: Colors.white)
                                                 ],
                                               ),
                                             ),
@@ -280,6 +239,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       onTap: () {
                                         showModalBottomSheet(
                                           context: context,
+                                          backgroundColor: AppColors.bgColor,
                                           isScrollControlled: true,
                                           builder: (context) {
                                             return Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20),
@@ -290,9 +250,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children:  [
-                                                    const Text("Modifier l'adresse", style: TextStyle(
-                                                        fontWeight: FontWeight.w600
-                                                    ),),
+                                                    AppTexts.titleText("Modifier l'adresse"),
                                                     const SizedBox(height: 20,),
                                                     CustomFormField(
                                                       label: "Adresse",
@@ -326,7 +284,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           },
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20),
+                                              top: Radius.circular(0),
                                             ),
                                           ),
                                         );
@@ -348,11 +306,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                   const Icon(CupertinoIcons.map, size: 15,),
                                                   const SizedBox(width: 15,),
                                                   Flexible(
-                                                    child: Text(user!.adresse != null && user!.adresse != 'null' ? user!.adresse.toString(): "_", style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: Colors.black
-                                                    ),),
+                                                    child: AppTexts.descriptionText(user!.adresse != null && user!.adresse != 'null' ? user!.adresse.toString(): "_"),
                                                   ),
                                                 ],
                                               ),
@@ -368,6 +322,7 @@ class _ProfileViewState extends State<ProfileView> {
                                         showModalBottomSheet(
                                           context: context,
                                           isScrollControlled: true,
+                                          backgroundColor: AppColors.bgColor,
                                           builder: (context) {
                                             return Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20),
                                               child: Container(
@@ -377,9 +332,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children:  [
-                                                    const Text("Modifier le mot de passe", style: TextStyle(
-                                                        fontWeight: FontWeight.w600
-                                                    ),),
+                                                    AppTexts.titleText("Modifier le mot de passe"),
                                                     const SizedBox(height: 20,),
                                                     CustomFormField(
                                                       label: "Mot de passe actuel",
@@ -423,7 +376,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           },
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20),
+                                              top: Radius.circular(0),
                                             ),
                                           ),
                                         );
@@ -439,17 +392,13 @@ class _ProfileViewState extends State<ProfileView> {
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Expanded(
+                                            Expanded(
                                               child: Row(
                                                 children: [
-                                                  Icon(CupertinoIcons.lock, size: 15,),
-                                                  SizedBox(width: 15,),
+                                                  const Icon(CupertinoIcons.lock, size: 15,),
+                                                  const SizedBox(width: 15,),
                                                   Flexible(
-                                                    child: Text("Modifier le mot de passe", style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: Colors.black
-                                                    ),),
+                                                    child: AppTexts.descriptionText("Modifier le mot de passe"),
                                                   ),
                                                 ],
                                               ),
@@ -477,11 +426,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                 const Icon(CupertinoIcons.at, size: 15,),
                                                 const SizedBox(width: 15,),
                                                 Flexible(
-                                                  child: Text(user != null ? user!.emailClient.toString() : "", style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.black
-                                                  ),),
+                                                  child: AppTexts.descriptionText(user != null ? user!.emailClient.toString() : ""),
                                                 ),
                                               ],
                                             ),
@@ -506,11 +451,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                 const Icon(CupertinoIcons.phone, size: 15,),
                                                 const SizedBox(width: 15,),
                                                 Flexible(
-                                                  child: Text(user != null ? user!.telClient.toString() : "", style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.black
-                                                  ),),
+                                                  child: AppTexts.descriptionText(user != null ? user!.telClient.toString() : ""),
                                                 ),
                                               ],
                                             ),

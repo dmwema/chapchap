@@ -1,11 +1,11 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/history_card.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/demande_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/history_card.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,52 +29,50 @@ class _HistoryViewState extends State<HistoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.formFieldColor,
+        backgroundColor: AppColors.bgColor,
+        extendBodyBehindAppBar: false,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment:
             CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 20,),
               Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-                    )
-                ),
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Mon historique", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
-                    const SizedBox(height: 10,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutesName.historyWP);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.black
-                        ),
-                        child: const Text(
-                          "Demandes avec problèmes",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                    ),
+                    AppTexts.titleText("Mon historique"),
                   ],
+                ),
+              ),
+              const SizedBox(height: 10,),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.historyWP);
+                },
+                child: Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.error_outline, size: 20,),
+                            const SizedBox(width: 10,),
+                            AppTexts.smallText("Demandes avec problème")
+                          ],
+                        ),
+                        // Text("(3)", style: TextStyle(
+                        //     fontWeight: FontWeight.bold
+                        // ),)
+                      ],
+                    )
                 ),
               ),
               Expanded(

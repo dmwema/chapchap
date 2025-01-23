@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashService {
@@ -15,7 +17,7 @@ class SplashService {
       if (value.token == 'null' || value.token == '' || value.token == null || value.idClient == null || value.idClient == 'null' || value.idClient == '') {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RoutesName.login,
+          RoutesName.welcomeView,
               (route) => false,
         );
       } else {

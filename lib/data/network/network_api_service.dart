@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chapchap/utils/utils.dart';
+import 'package:mardona/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:chapchap/data/app_exceptions.dart';
-import 'package:chapchap/data/network/base_api_services.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/data/app_exceptions.dart';
+import 'package:mardona/data/network/base_api_services.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 
 class NetworkApiService extends BaseApiServices {
   Future<UserModel> getUserData () => UserViewModel().getUser();
@@ -175,13 +175,19 @@ class NetworkApiService extends BaseApiServices {
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
-        throw BadRequestException(response.body.toString());
+        String message = response.body.toString();
+        try {
+          message = jsonDecode(response.body)['message'];
+        } catch (e) {
+          print(e.toString());
+        }
+        throw BadRequestException(message);
       case 404:
         throw UnauthorisedException(response.body.toString());
       case 401:
-        if (ModalRoute.of(context)?.settings.name != RoutesName.login) {
+        if (ModalRoute.of(context)?.settings.name != RoutesName.welcomeView && ModalRoute.of(context)?.settings.name != RoutesName.login) {
           Utils.flushBarErrorMessage("Vous devez vous connecter", context);
-          Navigator.pushNamed(context, RoutesName.login);
+          Navigator.pushNamed(context, RoutesName.welcomeView);
         }
         throw UnauthorisedException("Non autorisé");
       default:

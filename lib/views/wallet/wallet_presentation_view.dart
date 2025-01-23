@@ -1,12 +1,16 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/pin_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/pin_view_model.dart';
+import 'package:mardona/views/pin/create_pin_view.dart';
+import 'package:mardona/views/wallet/wallet_home_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 
 class WalletPresentationView extends StatefulWidget {
   const WalletPresentationView({Key? key}) : super(key: key);
@@ -32,24 +36,17 @@ class _ContactViewState extends State<WalletPresentationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(
+        context: context,
+        backArrow: true,
+      ),
       body: SafeArea(
         child: Stack(
           children: [
           Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-                context: context,
-                backArrow: true,
-                backClick: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutesName.home,
-                        (route) => false,
-                  );
-                }
-            ),
             const SizedBox(height: 10,),
             Expanded(
               child: SingleChildScrollView(
@@ -61,24 +58,22 @@ class _ContactViewState extends State<WalletPresentationView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 30,),
-                        Image.asset('assets/wallet.gif', width: MediaQuery.of(context).size.width * 0.6,),
+                        Container(
+                          width: 250, height: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/wallet.gif'),
+                              fit: BoxFit.cover
+                            )
+                          ),
+                        ),
                         const SizedBox(height: 20,),
-                        const Text("Bienvenue dans votre", style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.black87,
-                        ), textAlign: TextAlign.center,),
+                        AppTexts.cardTitle("Bienvenue dans votre"),
                         const SizedBox(height: 5,),
-                        Text("CHAPCHAP WALLET", style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor
-                        ), textAlign: TextAlign.center,),
+                        AppTexts.titleText("Portefeuille ChapChap"),
                         const SizedBox(height: 10,),
-                        const Text("Une nouvelle expérience centrée sur la simplicité et le gain de temps.",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 15
-                          ), textAlign: TextAlign.center,),
+                        AppTexts.descriptionText("Une nouvelle expérience centrée sur la simplicité et le gain de temps."),
                         if (user!.pin != true)
                         const SizedBox(height: 20,),
                         if (user!.pin != true)
@@ -107,16 +102,14 @@ class _ContactViewState extends State<WalletPresentationView> {
                   title: user!.pin == true ? "Commencer" : "Définir un code PIN",
                   onPress: () async {
                     if (user!.pin != true) {
-                      Navigator.pushNamedAndRemoveUntil(
+                      Navigator.pushReplacement(
                         context,
-                        RoutesName.createPin,
-                            (route) => false,
+                        CupertinoPageRoute(builder: (context) => CreatePinView())
                       );
                     } else {
-                      Navigator.pushNamedAndRemoveUntil(
+                      Navigator.pushReplacement(
                         context,
-                        RoutesName.walletHome,
-                            (route) => false,
+                        CupertinoPageRoute(builder: (context) => WalletHomeView())
                       );
                     }
                   }

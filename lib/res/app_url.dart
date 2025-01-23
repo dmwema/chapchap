@@ -1,12 +1,13 @@
 class AppUrl {
-  static var domainName = 'https://app.chapchap.ca';
-  // static var domainName = 'https://sandbox-app.chapchap.ca';
+  static var domainName = 'https://app.mardonatransfert.com';
   static var baseUrl = "$domainName/api";
 
   static var loginEndPoint = '$baseUrl/login';
   static var registerEndPoint = '$baseUrl/register';
   static var changePassword = '$baseUrl/change_password';
   static var passwordReset = '$baseUrl/reset_password';
+  static var deleteAccount = '$baseUrl/close_account';
+  static var updateNotifications = '$baseUrl/update_notification';
   static var phoneVerificationEndPoint = '$baseUrl/confirm_number_phone';
   static var confirmContact = '$baseUrl/confirm_contact';
   static var myDemandesEndPoint = '$baseUrl/my_demandes';
@@ -51,5 +52,12 @@ class AppUrl {
   static var getMyWallets = '$baseUrl/my_wallets';
   static var transactionsHistory = '$baseUrl/historique_transactions_wallets';
   static var rechargesHistory = '$baseUrl/historique_recharge_wallets';
+
+  // POINTS
+  static var getPointsBalance = '$baseUrl/points_balance';
+  static var getPointsRules = '$baseUrl/points_to_cash_rules';
+  static var pointToCashConvert = '$baseUrl/convert';
+  static var pointsTransactionsHistory = '$baseUrl/points_transactions_historique';
+  static var pointsConversionsHistory = '$baseUrl/points_convert_historique';
 
 }

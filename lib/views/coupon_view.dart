@@ -1,15 +1,17 @@
 
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/res/components/custom_appbar.dart';
+import 'package:mardona/view_model/user_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,187 +56,143 @@ class _CouponViewState extends State<CouponView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.formFieldColor,
+      backgroundColor: AppColors.bgColor,
+      appBar: CommonAppBar(context: context, backArrow: true,),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-              backArrow: true
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: AppTexts.titleText("Mes coupons rabais"),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Mes coupons rabais", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 5),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              color: Colors.white,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(CupertinoIcons.gift_fill, color: AppColors.primaryColor, size: 40,),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Rabais de 10\$ !',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(height: 5.0),
-                      const SizedBox(
-                        width: 230,
-                        child: Text(
-                          "Lorsqu'une personne fait son premier transfert avec votre code de parrainage",
-                          style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 11,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+            const SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: commonRoundedContainer(
+                removePaddingH: true,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Code de parrainage',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          const SizedBox(width: 5,),
-                          if (user != null)
-                            Text(
-                              user!.codeParrainage.toString(),
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13.0,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(CupertinoIcons.gift_fill, color: AppColors.primaryColor, size: 40,),
+                              const SizedBox(height: 10),
+                              AppTexts.bodyText(
+                                'Rabais de 10\$ !', bold: true
                               ),
-                            ),
-                          const SizedBox(width: 10,),
-                          if (user != null)
-                            InkWell(
-                              onTap: () {
-                                final box = context.findRenderObject() as RenderBox?;
-                                Share.share(
-                                  "Découvrez Transfert ChapChap! 🎉🎉🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
-                                  sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                                );
-                              },
-                              child: Container(
-                                width: 25,
-                                height: 25,
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.circular(20)
+                              const SizedBox(height: 5.0),
+                              SizedBox(
+                                width: 230,
+                                child: AppTexts.smallText(
+                                  "Lorsqu'une personne fait son premier transfert avec votre code de parrainage"
                                 ),
-                                child: const Center(child: Icon(Icons.share_outlined, size: 13, color: Colors.white,)),
                               ),
-                            )
-                        ],
-                      ),
-                      const Divider(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Url parrainage',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11.0,
-                            ),
+                              Divider(color: AppColors.bgColor,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AppTexts.smallText(
+                                    'Code de parrainage'
+                                  ),
+                                  const SizedBox(width: 5,),
+                                  if (user != null)
+                                    SelectableText(user!.codeParrainage.toString(), style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                    ),),
+                                  const SizedBox(width: 10,),
+                                  if (user != null)
+                                    InkWell(
+                                      onTap: () {
+                                        final box = context.findRenderObject() as RenderBox?;
+                                        Share.share(
+                                          "Découvrez Transfert ChapChap! 🎉🎉🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                                          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 25,
+                                        height: 25,
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.primaryColor,
+                                            borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        child: const Center(child: Icon(Icons.share_outlined, size: 13, color: Colors.white,)),
+                                      ),
+                                    )
+                                ],
+                              ),
+                              Divider(color: AppColors.bgColor,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AppTexts.cardDescription(
+                                    'Url parrainage',
+                                  ),
+                                  const SizedBox(height: 5,),
+                                  if (user != null)
+                                    SelectableText('https://chapchap.ca/signup-${user!.codeParrainage}.html', style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12
+                                    ),),
+                                ],
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 5,),
-                          if (user != null)
-                            Text(
-                              'https://chapchap.ca/signup-${user!.codeParrainage}.html',
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11.0,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
                         ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                ],
+                    ),
+                    const SizedBox(height: 15,),
+                    commonDivider(),
+                    const SizedBox(height: 15,),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AppTexts.bodyText(
+                                "Gains", bold: true
+                              ),
+                              if (user != null)
+                                AppTexts.titleText(
+                                  "${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}", color: AppColors.primaryColor
+                                ),
+                              const SizedBox(height: 5.0),
+                              if (user != null)
+                                SizedBox(
+                                  width: 230,
+                                  child: AppTexts.cardDescription(
+                                    "Vous avez ${user!.soldeParrainage} ${user!.paysMonnaie ?? ''} comme solde de parrainage.",
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 10,),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10,),
-            if (user != null && user!.soldeParrainage != null)
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 5),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              color: Colors.white,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Gains",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 12,
-                        ),
-                      ),
-                      if (user != null)
-                      Text(
-                        "${user!.soldeParrainage} ${user!.paysMonnaie ?? ''}",
-                        style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(height: 5.0),
-                      if (user != null)
-                      SizedBox(
-                        width: 230,
-                        child: Text(
-                          "Vous avez ${user!.soldeParrainage} ${user!.paysMonnaie ?? ''} comme solde de parrainage.",
-                          style: const TextStyle(
-                            color: Colors.black45,
-                            fontSize: 11,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                ],
-              ),
-            ),
             Expanded(
               child: ChangeNotifierProvider<DemandesViewModel>(
                   create: (BuildContext context) => demandesViewModel,
@@ -255,11 +213,8 @@ class _CouponViewState extends State<CouponView> {
                           default:
                             if (value.promoList.data!.length == 0) {
                               return Center(
-                                child: Text(
+                                child: AppTexts.descriptionText(
                                   "Vous n'avez aucun code Promo",
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(.2),
-                                  ),
                                 ),
                               );
                             }
@@ -284,11 +239,11 @@ class _CouponViewState extends State<CouponView> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text("Type : " + value.promoList.data![index]["typeCodePromo"]),
+                                            AppTexts.smallText("Type : ${value.promoList.data![index]["typeCodePromo"]}"),
                                             const SizedBox(height: 5,),
-                                            Text("Code : " + value.promoList.data![index]["codePromo"]),
+                                            AppTexts.smallText("Code : ${value.promoList.data![index]["codePromo"]}"),
                                             const SizedBox(height: 5,),
-                                            Text("Montant : ${value.promoList.data![index]["montantCodePromo"]}"),
+                                            AppTexts.smallText("Montant : ${value.promoList.data![index]["montantCodePromo"]}"),
                                           ],
                                         ),
                                       );

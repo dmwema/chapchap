@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:chapchap/data/response/api_response.dart';
-import 'package:chapchap/repository/wallet_repository.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:mardona/data/response/api_response.dart';
+import 'package:mardona/repository/wallet_repository.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:chapchap/utils/utils.dart';
+import 'package:mardona/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WalletViewModel with ChangeNotifier{

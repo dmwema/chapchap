@@ -1,13 +1,15 @@
-import 'package:chapchap/model/beneficiaire_model.dart';
-import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/confirm_cancel.dart';
-import 'package:chapchap/res/components/modal/change_beneficiaire_modal.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/views/confirm_cancel_view.dart';
-import 'package:chapchap/views/send_view.dart';
+import 'package:mardona/model/beneficiaire_model.dart';
+import 'package:mardona/model/demande_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/confirm_cancel.dart';
+import 'package:mardona/res/components/modal/change_beneficiaire_modal.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
+import 'package:mardona/views/confirm_cancel_view.dart';
+import 'package:mardona/views/send_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -46,182 +48,140 @@ class _HistoryCardState extends State<HistoryCard> {
           builder: (context) {
             return Container(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              color: AppColors.bgColor,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  [
-                  const SizedBox(height: 5,),
-                  if (demande.probleme != null)
+                  const SizedBox(height: 20,),
+                  if (demande.probleme != null && demande.probleme != "")
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: Text(demande.probleme.toString(), style: const TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
-                          ),),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: AppColors.formFieldBorderColor
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                            child: AppTexts.descriptionText(demande.probleme.toString()),
+                          ),
                         ),
                       ],
                     ),
-                  if (demande.probleme != null)
-                  const SizedBox(height: 5,),
+                  if (demande.probleme != null && demande.probleme != "")
+                  const SizedBox(height: 10,),
                   if (demande.progression != null)
-                  Text(demande.progression.toString(),
-                      style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red),
-                  ),),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.formFieldColor
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: AppTexts.smallText(demande.progression.toString(), color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? Colors.orange: Colors.red)),
+                  ),
+                  const SizedBox(height: 20,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("ID Transaction", style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                      ),),
-                      Text("#${demande.idDemande}"),
+                      AppTexts.smallText("ID Transaction"),
+                      AppTexts.bodyText("#${demande.idDemande}", bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Date", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text(demande.date.toString()),
+                      AppTexts.smallText("Date"),
+                      AppTexts.bodyText(demande.date.toString(), bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Montant envoyé", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}"),
+                      AppTexts.smallText("Montant envoyé"),
+                      AppTexts.bodyText("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Montant à recevoir", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text("${demande.montanceDest} ${demande.paysCodeMonnaieDest}"),
+                      AppTexts.smallText("Montant à recevoir"),
+                      AppTexts.bodyText("${demande.montanceDest} ${demande.paysCodeMonnaieDest}", bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Mode de retrait", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text("${demande.modeRetrait}"),
+                      AppTexts.smallText("Mode de retrait"),
+                      AppTexts.bodyText("${demande.modeRetrait}", bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Sens du transfert", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text("${demande.paysSrce} vers ${demande.paysDest}"),
+                      AppTexts.smallText("Sens"),
+                      AppTexts.bodyText("${demande.paysSrce} vers ${demande.paysDest}", bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Bénéficiaire", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text(demande.beneficiaire.toString()),
+                      AppTexts.smallText("Bénéficiaire"),
+                      AppTexts.bodyText(demande.beneficiaire.toString(), bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  Divider(color: AppColors.formFieldColor,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Téléphone", style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text(demande.telBeneficiaire.toString()),
+                      AppTexts.smallText("Téléphone"),
+                      AppTexts.bodyText(demande.telBeneficiaire.toString(), bold: true),
                     ],
                   ),
-                  const SizedBox(height: 5,),
-                  const Divider(),
-                  const SizedBox(height: 5,),
+                  const SizedBox(height: 20,),
                   Wrap(
                     spacing: 1,
                     runSpacing: 1,
                     alignment: WrapAlignment.spaceBetween,
                     children: [
                       if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
-                        InkWell(
-                          onTap: () async {
-                            if (demande.codePaysSrce == "cd") {
-                              Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
-                                'idDemande': demande.idDemande,
-                                'nomBeneficiaire': demande.beneficiaire,
-                                'montant': "${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}",
-                              });
-                            } else {
-                              String url = demande.lienPaiement.toString();
-                              var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                              if(urllaunchable){
-                                await launch(url); //launch is from url_launcher package to launch URL
-                                Navigator.pushNamed(context,RoutesName.home);
-                              }else{
-                                Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                        RoundedButton(
+                            onPress: () async {
+                              if (demande.codePaysSrce == "cd") {
+                                Navigator.pushNamed(context, RoutesName.drcPayment, arguments: {
+                                  'idDemande': demande.idDemande,
+                                  'nomBeneficiaire': demande.beneficiaire,
+                                  'montant': "${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}",
+                                });
+                              } else {
+                                String url = demande.lienPaiement.toString();
+                                var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                                if(urllaunchable){
+                                  await launch(url); //launch is from url_launcher package to launch URL
+                                  Navigator.pushNamed(context,RoutesName.home);
+                                }else{
+                                  Utils.toastMessage("Impossible d'ouvrir l'url de paiement");
+                                }
                               }
-                            }
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                              decoration: BoxDecoration(
-                                  color: CupertinoColors.activeGreen,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(CupertinoIcons.creditcard, color: Colors.white, size: 25,),
-                                  SizedBox(width: 10,),
-                                  Text("Payer", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                ],
-                              )
-                          ),
+                            },
+                            color: AppColors.buttonBlackColor,
+                            title: "Payer",
+                            icon: CupertinoIcons.creditcard
                         ),
                       if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
-                        const SizedBox(height: 10,),
+                        const SizedBox(height: 5,),
                       if (hasProblem != true)
-                        InkWell(
-                          onTap: () {
+                        RoundedButton(
+                          onPress: () async {
                             BeneficiaireModel beneficiaire = BeneficiaireModel(
                               codePays: demande.codePaysDest,
                               idBeneficiaire: demande.idBeneficiaire,
@@ -239,126 +199,65 @@ class _HistoryCardState extends State<HistoryCard> {
                               )),
                             );
                           },
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(CupertinoIcons.arrow_up_right, color: Colors.white, size: 15,),
-                                  SizedBox(width: 5,),
-                                  Text(
-                                    "Nouveau Transfert",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 11
-                                    ),
-                                  )
-                                ],
-                              )
-                          ),
+                          color: AppColors.buttonBlackColor,
+                          title: "Nouveau Transfert",
+                          icon: CupertinoIcons.arrow_up_right
                         ),
                       if (
-                      demande.facture == null
-                          && hasProblem != true
+                        demande.facture == null
+                        && hasProblem != true
                       )
-                        const SizedBox(height: 10,),
+                        const SizedBox(height: 5,),
                       if (
                         demande.facture == null
                         && hasProblem != true
                         && (demande.lienPaiement != null || demande.progression.toString().contains("En cours"))
                       )
-                        InkWell(
-                          onTap: () {
-                            DemandesViewModel demandeViewModel = DemandesViewModel();
-                            if (demande.isPaid == true) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmCancelView(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel)));
-                            } else {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
-                                },
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(CupertinoIcons.xmark_circle, color: Colors.white, size: 15,),
-                                  SizedBox(width: 5,),
-                                  Text(
-                                    "Annuler la demande",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10
+                        RoundedButton(
+                            onPress: () {
+                              DemandesViewModel demandeViewModel = DemandesViewModel();
+                              if (demande.isPaid == true) {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmCancelView(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel)));
+                              } else {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: AppColors.bgColor,
+                                  builder: (context) {
+                                    return ConfirmCancel(demandeId: demande.idDemande!.toInt(), demandesViewModel: demandeViewModel);
+                                  },
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(0),
                                     ),
                                   ),
-                                ],
-                              )
-                          ),
+                                );
+                              }
+                            },
+                            color: AppColors.buttonBlackColor,
+                            title: "Annuler la demande",
+                            icon: CupertinoIcons.xmark_circle
                         ),
                       if (hasProblem == true)
-                        InkWell(
-                          onTap: () {
-                            DemandesViewModel demandeViewModel = DemandesViewModel();
-                            showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return ChangeBeneficiaireModal(demande: demande,);
-                                }
-                            );
-                          },
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(CupertinoIcons.pencil, color: Colors.white, size: 15,),
-                                  SizedBox(width: 5,),
-                                  Text(
-                                    "Changer de beneficiaire",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10
+                        RoundedButton(
+                            onPress: () {
+                              DemandesViewModel demandeViewModel = DemandesViewModel();
+                              showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: AppColors.bgColor,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(0),
                                     ),
                                   ),
-                                ],
-                              )
-                          ),
+                                  builder: (context) {
+                                    return ChangeBeneficiaireModal(demande: demande,);
+                                  }
+                              );
+                            },
+                            color: AppColors.buttonBlackColor,
+                            title: "Changer de beneficiaire",
+                            icon: CupertinoIcons.pencil
                         ),
                     ],
                   )
@@ -377,10 +276,8 @@ class _HistoryCardState extends State<HistoryCard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              // border: Border.all(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
-              // border: Border.all(color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red), width: 1),
               boxShadow: const [
                 BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.1),
@@ -391,64 +288,48 @@ class _HistoryCardState extends State<HistoryCard> {
               ]
             ),
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween ,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 35, height: 35,
-                      decoration: BoxDecoration(
-                          color: demande.facture != null ? Colors.green.withOpacity(.1): (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (Colors.orange.withOpacity(.3)): Colors.red.withOpacity(.3)),
-                          borderRadius: BorderRadius.circular(50),
-                      ),
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: Center(
-                        child: Icon(
-                          demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
-                          color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
+                Flexible(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 35, height: 35,
+                        decoration: BoxDecoration(
+                            color: AppColors.lightGrey,
+                            borderRadius: BorderRadius.circular(50),
+                        ),
+                        padding: const EdgeInsets.only(bottom: 1),
+                        child: Center(
+                          child: Icon(
+                            demande.facture != null ? CupertinoIcons.checkmark_alt : (demande.lienPaiement != null || demande.progression.toString().contains("En cours")? (CupertinoIcons.refresh_thick): CupertinoIcons.nosign), size: 20,
+                            color: AppColors.textGrey,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 15,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(demande.beneficiaire.toString(), style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 12,
-                        ),),
-                        const SizedBox(height: 2,),
-                        Text(demande.date.toString(), style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: Colors.black54
-                        ),),
-                      ],
-                    ),
-                  ],
+                      const SizedBox(width: 15,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          AppTexts.cardTitle(demande.beneficiaire.toString()),
+                          const SizedBox(height: 2,),
+                          AppTexts.cardDescription(demande.date.toString(), color: AppColors.textGrey),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14
-                    ), textAlign: TextAlign.right,),
-                    const SizedBox(height: 2,),
-                    if (demande.progression != null)
-                    Text(truncateWithEllipsis(demande.progression.toString()), style: TextStyle(
-                        color: demande.facture != null ? Colors.green: (demande.lienPaiement != null || demande.progression.toString().contains("En cours") ? (Colors.orange): Colors.red),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10
-                    ), textAlign: TextAlign.right,)
-                  ],
-                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.formFieldColor
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: AppTexts.cardDescription("${demande.montanceSrce} ${demande.paysCodeMonnaieSrce}", bold: true),
+                )
               ],
             ),
           ),

@@ -1,9 +1,9 @@
-import 'package:chapchap/firebase_options.dart';
-import 'package:chapchap/utils/routes/routes.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/services/notifications_service.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/firebase_options.dart';
+import 'package:mardona/utils/routes/routes.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
+import 'package:mardona/view_model/services/notifications_service.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';

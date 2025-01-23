@@ -1,9 +1,11 @@
 import 'dart:io';
 
-import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/model/demande_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
@@ -32,111 +34,100 @@ class _InvoiceCardState extends State<InvoiceCard> {
   @override
   Widget build(BuildContext context) {
     DemandeModel demande = widget.demande;
-    return InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.black.withOpacity(.4), width: 1)
-        ),
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return commonRoundedContainer(
+      removePaddingH: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20.0, bottom: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(demande.datePaidBen.toString(), style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black.withOpacity(.6)
-                ),),
+                AppTexts.smallText(demande.datePaidBen.toString()),
+                const SizedBox(height: 5,),
+                Row(
+                  children: [
+                    Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysSrce}.png", width: 30,),
+                    const SizedBox(width: 10,),
+                    const Icon(Icons.arrow_forward, size: 20,),
+                    const SizedBox(width: 10,),
+                    Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysDest}.png", width: 30,),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () async {
+                        if (!loading) {
+                          setState(() {
+                            loading = true;
+                          });
+                          DemandesViewModel demandeVM = DemandesViewModel();
+                          File file = await demandeVM.getFileContent(demande.facture.toString(), context: context);
+                          print(file.path);
+                          try {
+                            openFile(file.path);
+                          } catch (error) {
+                            Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
+                          }
+
+                          setState(() {
+                            loading = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: Row(
+                          children: [
+                            if (!loading)
+                              const Icon(Icons.download, size: 20, color: Colors.white,),
+                            if (loading)
+                              const SizedBox(
+                                  width: 12,
+                                  height: 12,
+                                  child: CupertinoActivityIndicator(
+                                    color: Colors.white,
+                                  )
+                              ),
+                            SizedBox(width: loading ? 10 : 7,),
+                            AppTexts.smallButtonText("Télécharger", color: Colors.white)
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
-            const SizedBox(height: 5,),
-            Row(
+          ),
+          commonDivider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20.0, top: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysSrce}.png", width: 20,),
-                const SizedBox(width: 10,),
-                const Icon(Icons.arrow_forward, size: 20,),
-                const SizedBox(width: 10,),
-                Image.asset("packages/country_icons/icons/flags/png/${demande.codePaysDest}.png", width: 20,),
-                const Spacer(),
-                InkWell(
-                  onTap: () async {
-                    if (!loading) {
-                      setState(() {
-                        loading = true;
-                      });
-                      DemandesViewModel demandeVM = DemandesViewModel();
-                      File file = await demandeVM.getFileContent(demande.facture.toString(), context: context);
-                      print(file.path);
-                      try {
-                        openFile(file.path);
-                      } catch (error) {
-                        Utils.flushBarErrorMessage("Une erreur est survenue, veuillez ressayer.", context);
-                      }
-
-                      setState(() {
-                        loading = false;
-                      });
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(5)
-                    ),
-                    child: Row(
-                      children: [
-                        if (!loading)
-                        const Icon(Icons.download, size: 20, color: Colors.white,),
-                        if (loading)
-                        const SizedBox(
-                          width: 12,
-                          height: 12,
-                          child: CupertinoActivityIndicator(
-                            color: Colors.white,
-                          )
-                        ),
-                        SizedBox(width: loading ? 10 : 7,),
-                        const Text("Télécharger", style: TextStyle(
-                          color: Colors.white
-                        ),)
-                      ],
-                    ),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppTexts.smallText("Bénéficiaire"),
+                    AppTexts.bodyText(demande.beneficiaire.toString(), bold: true),
+                  ],
+                ),
+                const SizedBox(height: 5,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppTexts.smallText("Montant"),
+                    AppTexts.bodyText("${demande.montanceSrce} ${demande.paysCodeMonnaieDest}", bold: true),
+                  ],
                 )
               ],
             ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Bénéficiaire", style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black.withOpacity(.4),
-                ),),
-                Text(demande.beneficiaire.toString(), style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                ),)
-              ],
-            ),
-            const SizedBox(height: 5,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Montant", style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black.withOpacity(.4),
-                ),),
-                Text("${demande.montanceSrce} ${demande.paysMonnaieSrce}", style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                ),)
-              ],
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

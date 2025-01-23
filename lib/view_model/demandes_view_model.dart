@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:chapchap/data/response/api_response.dart';
-import 'package:chapchap/model/beneficiaire_model.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/data/response/api_response.dart';
+import 'package:mardona/model/beneficiaire_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chapchap/model/pays_destination_model.dart';
-import 'package:chapchap/repository/demandes_repository.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:mardona/model/pays_destination_model.dart';
+import 'package:mardona/repository/demandes_repository.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:chapchap/utils/utils.dart';
+import 'package:mardona/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DemandesViewModel with ChangeNotifier{
@@ -204,9 +204,13 @@ class DemandesViewModel with ChangeNotifier{
   }
 
   Future<void> paysActifs(dynamic data, BuildContext context) async {
+    print("111111111111111111111111111111111111");
     setLoading(true);
     await _repository.paysActif(data, context: context).then((value) {
+      print("222222222222222222222222222222");
       if (value!=null){
+        print("333333333333333333333333333333333333");
+        print(value);
         setLoading(false);
         if (value['error'] != true) {
           setPaysActif(ApiResponse.completed(value["data"]));

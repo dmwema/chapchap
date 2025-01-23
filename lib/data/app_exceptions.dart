@@ -7,7 +7,7 @@ class AppException implements Exception {
   AppException([this._message, this._prefix]);
 
   String toString () {
-    return '$_prefix $_message';
+    return '${_prefix ?? ''} $_message';
   }
 }
 
@@ -16,7 +16,7 @@ class FetchDataException extends AppException {
 }
 
 class BadRequestException extends AppException {
-  BadRequestException([String? message]) : super(message, 'Requette invalide : ');
+  BadRequestException([String? message]) : super(message);
 }
 
 class UnauthorisedException extends AppException {

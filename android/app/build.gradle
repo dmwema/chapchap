@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.wizmea.chapchap_app"
+    namespace "com.dmwema.mardona"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -47,7 +47,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wizmea.chapchap_app"
+        applicationId "com.dmwema.mardona"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()

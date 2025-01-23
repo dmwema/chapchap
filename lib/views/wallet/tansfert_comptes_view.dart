@@ -1,12 +1,12 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/wallet_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/hide_keyboard_container.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/wallet_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,10 +40,10 @@ class _TransferCompteWalletViewState extends State<TransferCompteWalletView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true
-              ),
+              //commonAppBar(
+               //   context: context,
+               //   backArrow: true
+              //),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text("Transferer l'argent entre comptes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),

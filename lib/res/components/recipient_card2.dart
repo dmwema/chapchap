@@ -1,6 +1,10 @@
-import 'package:chapchap/res/app_colors.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipientCard2 extends StatelessWidget {
   final String name;
@@ -12,50 +16,47 @@ class RecipientCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-          )
-      ),
-      child: Row(
-        children: [
-          CircularProfileAvatar(
-            "",
-            radius: 20, // sets radius, default 50.0
-            backgroundColor: AppColors.primaryColor.withOpacity(.4), // sets background color, default Colors.white// sets border, default 0.0
-            initialsText: Text(
-              getInitials(name),
-              style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-            ),  // sets initials text, set your own style, default Text('')
-            elevation: 2.0, // sets elevation (shadow of the profile picture), default value is 0.0
-            foregroundColor: Colors.brown.withOpacity(0.5), //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
-            cacheImage: true, // allow widget to cache image against provided url
-            showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
-          ),
-          const SizedBox(width: 10,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(bottom: 10),
+      child: commonRoundedContainer(
+        removePaddingV: true,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
             children: [
-              Text(name, style: const TextStyle(
-                  fontWeight: FontWeight.w600
-              ),),
-              const SizedBox(width: 5,),
-              const SizedBox(height: 5,),
-              if (address != "null")
-              Text(phone, style: const TextStyle(
-                fontSize: 11,fontWeight: FontWeight.w500
-              ),),
+              CircularProfileAvatar(
+                "",
+                radius: 20, // sets radius, default 50.0
+                backgroundColor: AppColors.buttonBlackColor, // sets background color, default Colors.white// sets border, default 0.0
+                initialsText: Text(
+                  getInitials(name),
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                ),  // sets initials text, set your own style, default Text('')
+                elevation: 0, // sets elevation (shadow of the profile picture), default value is 0.0
+                foregroundColor: Colors.white, //sets foreground colour, it works if showInitialTextAbovePicture = true , default Colors.transparent
+                cacheImage: true, // allow widget to cache image against provided url
+                showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
+              ),
+              const SizedBox(width: 10,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppTexts.cardTitle(name),
+                  const SizedBox(height: 2,),
+                  if (phone != "null")
+                  AppTexts.cardDescription(phone, color: AppColors.textGrey)
+                ],
+              ),
+              const Expanded(
+                child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.more_horiz),
+                )
+              )
             ],
           ),
-          Expanded(
-            child: Align(
-            alignment: Alignment.centerRight,
-            child: Image.asset("packages/country_icons/icons/flags/png/$address.png", width: 30, height: 13, fit: BoxFit.contain),
-            )
-          )
-        ],
+        ),
       ),
     );
   }

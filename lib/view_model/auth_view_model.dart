@@ -1,12 +1,14 @@
-import 'package:chapchap/res/app_colors.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/rounded_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/repository/auth_repository.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/repository/auth_repository.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,42 +72,22 @@ class AuthViewModel with ChangeNotifier{
                           size: 60,
                         ),
                         const SizedBox(height: 20,),
-                        Text(
+                        AppTexts.descriptionText(
                           value['message'],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          ),
                         ),
                         const SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.circular(30)
-                                ),
-                                child: const Text("Vérifier l'identité", style: TextStyle(color: Colors.white),),
-                              ),
-                              onTap: () async {
-                                print(value['data']['verify_identity_url']);
-                                String url = value['data']['verify_identity_url'];
-                                var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
-                                if(urllaunchable){
-                                  await launch(url); //launch is from url_launcher package to launch URL
-                                  Navigator.pop(context);
-                                }else{
-                                  Navigator.pop(context);
-                                  Utils.toastMessage("Impossible d'ouvrir l'url");
-                                }
-                              },
-                            ),
-                          ],
-                        )
+                        RoundedButton(title: "Vérifier l'identité", onPress: () async {
+                          print(value['data']['verify_identity_url']);
+                          String url = value['data']['verify_identity_url'];
+                          var urllaunchable = await canLaunch(url); //canLaunch is from url_launcher package
+                          if(urllaunchable){
+                            await launch(url); //launch is from url_launcher package to launch URL
+                            Navigator.pop(context);
+                          }else{
+                            Navigator.pop(context);
+                            Utils.toastMessage("Impossible d'ouvrir l'url");
+                          }
+                        })
                       ],
                     ),
                   ),
@@ -204,6 +186,54 @@ class AuthViewModel with ChangeNotifier{
       Utils.flushBarErrorMessage(error.toString(), context);
       setLoading(false);
     });
+  }
+
+  Future<bool> updateNotifications(dynamic data, BuildContext context) async {
+    setLoading(true);
+    bool success = true;
+    await _repository.updateNotification(data, context: context).then((value) {
+      setLoading(false);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] == true) {
+          Utils.flushBarErrorMessage(value['message'], context);
+          success = false;
+        } else {
+          Utils.toastMessage(value['message']);
+        }
+
+      }
+    }).onError((error, stackTrace) {
+      success = false;
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return success;
+  }
+
+  Future<String?> deleteAccount(dynamic data, BuildContext context) async {
+    setLoading(true);
+    String? message;
+    await _repository.deleteAccount(data, context: context).then((value) {
+      setLoading(false);
+      if (value!=null){
+        setLoading(false);
+        if (value['error'] != true) {
+          message = value['message'];
+        } else {
+          Utils.flushBarErrorMessage(value['message'], context);
+          Navigator.pop(context);
+        }
+
+      }
+    }).onError((error, stackTrace) {
+      setLoading(false);
+
+      Utils.flushBarErrorMessage(error.toString(), context);
+      setLoading(false);
+    });
+    return message;
   }
 
   Future<dynamic> getInfoMessages (BuildContext context) async {

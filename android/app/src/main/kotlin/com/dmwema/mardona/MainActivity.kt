@@ -1,4 +1,4 @@
-package com.wizmea.chapchap_app
+package com.dmwema.mardona
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

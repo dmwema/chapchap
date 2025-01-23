@@ -1,9 +1,9 @@
-import 'package:chapchap/utils/utils.dart';
+import 'package:mardona/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/data/network/base_api_services.dart';
-import 'package:chapchap/data/network/network_api_service.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_url.dart';
+import 'package:mardona/data/network/base_api_services.dart';
+import 'package:mardona/data/network/network_api_service.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_url.dart';
 
 class AuthRepository {
   final BaseApiServices _apiServices = NetworkApiService();
@@ -38,6 +38,24 @@ class AuthRepository {
   Future<dynamic> passwordReset (dynamic data, {required BuildContext context}) async {
     try  {
       dynamic response = await _apiServices.getPostApiResponse(AppUrl.passwordReset, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> updateNotification (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.updateNotifications, data, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> deleteAccount (dynamic data, {required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.deleteAccount, data, context: context, auth: true);
       return response;
     } catch(e) {
       rethrow;

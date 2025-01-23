@@ -1,9 +1,11 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/pays_destination_model.dart';
-import 'package:chapchap/res/components/NewBeneficiaireForm.dart';
-import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/pays_destination_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/NewBeneficiaireForm.dart';
+import 'package:mardona/res/components/hide_keyboard_container.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,20 +33,17 @@ class _NewBeneficiaireViewState extends State<NewBeneficiaireView> {
   Widget build(BuildContext context) {
     return HideKeyBordContainer(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: false,
+        appBar: CommonAppBar(context: context, backArrow: true, title: "Nouveau bénéficiaire",),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                context: context,
-                backArrow: true
-              ),
               const SizedBox(height: 20,),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text("Nouveau bénéficiaire", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: pageTitleStyle(title: "ça ne vous prendra que 30 secondes ;)", context: context),
               ),
               const SizedBox(height: 10,),
               Expanded(

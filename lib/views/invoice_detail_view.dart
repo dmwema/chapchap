@@ -1,6 +1,6 @@
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/components/custom_appbar.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceDetailView extends StatelessWidget {

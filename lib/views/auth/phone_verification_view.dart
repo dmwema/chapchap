@@ -1,14 +1,19 @@
-import 'package:chapchap/res/components/custom_appbar.dart';
-import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
+import 'dart:async';
+
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/custom_appbar.dart';
+import 'package:mardona/res/components/hide_keyboard_container.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/auth_view_model.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
+import 'package:mardona/view_model/user_view_model.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class PhoneVerification extends StatefulWidget {
@@ -21,6 +26,7 @@ class PhoneVerification extends StatefulWidget {
 
 class _PhoneVerificationState extends State<PhoneVerification> {
   String otp = "";
+  StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
 
   AuthViewModel authViewModel = AuthViewModel();
 
@@ -55,50 +61,45 @@ class _PhoneVerificationState extends State<PhoneVerification> {
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: CustomAppBar(
-            title: "Vérification",
-            showBack: true,
-            backUrl: RoutesName.login,
-          ),
+          backgroundColor: AppColors.bgColor,
+          appBar: CommonAppBar(context: context, backArrow: true, backClick: () {
+            Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false);
+          },),
           body: Column(
             children: [
-              Container(
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text("Entrez le code de vérification!", textAlign: TextAlign.center, style: TextStyle(
-                        color: Colors.black, fontSize: 19, fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
                     const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: PinFieldAutoFill(
-                        cursor: Cursor(color: Colors.black, width: 2, height: 16, enabled: true),
-                        currentCode: otp,
-                        codeLength: 5,
-                        decoration: BoxLooseDecoration(
-                            strokeColorBuilder: PinListenColorBuilder(Colors.black, Colors.black,),
-                            strokeWidth: 0,
-                            textStyle: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.black
-                            ),
-                            radius: const Radius.circular(5)
-                        ),
-                        onCodeChanged: (code) {
-                          setState(() {
-                            otp = code ?? '';
-                          });
-                        },
+                    AppTexts.titleText("Entrez le code de vérification!"),
+                    const SizedBox(height: 20,),
+                    PinCodeTextField(
+                      length: 5,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      animationDuration: const Duration(milliseconds: 300),
+                      errorAnimationController: errorController,
+                      keyboardType: TextInputType.number,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      cursorColor: Colors.black,
+                      showCursor: true,
+                      pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: 50,
+                          fieldWidth: 50,
+                          errorBorderColor: Colors.black45,
+                          inactiveColor: AppColors.formFieldBorderColor,
+                          activeColor: AppColors.textGrey,
+                          selectedColor: AppColors.textGrey
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          otp = value ?? '';
+                        });
+                      },
+                      appContext: context,
                     ),
                     const SizedBox(height: 20,),
                     InkWell(
@@ -124,23 +125,14 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                               const CupertinoActivityIndicator(radius: 8,),
                             if (resending)
                               const SizedBox(width: 7,),
-                            Text("Renvoyer le code ?", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColors.primaryColor), textAlign: TextAlign.left,),
+                            AppTexts.bodyText("Renvoyer le code ?", bold: true),
                           ],
                         )
                     ),
                     const SizedBox(height: 20,),
                     if (widget.data['message'] != null)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 40, right: 40,),
-                      child: Text(
-                        widget.data['message'],
-                        style: const TextStyle(
-                            color: Colors.black54,
-                            height: 1.5,
-                            fontSize: 14
-                        ),
-                        textAlign: TextAlign.center,
-                      )
+                    AppTexts.descriptionText(
+                      widget.data['message'],
                     ),
                     /* const SizedBox(height: 10,),
                     const Divider(),

@@ -15,10 +15,12 @@ class RoutesName {
   static const String login = 'login_screen';
   static const String register = 'register_screen';
   static const String accountView = 'account_view';
+  static const String notificationsView = 'notifications_view';
   static const String passwordReset = 'password_reset_screen';
   static const String recompenseView = 'recompenses_view';
   static const String resetCodeSend = 'reset_code_sent_screen';
   static const String newPasswords = 'new_password_screen';
+  static const String welcomeView = 'welcomde_view';
 
   static const String drcPayment = 'drc_payment';
 

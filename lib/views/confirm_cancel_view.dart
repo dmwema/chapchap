@@ -1,17 +1,18 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/data/response/status.dart';
-import 'package:chapchap/model/beneficiaire_model.dart';
-import 'package:chapchap/model/pays_destination_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/confirm_delete.dart';
-import 'package:chapchap/res/components/custom_field.dart';
-import 'package:chapchap/res/components/hide_keyboard_container.dart';
-import 'package:chapchap/res/components/recipient_card2.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/utils/utils.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
-import 'package:chapchap/views/send_view.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/data/response/status.dart';
+import 'package:mardona/model/beneficiaire_model.dart';
+import 'package:mardona/model/pays_destination_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
+import 'package:mardona/res/components/confirm_delete.dart';
+import 'package:mardona/res/components/custom_field.dart';
+import 'package:mardona/res/components/hide_keyboard_container.dart';
+import 'package:mardona/res/components/recipient_card2.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/utils/utils.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
+import 'package:mardona/views/send_view.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,19 +43,16 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bgColor,
+        appBar: CommonAppBar(context: context, backArrow: true,),
         resizeToAvoidBottomInset: false,
         body: HideKeyBordContainer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commonAppBar(
-                  context: context,
-                  backArrow: true
-              ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -64,20 +62,8 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
                         size: 50,
                       ),
                       const SizedBox(height: 10,),
-                      const Column(
-                        children: [
-                          Text("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Divider(),
-                        ],
-                      ),
-                      const SizedBox(height: 10,),
+                      AppTexts.titleText("Voulez-vous vraiment faire une demande d'annulation de ce transfert ?"),
+                      const SizedBox(height: 20,),
                       CustomFormField(
                         hint: "Motif",
                         label: "Motif",
@@ -87,15 +73,7 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
                         maxLines: 2,
                       ),
                       const SizedBox(height: 20,),
-                      const Text("Quel mode de remboursement voulez-vous ?",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const Divider(),
+                      AppTexts.bodyText("Quel mode de remboursement voulez-vous ?"),
                       const SizedBox(height: 10,),
                       ChangeNotifierProvider<DemandesViewModel>(
                           create: (BuildContext context) => demandesViewModel,
@@ -180,15 +158,7 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
                                                     ),
                                                   ),
                                                   const SizedBox(width: 20,),
-                                                  Text(modeRemboursement["mode_remboursement"], style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: (
-                                                          selectedModeRemboursement != null
-                                                              && selectedModeRemboursement
-                                                              == modeRemboursement["id_mode_remboursement"]
-                                                      ) ? Colors.white : Colors.black,
-                                                      fontWeight: FontWeight.bold
-                                                  ),textAlign: TextAlign.center,)
+                                                  AppTexts.smallText(modeRemboursement["mode_remboursement"])
                                                 ],
                                               ),
                                             )
@@ -198,46 +168,41 @@ class _ConfirmCancelViewState extends State<ConfirmCancelView> {
                                 }
                               })
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RoundedButton(
-                            onPress: () {
-                              if (_motifController.text.isEmpty) {
-                                Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
-                              } else if (selectedModeRemboursement == null) {
-                                Utils.flushBarErrorMessage("Vous devez séléctionner un mode de remboursement", context);
-                              } else {
-                                Map data = {
-                                  "idDemande" : widget.demandeId,
-                                  "id_mode_remboursement": selectedModeRemboursement,
-                                  "motif": _motifController.text
-                                };
-                                widget.demandesViewModel.cancelSend(context, data);
-                              }
-                            },
-                            title: "Confirmer",
+                      RoundedButton(
+                        onPress: () {
+                          if (_motifController.text.isEmpty) {
+                            Utils.flushBarErrorMessage("Vous devez saisir le motif de l'annulation", context);
+                          } else if (selectedModeRemboursement == null) {
+                            Utils.flushBarErrorMessage("Vous devez séléctionner un mode de remboursement", context);
+                          } else {
+                            Map data = {
+                              "idDemande" : widget.demandeId,
+                              "id_mode_remboursement": selectedModeRemboursement,
+                              "motif": _motifController.text
+                            };
+                            widget.demandesViewModel.cancelSend(context, data);
+                          }
+                        },
+                        title: "Confirmer",
+                      ),
+                      const SizedBox(height: 10,),
+                      InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              border: Border.all(color: AppColors.primaryColor, width: 2)
                           ),
-                          const SizedBox(width: 10,),
-                          InkWell(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  border: Border.all(color: AppColors.primaryColor, width: 2)
-                              ),
-                              child: Text("Annuler", style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor
-                              ),),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      )
+                          child: Text("Annuler", style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryColor
+                          ),),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ],
                   ),
                 ),

@@ -1,6 +1,9 @@
+import 'dart:io';
+
+import 'package:mardona/common/common_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/view_model/services/splash_service.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/view_model/services/splash_service.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -23,17 +26,20 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          color: AppColors.primaryColor,
-          child: const Center(
-              child: Text(
-                "Chargement...",
-                style: TextStyle(
-                    color: Colors.white
-                ),
-              )
-          ),
-        )
+      appBar: CommonAppBar(
+        context: context,
+      ),
+      body: Container(
+        color: AppColors.primaryColor,
+        child: const Center(
+            child: Text(
+              "Chargement...",
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            )
+        ),
+      )
     );
   }
 }

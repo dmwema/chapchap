@@ -1,7 +1,7 @@
-import 'package:chapchap/model/user_model.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/user_view_model.dart';
+import 'package:mardona/model/user_model.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/user_view_model.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

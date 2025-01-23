@@ -1,8 +1,8 @@
-import 'package:chapchap/common/common_widgets.dart';
-import 'package:chapchap/res/app_colors.dart';
-import 'package:chapchap/res/components/rounded_button.dart';
-import 'package:chapchap/utils/routes/routes_name.dart';
-import 'package:chapchap/view_model/demandes_view_model.dart';
+import 'package:mardona/common/common_widgets.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/components/rounded_button.dart';
+import 'package:mardona/utils/routes/routes_name.dart';
+import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -54,39 +54,39 @@ class _DRCPaymentViewSatet extends State<DRCPaymentView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonAppBar(
-              context: context,
-              backArrow: true,
-              backClick: () {
-                showCupertinoDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: const Text('Confirmer'),
-                      content: const Text('Êtes-vous sûr de vouloir quitter cette page ?'),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: const Text('Annuler', style: TextStyle(
-                              color: Colors.black
-                          ),),
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Fermer le dialogue
-                          },
-                        ),
-                        CupertinoDialogAction(
-                          child: Text('Confirmer', style: TextStyle(
-                              color: AppColors.primaryColor
-                          ),),
-                          onPressed: () async {
-                            Navigator.pushNamed(context, RoutesName.home);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            ),
+            // commonAppBar(
+            //   context: context,
+            //   backArrow: true,
+            //   backClick: () {
+            //     showCupertinoDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return CupertinoAlertDialog(
+            //           title: const Text('Confirmer'),
+            //           content: const Text('Êtes-vous sûr de vouloir quitter cette page ?'),
+            //           actions: [
+            //             CupertinoDialogAction(
+            //               child: const Text('Annuler', style: TextStyle(
+            //                   color: Colors.black
+            //               ),),
+            //               onPressed: () {
+            //                 Navigator.of(context).pop(); // Fermer le dialogue
+            //               },
+            //             ),
+            //             CupertinoDialogAction(
+            //               child: Text('Confirmer', style: TextStyle(
+            //                   color: AppColors.primaryColor
+            //               ),),
+            //               onPressed: () async {
+            //                 Navigator.pushNamed(context, RoutesName.home);
+            //               },
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //     );
+            //   }
+            // ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(

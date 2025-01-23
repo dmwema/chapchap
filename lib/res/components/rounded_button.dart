@@ -1,20 +1,27 @@
-import 'package:chapchap/res/app_colors.dart';
+import 'package:mardona/res/app_colors.dart';
+import 'package:mardona/res/app_texts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   final String title;
   final bool loading;
+  final bool outlined;
   Color? color;
   final Color textColor;
-  final VoidCallback onPress;
+  final void Function()? onPress;
   bool? wallet;
+  bool? select;
+  IconData? icon;
 
   RoundedButton({
     Key? key,
     required this.title,
     this.loading = false,
     this.wallet,
+    this.outlined = false,
+    this.select,
+    this.icon,
     this.color,
     this.textColor = Colors.white,
     required this.onPress
@@ -24,33 +31,36 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPress,
-      color: color ?? AppColors.primaryColor,
+      color: outlined ? null : color ?? AppColors.primaryColor,
+      borderRadius: BorderRadius.circular(30),
+      padding: const EdgeInsets.all(0),
       pressedOpacity: .7,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.5),
-          //     spreadRadius: 5,
-          //     blurRadius: 7,
-          //     offset: const Offset(0, 3), // changes position of shadow
-          //   ),
-          // ],
+          borderRadius: BorderRadius.circular(30),
+          border: outlined ? Border.all(width: 1, color: AppColors.accentColor) : null
         ),
+        padding: const EdgeInsets.symmetric(vertical: 12.5),
         child: Center(
           child: loading ? const SizedBox(
             width: 20,
             height: 20,
             child: CupertinoActivityIndicator(color: Colors.white)
          ) :Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: select == true ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
            children: [
              if (wallet == true)
              const Icon(Icons.wallet_outlined, size: 20,),
              if (wallet == true)
                const SizedBox(width: 5,),
-             Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),),
+
+             if (icon != null)
+               Icon(icon, size: 20, color: textColor,),
+             if (icon != null)
+               const SizedBox(width: 5,),
+             AppTexts.buttonText(title, color: outlined ? AppColors.accentColor : textColor),
+             if (select == true)
+               const Icon(Icons.arrow_drop_down)
            ],
          ),
         ),
