@@ -11,6 +11,7 @@ import 'package:mardona/res/app_colors.dart';
 import 'package:mardona/res/app_texts.dart';
 import 'package:mardona/res/components/hide_keyboard_container.dart';
 import 'package:mardona/res/components/history_card.dart';
+import 'package:mardona/res/components/rounded_button.dart';
 import 'package:mardona/utils/routes/routes_name.dart';
 import 'package:mardona/utils/utils.dart';
 import 'package:mardona/view_model/auth_view_model.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mardona/views/new_beneficiaire.dart';
 import 'package:mardona/views/send_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -62,12 +64,6 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   late AnimationController _controller;
   late Animation<double> _animation;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isHidden = !_isHidden;
-    });
-  }
 
   @override
   void initState() {
@@ -281,15 +277,15 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 100,
-                          child: ChangeNotifierProvider<DemandesViewModel>(
-                              create: (BuildContext context) => demandesViewModel,
-                              child: Consumer<DemandesViewModel>(
-                                  builder: (context, value, _){
-                                    switch (value.beneficiairesList.status) {
-                                      case Status.LOADING:
-                                        return Padding(
+                        ChangeNotifierProvider<DemandesViewModel>(
+                            create: (BuildContext context) => demandesViewModel,
+                            child: Consumer<DemandesViewModel>(
+                                builder: (context, value, _){
+                                  switch (value.beneficiairesList.status) {
+                                    case Status.LOADING:
+                                      return SizedBox(
+                                        height: 100,
+                                        child: Padding(
                                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                           child: ListView.builder(
                                             itemCount: 5,
@@ -323,18 +319,24 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                               );
                                             },
                                           ),
+                                        ),
+                                      );
+                                    case Status.ERROR:
+                                      return Center(
+                                        child: Text(value.beneficiairesList.message.toString()),
+                                      );
+                                    default:
+                                      if (value.beneficiairesList.data!.length == 0) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 20,),
+                                          child: RoundedButton(title: "Ajouter un bénéficiaire", icon: Icons.add, onPress: () {
+                                            Navigator.push(context, CupertinoPageRoute(builder: (route) => NewBeneficiaireView()));
+                                          }),
                                         );
-                                      case Status.ERROR:
-                                        return Center(
-                                          child: Text(value.beneficiairesList.message.toString()),
-                                        );
-                                      default:
-                                        if (value.beneficiairesList.data!.length == 0) {
-                                          return Center(
-                                            child: AppTexts.descriptionText("Aucun bénéficiaire enrégistré"),
-                                          );
-                                        }
-                                        return ListView.builder(
+                                      }
+                                      return SizedBox(
+                                        height: 100,
+                                        child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
                                           shrinkWrap: true,
                                           itemCount: value.beneficiairesList.data.length,
@@ -379,13 +381,14 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                               ),
                                             );
                                           },
-                                        );
-                                    }
-                                  })
-                          )
+                                        ),
+                                      );
+                                  }
+                                })
                         ),
                         const SizedBox(height: 20),
-                        Padding(
+                        if (msgList.isNotEmpty)
+                          Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -402,14 +405,16 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                             ],
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        if (msgList.isNotEmpty)
+                          const SizedBox(height: 20),
+                        if (msgList.isNotEmpty)
                         SizedBox(
                           height: 240,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: 4,
+                              itemCount: msgList.length,
                               itemBuilder: (context, index) {
                                 return SizedBox(
                                   width: 200,
@@ -427,8 +432,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                           ),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(15),
-                                            child: Image.asset(
-                                              "assets/1.png",
+                                            child: Image.network(
+                                              msgList[index]['url_img'],
                                               fit: BoxFit.cover,
                                               width: 250,
                                             ),
@@ -436,7 +441,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                                         ),
                                         const SizedBox(height: 5),
                                         Flexible(
-                                          child: AppTexts.cardTitle("Vos transferts du Burkina Faso vers le Canada")
+                                          child: AppTexts.cardTitle(msgList[index]['titre'])
                                         ),
                                       ],
                                     ),

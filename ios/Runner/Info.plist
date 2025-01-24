@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Transfert ChapChap</string>
+		<string>Mardona Transfert</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>chapchap</string>
+		<string>mardona</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -27,14 +27,14 @@
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>NSCameraUsageDescription</key>
-		<string>ChapChap souhaite accéder à votre caméra pour définir votre photo de profil</string>
+		<string>Mardona souhaite accéder à votre caméra pour définir votre photo de profil</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>ChapChap souhaite accéder à votre gallerie pour définir votre photo de profil</string>
+		<string>Mardona souhaite accéder à votre gallerie pour définir votre photo de profil</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UIBackgroundModes</key>
 		<array>
-			<string>remote-notification</string>
+			<string>remote-notification</string>s
 		</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>

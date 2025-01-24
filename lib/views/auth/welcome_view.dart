@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:mardona/common/common_widgets.dart';
 import 'package:mardona/res/app_colors.dart';
-import 'package:mardona/res/app_texts.dart';
 import 'package:mardona/res/components/rounded_button.dart';
 import 'package:mardona/res/components/slider.dart';
-import 'package:mardona/view_model/services/notifications_service.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
 import 'package:mardona/views/auth/login_view.dart';
 import 'package:mardona/views/auth/register_view.dart';
 import 'package:mardona/views/exchange_view.dart';
@@ -33,6 +32,8 @@ class _WelcomeViewState extends State<WelcomeView> {
     SliderPage(title: "Gagnez 5\$ de rabais avec le Black Friday !", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue feugiat erat in porttitor. In gravida justo non est elementum, ac malesuada nisi iaculis.", image: "assets/2.png"),
     SliderPage(title: "Vos transferts du Tchad vers le Canada !", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue feugiat erat in porttitor. In gravida justo non est elementum, ac malesuada nisi iaculis.", image: "assets/3.png", text_color: Colors.white,),
   ];
+  AuthViewModel authViewModel = AuthViewModel();
+  List<Map> msgList = [];
 
   _onChanged(int index) {
     setState(() {
@@ -47,6 +48,15 @@ class _WelcomeViewState extends State<WelcomeView> {
 
   @override
   void initState() {
+    authViewModel.getInfoMessages(context).then((value) {
+      if (value != null && value['error'] != true && value['data'] != null && value['data'].length > 0) {
+        value['data'].forEach((element) => {
+          setState(() {
+            msgList.add(element);
+          })
+        });
+      }
+    });
     super.initState();
   }
 
@@ -64,6 +74,11 @@ class _WelcomeViewState extends State<WelcomeView> {
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Stack(
             children: [
+              if (msgList.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: _pages[0]),
+              if (msgList.isNotEmpty)
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -89,10 +104,10 @@ class _WelcomeViewState extends State<WelcomeView> {
                       child: PageView.builder(
                         scrollDirection: Axis.horizontal,
                         controller: _controller,
-                        itemCount: _pages.length,
+                        itemCount: msgList.length,
                         onPageChanged:_onChanged,
                         itemBuilder: (context, int index) {
-                          return _pages[index];
+                          return SliderPage(title: msgList[index]['titre'], description: msgList[index]['msg'], image: msgList[index]['url_img'], text_color: Colors.white, useUrl: true,);
                         },
                       ),
                     ),

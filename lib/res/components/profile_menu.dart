@@ -23,17 +23,7 @@ class ProfileMenu extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
-          borderRadius: const BorderRadius.all(Radius.circular(4)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.08),
-              spreadRadius: 3,
-              blurRadius: 5,
-              offset: const Offset(0, 4), // changes position of shadow
-            ),
-          ],
+          border: Border(bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)),
         ),
         padding: padding! ? const EdgeInsets.symmetric(vertical: 12, horizontal: 15) : const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
         child: Row(
@@ -45,9 +35,9 @@ class ProfileMenu extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(icon, color: color ?? AppColors.primaryColor, size: 16,),
+                  Icon(icon, color: color ?? AppColors.textGrey, size: 16,),
                   const SizedBox(width: 20,),
-                  Flexible(child: AppTexts.cardTitle(title.toString())),
+                  Flexible(child: AppTexts.cardTitle(title.toString(), color: AppColors.textGrey)),
                   noIcon != null && noIcon! == true ? Container(): download! ? const Icon(Icons.download_outlined, color: Colors.black45,)
                     : (count == null ? const Icon(Icons.chevron_right_outlined, color: Colors.black45,)
                     : Text(count.toString())),

@@ -1,4 +1,3 @@
-import 'package:country_icons/country_icons.dart';
 import 'package:mardona/common/common_widgets.dart';
 import 'package:mardona/data/response/status.dart';
 import 'package:mardona/model/pays_destination_model.dart';
@@ -443,13 +442,6 @@ class _ExchangeViewState extends State<ExchangeView> with SingleTickerProviderSt
                                       removePaddingH: true
                                     ),
                                     const SizedBox(height: 20,),
-                                    // Row(
-                                    //   children: [
-                                    //     Icon(Icons.info_outline_rounded, color: AppColors.primaryColor, size: 20,),
-                                    //     const SizedBox(width: 10,),
-                                    //     Flexible(child: AppTexts.descriptionText("  utilise son propre taux de change")),
-                                    //   ],
-                                    // )
                                   ],
                                 ),
                               ),

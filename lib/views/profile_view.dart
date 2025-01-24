@@ -84,16 +84,15 @@ class _ProfileViewState extends State<ProfileView> {
     });
     return Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: CommonAppBar(context: context, backArrow: true,),
+        appBar: CommonAppBar(context: context, backArrow: true, title: "Informations personnelles",),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(20),
                 child: AppTexts.titleText("Informations personnelles"),
               ),
-              const SizedBox(height: 20,),
               Expanded(
                 child: ChangeNotifierProvider<DemandesViewModel>(
                     create: (BuildContext context) => demandesViewModel,
@@ -184,7 +183,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                   children: [
                                                     CircularProfileAvatar(
                                                       user!.photoProfil.toString(),
-                                                      radius: 30, // sets radius, default 50.0
+                                                      radius: 40, // sets radius, default 50.0
                                                       initialsText: Text(
                                                         "CC",
                                                         style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
@@ -195,17 +194,17 @@ class _ProfileViewState extends State<ProfileView> {
                                                       showInitialTextAbovePicture: false, // setting it true will show initials text above profile picture, default false
                                                     ),
                                                     Positioned(
-                                                      bottom: 1,
-                                                      right: 1,
+                                                      bottom: 0,
+                                                      right: 28,
                                                       child: Container(
                                                         width: 20,
                                                         height: 20,
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(20),
-                                                          color: Colors.white
+                                                          color: AppColors.formFieldBorderColor
                                                         ),
                                                         child: const Center(
-                                                          child: Icon(Icons.edit, size: 12,),
+                                                          child: Icon(Icons.camera_alt_outlined, size: 12,),
                                                         ),
                                                       ),
                                                     )
@@ -215,26 +214,58 @@ class _ProfileViewState extends State<ProfileView> {
                                             const SizedBox(height: 10,),
                                             if (user != null)
                                               AppTexts.bodyText("${user!.prenomClient} ${user!.nomClient}", bold: true),
-                                            const SizedBox(height: 10,),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius: BorderRadius.circular(20),
-                                              ),
-                                              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Icon(CupertinoIcons.check_mark_circled, color: Colors.white, size: 16,),
-                                                  const SizedBox(width: 5,),
-                                                  AppTexts.smallText("Compte actif", color: Colors.white)
-                                                ],
-                                              ),
-                                            ),
                                           ],
                                         )
                                     ),
                                     const SizedBox(height: 20,),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+                                          )
+                                      ),
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                const Icon(CupertinoIcons.phone, size: 15,),
+                                                const SizedBox(width: 15,),
+                                                Flexible(
+                                                  child: AppTexts.descriptionText(user != null ? user!.telClient.toString() : ""),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
+                                          )
+                                      ),
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                const Icon(CupertinoIcons.mail, size: 15,),
+                                                const SizedBox(width: 15,),
+                                                Flexible(
+                                                  child: AppTexts.descriptionText(user != null ? user!.emailClient.toString() : ""),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     GestureDetector(
                                       onTap: () {
                                         showModalBottomSheet(
@@ -291,7 +322,6 @@ class _ProfileViewState extends State<ProfileView> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
                                             border: Border(
                                                 bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
                                             )
@@ -303,7 +333,7 @@ class _ProfileViewState extends State<ProfileView> {
                                             Expanded(
                                               child: Row(
                                                 children: [
-                                                  const Icon(CupertinoIcons.map, size: 15,),
+                                                  const Icon(CupertinoIcons.map_pin_ellipse, size: 15,),
                                                   const SizedBox(width: 15,),
                                                   Flexible(
                                                     child: AppTexts.descriptionText(user!.adresse != null && user!.adresse != 'null' ? user!.adresse.toString(): "_"),
@@ -311,8 +341,6 @@ class _ProfileViewState extends State<ProfileView> {
                                                 ],
                                               ),
                                             ),
-                                            const SizedBox(width: 10,),
-                                            Icon(Icons.edit, color: AppColors.primaryColor, size: 14,)
                                           ],
                                         ),
                                       ),
@@ -383,7 +411,6 @@ class _ProfileViewState extends State<ProfileView> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
                                             border: Border(
                                                 bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
                                             )
@@ -403,60 +430,8 @@ class _ProfileViewState extends State<ProfileView> {
                                                 ],
                                               ),
                                             ),
-                                            const SizedBox(width: 10,),
-                                            Icon(Icons.edit, color: AppColors.primaryColor, size: 14,)
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border(
-                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-                                          )
-                                      ),
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                const Icon(CupertinoIcons.at, size: 15,),
-                                                const SizedBox(width: 15,),
-                                                Flexible(
-                                                  child: AppTexts.descriptionText(user != null ? user!.emailClient.toString() : ""),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border(
-                                              bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)
-                                          )
-                                      ),
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                const Icon(CupertinoIcons.phone, size: 15,),
-                                                const SizedBox(width: 15,),
-                                                Flexible(
-                                                  child: AppTexts.descriptionText(user != null ? user!.telClient.toString() : ""),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
                                       ),
                                     ),
                                     // Container(

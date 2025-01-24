@@ -5,6 +5,7 @@ import 'package:mardona/res/app_colors.dart';
 import 'package:mardona/res/app_texts.dart';
 import 'package:mardona/res/components/hide_keyboard_container.dart';
 import 'package:mardona/res/components/history_card.dart';
+import 'package:mardona/view_model/auth_view_model.dart';
 import 'package:mardona/view_model/demandes_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,22 @@ class HistoryWithProblemView extends StatefulWidget {
 
 class _HistoryWithProblemState extends State<HistoryWithProblemView> {
   DemandesViewModel demandesViewModel = DemandesViewModel();
+  AuthViewModel authViewModel = AuthViewModel();
+  List<Map> msgList = [];
 
   @override
   void initState() {
     super.initState();
     demandesViewModel.myDemandesWProblems([], context, null);
+    authViewModel.getInfoMessages(context).then((value) {
+      if (value != null && value['error'] != true && value['data'] != null && value['data'].length > 0) {
+        value['data'].forEach((element) => {
+          setState(() {
+            msgList.add(element);
+          })
+        });
+      }
+    });
   }
 
   @override
@@ -39,7 +51,7 @@ class _HistoryWithProblemState extends State<HistoryWithProblemView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.all(20),
                   child: AppTexts.titleText("Demandes avec problèmes"),
                 ),
                 const SizedBox(height: 10,),

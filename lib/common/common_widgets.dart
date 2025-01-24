@@ -268,8 +268,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSize {
         statusBarColor: AppColors.primaryColor,
         systemNavigationBarColor: AppColors.bgColor,
         systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
-        statusBarBrightness:Brightness.dark, // For iOS (dark icons)
+        statusBarIconBrightness: empty ? Brightness.dark : Brightness.light, // For Android (dark icons)
+        statusBarBrightness:empty ? Brightness.light : Brightness.dark, // For iOS (dark icons)
         systemNavigationBarDividerColor: AppColors.bgColor
       ),
     );

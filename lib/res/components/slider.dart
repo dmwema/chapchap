@@ -4,10 +4,11 @@ import 'package:mardona/res/app_colors.dart';
 class SliderPage extends StatelessWidget {
   final String title;
   final String description;
+  bool useUrl;
   final String image;
   Color text_color;
 
-  SliderPage({super.key, required this.title, required this.description, required this.image, Color this.text_color  = Colors.black});
+  SliderPage({super.key, required this.title, required this.description, this.useUrl = false, required this.image, Color this.text_color  = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,14 @@ class SliderPage extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15), // Assurez-vous que l'image a le même radius
-            child: Image.asset(
+            child: useUrl ? Image.network(
               image,
               width: width - 40,
-              fit: BoxFit.cover, // Ajustez l'image pour couvrir l'espace
+              fit: BoxFit.cover,
+            ) : Image.asset(
+              image,
+              width: width - 40,
+              fit: BoxFit.cover,
             ),
           ),
         ),

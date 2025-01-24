@@ -148,30 +148,16 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
     return HideKeyBordContainer(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0.0),
-          child: AppBar(
-            surfaceTintColor: Colors.transparent,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: AppColors.bgColor,
-              systemNavigationBarColor: Colors.white,
-              systemNavigationBarIconBrightness: Brightness.dark,
-              statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-              statusBarBrightness: Brightness.light, // For iOS (dark icons)
-              systemNavigationBarDividerColor: Colors.white,
-            ),
-          ),
+        appBar: CommonAppBar(
+          context: context,
+          backArrow: true,
+          title: "Mon compte",
         ),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20,),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: AppTexts.titleText("Mon compte")
-              ),
               Expanded(
                 child: ChangeNotifierProvider<DemandesViewModel>(
                     create: (BuildContext context) => demandesViewModel,
@@ -204,20 +190,19 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      AppTexts.smallText("GÉNÉRAL", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
                                       ProfileMenu(
                                         title: "informations personnelles",
-                                        icon: Icons.notes,
+                                        icon: Icons.sticky_note_2_outlined,
                                         noIcon: true,
                                         onTap: () {
                                           Navigator.pushNamed(context, RoutesName.profile);
                                         },
                                       ),
+                                      if (selectedFrom != null)
                                       ProfileMenu(
                                         title: "Pays de résidence",
-                                        icon: CupertinoIcons.map,
-                                        suffix: Image.asset("packages/country_icons/icons/flags/png/${selectedFrom.codePays}.png", width: 20, height: 15, fit: BoxFit.contain),
+                                        icon: CupertinoIcons.map_pin_ellipse,
+                                        suffix: AppTexts.bodyText(selectedFrom.codePays!.toUpperCase()),
                                         noIcon: true,
                                         onTap: () {
                                           showModalBottomSheet(
@@ -254,7 +239,7 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                                                 padding: const EdgeInsets.all(10),
                                                                 child: Row(
                                                                   children: [
-                                                                    Image.asset("packages/country_icons/icons/flags/png/${current.codePays}.png", width: 20, height: 20, fit: BoxFit.contain,),
+                                                                    Image.asset("assets/flag.png", width: 20, height: 20, fit: BoxFit.contain,),
                                                                     const SizedBox(width: 20,),
                                                                     AppTexts.descriptionText(current.paysNom.toString())
                                                                   ],
@@ -275,16 +260,59 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                           );
                                         },
                                       ),
+                                      ProfileMenu(
+                                        title: "Mon historique",
+                                        icon: Icons.history_rounded,
+                                        noIcon: true,
+                                        onTap: () {
+                                          Navigator.pushNamed(context, RoutesName.history);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "Mes factures",
+                                        icon: CupertinoIcons.doc_text,
+                                        noIcon: true,
+                                        onTap: () {
+                                          Navigator.pushNamed(context, RoutesName.invoices);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "Coupons rabais",
+                                        icon: CupertinoIcons.ticket,
+                                        noIcon: true,
+                                        onTap: () {
+                                          // Navigator.pushNamed(context, RoutesName.couponView);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: "Nous joindre",
+                                        icon: Icons.sms_outlined,
+                                        noIcon: true,
+                                        onTap: () {
+                                          // Navigator.pushNamed(context, RoutesName.contactView);
+                                        },
+                                      ),
+                                      ProfileMenu(
+                                        title: 'Parrainage',
+                                        icon: Icons.share_outlined,
+                                        noIcon: true,
+                                        onTap: () {
+                                          final box = context.findRenderObject() as RenderBox?;
+                                          Share.share(
+                                            "Découvrez Mardona Transfert! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://mardonatransfert.com\n\nUtilisez le code de parrainage ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
+                                            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                                          );
+                                        },
+                                        suffix: AppTexts.cardTitle("${user!.codeParrainage}"),
+                                      ),
                                       InkWell(
                                         onTap: () {
-
                                         },
                                         child: Container(
                                           width: double.infinity,
                                           margin: const EdgeInsets.only(bottom: 10),
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
+                                            border: Border(bottom: BorderSide(color: AppColors.formFieldBorderColor, width: 1)),
                                             borderRadius: const BorderRadius.all(Radius.circular(4)),
                                             boxShadow: [
                                               BoxShadow(
@@ -295,7 +323,7 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                               ),
                                             ],
                                           ),
-                                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+                                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -305,9 +333,10 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                                   mainAxisSize: MainAxisSize.max,
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    Platform.isAndroid ? Icon(Icons.fingerprint, color: AppColors.primaryColor, size: 16,) : SvgPicture.asset("assets/icons/face-id.svg", width: 16, color: AppColors.primaryColor,),
+                                                    const SizedBox(width: 15,),
+                                                    Platform.isAndroid ? Icon(Icons.fingerprint, color: AppColors.primaryColor, size: 16,) : SvgPicture.asset("assets/icons/face-id.svg", width: 16, color: AppColors.textGrey,),
                                                     const SizedBox(width: 20,),
-                                                    Flexible(child: AppTexts.cardTitle("Verrouillage biométrique")),
+                                                    Flexible(child: AppTexts.cardTitle("Verrouillage biométrique", color: AppColors.textGrey)),
                                                   ],
                                                 ),
                                               ),
@@ -342,552 +371,6 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 20,),
-                                      AppTexts.smallText("PRTEFEUILLE", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
-                                      ProfileMenu(
-                                        title: "Mon portefeuille",
-                                        icon: Icons.wallet,
-                                        suffix: ChangeNotifierProvider<WalletViewModel>(
-                                            create: (BuildContext context) => walletViewModel,
-                                            child: Consumer<WalletViewModel>(
-                                                builder: (context, value, _){
-                                                  switch (value.balance.status) {
-                                                    case Status.LOADING:
-                                                      return const CupertinoActivityIndicator();
-                                                    case Status.ERROR:
-                                                      return Container();
-                                                    default:
-                                                      var balance = value.balance.data!;
-                                                      return Row(
-                                                        children: [
-                                                          GestureDetector(
-                                                            onTap: _toggleVisibility,
-                                                            child: AnimatedContainer(
-                                                              duration: const Duration(milliseconds: 300),
-                                                              decoration: BoxDecoration(
-                                                                color: AppColors.primaryColor,
-                                                                borderRadius: BorderRadius.circular(30),
-                                                              ),
-                                                              margin: const EdgeInsets.only(right: 3),
-                                                              padding: const EdgeInsets.all(5),
-                                                              child: Center(
-                                                                child: Icon(
-                                                                  _isHidden
-                                                                      ? CupertinoIcons.eye_fill
-                                                                      : CupertinoIcons.eye_slash_fill,
-                                                                  color: Colors.white,
-                                                                  size: 13,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(10),
-                                                                  color: AppColors.primaryColor
-                                                              ),
-                                                              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                                              child: ImageFiltered(
-                                                                  imageFilter: ImageFilter.blur(sigmaX: _isHidden ? 5 : 0, sigmaY: _isHidden ? 5 : 0),
-                                                                  child: Text("${balance["balance"]} ${balance["currency"]}", style: const TextStyle(
-                                                                      fontWeight: FontWeight.w800,
-                                                                      color: Colors.white,
-                                                                      fontSize: 12
-                                                                  ),)
-                                                              ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                  }
-                                                })
-                                        ),
-                                        noIcon: true,
-                                        onTap: () async {
-                                          SharedPreferences preferences = await SharedPreferences.getInstance();
-                                          bool? presentationWalletPassed = preferences.getBool('wallet_presentation_passed');
-
-                                          if (presentationWalletPassed != true || user!.pin != true) {
-                                            await preferences.setBool('wallet_presentation_passed', true);
-                                            Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              RoutesName.walletPresentation,
-                                                  (route) => false,
-                                            );
-                                          } else {
-                                            Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              RoutesName.walletHome,
-                                                  (route) => false,
-                                            );
-                                          }
-                                        },
-                                      ),
-                                      if (user != null && user!.codeInterac != null && user!.codePays == "ca")
-                                        ProfileMenu(
-                                          title: "Rechargez votre portefeuille",
-                                          icon: Icons.payment,
-                                          noIcon: true,
-                                          onTap: () {
-                                            Navigator.pushNamed(context, RoutesName.interac);
-                                          },
-                                        ),
-                                      ProfileMenu(
-                                        title: "Points",
-                                        icon: Icons.circle,
-                                        suffix: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: Colors.orange
-                                            ),
-                                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                            child: AppTexts.cardTitle(user != null && user!.pointsBalance != null ? user!.pointsBalance.toString(): "0", color: Colors.white)
-                                        ),
-                                        noIcon: true,
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(builder: (context) => PointsView())
-                                          );
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "${user!.pin == true ? 'Modifier le ' : ''}Code PIN",
-                                        icon: Icons.pin,
-                                        suffix: Container(
-                                            decoration: BoxDecoration(
-                                                color: user!.pin == true ? Colors.green.withOpacity(.2) : Colors.red.withOpacity(.2),
-                                                borderRadius: BorderRadius.circular(10)
-                                            ),
-                                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                            child: Text(user!.pin == true ? "Défini" : "Non défini", style: TextStyle(
-                                                fontSize: 12,
-                                                color: user!.pin == true ? Colors.green : Colors.red,
-                                                fontWeight: FontWeight.bold
-                                            ),)
-                                        ),
-                                        noIcon: true,
-                                        onTap: () {
-                                          if (user!.pin != true) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return Dialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius
-                                                          .circular(20)
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(vertical: 30,
-                                                        horizontal: 30),
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize
-                                                          .min,
-                                                      children: [
-                                                        const Icon(
-                                                          Icons.info_outline,
-                                                          color: Colors.red,
-                                                          size: 60,
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,),
-                                                        const Text(
-                                                          "CODE PIN ?",
-                                                          textAlign: TextAlign
-                                                              .center,
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black,
-                                                              fontWeight: FontWeight
-                                                                  .bold
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,),
-                                                        const Text(
-                                                          "Le code PIN vous permet de renforcer la securite de votre compte",
-                                                          textAlign: TextAlign
-                                                              .center,
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,),
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment
-                                                              .center,
-                                                          children: [
-                                                            InkWell(
-                                                              child: Container(
-                                                                padding: const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical: 15,
-                                                                    horizontal: 20),
-                                                                decoration: BoxDecoration(
-                                                                    color: AppColors
-                                                                        .primaryColor,
-                                                                    borderRadius: BorderRadius
-                                                                        .circular(
-                                                                        30)
-                                                                ),
-                                                                child: const Text(
-                                                                  "Definir un code PIN",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),),
-                                                              ),
-                                                              onTap: () {
-                                                                Navigator.pushNamedAndRemoveUntil(
-                                                                  context,
-                                                                  RoutesName.createPin,
-                                                                      (route) => false,
-                                                                );
-                                                              },
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          } else {
-                                            Navigator.pushNamed(context, RoutesName.updatePin);
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(height: 20,),
-                                      AppTexts.smallText("TRANSFERTS", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
-                                      ProfileMenu(
-                                        title: "Mon historique",
-                                        icon: Icons.history_rounded,
-                                        noIcon: true,
-                                        onTap: () {
-                                          Navigator.pushNamed(context, RoutesName.history);
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "Mes factures",
-                                        icon: CupertinoIcons.doc_text,
-                                        noIcon: true,
-                                        onTap: () {
-                                          Navigator.pushNamed(context, RoutesName.invoices);
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "Coupons rabais & Parrainage",
-                                        icon: CupertinoIcons.gift,
-                                        noIcon: true,
-                                        onTap: () {
-                                          Navigator.pushNamed(context, RoutesName.couponView);
-                                        },
-                                      ),
-                                      const SizedBox(height: 20,),
-                                      AppTexts.smallText("NOTIFICATIONS", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
-                                      Container(
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.08),
-                                              spreadRadius: 3,
-                                              blurRadius: 5,
-                                              offset: const Offset(0, 4), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Icon(Icons.notifications_active_outlined, color: AppColors.primaryColor, size: 16,),
-                                                  const SizedBox(width: 20,),
-                                                  Flexible(child: AppTexts.cardTitle("Push")),
-                                                ],
-                                              ),
-                                            ),
-                                            CupertinoSwitch(
-                                              activeColor: AppColors.primaryColor,
-                                              value: pushNotificationsEnabled,
-                                              onChanged: (value) async {
-                                                setState(() {
-                                                  pushNotificationsEnabled = value;
-                                                });
-                                                await authViewModel.updateNotifications({
-                                                  'type': 'push_notification',
-                                                  'status': pushNotificationsEnabled
-                                                }, context).then((value2) {
-                                                  if (!value2) {
-                                                    setState(() {
-                                                      pushNotificationsEnabled = !value;
-                                                    });
-                                                  } else {
-                                                  }
-                                                });
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.08),
-                                              spreadRadius: 3,
-                                              blurRadius: 5,
-                                              offset: const Offset(0, 4), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Icon(Icons.alternate_email, color: AppColors.primaryColor, size: 16,),
-                                                  const SizedBox(width: 20,),
-                                                  Flexible(child: AppTexts.cardTitle("E-mail")),
-                                                ],
-                                              ),
-                                            ),
-                                            CupertinoSwitch(
-                                              activeColor: AppColors.primaryColor,
-                                              value: emailNotificationsEnabled,
-                                              onChanged: (value) async {
-                                                setState(() {
-                                                  emailNotificationsEnabled = value;
-                                                });
-                                                await authViewModel.updateNotifications({
-                                                  'type': 'email_notification',
-                                                  'status': emailNotificationsEnabled
-                                                }, context).then((value2) {
-                                                  if (!value2) {
-                                                    setState(() {
-                                                      emailNotificationsEnabled = !value;
-                                                    });
-                                                  } else {
-                                                  }
-                                                });
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(color: AppColors.formFieldBorderColor, width: 1),
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.08),
-                                              spreadRadius: 3,
-                                              blurRadius: 5,
-                                              offset: const Offset(0, 4), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Icon(Icons.sms_outlined, color: AppColors.primaryColor, size: 16,),
-                                                  const SizedBox(width: 20,),
-                                                  Flexible(child: AppTexts.cardTitle("SMS")),
-                                                ],
-                                              ),
-                                            ),
-                                            CupertinoSwitch(
-                                              activeColor: AppColors.primaryColor,
-                                              value: smsNotificationsEnabled,
-                                              onChanged: (value) async {
-                                                setState(() {
-                                                  smsNotificationsEnabled = value;
-                                                });
-                                                await authViewModel.updateNotifications({
-                                                  'type': 'sms_notification',
-                                                  'status': smsNotificationsEnabled
-                                                }, context).then((value2) {
-                                                  if (!value2) {
-                                                    setState(() {
-                                                      smsNotificationsEnabled = !value;
-                                                    });
-                                                  } else {
-                                                  }
-                                                });
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20,),
-                                      AppTexts.smallText("TRANSFERT CHAPCHAP", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
-                                      ProfileMenu(
-                                        title: "Nous joindre",
-                                        icon: Icons.phone_outlined,
-                                        noIcon: true,
-                                        onTap: () {
-                                          Navigator.pushNamed(context, RoutesName.contactView);
-                                        },
-                                      ),
-                                      if (user != null)
-                                      ProfileMenu(
-                                        title: 'Parrainage "${user!.codeParrainage}"',
-                                        icon: CupertinoIcons.gift,
-                                        noIcon: true,
-                                        suffix: InkWell(
-                                          onTap: () {
-                                            final box = context.findRenderObject() as RenderBox?;
-                                            Share.share(
-                                              "Découvrez Transfert ChapChap! 🎉 \n\nUne application facile à utiliser pour envoyer de l'argent à ses proche dans plusieurs pays du monde.\nObtenez-le à cette adresse https://chapchap.ca\n\nUtilisez le code de parrainage ${user!.codeParrainage} pour gagner 10\$ et me faire gagner 10\$",
-                                              sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-                                            );
-                                          },
-                                          child: Icon(Icons.share_rounded, color: AppColors.primaryColor, size: 20,),
-                                        ),
-                                        onTap: () {
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "Fermer mon compte",
-                                        icon: Icons.highlight_remove_outlined,
-                                        noIcon: true,
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return Dialog(
-                                                backgroundColor: AppColors.bgColor,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius
-                                                        .circular(20)
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 20,
-                                                      horizontal: 20),
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize
-                                                        .min,
-                                                    children: [
-                                                      AppTexts.titleText(
-                                                        "Voulez-vous vraiment fermer votre compte ?"),
-                                                      const SizedBox(
-                                                        height: 10,),
-                                                      AppTexts.bodyText(
-                                                        "Nous sommes désolés de savoir que vous souhaitez fermer votre compte.",),
-                                                      const SizedBox(
-                                                        height: 5,),
-                                                      Divider(color: AppColors.formFieldColor,),
-                                                      const SizedBox(
-                                                        height: 5,),
-                                                      AppTexts.descriptionText(
-                                                        "sachez que la fermeture de votre compte vous empêchera d'accéder aux plateformes de CHAPCHAP ainsi qu’aux informations relatives à vos transferts.",),
-                                                      const SizedBox(height: 10,),
-                                                      CustomFormField(label: "Raison (Optionnelle)", controller: _deletionReasonController, hint: "Raison (Optionnelle)"),
-                                                      const SizedBox(height: 20,),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment
-                                                            .center,
-                                                        children: [
-                                                          RoundedButton(title: "Annuler", color: AppColors.buttonBlackColor, onPress: () {
-                                                            Navigator.pop(context);
-                                                          }),
-                                                          const SizedBox(width: 5,),
-                                                          RoundedButton(title: "Confirmer", onPress: () async {
-                                                            await authViewModel.deleteAccount({
-                                                              'reason': _deletionReasonController.text,
-                                                            }, context).then((message) async {
-                                                              if (message != null) {
-                                                                await  UserViewModel().remove().then((value) {
-                                                                  if (value) {
-                                                                    Navigator.pushAndRemoveUntil(
-                                                                      context,
-                                                                      CupertinoPageRoute(
-                                                                        builder: (context) => WelcomeView(message: message),
-                                                                      ),
-                                                                          (route) => false,
-                                                                    );
-                                                                  }
-                                                                });
-                                                              }
-                                                            });
-                                                          }),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                      const SizedBox(height: 20,),
-                                      AppTexts.smallText("NOS POLITIQUES", color: Colors.black.withOpacity(.2)),
-                                      const SizedBox(height: 10,),
-                                      ProfileMenu(
-                                        title: "Politique de confidentialité",
-                                        icon: Icons.privacy_tip_outlined,
-                                        noIcon: true,
-                                        onTap: () async {
-                                            var urllaunchable = await canLaunch("https://chapchap.ca/privacy_policy"); //canLaunch is from url_launcher package
-                                            if(urllaunchable){
-                                              await launch("https://chapchap.ca/privacy_policy"); //launch is from url_launcher package to launch URL
-                                            }else{
-                                              Utils.toastMessage("Impossible d'ouvrir l'url des politiques");
-                                            }
-                                        },
-                                      ),
-                                      ProfileMenu(
-                                        title: "Conditions d'utilisation",
-                                        icon: Icons.privacy_tip_outlined,
-                                        noIcon: true,
-                                        onTap: () async {
-                                          var urllaunchable = await canLaunch("https://chapchap.ca/terms_of_condition"); //canLaunch is from url_launcher package
-                                          if(urllaunchable){
-                                            await launch("https://chapchap.ca/terms_of_condition"); //launch is from url_launcher package to launch URL
-                                          }else{
-                                            Utils.toastMessage("Impossible d'ouvrir l'url des politiques");
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(height: 10,),
                                       GestureDetector(
                                         onTap: () {
                                           showCupertinoDialog(
@@ -930,23 +413,25 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: AppColors.formFieldColor,
-                                              borderRadius: BorderRadius.circular(5)
+                                            color: AppColors.formFieldColor,
+                                            borderRadius: BorderRadius.circular(5)
                                           ),
-                                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                                           child: Center(
-                                            child: AppTexts.smallText("Se déconnecter"),
+                                            child: Row(
+                                              children: [
+                                                AppTexts.smallText("Se déconnecter"),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 30,),
-                                      Center(child: Image.asset('assets/logo_red.png', width: 18)),
-                                      const SizedBox(height: 5,),
+                                      const SizedBox(height: 20,),
                                       Center(
-                                        child: AppTexts.menuText("Version 4.0.0", color: AppColors.buttonBlackColor.withOpacity(.5))
+                                        child: AppTexts.menuText("Version 1.0.0", color: AppColors.buttonBlackColor.withOpacity(.5))
                                       ),
                                       const SizedBox(height: 2,),
-                                      Center(child: AppTexts.menuText("@ 2025 Transfert ChapChap", color: AppColors.buttonBlackColor.withOpacity(.8))),
+                                      Center(child: AppTexts.menuText("@ 2025 Mardona Transfert", color: AppColors.buttonBlackColor.withOpacity(.8))),
                                       const SizedBox(height: 40),
                                     ],
                                   ),
@@ -957,20 +442,6 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                 ),
               ),
             ],
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton:ScaleTransition(
-          scale: _animation,
-          child: FloatingActionButton(
-            backgroundColor: AppColors.primaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, RoutesName.send);
-            },
-            child: const Icon(CupertinoIcons.arrow_up_right_circle, color: Colors.white, size: 35,),
           ),
         ),
         bottomNavigationBar: commonBottomAppBar(context: context, active: 3),
