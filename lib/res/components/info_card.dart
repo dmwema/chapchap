@@ -1,0 +1,76 @@
+import 'package:chapchap/res/app_texts.dart';
+import 'package:chapchap/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../app_colors.dart';
+
+class InfoCard extends StatelessWidget {
+  final String type;
+  final String content;
+
+  const InfoCard({required this.type, required this.content});
+  @override
+  Widget build(BuildContext context) {
+    Color color = Colors.black;
+
+    if (type == "PROMO") {
+      color = Colors.green;
+    } else if (type == "INFO") {
+       color = Colors.orange;
+    } else if (type == "DANGER") {
+      color = Colors.red;
+    }
+
+    IconData icon = Icons.error_outline_rounded;
+
+    if (type == "PROMO") {
+      icon = CupertinoIcons.gift;
+    } else if (type == "INFO") {
+      icon = CupertinoIcons.info;
+    } else if (type == "DANGER") {
+      icon = CupertinoIcons.exclamationmark_circle;
+    }
+
+    
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [Utils.customShadow()],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              color: type == "PROMO" ? Colors.green : (type == "INFO" ? Colors.orange : AppColors.primaryColor),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            width: 60,
+            height: 60,
+            child: Icon(icon, color: Colors.white, size: 40,)
+          ),
+          const SizedBox(width: 5,),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppTexts.cardTitle(type == "PROMO" ? "Promotion": (type == "INFO" ? "Information": "Alert"),),
+                const SizedBox(
+                  height: 2,
+                ),
+                AppTexts.cardDescription(content)
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

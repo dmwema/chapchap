@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "861779122333",
+    "project_id": "chapchapapp-fa630",
+    "storage_bucket": "chapchapapp-fa630.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861779122333:android:371c4bd13350821e679c74",
+        "android_client_info": {
+          "package_name": "com.wizmea.chapchap_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGhsmVOqAL6NDyx4aZm1QHIRURrwUmvDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
