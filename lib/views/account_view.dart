@@ -98,6 +98,96 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
     });
   }
 
+  void _showIdentityVerificationDialog() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        bool loading = false;
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return Dialog(
+              backgroundColor: AppColors.bgColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.verified_user, color: AppColors.primaryColor, size: 60),
+                    const SizedBox(height: 20),
+                    AppTexts.titleText(AppLocalizations.of(context)!.translate("verify_my_identity")),
+                    const SizedBox(height: 12),
+                    Text(
+                      AppLocalizations.of(context)!.translate("verify_identity_confirmation"),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: RoundedButton(
+                            title: AppLocalizations.of(context)!.translate("cancel"),
+                            color: Colors.grey.shade300,
+                            textColor: Colors.black,
+                            onPress: loading ? null : () => Navigator.pop(dialogContext),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: RoundedButton(
+                            title: AppLocalizations.of(context)!.translate("confirm"),
+                            loading: loading,
+                            onPress: loading
+                                ? null
+                                : () async {
+                                    setDialogState(() => loading = true);
+                                    final value = await authViewModel.initiateIdentityVerification(context);
+                                    if (!dialogContext.mounted) return;
+                                    setDialogState(() => loading = false);
+                                    if (value == null) return;
+
+                                    final isSuccess = value['success'] == true || value['error'] != true;
+                                    if (!isSuccess) {
+                                      Utils.flushBarErrorMessage(value['message'] ?? '', context);
+                                      return;
+                                    }
+
+                                    final message = value['message']?.toString() ?? '';
+                                    final url = value['data']?['url']?.toString();
+                                    Navigator.pop(dialogContext);
+
+                                    if (url == null || url.isEmpty) {
+                                      if (message.isNotEmpty) {
+                                        Utils.toastMessage(message);
+                                      }
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => PaymentWebView(
+                                            url: url,
+                                            headerMessage: message.isNotEmpty ? message : null,
+                                            popOnBack: true,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -222,6 +312,14 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                     children: [
                                       AppTexts.smallText(AppLocalizations.of(context)!.translate("general").toUpperCase(), color: Colors.black.withOpacity(.2)),
                                       const SizedBox(height: 10,),
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        child: RoundedButton(
+                                          title: AppLocalizations.of(context)!.translate("verify_my_identity"),
+                                          icon: Icons.verified_user,
+                                          onPress: _showIdentityVerificationDialog,
+                                        ),
+                                      ),
                                       ProfileMenu(
                                         title: AppLocalizations.of(context)!.translate("personal_information"),
                                         icon: Icons.notes,

@@ -481,6 +481,8 @@
   "logout_confirmation": "Do you really want to log out?",
   "modify_pin_code": "Modify the PIN Code",
   "general": "General",
+  "verify_my_identity": "Verify my identity",
+  "verify_identity_confirmation": "Do you want to start your identity verification?",
   "personal_information": "Personal Information",
   "country_of_residence": "Country of Residence",
   "selectCountry": "Select a Country",

@@ -1,5 +1,6 @@
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/res/app_colors.dart';
+import 'package:chapchap/res/app_texts.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/rate_app_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,8 +10,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentWebView extends StatefulWidget {
   final String url;
+  final String? headerMessage;
+  final bool popOnBack;
 
-  const PaymentWebView({Key? key, required this.url}) : super(key: key);
+  const PaymentWebView({
+    Key? key,
+    required this.url,
+    this.headerMessage,
+    this.popOnBack = false,
+  }) : super(key: key);
 
   @override
   State<PaymentWebView> createState() => _PaymentWebViewState();
@@ -83,22 +91,29 @@ class _PaymentWebViewState extends State<PaymentWebView> {
           context: context,
           backArrow: true,
           backClick: () async {
-            // if (await _controller.canGoBack()) {
-            //   _controller.goBack();
-            // } else {
-              await RateAppService.markTransferCompleted();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                RoutesName.home,
-                    (route) => false,
-              );
-            // }
+            if (widget.popOnBack) {
+              Navigator.pop(context);
+              return;
+            }
+            await RateAppService.markTransferCompleted();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutesName.home,
+              (route) => false,
+            );
           },
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (widget.headerMessage != null && widget.headerMessage!.isNotEmpty)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                color: AppColors.primaryColor.withOpacity(0.1),
+                child: AppTexts.descriptionText(widget.headerMessage!),
+              ),
             Expanded(
               child: Stack(
                 children: [

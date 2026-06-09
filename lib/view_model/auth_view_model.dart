@@ -474,4 +474,14 @@ class AuthViewModel with ChangeNotifier{
     });
   }
 
+  Future<dynamic> initiateIdentityVerification(BuildContext context) async {
+    dynamic response;
+    await _repository.initiateIdentityVerification(context: context).then((value) {
+      response = value;
+    }).onError((error, stackTrace) {
+      Utils.flushBarErrorMessage("Une erreur est survenue. Veuillez réessayer plutard.", context);
+    });
+    return response;
+  }
+
 }

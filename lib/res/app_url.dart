@@ -54,6 +54,7 @@ class AppUrl {
   static var allInfoMessages = '$baseUrl/get_all_msg_info';
 
   static var updateProfile = '$baseUrl/update_profile';
+  static var initiateIdentityVerification = '$baseUrl/initiate_identity_verification';
 
   // CODE PIN
   static var createPin = '$baseUrl/creat_pin';

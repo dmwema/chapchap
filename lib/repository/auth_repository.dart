@@ -170,4 +170,13 @@ class AuthRepository {
     }
   }
 
+  Future<dynamic> initiateIdentityVerification ({required BuildContext context}) async {
+    try  {
+      dynamic response = await _apiServices.getPostApiResponse(AppUrl.initiateIdentityVerification, {}, context: context, auth: true);
+      return response;
+    } catch(e) {
+      rethrow;
+    }
+  }
+
 }

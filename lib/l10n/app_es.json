@@ -463,6 +463,8 @@
   "pin_creation_prompt": "Para comenzar, por favor crea un PIN para asegurar tu Cartera!",
   "set_pin": "Establecer un PIN",
   "general": "General",
+  "verify_my_identity": "Verificar mi identidad",
+  "verify_identity_confirmation": "¿Desea iniciar la verificación de su identidad?",
   "personal_information": "Información personal",
   "country_of_residence": "País de residencia",
   "selectCountry": "Seleccionar un país",

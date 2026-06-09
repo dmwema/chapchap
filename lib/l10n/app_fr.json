@@ -463,6 +463,8 @@
   "push": "Push",
   "modify_pin_code": "Modifier le code PIN",
   "general": "Général",
+  "verify_my_identity": "Vérifier mon identité",
+  "verify_identity_confirmation": "Souhaitez-vous lancer la vérification de votre identité ?",
   "personal_information": "Informations personnelles",
   "country_of_residence": "Pays de résidence",
   "selectCountry": "Sélectionner un pays",
