@@ -26,6 +26,7 @@ import 'package:chapchap/views/points/points_view.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:chapchap/utils/rate_app_service.dart';
 import 'package:chapchap/res/components/rate_app_modal.dart';
+import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -166,11 +167,15 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
 
-    authViewModel.myInfos(context).then((value) => {
-      if (value != null) {
-        setState(() {
-          user = value;
-        })
+    authViewModel.myInfos(context).then((value) {
+      if (value == null || !mounted) return;
+      setState(() => user = value);
+
+      final message = value.message?.trim();
+      if (message != null && message.isNotEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _showUserMessageDialog(message);
+        });
       }
     });
 
@@ -356,6 +361,38 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
               child: AppTexts.smallText("Oui", color: AppColors.primaryColor),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  void _showUserMessageDialog(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return PopScope(
+          canPop: false,
+          child: Dialog(
+            backgroundColor: AppColors.bgColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.info_outline, color: AppColors.primaryColor, size: 60),
+                  const SizedBox(height: 20),
+                  AppTexts.descriptionText(message),
+                  const SizedBox(height: 24),
+                  RoundedButton(
+                    title: AppLocalizations.of(context)!.translate("understood"),
+                    onPress: () => Navigator.pop(dialogContext),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );

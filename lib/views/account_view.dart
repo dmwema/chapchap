@@ -24,7 +24,6 @@ import 'package:chapchap/view_model/user_view_model.dart';
 import 'package:chapchap/view_model/wallet_view_model.dart';
 import 'package:chapchap/views/Tontine_announcement_view.dart';
 import 'package:chapchap/views/auth/welcome_view.dart';
-import 'package:chapchap/views/payment_webview.dart';
 import 'package:chapchap/views/permits_view.dart';
 import 'package:chapchap/views/points/points_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -162,16 +161,15 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                         Utils.toastMessage(message);
                                       }
                                     } else {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => PaymentWebView(
-                                            url: url,
-                                            // headerMessage: message.isNotEmpty ? message : null,
-                                            popOnBack: true,
-                                          ),
-                                        ),
-                                      );
+                                      if (message.isNotEmpty) {
+                                        Utils.toastMessage(message);
+                                      }
+                                      final uri = Uri.parse(url);
+                                      if (await canLaunchUrl(uri)) {
+                                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                      } else {
+                                        Utils.flushBarErrorMessage('Could not launch $url', context);
+                                      }
                                     }
                                   },
                           ),
