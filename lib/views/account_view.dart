@@ -167,7 +167,7 @@ class _AccountViewState extends State<AccountView> with SingleTickerProviderStat
                                         MaterialPageRoute(
                                           builder: (_) => PaymentWebView(
                                             url: url,
-                                            headerMessage: message.isNotEmpty ? message : null,
+                                            // headerMessage: message.isNotEmpty ? message : null,
                                             popOnBack: true,
                                           ),
                                         ),

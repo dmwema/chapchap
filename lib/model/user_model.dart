@@ -17,6 +17,7 @@ class UserModel {
   String? telClient;
   String? villeClient;
   String? username;
+  String? message;
   int? idTypeClient;
   String? photoProfil;
   bool? belmoney;
@@ -54,6 +55,7 @@ class UserModel {
       this.smsNotification,
       this.belmoney,
       this.nomClient,
+      this.message,
       this.prenomClient,
       this.updatePhone,
       this.pin,
@@ -93,6 +95,7 @@ class UserModel {
     paysNationalite = json['pays_nationalite'];
     langue = json['langue'];
     nomClient = json['nomClient'];
+    message = json['message'];
     villeClient = json['villeClient'];
     updatePhone = json['update_phone'];
     emailNotification = json['email_notification'];
@@ -135,6 +138,7 @@ class UserModel {
     data['pays_nationalite'] = paysNationalite;
     data['update_phone'] = updatePhone;
     data['villeClient'] = villeClient;
+    data['message'] = message;
     data['client'] = this.client;
     data['solde_parrainage'] = soldeParrainage;
     data['points_balance'] = pointsBalance;
