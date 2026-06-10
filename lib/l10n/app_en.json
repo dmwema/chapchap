@@ -556,5 +556,14 @@
   "reason_optional": "Reason (Optional)",
   "languages": "Languages",
   "language": "Language",
-  "choose_language": "Choose your language"
+  "choose_language": "Choose your language",
+  "repeat_transfer_loading": "Preparing transfer…",
+  "repeat_transfer_unavailable_title": "Transfer unavailable",
+  "repeat_transfer_missing_beneficiary": "This transaction does not contain a valid beneficiary.",
+  "repeat_transfer_beneficiary_not_found": "This beneficiary no longer exists. Please select another one.",
+  "repeat_transfer_beneficiary_archived": "This beneficiary is archived. Unarchive them from your beneficiaries to repeat this transfer.",
+  "repeat_transfer_destination_unavailable": "The destination for this transfer is no longer available.",
+  "repeat_transfer_data_load_failed": "Unable to load transfer information. Please try again.",
+  "repeat_transfer_beneficiary_invalid": "The selected beneficiary is no longer available.",
+  "ok": "OK"
 }

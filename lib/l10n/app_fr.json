@@ -554,5 +554,14 @@
   "confirm_new_password": "Confirmer le nouveau mot de passe",
   "all_fields_required": "Tous les champs sont requis",
   "language": "Langue",
-  "choose_language": "Choisissez votre langue"
+  "choose_language": "Choisissez votre langue",
+  "repeat_transfer_loading": "Préparation du transfert…",
+  "repeat_transfer_unavailable_title": "Transfert indisponible",
+  "repeat_transfer_missing_beneficiary": "Cette transaction ne contient pas de bénéficiaire valide.",
+  "repeat_transfer_beneficiary_not_found": "Ce bénéficiaire n'existe plus. Veuillez en sélectionner un autre.",
+  "repeat_transfer_beneficiary_archived": "Ce bénéficiaire est archivé. Désarchivez-le depuis vos bénéficiaires pour refaire ce transfert.",
+  "repeat_transfer_destination_unavailable": "La destination de ce transfert n'est plus disponible.",
+  "repeat_transfer_data_load_failed": "Impossible de charger les informations du transfert. Veuillez réessayer.",
+  "repeat_transfer_beneficiary_invalid": "Le bénéficiaire sélectionné n'est plus disponible.",
+  "ok": "OK"
 }

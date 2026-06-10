@@ -233,16 +233,21 @@ class DemandesViewModel with ChangeNotifier {
 
   Future<void> beneficiaires(dynamic data, BuildContext context, {bool recent = false}) async {
     setLoading(true);
+    setBeneficiairesList(ApiResponse.loading());
     await _repository.beneficiaires(data, context: context, recent: recent).then((value) {
       if (_isDisposed) return;
-      if (value!=null){
-        setLoading(false);
-        if (value['error'] != true) {
-          setBeneficiairesList(ApiResponse.completed(value["data"]));
-        }
+      setLoading(false);
+      if (value != null && value['error'] != true) {
+        setBeneficiairesList(ApiResponse.completed(value["data"]));
+      } else {
+        final message = value?['message']?.toString() ??
+            "Impossible de charger les bénéficiaires. Veuillez réessayer.";
+        setBeneficiairesList(ApiResponse.error(message));
       }
     }).onError((error, stackTrace) {
+      if (_isDisposed) return;
       setLoading(false);
+      setBeneficiairesList(ApiResponse.error(error.toString()));
     });
   }
 

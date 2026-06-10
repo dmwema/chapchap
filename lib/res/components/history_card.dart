@@ -1,7 +1,7 @@
+import 'dart:developer' as developer;
+
 import 'package:chapchap/l10n/app_localizations.dart';
-import 'package:chapchap/model/beneficiaire_model.dart';
 import 'package:chapchap/model/demande_model.dart';
-import 'package:chapchap/model/pays_destination_model.dart';
 import 'package:chapchap/model/user_model.dart';
 import 'package:chapchap/res/app_colors.dart';
 import 'package:chapchap/res/app_texts.dart';
@@ -9,11 +9,11 @@ import 'package:chapchap/res/components/confirm_cancel.dart';
 import 'package:chapchap/res/components/modal/change_beneficiaire_modal.dart';
 import 'package:chapchap/res/components/rounded_button.dart';
 import 'package:chapchap/res/components/wallet_pin_dialog.dart';
+import 'package:chapchap/utils/repeat_transfer_helper.dart';
 import 'package:chapchap/utils/routes/routes_name.dart';
 import 'package:chapchap/utils/utils.dart';
 import 'package:chapchap/view_model/demandes_view_model.dart';
 import 'package:chapchap/view_model/user_view_model.dart';
-import 'package:chapchap/views/confirm_cancel_view.dart';
 import 'package:chapchap/views/payment_webview.dart';
 import 'package:chapchap/views/send_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,12 +33,80 @@ class HistoryCard extends StatefulWidget {
 
 class _HistoryCardState extends State<HistoryCard> {
 
-  String truncateWithEllipsis(String text, {int maxLength = 22}) {
-    if (text.length <= maxLength) {
-      return text;
-    } else {
-      return '${text.substring(0, maxLength - 3)}...';
+  Future<void> _startRepeatTransfer(BuildContext sheetContext, DemandeModel demande) async {
+    if (user == null || !mounted) {
+      developer.log('abort: user null or widget unmounted', name: 'RepeatTransfer');
+      return;
     }
+
+    developer.log('start repeat transfer demande=${demande.idDemande}', name: 'RepeatTransfer');
+    RepeatTransferHelper.showLoadingDialog(context);
+
+    RepeatTransferResult result;
+    try {
+      result = await RepeatTransferHelper.resolve(context: context, demande: demande);
+    } catch (error, stackTrace) {
+      developer.log(
+        'resolve threw in history_card',
+        name: 'RepeatTransfer',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      result = RepeatTransferResult.failure(RepeatTransferFailure.dataLoadFailed);
+    } finally {
+      if (mounted) {
+        RepeatTransferHelper.hideLoadingDialog(context);
+      }
+    }
+
+    if (!mounted) {
+      developer.log('widget unmounted after resolve', name: 'RepeatTransfer');
+      return;
+    }
+
+    if (!result.isSuccess) {
+      developer.log('resolve failed: ${result.failure}', name: 'RepeatTransfer');
+      final failure = result.failure!;
+      if (failure == RepeatTransferFailure.beneficiaryNotFound ||
+          failure == RepeatTransferFailure.beneficiaryArchived ||
+          failure == RepeatTransferFailure.missingBeneficiary) {
+        Navigator.pop(sheetContext);
+        RepeatTransferHelper.openSendViewForMissingBeneficiary(
+          context: context,
+          demande: demande,
+          failure: failure,
+        );
+        return;
+      }
+
+      RepeatTransferHelper.showFailureDialog(
+        context,
+        RepeatTransferHelper.failureMessage(context, failure),
+      );
+      return;
+    }
+
+    developer.log('resolve success, opening SendView confirmation', name: 'RepeatTransfer');
+    final prefill = result.prefill!;
+    Navigator.pop(sheetContext);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SendView(
+          beneficiaire: prefill.beneficiaire,
+          destination: demande.codePaysDest,
+          selectedDestination: prefill.destination,
+          paysDestination: prefill.paysDestination,
+          modeRetrait: prefill.modeRetrait,
+          motif: prefill.motif,
+          amount: prefill.amount,
+          repeatFromHistory: true,
+          repeatTransferValidated: true,
+          prefilledBeneficiaires: prefill.beneficiaires,
+          prefilledMotifs: prefill.motifs,
+        ),
+      ),
+    );
   }
 
   UserModel? user;
@@ -180,21 +248,23 @@ class _HistoryCardState extends State<HistoryCard> {
                       ],
                     ),
                     Divider(color: AppColors.formFieldColor,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AppTexts.smallText(AppLocalizations.of(context).translate('beneficiary')),  // Traduction dynamique
-                        AppTexts.bodyText(demande.beneficiaire!.fullName(), bold: true),
-                      ],
-                    ),
-                    Divider(color: AppColors.formFieldColor,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AppTexts.smallText(AppLocalizations.of(context)!.translate('phone')),  // Traduction dynamique
-                        AppTexts.bodyText(demande.beneficiaire!.telBeneficiaire.toString(), bold: true),
-                      ],
-                    ),
+                    if (demande.beneficiaire != null) ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText(AppLocalizations.of(context).translate('beneficiary')),
+                          AppTexts.bodyText(demande.beneficiaire!.fullName(), bold: true),
+                        ],
+                      ),
+                      Divider(color: AppColors.formFieldColor,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppTexts.smallText(AppLocalizations.of(context)!.translate('phone')),
+                          AppTexts.bodyText(demande.beneficiaire!.telBeneficiaire.toString(), bold: true),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: 20,),
                     Wrap(
                       spacing: 1,
@@ -254,31 +324,11 @@ class _HistoryCardState extends State<HistoryCard> {
                           ),
                         if (demande.lienPaiement != null && demande.facture == null && hasProblem != true)
                           const SizedBox(height: 5,),
-                        if (hasProblem != true && user != null)
+                        if (hasProblem != true && user != null && demande.beneficiaire != null)
                           RoundedButton(
-                            onPress: () async {
-                              BeneficiaireModel beneficiaire = demande.beneficiaire!;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SendView(
-                                  beneficiaire: beneficiaire,
-                                  destination: demande.codePaysDest,
-                                  selectedDestination: beneficiaire.destination,
-                                  paysDestination: PaysDestinationModel(
-                                    idPaysSrce: user!.idPays,
-                                    codePaysSrce: demande.codePaysSrce,
-                                    paysCodeMonnaieSrce:  demande.paysCodeMonnaieSrce,
-                                    paysMonnaieSrce: demande.paysMonnaieSrce,
-                                    paysSrce: demande.paysSrce
-                                  ),
-                                  modeRetrait: demande.modeRetrait,
-                                  motif: demande.motif,
-                                  amount: double.parse(demande.montanceSrce.toString().replaceAll(',', '.').replaceAll(' ', '')),
-                                )),
-                              );
-                            },
+                            onPress: () => _startRepeatTransfer(context, demande),
                             color: AppColors.buttonBlackColor,
-                            title: "Nouveau Transfert",
+                            title: AppLocalizations.of(context)!.translate('new_transfer'),
                             icon: CupertinoIcons.arrow_up_right
                           ),
                         if (
@@ -423,7 +473,7 @@ class _HistoryCardState extends State<HistoryCard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             AppTexts.cardTitle(
-                              demande.beneficiaire!.fullName(),
+                              demande.beneficiaire?.fullName() ?? AppLocalizations.of(context)!.translate('beneficiary'),
                             ),
                             const SizedBox(height: 2),
                             AppTexts.cardDescription(demande.date.toString()),

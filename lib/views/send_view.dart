@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chapchap/common/common_widgets.dart';
 import 'package:chapchap/l10n/app_localizations.dart';
 import 'package:chapchap/model/beneficiaire_model.dart';
+import 'package:chapchap/data/response/api_response.dart';
 import 'package:chapchap/data/response/status.dart';
 import 'package:chapchap/model/motif_model.dart';
 import 'package:chapchap/model/pays_destination_model.dart';
@@ -35,6 +36,10 @@ class SendView extends StatefulWidget {
   double? amount;
   ModeRetrait? modeRetrait;
   MotifModel? motif;
+  bool repeatFromHistory;
+  bool repeatTransferValidated;
+  List<dynamic>? prefilledBeneficiaires;
+  List<MotifModel>? prefilledMotifs;
   SendView({
     super.key,
     this.beneficiaire,
@@ -44,6 +49,10 @@ class SendView extends StatefulWidget {
     this.selectedDestination,
     this.destination,
     this.amount,
+    this.repeatFromHistory = false,
+    this.repeatTransferValidated = false,
+    this.prefilledBeneficiaires,
+    this.prefilledMotifs,
   });
 
   @override
@@ -58,7 +67,7 @@ class _SendViewState extends State<SendView> {
 
   int step = STEP_BENEFICIARY;
   int steps = 4;
-  final PageController _controller = PageController();
+  late final PageController _controller;
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
   final TextEditingController _searchBeneficiaireController = TextEditingController();
@@ -77,6 +86,9 @@ class _SendViewState extends State<SendView> {
   bool initBen = false;
   bool loadedDestination = false;
   bool loadedModeRetrait = false;
+  bool loadedMotif = false;
+  bool _initialCalculationRequested = false;
+  bool _beneficiaryValidationFailed = false;
   bool loading = false;
   bool loadingPromo = false;
   bool loadingPromoSucces = false;
@@ -140,16 +152,32 @@ class _SendViewState extends State<SendView> {
     if (widget.motif != null) {
       selectedMotif = widget.motif;
     }
+    if (widget.prefilledMotifs != null) {
+      motifs = List<MotifModel>.from(widget.prefilledMotifs!);
+      loadedMotif = true;
+    }
 
-    demandesViewModel.myDestinationsApi([], context);
-    demandesViewModel2.beneficiaires([], context);
-    demandesViewModel3.motifs([], context).then((value) {
-      if (mounted) {
-        setState(() {
-          motifs = value;
-        });
-      }
-    });
+    if (widget.repeatTransferValidated) {
+      _applyValidatedRepeatTransferPrefill();
+    } else {
+      demandesViewModel.myDestinationsApi([], context);
+      demandesViewModel2.beneficiaires([], context);
+      demandesViewModel3.motifs([], context).then((value) {
+        if (mounted) {
+          setState(() {
+            motifs = value;
+            _resolvePrefilledMotif();
+          });
+        }
+      });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _initializePageView();
+      });
+    }
+
+    step = _resolveInitialStep();
+    _controller = PageController(initialPage: step);
 
     UserViewModel().getUser().then((value) {
       if (mounted) {
@@ -158,19 +186,68 @@ class _SendViewState extends State<SendView> {
         });
       }
     });
+  }
+
+  int _resolveInitialStep() {
+    if (widget.repeatTransferValidated && widget.beneficiaire != null) {
+      return STEP_CONFIRMATION;
+    }
+    if (widget.beneficiaire != null && !_beneficiaryValidationFailed) {
+      return _calculateInitialStep();
+    }
+    return STEP_BENEFICIARY;
+  }
+
+  void _applyValidatedRepeatTransferPrefill() {
+    selectedBeneficiaire = widget.beneficiaire;
+    selectedDesinaion = widget.selectedDestination;
+    paysDestinationModel = widget.paysDestination;
+    selectedModeRetrait = widget.modeRetrait;
+    selectedMotif = widget.motif;
+    loadedDestination = true;
+    loadedModeRetrait = true;
+    loadedMotif = true;
+    initBen = true;
+
+    if (widget.paysDestination != null) {
+      demandesViewModel.setPaysDestination(ApiResponse.completed(widget.paysDestination));
+    }
+    if (widget.prefilledBeneficiaires != null) {
+      demandesViewModel2.setBeneficiairesList(
+        ApiResponse.completed(widget.prefilledBeneficiaires),
+      );
+    }
+
+    demandesViewModel.myDestinationsApi([], context).then((freshPaysDestination) {
+      if (!mounted || freshPaysDestination == null) return;
+      setState(() {
+        paysDestinationModel = freshPaysDestination;
+        demandesViewModel.setPaysDestination(ApiResponse.completed(freshPaysDestination));
+        _resolvePrefilledDestination(freshPaysDestination);
+        _resolvePrefilledModeRetrait();
+      });
+      _requestInitialCalculation(force: true);
+    });
+  }
+
+  void _requestInitialCalculation({bool force = false}) {
+    if (_initialCalculationRequested && !force) return;
+    if (widget.amount == null || selectedDesinaion == null) return;
+
+    _initialCalculationRequested = true;
+    insert(widget.amount, _fromController);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initializePageView();
+      if (!mounted || widget.amount == null) return;
+      _requestCalculation(fromSource: true, amount: widget.amount!);
     });
   }
 
   void _initializePageView() {
     if (widget.beneficiaire != null && !initBen) {
-      int stepToGo = _calculateInitialStep();
-
-      if (widget.amount != null) {
-        _fromController.text = widget.amount!.toString();
-      }
+      final stepToGo = _beneficiaryValidationFailed
+          ? STEP_BENEFICIARY
+          : _calculateInitialStep();
 
       setState(() {
         step = stepToGo;
@@ -178,27 +255,142 @@ class _SendViewState extends State<SendView> {
         selectedBeneficiaire = widget.beneficiaire;
       });
       _controller.jumpToPage(stepToGo);
-
-      if (widget.amount != null && selectedDesinaion != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _requestCalculation(fromSource: true, amount: widget.amount!);
-        });
-      }
     }
   }
 
   int _calculateInitialStep() {
-    int stepToGo = STEP_AMOUNT; // Start at step 1 if beneficiary exists
+    if (widget.beneficiaire == null) return STEP_BENEFICIARY;
 
-    if (widget.modeRetrait != null) {
-      stepToGo = STEP_REASON; // Step 2 if modeRetrait exists
+    int stepToGo = STEP_AMOUNT;
 
-      if (widget.motif != null) {
-        stepToGo = STEP_CONFIRMATION; // Step 3 if motif exists
+    if (selectedModeRetrait != null) {
+      stepToGo = STEP_REASON;
+      if (selectedMotif != null) {
+        stepToGo = STEP_CONFIRMATION;
       }
     }
 
     return stepToGo;
+  }
+
+  BeneficiaireModel? _findBeneficiaryInList(List<dynamic>? data, int? id) {
+    if (data == null || id == null) return null;
+    for (final item in data) {
+      if (item == null) continue;
+      final beneficiary = BeneficiaireModel.fromJson(Map<String, dynamic>.from(item));
+      if (beneficiary.idBeneficiaire == id) {
+        return beneficiary;
+      }
+    }
+    return null;
+  }
+
+  void _resolvePrefilledMotif() {
+    if (loadedMotif || widget.motif == null || motifs.isEmpty) return;
+
+    MotifModel? resolved;
+    for (final motif in motifs) {
+      if (motif.idMotif == widget.motif!.idMotif) {
+        resolved = motif;
+        break;
+      }
+    }
+    selectedMotif = resolved;
+    loadedMotif = true;
+    _syncStepAfterPrefillResolution();
+  }
+
+  void _resolvePrefilledDestination(PaysDestinationModel freshPaysDestination) {
+    if (widget.destination == null || freshPaysDestination.destination == null) return;
+
+    for (final element in freshPaysDestination.destination!) {
+      if (element.codePaysDest == widget.destination) {
+        selectedDesinaion = element;
+        break;
+      }
+    }
+  }
+
+  void _resolvePrefilledModeRetrait() {
+    if (loadedModeRetrait) return;
+
+    if (widget.modeRetrait == null || selectedDesinaion?.modeRetrait == null) {
+      selectedModeRetrait = null;
+      loadedModeRetrait = true;
+      _syncStepAfterPrefillResolution();
+      return;
+    }
+
+    final targetId = widget.modeRetrait!.idModeRetrait;
+    ModeRetrait? resolved;
+    for (final element in selectedDesinaion!.modeRetrait!) {
+      if (element.idModeRetrait == targetId) {
+        resolved = element;
+        break;
+      }
+    }
+    selectedModeRetrait = resolved;
+    loadedModeRetrait = true;
+    _syncStepAfterPrefillResolution();
+  }
+
+  void _syncStepAfterPrefillResolution() {
+    if (!initBen || widget.beneficiaire == null || _beneficiaryValidationFailed) return;
+
+    final targetStep = _calculateInitialStep();
+    if (targetStep == step) return;
+
+    setState(() {
+      step = targetStep;
+    });
+    _controller.jumpToPage(targetStep);
+  }
+
+  void _scheduleInitialCalculation() {
+    _requestInitialCalculation();
+  }
+
+  void _handleMissingRepeatBeneficiary() {
+    if (!widget.repeatFromHistory || _beneficiaryValidationFailed) return;
+
+    _beneficiaryValidationFailed = true;
+    Utils.flushBarErrorMessage(
+      AppLocalizations.of(context)!.translate('repeat_transfer_beneficiary_invalid'),
+      context,
+    );
+
+    setState(() {
+      selectedBeneficiaire = null;
+      step = STEP_BENEFICIARY;
+      selectedModeRetrait = null;
+      selectedMotif = null;
+      _clearCalculation();
+      _fromController.clear();
+      _toController.clear();
+    });
+    _controller.jumpToPage(STEP_BENEFICIARY);
+  }
+
+  void _validateRepeatBeneficiary(List<dynamic>? beneficiaries) {
+    if (widget.repeatTransferValidated) return;
+    if (!widget.repeatFromHistory || widget.beneficiaire?.idBeneficiaire == null) return;
+
+    final freshBeneficiary = _findBeneficiaryInList(
+      beneficiaries,
+      widget.beneficiaire!.idBeneficiaire,
+    );
+
+    if (freshBeneficiary == null) {
+      _handleMissingRepeatBeneficiary();
+      return;
+    }
+
+    if (selectedBeneficiaire?.idBeneficiaire != freshBeneficiary.idBeneficiaire) {
+      setState(() {
+        selectedBeneficiaire = freshBeneficiary;
+        selectedDesinaion = freshBeneficiary.destination ?? selectedDesinaion;
+      });
+    }
   }
 
   void _onChanged(int index) {
@@ -502,8 +694,8 @@ class _SendViewState extends State<SendView> {
           ),
         ),
         Expanded(
-          child: ChangeNotifierProvider<DemandesViewModel>(
-            create: (BuildContext context) => demandesViewModel2,
+          child: ChangeNotifierProvider<DemandesViewModel>.value(
+            value: demandesViewModel2,
             child: Consumer<DemandesViewModel>(
               builder: (context, value, _) {
                 switch (value.beneficiairesList.status) {
@@ -519,7 +711,10 @@ class _SendViewState extends State<SendView> {
                       child: Text(value.beneficiairesList.message.toString()),
                     );
                   default:
-                    if (value.beneficiairesList.data!.isEmpty) {
+                    List data = value.beneficiairesList.data!.where((element) => element != null).toList();
+                    _validateRepeatBeneficiary(data);
+
+                    if (data.isEmpty) {
                       return Center(
                         child: Text(
                           AppLocalizations.of(context)!.translate("no_beneficiary_registered"),
@@ -527,8 +722,6 @@ class _SendViewState extends State<SendView> {
                         ),
                       );
                     }
-
-                    List data = value.beneficiairesList.data!.where((element) => element != null).toList();
 
                     List filteredData = data.where((element) {
                       BeneficiaireModel ben = BeneficiaireModel.fromJson(element);
@@ -606,8 +799,8 @@ class _SendViewState extends State<SendView> {
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
-            child: ChangeNotifierProvider<DemandesViewModel>(
-              create: (BuildContext context) => demandesViewModel,
+            child: ChangeNotifierProvider<DemandesViewModel>.value(
+              value: demandesViewModel,
               child: Consumer<DemandesViewModel>(
                 builder: (context, value, _) {
                   switch (value.paysDestination.status) {
@@ -627,37 +820,23 @@ class _SendViewState extends State<SendView> {
                       );
                     default:
                       paysDestinationModel = value.paysDestination.data!;
+                      _resolvePrefilledDestination(paysDestinationModel!);
 
                       if (selectedBeneficiaire == null && widget.beneficiaire != null) {
                         selectedBeneficiaire = widget.beneficiaire;
-                        selectedDesinaion = widget.beneficiaire!.destination;
+                      }
 
-                        if (widget.amount != null && _fromController.text.isEmpty) {
-                          insert(widget.amount, _fromController);
-                        }
+                      if (selectedDesinaion == null && widget.selectedDestination != null) {
+                        selectedDesinaion = widget.selectedDestination;
                       }
 
                       if (!loadedDestination) {
-                        if (widget.destination != null && paysDestinationModel!.destination != null) {
-                          for (var element in paysDestinationModel!.destination!) {
-                            if (element.codePaysDest == widget.destination) {
-                              selectedDesinaion = element;
-                            }
-                          }
-                        }
                         loadedDestination = true;
                       }
 
-                      if (!loadedModeRetrait) {
-                        if (selectedDesinaion != null && selectedDesinaion!.modeRetrait != null && widget.modeRetrait != null) {
-                          for (var element in selectedDesinaion!.modeRetrait!) {
-                            if (widget.modeRetrait == element.idModeRetrait) {
-                              selectedModeRetrait = element;
-                            }
-                          }
-                        }
-                        loadedModeRetrait = true;
-                      }
+                      _resolvePrefilledModeRetrait();
+                      _resolvePrefilledMotif();
+                      _scheduleInitialCalculation();
 
                       return Container(
                         padding: EdgeInsets.only(
@@ -693,7 +872,9 @@ class _SendViewState extends State<SendView> {
           if (selectedDesinaion != null && paysDestinationModel != null)
             AppTexts.buttonText(
               _transferCalculation?.formule ??
-                  "1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}",
+                  (selectedDesinaion!.rate != null
+                      ? "1 ${paysDestinationModel!.paysCodeMonnaieSrce} = ${selectedDesinaion!.rate} ${selectedDesinaion!.paysCodeMonnaieDest}"
+                      : AppLocalizations.of(context)!.translate("custom_exchange_rate_info")),
             ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1604,6 +1785,10 @@ class _SendViewState extends State<SendView> {
   }
 
   void _validateReasonStep() {
+    if (selectedBeneficiaire == null) {
+      Utils.flushBarErrorMessage(AppLocalizations.of(context)!.translate("select_beneficiary"), context);
+      return;
+    }
     if (selectedMotif == null) {
       Utils.flushBarErrorMessage(AppLocalizations.of(context)!.translate("select_reason"), context);
     } else if (selectedModeRetrait == null) {
@@ -1653,6 +1838,20 @@ class _SendViewState extends State<SendView> {
 
   void _submitTransfer({String? pin, bool wallet = false}) {
     if (!loading) {
+      if (selectedBeneficiaire == null ||
+          selectedDesinaion == null ||
+          selectedModeRetrait == null ||
+          selectedMotif == null ||
+          paysDestinationModel == null ||
+          _transferCalculation == null ||
+          _isCalculating) {
+        Utils.flushBarErrorMessage(
+          AppLocalizations.of(context)!.translate("enter_amount"),
+          context,
+        );
+        return;
+      }
+
       setState(() {
         loading = true;
       });

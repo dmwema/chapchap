@@ -554,5 +554,14 @@
   "language": "Idiomas",
   "my_tontine": "Mi Tontina",
   "coming_soon": "Próximamente",
-  "choose_language": "Elija su idioma"
+  "choose_language": "Elija su idioma",
+  "repeat_transfer_loading": "Preparando la transferencia…",
+  "repeat_transfer_unavailable_title": "Transferencia no disponible",
+  "repeat_transfer_missing_beneficiary": "Esta transacción no contiene un beneficiario válido.",
+  "repeat_transfer_beneficiary_not_found": "Este beneficiario ya no existe. Seleccione otro.",
+  "repeat_transfer_beneficiary_archived": "Este beneficiario está archivado. Desarchívelo desde sus beneficiarios para repetir esta transferencia.",
+  "repeat_transfer_destination_unavailable": "El destino de esta transferencia ya no está disponible.",
+  "repeat_transfer_data_load_failed": "No se pudo cargar la información de la transferencia. Inténtelo de nuevo.",
+  "repeat_transfer_beneficiary_invalid": "El beneficiario seleccionado ya no está disponible.",
+  "ok": "OK"
 }
